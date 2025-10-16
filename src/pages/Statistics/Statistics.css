@@ -6,6 +6,9 @@
   color: #ffffff;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* Header */

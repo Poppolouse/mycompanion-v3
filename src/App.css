@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -15,10 +21,11 @@ body {
   color: #e2e8f0;
   line-height: 1.6;
   overflow-x: hidden;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* App Layout */
@@ -37,6 +44,8 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 }
 
 .main-content.sidebar-acik {
