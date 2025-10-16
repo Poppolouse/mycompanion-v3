@@ -76,10 +76,15 @@ function GameTracker() {
 
   return (
     <div className="game-tracker-page">
-      {/* Ana Ekrana Dönüş Tuşu */}
-      <button className="home-button" onClick={handleGoHome}>
-        🏠 Ana Sayfa
-      </button>
+      {/* Üst Navigasyon */}
+      <div className="top-navigation">
+        <button className="home-button" onClick={handleGoHome}>
+          🏠 Ana Sayfa
+        </button>
+        <button className="stats-button" onClick={() => navigate('/statistics')}>
+          📊 İstatistikler
+        </button>
+      </div>
 
       {/* Sayfa Başlığı */}
       <div className="page-header">

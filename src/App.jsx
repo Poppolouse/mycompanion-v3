@@ -8,6 +8,7 @@ import HavaDurumu from './pages/HavaDurumu';
 import NotDefteri from './pages/NotDefteri';
 import GameTracker from './pages/GameTracker';
 import GameDetail from './pages/GameDetail';
+import Statistics from './pages/Statistics';
 import AdminPanel from './components/AdminPanel';
 import './App.css';
 
@@ -28,6 +29,7 @@ function App() {
         {/* GameTracker - Sidebar'sız bağımsız sayfa */}
         <Route path="/game-tracker" element={<GameTracker />} />
         <Route path="/game-tracker/game/:id" element={<GameDetail />} />
+        <Route path="/statistics" element={<Statistics />} />
         
         {/* Diğer sayfalar - Sidebar ile birlikte */}
         <Route path="/*" element={
