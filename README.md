@@ -234,6 +234,63 @@ Uygulama tüm cihazlarda mükemmel çalışır:
 - [ ] **Social Features** - Arkadaş listesi ve paylaşım
 - [ ] **Mobile App** - React Native uygulaması
 
+## 🚀 **Deployment - Cloudflare Pages**
+
+### 📋 **Ön Gereksinimler**
+- GitHub repository
+- Cloudflare hesabı (ücretsiz)
+
+### 🔧 **Cloudflare Pages Kurulumu**
+
+1. **GitHub Repository Bağlantısı**
+   ```bash
+   # Repository'yi fork edin veya clone edin
+   git clone https://github.com/your-username/mycompanion-v3.git
+   cd mycompanion-v3
+   ```
+
+2. **Cloudflare Pages'e Git**
+   - [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
+   - "Create a project" → "Connect to Git"
+   - GitHub repository'nizi seçin
+
+3. **Build Ayarları**
+   ```
+   Framework preset: Vite
+   Build command: npm run build
+   Build output directory: dist
+   Root directory: /
+   ```
+
+4. **Environment Variables (Opsiyonel)**
+   ```
+   VITE_APP_NAME=Vault Tracker v3
+   VITE_APP_VERSION=3.6.0
+   VITE_ENABLE_ANALYTICS=false
+   ```
+
+5. **Deploy**
+   - "Save and Deploy" butonuna tıklayın
+   - İlk deployment 2-3 dakika sürer
+   - Her Git push otomatik deployment tetikler
+
+### 🌐 **Production URL**
+Deployment tamamlandıktan sonra:
+- `https://your-project-name.pages.dev` URL'si alırsınız
+- Custom domain bağlayabilirsiniz
+- SSL otomatik aktif olur
+
+### 🔄 **Otomatik Deployment**
+- `main` branch'e her push otomatik deployment yapar
+- Preview deployments (PR'lar için)
+- Rollback özelliği mevcut
+
+### 📊 **Build Optimizasyonları**
+- ✅ Terser minification
+- ✅ Code splitting (vendor, utils chunks)
+- ✅ Asset optimization
+- ✅ SPA routing support (`_redirects` dosyası)
+
 ## 🤝 **Katkıda Bulunma**
 
 1. Fork edin
