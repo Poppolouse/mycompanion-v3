@@ -2,12 +2,13 @@
 
 .statistics-page {
   min-height: 100vh;
+  min-width: 1200px;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   color: #ffffff;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   position: relative;
 }
 
@@ -97,9 +98,18 @@
 /* Ana İstatistikler */
 .stats-overview {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-bottom: 3rem;
+  min-width: 1200px;
+}
+
+/* Masaüstü için 6 kart düzeni */
+@media (min-width: 1400px) {
+  .stats-overview {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 .stat-card {
@@ -173,8 +183,17 @@
 /* Detaylı Analizler */
 .stats-details {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  min-width: 1200px;
+}
+
+/* Tek sütun için küçük ekranlar */
+@media (max-width: 1199px) {
+  .stats-details {
+    grid-template-columns: 1fr;
+    min-width: auto;
+  }
 }
 
 .stats-section {
