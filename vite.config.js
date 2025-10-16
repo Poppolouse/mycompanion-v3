@@ -9,6 +9,7 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'terser',
+    cssMinify: false, // CSS minification'ı geçici olarak kapat
     rollupOptions: {
       output: {
         manualChunks: {

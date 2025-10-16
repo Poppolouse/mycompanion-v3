@@ -1339,6 +1339,8 @@
 
 .btn-select:hover {
   background: var(--route-secondary);
+}
+
 /* Cycle Düzenleme Butonları */
 .cycle-edit-btn {
   background: rgba(102, 126, 234, 0.2);
