@@ -422,6 +422,303 @@
   font-size: 16px;
 }
 
+/* 🎯 Campaign Stilleri */
+.campaigns-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campaigns-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.campaigns-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.add-campaign-button {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.add-campaign-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* Campaign Ekleme Formu */
+.add-campaign-form {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.campaign-input,
+.campaign-textarea,
+.campaign-select,
+.campaign-progress-input,
+.campaign-date {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.campaign-input:focus,
+.campaign-textarea:focus,
+.campaign-select:focus,
+.campaign-progress-input:focus,
+.campaign-date:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.campaign-input::placeholder,
+.campaign-textarea::placeholder,
+.campaign-progress-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.campaign-progress-input {
+  max-width: 120px;
+}
+
+.campaign-date {
+  max-width: 150px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.save-campaign-button {
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.save-campaign-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.save-campaign-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Campaign Listesi */
+.campaigns-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.no-campaigns {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.no-campaigns p {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+}
+
+.no-campaigns small {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Campaign Kartları */
+.campaign-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.campaign-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.campaign-name {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.campaign-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-campaign-button {
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #ff6b6b;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.delete-campaign-button:hover {
+  background: rgba(244, 67, 54, 0.3);
+  transform: scale(1.1);
+}
+
+.campaign-description {
+  margin: 0 0 15px 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.campaign-info {
+  margin-bottom: 15px;
+}
+
+.campaign-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.başlanmadı {
+  background: rgba(158, 158, 158, 0.2);
+  color: #bdbdbd;
+}
+
+.status-badge.oynuyor {
+  background: rgba(33, 150, 243, 0.2);
+  color: #64b5f6;
+}
+
+.status-badge.tamamlandı {
+  background: rgba(76, 175, 80, 0.2);
+  color: #81c784;
+}
+
+.status-badge.bırakıldı {
+  background: rgba(244, 67, 54, 0.2);
+  color: #e57373;
+}
+
+.campaign-progress {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.campaign-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.campaign-dates {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.start-date,
+.end-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.campaign-notes {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campaign-notes small {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .game-detail-page {
@@ -449,5 +746,32 @@
   
   .factions-grid {
     grid-template-columns: 1fr;
+  }
+
+  .campaigns-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .campaign-progress-input,
+  .campaign-date {
+    max-width: none;
+  }
+
+  .campaign-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .campaign-dates {
+    flex-direction: column;
+    gap: 8px;
   }
 }

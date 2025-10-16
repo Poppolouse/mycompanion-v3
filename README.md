@@ -13,6 +13,14 @@ Vault Tracker, oyun koleksiyonunuzu profesyonel düzeyde takip etmenizi sağlaya
 - **🗑️ Oyun Silme** - İstenmeyen oyunları kaldırma
 - **➕ Manuel Oyun Ekleme** - Yeni oyunları elle ekleme
 
+### 🔄 **117 Oyun Route Sistemi**
+- **📋 39 Cycle Yönetimi** - 117 oyunluk route'u 39 cycle'a bölen akıllı sistem
+- **🎮 Cycle Düzenleme** - Her cycle'daki oyunları değiştirme ve kaldırma
+- **🔍 Akıllı Oyun Seçimi** - Tür bazlı filtreleme ile uygun oyun önerisi
+- **📊 Route İlerlemesi** - Cycle ve genel route ilerlemesini takip
+- **💾 Otomatik Kayıt** - Tüm değişiklikler otomatik olarak localStorage'a kaydedilir
+- **🎯 Oyun Türü Eşleştirme** - RPG, Story/Indie, Strategy/Sim türlerine göre akıllı filtreleme
+
 ### 🏷️ **Gelişmiş Kategorilendirme**
 - **🎭 Fraksiyonlar** - Oyun karakterlerini ve fraksiyonlarını tag'ler halinde gösterme
 - **📊 İlerleme Takibi** - Oyun tamamlama yüzdelerini görüntüleme ve güncelleme
@@ -138,7 +146,15 @@ Elden Ring     | RPG     | PS5      | Backlog   | High     | 0        | Tarnishe
 - **Günlük Aktivite:** Son 7 günün bar grafiği
 - **Zaman Filtresi:** Son 7 gün, 30 gün, tüm zamanlar
 
-### 7. 💾 Veri Yönetimi
+### 7. 🔄 Cycle Düzenleme Sistemi
+- **Cycle Görünümü:** "Cycles" sekmesine tıklayarak 39 cycle'ı görüntüleyin
+- **Oyun Değiştirme:** 🔄 "Değiştir" butonuna tıklayarak cycle'daki oyunu değiştirin
+- **Oyun Kaldırma:** 🗑️ "Kaldır" butonuna tıklayarak oyunu cycle'dan çıkarın
+- **Akıllı Seçim:** Modal'da oyun türüne uygun oyunlar otomatik filtrelenir
+- **Arama Özelliği:** Modal'da oyun adı veya türüne göre arama yapın
+- **Otomatik Kayıt:** Tüm değişiklikler anında RouteContext'e kaydedilir
+
+### 8. 💾 Veri Yönetimi
 - **Yedekleme:** 💾 "Yedekle" butonuna tıklayarak JSON dosyası indirin
 - **Geri Yükleme:** 📥 "Geri Yükle" butonuna tıklayarak yedek dosyası seçin
 - **Onay:** İçe aktarılacak veriler hakkında bilgi alın ve onaylayın
@@ -206,6 +222,10 @@ Uygulama tüm cihazlarda mükemmel çalışır:
 - [x] **Zaman takip sistemi** - Oyun süresi takibi
 - [x] **İstatistikler ve raporlar** - Detaylı analiz
 - [x] **Veri export/import** - JSON yedekleme sistemi
+- [x] **117 Oyun Route Sistemi** - 39 cycle'lık akıllı route yönetimi
+- [x] **Cycle Düzenleme** - Oyun değiştirme, kaldırma ve ekleme
+- [x] **Akıllı Oyun Seçimi** - Tür bazlı filtreleme ve arama
+- [x] **RouteContext Entegrasyonu** - Merkezi state yönetimi
 
 ### 🔄 Gelecek Güncellemeler
 - [ ] **Cloud Sync** - Google Drive/OneDrive entegrasyonu

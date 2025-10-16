@@ -1,5 +1,57 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🚀 **v3.6.0** - 2024-12-28 - **117 Oyun Route Sistemi & Cycle Editing Düzeltmeleri**
+
+### 🐛 **Kritik Hata Düzeltmeleri**
+
+#### 🔄 **Cycle Editing Sistemi Düzeltmeleri**
+- **🎯 "Sliding Buttons" Sorunu Çözüldü**
+  - ✅ Cycle kartlarında butonların kayması problemi düzeltildi
+  - ✅ CSS `position`, `min-height`, `flex-shrink` optimizasyonları
+  - ✅ `min-width` ve `display` property'leri ile buton stabilizasyonu
+  - ✅ Responsive layout'ta buton yerleşim sorunları giderildi
+
+- **🎮 Game Selection Modal Düzeltmeleri**
+  - ✅ Boş modal problemi çözüldü (`games` state → `routeState.library` kullanımı)
+  - ✅ Oyun listesi doğru şekilde yükleniyor
+  - ✅ Game type filtering logic genişletildi
+  - ✅ RPG, Story/Indie, Strategy/Sim kategorileri için keyword matching
+
+#### ✨ **Yeni Özellikler**
+
+- **🔍 Modal Search Sistemi**
+  - ✅ Game selection modal'ına arama kutusu eklendi
+  - ✅ Real-time search filtering (oyun adı bazlı)
+  - ✅ Search term + game type kombinasyonu ile filtreleme
+  - ✅ Modal açılışında search kutusunun otomatik temizlenmesi
+
+- **🎯 Gelişmiş Game Type Filtering**
+  - ✅ RPG kategorisi için: "rpg", "role", "jrpg", "crpg" keyword'leri
+  - ✅ Story/Indie kategorisi için: "story", "indie", "narrative", "adventure" keyword'leri
+  - ✅ Strategy/Sim kategorisi için: "strategy", "sim", "simulation", "management" keyword'leri
+  - ✅ Game title içinde keyword arama desteği
+
+- **🎨 UI/UX İyileştirmeleri**
+  - ✅ Modal search box modern tasarımı
+  - ✅ Placeholder text ve focus efektleri
+  - ✅ Search input CSS styling (border, padding, background)
+  - ✅ Responsive modal layout optimizasyonu
+
+### 🔧 **Teknik İyileştirmeler**
+- ✅ `modalSearchTerm` state management
+- ✅ `handleSelectGameForSlot` fonksiyonunda search term reset
+- ✅ Game filtering algorithm optimization
+- ✅ CSS Grid/Flexbox layout stabilization
+- ✅ RouteContext integration improvements
+
+### 📚 **Dokümantasyon Güncellemeleri**
+- ✅ README.md'ye "117 Oyun Route Sistemi" bölümü eklendi
+- ✅ "Cycle Düzenleme Sistemi" kullanım kılavuzu
+- ✅ Smart Game Selection ve Search özelliklerinin dokümantasyonu
+- ✅ Completed Features listesi güncellendi
+
+---
+
 ## 🚀 **v3.5.0** - 2024-12-28 - **FINAL RELEASE**
 
 ### ✨ **Yeni Özellikler**

@@ -1,0 +1,207 @@
+/* 🎮 Game Tracker - Modern CSS Variables */
+/* Route Planner benzeri renk paleti ve modern tasarım sistemi */
+
+:root {
+  /* 🎨 Ana Renkler (Route Planner Benzeri) */
+  --primary: #667eea;           /* Mavi - Ana butonlar */
+  --secondary: #764ba2;         /* Mor - İkincil öğeler */
+  --accent: #f093fb;            /* Pembe - Vurgular */
+  
+  /* 📊 Durum Renkleri */
+  --success: #4ade80;           /* Yeşil - Tamamlanan */
+  --warning: #fbbf24;           /* Sarı - Devam eden */
+  --danger: #f87171;            /* Kırmızı - Hata/Silme */
+  --info: #60a5fa;              /* Açık mavi - Bilgi */
+  
+  /* 🌙 Arka Plan Renkleri - Dark Theme */
+  --bg-primary: #0a0a0f;        /* Ana arka plan */
+  --bg-secondary: #1a1a2e;      /* İkincil arka plan */
+  --bg-tertiary: #16213e;       /* Üçüncül arka plan */
+  --bg-card: rgba(26, 26, 46, 0.95); /* Kart arka planı */
+  
+  /* 📝 Metin Renkleri - Dark Theme */
+  --text-primary: #ffffff;      /* Ana metin */
+  --text-secondary: rgba(255, 255, 255, 0.9); /* İkincil metin */
+  --text-muted: rgba(255, 255, 255, 0.7); /* Soluk metin */
+  --text-inverse: #0a0a0f;      /* Ters metin (açık arka plan için) */
+  
+  /* 🔲 Border ve Outline - Dark Theme */
+  --border: rgba(255, 255, 255, 0.1); /* Ana border */
+  --border-light: rgba(255, 255, 255, 0.2); /* Açık border */
+  --border-focus: var(--primary); /* Focus border */
+  
+  /* 📏 Spacing (8px grid system) */
+  --spacing-xs: 0.25rem;        /* 4px */
+  --spacing-sm: 0.5rem;         /* 8px */
+  --spacing-md: 1rem;           /* 16px */
+  --spacing-lg: 1.5rem;         /* 24px */
+  --spacing-xl: 2rem;           /* 32px */
+  --spacing-2xl: 3rem;          /* 48px */
+  
+  /* 📐 Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+  
+  /* 🌫️ Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  
+  /* 🎭 Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(20px);
+  
+  /* ⚡ Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* 📱 Breakpoints (for JS usage) */
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1280px;
+  
+  /* 🎮 Game Status Colors */
+  --status-completed: var(--success);
+  --status-playing: var(--warning);
+  --status-paused: var(--info);
+  --status-not-started: var(--danger);
+  --status-dropped: #6b7280;
+  
+  /* 🏆 Priority Colors */
+  --priority-high: var(--danger);
+  --priority-medium: var(--warning);
+  --priority-low: var(--success);
+  
+  /* 📊 Chart Colors */
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: var(--success);
+  --chart-5: var(--warning);
+  --chart-6: var(--info);
+  
+  /* 🔔 Notification Colors */
+  --notification-success-bg: rgba(74, 222, 128, 0.1);
+  --notification-warning-bg: rgba(251, 191, 36, 0.1);
+  --notification-danger-bg: rgba(248, 113, 113, 0.1);
+  --notification-info-bg: rgba(96, 165, 250, 0.1);
+  
+  /* 🎯 Interactive States */
+  --hover-overlay: rgba(255, 255, 255, 0.1);
+  --active-overlay: rgba(255, 255, 255, 0.2);
+  
+  /* 🌙 Dark Theme Variables - Koyu Lacivert Tonları */
+  --dark-bg-primary: #1a1d29;
+  --dark-bg-secondary: #252a3a;
+  --dark-bg-tertiary: #2d3748;
+  --dark-surface-1: #2a3441;
+  --dark-surface-2: #374151;
+  --dark-surface-3: #4a5568;
+  --dark-surface-4: #5a6478;
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: rgba(255, 255, 255, 0.9);
+  --dark-text-tertiary: rgba(255, 255, 255, 0.7);
+  --dark-text-muted: rgba(255, 255, 255, 0.5);
+  --dark-border-1: rgba(255, 255, 255, 0.1);
+  --dark-border-2: rgba(255, 255, 255, 0.15);
+  --dark-accent-primary: #667eea;
+  --dark-accent-error: #ff6b6b;
+  --disabled-opacity: 0.5;
+  
+  /* 📏 Layout */
+  --sidebar-width: 280px;
+  --header-height: 80px;
+  --container-max-width: 1400px;
+  
+  /* 🎨 Gradient Backgrounds */
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+  --gradient-success: linear-gradient(135deg, var(--success), #22c55e);
+  --gradient-warning: linear-gradient(135deg, var(--warning), #f59e0b);
+  --gradient-danger: linear-gradient(135deg, var(--danger), #ef4444);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  
+  /* 🌟 Special Effects */
+  --shimmer-gradient: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  --pulse-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* 🌅 Light Mode Override (Optional) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.95);
+    
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-inverse: #f1f5f9;
+    
+    --border: #e2e8f0;
+    --border-light: #cbd5e1;
+    
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* 📱 Mobile Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --spacing-md: 0.75rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --sidebar-width: 100%;
+  }
+}
+
+/* 🎯 Utility Classes */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.gradient-glass {
+  background: var(--gradient-glass);
+}
+
+.shadow-glow {
+  box-shadow: var(--pulse-shadow);
+}
+
+.transition-all {
+  transition: all var(--transition-normal);
+}
+
+/* 🎮 Game Status Utilities */
+.status-completed { color: var(--status-completed); }
+.status-playing { color: var(--status-playing); }
+.status-paused { color: var(--status-paused); }
+.status-not-started { color: var(--status-not-started); }
+.status-dropped { color: var(--status-dropped); }
+
+/* 🏆 Priority Utilities */
+.priority-high { color: var(--priority-high); }
+.priority-medium { color: var(--priority-medium); }
+.priority-low { color: var(--priority-low); }

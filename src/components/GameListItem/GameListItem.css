@@ -1,0 +1,450 @@
+/* GameListItem - Basit ve Temiz Stil */
+
+/* Global line-height reset ve margin temizleme */
+.game-list-item * {
+  line-height: 1.2;  /* Tüm elementler için optimize line-height */
+  margin: 0;  /* Beklenmedik margin'leri temizle */
+}
+
+.game-list-item {
+  display: grid;
+  grid-template-columns: 45px 70px 1.5fr 110px 110px 90px 120px 110px 70px;
+  gap: 0.75rem;
+  padding: 0 1.1rem;  /* Dikey padding kaldırıldı (0.9rem 1.1rem → 0 1.1rem) */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0.5rem;
+  min-height: 48px;
+  max-height: 48px;  /* Sabit yükseklik zorla */
+  line-height: 1.4;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  align-items: center;  /* Dikey ortalama */
+}
+
+/* Tüm child elementler için sabit yükseklik ve ortalama */
+.game-list-item > * {
+  height: 48px;  /* Tüm child elementler aynı yükseklikte */
+  display: flex;
+  align-items: center;  /* Dikey ortalama */
+}
+
+.game-list-item:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateX(2px);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  border-left: 4px solid;
+  border-image: linear-gradient(135deg, #667eea, #764ba2) 1;
+  /* Yükseklik sabit kalsın */
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.game-list-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.game-list-item:hover::before {
+  width: 4px;
+}
+
+/* Checkbox */
+.game-item-checkbox {
+  height: 48px;  /* Konteyner yüksekliği */
+  padding: 0;  /* Padding kaldırıldı */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-checkbox input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--color-primary, #667eea);
+  margin: 0;  /* Margin kaldırıldı */
+  vertical-align: middle;  /* Dikey ortalama */
+}
+
+/* Game Image */
+.game-item-image {
+  height: 48px;  /* Konteyner yüksekliği */
+  padding: 0;  /* Padding kaldırıldı */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-image img,
+.game-placeholder {
+  width: 40px;  /* 45px → 40px (biraz küçültüldü) */
+  height: 40px;
+  margin: 0;  /* Margin kaldırıldı */
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.game-item-image:hover img,
+.game-item-image:hover .game-placeholder {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.game-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;  /* 18px → 16px (biraz küçültüldü) */
+}
+
+/* Game Name */
+.game-item-name {
+  height: 48px;
+  padding: 0;  /* Padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  flex-direction: column;  /* Gerekirse row yap */
+  justify-content: center;
+  gap: 0;  /* Gap kaldırıldı (4px → 0) */
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.game-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  line-height: 1.2;  /* Line-height optimize edildi (1.3 → 1.2) */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.game-title:hover {
+  color: rgba(102, 126, 234, 0.9);
+}
+
+/* Platform */
+.game-item-platform {
+  height: 48px;
+  padding: 0;  /* Tüm padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;  /* Line-height eklendi */
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  text-align: center;
+  transition: color 0.3s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-platform span {
+  margin: 0;  /* Span margin kaldırıldı */
+  line-height: 1.2;  /* Span line-height eklendi */
+}
+
+.game-item-platform:hover {
+  color: rgba(102, 126, 234, 0.8);
+}
+
+/* Genre */
+.game-item-genre {
+  height: 48px;
+  padding: 0;  /* Tüm padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;  /* Line-height eklendi */
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  text-align: center;
+  transition: color 0.3s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-genre span {
+  margin: 0;  /* Span margin kaldırıldı */
+  line-height: 1.2;  /* Span line-height eklendi */
+}
+
+.game-item-genre:hover {
+  color: rgba(102, 126, 234, 0.7);
+}
+
+/* Status */
+.game-item-status {
+  height: 48px;
+  padding: 0;  /* Tüm padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;  /* Line-height eklendi */
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-status span,
+.game-item-status select {
+  margin: 0;  /* Margin kaldırıldı */
+  line-height: 1.2;  /* Line-height eklendi */
+}
+
+.status-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.88rem;
+  height: 32px;  /* Sabit yükseklik (auto → 32px) */
+  padding: 4px 8px;  /* Padding küçültüldü (6px 10px → 4px 8px) */
+  margin: 0;  /* Margin eklendi */
+  line-height: 1.2;  /* Line-height eklendi */
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+}
+
+.status-select:hover {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Progress */
+.game-item-progress {
+  height: 48px;
+  padding: 0;  /* Padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;  /* Gap küçültüldü (4px → 3px) */
+  position: relative;
+  z-index: 2;
+}
+
+.progress-text {
+  font-size: 0.85rem;  /* Font-size küçültüldü (0.88rem → 0.85rem) */
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  line-height: 1;  /* Line-height eklendi */
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.progress-text:hover {
+  color: rgba(102, 126, 234, 0.9);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;  /* Height küçültüldü (10px → 8px) */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Last Played */
+.game-item-last-played {
+  height: 48px;
+  padding: 0;  /* Tüm padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;  /* Line-height eklendi */
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+  text-align: center;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.game-item-last-played span {
+  margin: 0;  /* Span margin kaldırıldı */
+  line-height: 1.2;  /* Span line-height eklendi */
+}
+
+.game-item-last-played:hover {
+  color: rgba(102, 126, 234, 0.8);
+}
+
+/* Actions */
+.game-item-actions {
+  height: 48px;
+  padding: 0;  /* Padding kaldırıldı (6px 0 → 0) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;  /* Gap küçültüldü (6px → 4px) */
+  position: relative;
+  z-index: 2;
+}
+
+.action-btn {
+  width: 28px;  /* Boyut küçültüldü (32px → 28px) */
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  padding: 0;  /* Padding kaldırıldı (0.4rem → 0) */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;  /* Margin eklendi */
+}
+
+.action-btn:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.edit-btn:hover {
+  background: var(--warning-color, #ffc107);
+}
+
+.delete-btn:hover {
+  background: var(--danger-color, #dc3545);
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .game-list-item {
+    grid-template-columns: 40px 60px 1fr 100px 100px 80px 100px 80px;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-list-item {
+    grid-template-columns: 35px 45px 1fr 80px 60px;
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    min-height: 40px;
+  }
+  
+  /* Mobilde bazı kolonları gizle */
+  .game-item-genre,
+  .game-item-last-played,
+  .game-item-progress {
+    display: none;
+  }
+  
+  /* Mobil için boyut ayarları */
+  .game-item-checkbox {
+    height: 40px;
+  }
+  
+  .game-item-checkbox input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .game-item-image,
+  .game-placeholder {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .game-placeholder {
+    font-size: 14px;
+  }
+  
+  .game-item-name,
+  .game-item-platform,
+  .game-item-status,
+  .game-item-actions {
+    height: 40px;
+    padding: 4px 0;
+  }
+  
+  .action-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    padding: 0.3rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .game-list-item {
+    background: var(--dark-card-bg, #2d3748);
+    border-color: var(--dark-border, #4a5568);
+    color: var(--dark-text, #e2e8f0);
+  }
+  
+  .game-list-item:hover {
+    background: var(--dark-hover-bg, #4a5568);
+  }
+  
+  .game-title {
+    color: var(--dark-text-primary, #f7fafc);
+  }
+  
+  .game-item-platform,
+  .game-item-genre,
+  .game-item-last-played {
+    color: var(--dark-text-secondary, #a0aec0);
+  }
+}

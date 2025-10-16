@@ -38,6 +38,11 @@ export const readExcelFile = (file) => {
  * @returns {Array} - Formatlanmış oyun listesi
  */
 export const parseGameList = (rawData) => {
+  console.log('📊 Excel parse başlıyor, toplam satır:', rawData.length);
+  
+  // İlk birkaç satırı debug için göster
+  console.log('🔍 İlk 3 satır:', rawData.slice(0, 3));
+  
   return rawData.map((row, index) => {
     // Excel'deki sütun isimlerini normalize et
     const normalizedRow = {};

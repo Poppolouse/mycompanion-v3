@@ -11,27 +11,60 @@ import GameDetail from './pages/GameDetail';
 import Statistics from './pages/Statistics';
 import RoutePlanner from './pages/RoutePlanner';
 import GameTrackingHub from './pages/GameTrackingHub';
+import AddGame from './pages/AddGame';
+import EditGame from './pages/EditGame';
 import AdminPanel from './components/AdminPanel';
+import LoginModal from './components/LoginModal';
 import { RouteProvider } from './contexts/RouteContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { NotificationProvider } from './components/NotificationSystem';
 import './App.css';
 
 /**
  * Ana uygulama komponenti - Routing sistemi
  * Kullanıcıyı farklı sayfalara yönlendirir
  */
-function App() {
+function AppContent() {
   const [sidebarAcik, setSidebarAcik] = useState(true);
+  const { isAuthenticated, isLoading } = useAuth();
 
   const sidebarToggle = () => {
     setSidebarAcik(!sidebarAcik);
   };
 
+  // Loading durumu
+  if (isLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        background: 'linear-gradient(135deg, #1e1e2e 0%, #313244 100%)',
+        color: '#fff',
+        fontSize: '1.2rem'
+      }}>
+        ⏳ Yükleniyor...
+      </div>
+    );
+  }
+
+  // Giriş yapılmamışsa LoginModal göster
+  if (!isAuthenticated) {
+    return <LoginModal />;
+  }
+
   return (
-    <Router>
-      <Routes>
+    <NotificationProvider>
+      <Router>
+        <Routes>
         {/* Game Tracking - Sidebar'sız bağımsız sayfalar */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
-        <Route path="/game-tracker" element={<GameTracker />} />
+        <Route path="/game-tracker" element={
+          <RouteProvider>
+            <GameTracker />
+          </RouteProvider>
+        } />
         <Route path="/game-tracker/game/:id" element={<GameDetail />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/route-planner" element={
@@ -39,6 +72,8 @@ function App() {
             <RoutePlanner />
           </RouteProvider>
         } />
+        <Route path="/add-game" element={<AddGame />} />
+        <Route path="/edit-game/:gameId" element={<EditGame />} />
         
         {/* Diğer sayfalar - Sidebar ile birlikte */}
         <Route path="/*" element={
@@ -63,8 +98,20 @@ function App() {
             </main>
           </div>
         } />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </NotificationProvider>
+  );
+}
+
+/**
+ * Ana App wrapper - AuthProvider ile sarılmış
+ */
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

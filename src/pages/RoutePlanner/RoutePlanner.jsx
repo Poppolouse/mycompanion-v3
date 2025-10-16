@@ -24,6 +24,7 @@ function RoutePlanner() {
     startCycle,
     selectGame: contextSelectGame,
     completeGame: contextCompleteGame,
+    refreshFromLibrary,
     ROUTE_CONFIG 
   } = useRoute();
 
@@ -44,8 +45,14 @@ function RoutePlanner() {
   const [showGameSelector, setShowGameSelector] = useState(false);
   const [selectedGameType, setSelectedGameType] = useState(null);
   
+  // Cycle düzenleme için state'ler
+  const [showEditCycleModal, setShowEditCycleModal] = useState(false);
+  const [editingCycle, setEditingCycle] = useState(null);
+  
   // Toast notification state
   const [toasts, setToasts] = useState([]);
+  
+
   
   // Dark mode her zaman aktif (light mode kaldırıldı)
   const isDarkMode = true;
@@ -82,6 +89,17 @@ function RoutePlanner() {
   
   const removeToast = (id) => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
+  };
+
+  // Cycle düzenleme fonksiyonları
+  const handleEditCycle = (cycle) => {
+    setEditingCycle(cycle);
+    setShowEditCycleModal(true);
+  };
+
+  const handleResetGameStatus = (cycleNumber, gameIndex) => {
+    // Bu fonksiyon RouteContext'e eklenecek
+    showToast(`Cycle ${cycleNumber} - Oyun ${gameIndex + 1} durumu sıfırlandı`, 'success');
   };
   
   // Basit oyun listesi (gerçek uygulamada API'den gelecek)
@@ -198,6 +216,8 @@ function RoutePlanner() {
     };
     showToast(`✅ ${gameTypeNames[gameType]} oyunu tamamlandı!`, 'success');
   };
+
+
 
   // Sonraki cycle'a geçiş fonksiyonu
   const goToNextCycle = () => {
@@ -331,6 +351,12 @@ function RoutePlanner() {
                 onClick={() => window.location.href = '/statistics'}
               >
                 📊 İstatistikler
+              </button>
+              <button 
+                className="quick-btn"
+                onClick={refreshFromLibrary}
+              >
+                🔄 Kütüphane Yenile
               </button>
             </div>
           </div>
@@ -628,6 +654,13 @@ function RoutePlanner() {
                         g.type === 'strategy' ? '🏗️' : '🎮'
                       ).join(' ')}
                     </span>
+                    <button 
+                      className="cycle-edit-btn"
+                      onClick={() => handleEditCycle(cycle)}
+                      title="Cycle'ı düzenle"
+                    >
+                      ✏️
+                    </button>
                   </div>
                 );
               })}
@@ -778,6 +811,100 @@ function RoutePlanner() {
             </div>
            </div>
          )}
+
+        {/* Cycle Düzenleme Modal */}
+        {showEditCycleModal && editingCycle && (
+          <div className="modal-overlay" onClick={() => setShowEditCycleModal(false)}>
+            <div className="modal-content edit-cycle-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h2>✏️ Cycle {editingCycle.cycleNumber} Düzenle</h2>
+                <button 
+                  className="modal-close"
+                  onClick={() => setShowEditCycleModal(false)}
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="modal-body">
+                <div className="cycle-edit-content">
+                  <p className="cycle-info">
+                    Bu cycle'daki oyunları düzenleyebilirsin. Her cycle'da 3 oyun olmalı:
+                    <strong> 1 RPG, 1 Story/Indie, 1 Strategy/Sim</strong>
+                  </p>
+                  
+                  <div className="games-edit-list">
+                    {editingCycle.games.map((game, index) => (
+                      <div key={index} className="game-edit-item">
+                        <div className="game-type-icon">
+                          {game.type === 'rpg' ? '🗡️' : 
+                           game.type === 'story' ? '📖' : 
+                           game.type === 'strategy' ? '🏗️' : '🎮'}
+                        </div>
+                        <div className="game-details">
+                          <div className="game-type-label">
+                            {game.type === 'rpg' ? 'RPG Oyunu' :
+                             game.type === 'story' ? 'Story/Indie Oyunu' :
+                             game.type === 'strategy' ? 'Strategy/Sim Oyunu' : 'Oyun'}
+                          </div>
+                          <div className="game-name">
+                            {game.name || `${game.type} oyunu seçilmemiş`}
+                          </div>
+                          <div className="game-status">
+                            Durum: {
+                              game.status === 'completed' ? '✅ Tamamlandı' :
+                              game.status === 'active' ? '🎮 Aktif' :
+                              game.status === 'started' ? '▶️ Başlandı' :
+                              '⏸️ Başlanmadı'
+                            }
+                          </div>
+                        </div>
+                        <div className="game-actions">
+                          <button 
+                            className="btn-change-game"
+                            onClick={() => {
+                              setSelectedGameType(game.type);
+                              setShowGameSelector(true);
+                              setShowEditCycleModal(false);
+                            }}
+                          >
+                            🔄 Değiştir
+                          </button>
+                          {game.status !== 'completed' && (
+                            <button 
+                              className="btn-reset-status"
+                              onClick={() => handleResetGameStatus(editingCycle.cycleNumber, index)}
+                            >
+                              🔄 Sıfırla
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="modal-footer">
+                <button 
+                  className="modal-btn secondary"
+                  onClick={() => setShowEditCycleModal(false)}
+                >
+                  Kapat
+                </button>
+                <button 
+                  className="modal-btn primary"
+                  onClick={() => {
+                    showToast('Cycle düzenleme özelliği yakında aktif olacak!', 'info');
+                    setShowEditCycleModal(false);
+                  }}
+                >
+                  Kaydet
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Toast Notifications */}
         <div className="toast-container">

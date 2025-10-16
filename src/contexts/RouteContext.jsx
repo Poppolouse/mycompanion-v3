@@ -19,48 +19,48 @@ const ROUTE_CONFIG = {
   gameTypes: ['RPG', 'Story/Indie', 'Strategy/Sim']
 };
 
-// Initial Route State
-const createInitialRouteState = () => ({
-  config: {
-    ...ROUTE_CONFIG,
-    currentCycle: 1,
-    currentGame: 1,
-    startDate: null,
-    estimatedEndDate: null,
-    isActive: false
-  },
-  cycles: Array.from({ length: ROUTE_CONFIG.totalCycles }, (_, index) => ({
-    cycleNumber: index + 1,
-    status: index === 0 ? 'pending' : 'locked', // 'locked', 'pending', 'active', 'completed'
-    startDate: null,
-    endDate: null,
-    estimatedHours: 180, // 60 saat x 3 oyun
-    actualHours: 0,
-    games: ROUTE_CONFIG.gameTypes.map((type, gameIndex) => ({
-      position: gameIndex + 1,
-      type: type,
-      gameId: null, // GameTracker'dan seçilecek
-      status: 'empty', // 'empty', 'selected', 'active', 'completed'
-      completionCriteria: getCompletionCriteria(type),
-      estimatedHours: getEstimatedHours(type),
-      actualHours: 0,
-      startDate: null,
-      endDate: null,
-      notes: '',
-      progress: 0 // 0-100
-    }))
-  })),
-  analytics: {
-    totalHoursPlayed: 0,
-    completedCycles: 0,
-    completedGames: 0,
-    averageGameHours: 0,
-    currentStreak: 0,
-    longestStreak: 0,
-    startDate: null,
-    lastPlayDate: null
+
+
+// Initial Route State - Kütüphane verilerinden oluşturulur
+const createInitialRouteState = () => {
+  // Önce localStorage'dan mevcut route state'i kontrol et
+  const savedRouteState = localStorage.getItem('vaulttracker:route:state');
+  if (savedRouteState) {
+    try {
+      const parsed = JSON.parse(savedRouteState);
+      console.log('💾 Kaydedilmiş route state yüklendi - cycle\'lar korunuyor');
+      return parsed;
+    } catch (error) {
+      console.warn('⚠️ Kaydedilmiş route state bozuk, yenisi oluşturuluyor');
+    }
   }
-});
+
+  console.log('🆕 Yeni route state oluşturuluyor - deterministik cycle\'lar');
+  // Kütüphaneden cycle'ları oluştur (deterministik)
+  const cycles = createCyclesFromLibrary();
+  
+  return {
+    config: {
+      ...ROUTE_CONFIG,
+      currentCycle: 1,
+      currentGame: 1,
+      startDate: new Date().toISOString(),
+      estimatedEndDate: null,
+      isActive: false // Başlangıçta aktif değil
+    },
+    cycles,
+    analytics: {
+      totalHoursPlayed: 0,
+      completedCycles: 0,
+      completedGames: 0,
+      averageGameHours: 0,
+      currentStreak: 0,
+      longestStreak: 0,
+      startDate: new Date().toISOString(),
+      lastPlayDate: null
+    }
+  };
+};
 
 // Tamamlama kriterleri
 function getCompletionCriteria(gameType) {
@@ -90,6 +90,202 @@ function getEstimatedHours(gameType) {
   }
 }
 
+// Kütüphaneden oyunları yükle
+function loadGamesFromLibrary() {
+  try {
+    const savedGames = localStorage.getItem('gameTracker_games');
+    if (!savedGames) {
+      console.warn('⚠️ Kütüphanede oyun bulunamadı');
+      return [];
+    }
+    
+    const games = JSON.parse(savedGames);
+    console.log('📚 Kütüphaneden yüklenen oyunlar:', games.length);
+    return games;
+  } catch (error) {
+    console.error('❌ Kütüphane yükleme hatası:', error);
+    return [];
+  }
+}
+
+// Oyunları türlerine göre kategorilere ayır
+function categorizeGamesByType(games) {
+  const gamesByType = {
+    'RPG': [],
+    'Story/Indie': [],
+    'Strategy/Sim': []
+  };
+
+  games.forEach(game => {
+    const genre = (game.genre || game.tur || '').toLowerCase();
+    const title = (game.title || game.name || '').toLowerCase();
+    
+    // RPG kategorisi
+    if (genre.includes('rpg') || genre.includes('role') || title.includes('rpg')) {
+      gamesByType['RPG'].push(game);
+    }
+    // Story/Indie kategorisi
+    else if (
+      genre.includes('story') || 
+      genre.includes('indie') || 
+      genre.includes('adventure') ||
+      genre.includes('narrative') ||
+      genre.includes('action adventure')
+    ) {
+      gamesByType['Story/Indie'].push(game);
+    }
+    // Strategy/Sim kategorisi
+    else if (
+      genre.includes('strategy') || 
+      genre.includes('simulation') || 
+      genre.includes('sim') ||
+      genre.includes('management') ||
+      genre.includes('city') ||
+      genre.includes('building')
+    ) {
+      gamesByType['Strategy/Sim'].push(game);
+    }
+    // Eğer hiçbir kategoriye uymuyorsa, en az oyunu olan kategoriye ekle
+    else {
+      const minCategory = Object.keys(gamesByType).reduce((min, key) => 
+        gamesByType[key].length < gamesByType[min].length ? key : min
+      );
+      gamesByType[minCategory].push(game);
+    }
+  });
+
+  console.log('🎯 Kategorilere ayrılan oyunlar:', {
+    RPG: gamesByType['RPG'].length,
+    'Story/Indie': gamesByType['Story/Indie'].length,
+    'Strategy/Sim': gamesByType['Strategy/Sim'].length
+  });
+
+  return gamesByType;
+}
+
+// Deterministik rastgele sayı üretici (seed-based)
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Kütüphaneden cycle'ları oluştur (deterministik)
+function createCyclesFromLibrary() {
+  const libraryGames = loadGamesFromLibrary();
+  
+  if (libraryGames.length === 0) {
+    console.warn('⚠️ Kütüphanede oyun bulunamadığı için varsayılan cycle oluşturuluyor');
+    return createDefaultCycles();
+  }
+
+  const gamesByType = categorizeGamesByType(libraryGames);
+  const cycles = [];
+
+  // Sabit seed kullanarak her zaman aynı sonucu al
+  const baseSeed = 12345; // Sabit seed değeri
+
+  // Her cycle için 3 oyun seç (RPG, Story/Indie, Strategy/Sim)
+  for (let cycleIndex = 0; cycleIndex < ROUTE_CONFIG.totalCycles; cycleIndex++) {
+    const cycleNumber = cycleIndex + 1;
+    const cycle = {
+      cycleNumber,
+      status: cycleIndex === 0 ? 'pending' : 'locked',
+      startDate: null,
+      endDate: null,
+      estimatedHours: 180,
+      actualHours: 0,
+      games: []
+    };
+
+    // Her türden bir oyun seç
+    ['RPG', 'Story/Indie', 'Strategy/Sim'].forEach((gameType, gameIndex) => {
+      const availableGames = gamesByType[gameType];
+      
+      if (availableGames.length > 0) {
+        // Deterministik oyun seçimi (daha önce seçilmemiş olanlardan)
+        const usedGameIds = cycles.flatMap(c => c.games.map(g => g.gameId)).filter(Boolean);
+        const unusedGames = availableGames.filter(game => 
+          !usedGameIds.includes(game.id || game.gameId)
+        );
+        
+        // Cycle ve oyun pozisyonuna göre unique seed oluştur
+        const seed = baseSeed + (cycleIndex * 3) + gameIndex;
+        const randomValue = seededRandom(seed);
+        
+        const selectedGame = unusedGames.length > 0 
+          ? unusedGames[Math.floor(randomValue * unusedGames.length)]
+          : availableGames[Math.floor(randomValue * availableGames.length)];
+
+        cycle.games.push({
+          position: gameIndex + 1,
+          type: gameType,
+          gameId: selectedGame.id || selectedGame.gameId,
+          name: selectedGame.title || selectedGame.name || `${gameType} Oyunu`,
+          status: 'empty',
+          completionCriteria: getCompletionCriteria(gameType),
+          estimatedHours: getEstimatedHours(gameType),
+          actualHours: 0,
+          startDate: null,
+          endDate: null,
+          notes: '',
+          progress: 0
+        });
+      } else {
+        // Eğer o türde oyun yoksa placeholder ekle
+        cycle.games.push({
+          position: gameIndex + 1,
+          type: gameType,
+          gameId: null,
+          name: null,
+          status: 'empty',
+          completionCriteria: getCompletionCriteria(gameType),
+          estimatedHours: getEstimatedHours(gameType),
+          actualHours: 0,
+          startDate: null,
+          endDate: null,
+          notes: '',
+          progress: 0
+        });
+      }
+    });
+
+    cycles.push(cycle);
+  }
+
+  console.log('🔄 Kütüphaneden oluşturulan cycle\'lar:', cycles.length);
+  return cycles;
+}
+
+// Varsayılan cycle'ları oluştur (kütüphanede oyun yoksa)
+function createDefaultCycles() {
+  return Array.from({ length: ROUTE_CONFIG.totalCycles }, (_, index) => {
+    const cycleNumber = index + 1;
+    
+    return {
+      cycleNumber,
+      status: index === 0 ? 'pending' : 'locked',
+      startDate: null,
+      endDate: null,
+      estimatedHours: 180,
+      actualHours: 0,
+      games: ROUTE_CONFIG.gameTypes.map((type, gameIndex) => ({
+        position: gameIndex + 1,
+        type: type,
+        gameId: null,
+        name: null,
+        status: 'empty',
+        completionCriteria: getCompletionCriteria(type),
+        estimatedHours: getEstimatedHours(type),
+        actualHours: 0,
+        startDate: null,
+        endDate: null,
+        notes: '',
+        progress: 0
+      }))
+    };
+  });
+}
+
 export function RouteProvider({ children }) {
   const [routeState, setRouteState] = useState(createInitialRouteState);
   const [loading, setLoading] = useState(true);
@@ -104,7 +300,9 @@ export function RouteProvider({ children }) {
         console.log('🎯 Route state localStorage\'dan yüklendi');
       } catch (error) {
         console.error('❌ Route state yükleme hatası:', error);
-        // Hatalı data varsa sıfırla
+        // Hatalı state varsa kütüphaneden yeniden oluştur
+        const newState = createInitialRouteState();
+        setRouteState(newState);
         localStorage.removeItem('vaulttracker:route:state');
       }
     }
@@ -274,10 +472,59 @@ export function RouteProvider({ children }) {
     saveRouteState(newState);
   };
 
-  // Route sıfırla
+  // Route'u sıfırla
   const resetRoute = () => {
     const newState = createInitialRouteState();
     saveRouteState(newState);
+  };
+
+  // Kütüphaneden oyunları yeniden yükle
+  const refreshFromLibrary = () => {
+    console.log('🔄 Kütüphaneden yeni oyunlar kontrol ediliyor...');
+    
+    // Mevcut route state'i koru, sadece yeni oyunları ekle
+    const currentLibraryGames = loadGamesFromLibrary();
+    const currentGamesByType = categorizeGamesByType(currentLibraryGames);
+    
+    // Mevcut cycle'ları koru, sadece boş slotları doldur
+    const updatedCycles = routeState.cycles.map(cycle => {
+      const updatedGames = cycle.games.map(game => {
+        // Eğer oyun seçilmemişse (gameId null) ve o türde yeni oyunlar varsa
+        if (!game.gameId && currentGamesByType[game.type]?.length > 0) {
+          const availableGames = currentGamesByType[game.type];
+          const usedGameIds = routeState.cycles.flatMap(c => 
+            c.games.map(g => g.gameId).filter(Boolean)
+          );
+          const unusedGames = availableGames.filter(g => 
+            !usedGameIds.includes(g.id || g.gameId)
+          );
+          
+          if (unusedGames.length > 0) {
+            // Deterministik seçim (cycle ve pozisyona göre)
+            const seed = 12345 + (cycle.cycleNumber * 3) + game.position;
+            const randomValue = seededRandom(seed);
+            const selectedGame = unusedGames[Math.floor(randomValue * unusedGames.length)];
+            
+            return {
+              ...game,
+              gameId: selectedGame.id || selectedGame.gameId,
+              name: selectedGame.title || selectedGame.name || `${game.type} Oyunu`
+            };
+          }
+        }
+        return game;
+      });
+      
+      return { ...cycle, games: updatedGames };
+    });
+    
+    const newState = {
+      ...routeState,
+      cycles: updatedCycles
+    };
+    
+    saveRouteState(newState);
+    console.log('✅ Kütüphane güncellendi - mevcut cycle\'lar korundu');
   };
 
   // Helper functions
@@ -302,6 +549,115 @@ export function RouteProvider({ children }) {
     return Math.round((completedGames / totalGames) * 100);
   };
 
+  // Cycle düzenleme fonksiyonları
+  const updateCycleGame = (cycleNumber, gamePosition, newGameId) => {
+    console.log(`🎮 Cycle ${cycleNumber} - Pozisyon ${gamePosition} oyunu güncelleniyor:`, newGameId);
+    
+    // Kütüphaneden oyun bilgilerini al
+    const libraryGames = loadGamesFromLibrary();
+    const selectedGame = libraryGames.find(game => 
+      (game.id && game.id === newGameId) || (game.gameId && game.gameId === newGameId)
+    );
+    
+    if (!selectedGame) {
+      console.error('❌ Seçilen oyun kütüphanede bulunamadı:', newGameId);
+      return false;
+    }
+
+    const newState = {
+      ...routeState,
+      cycles: routeState.cycles.map(cycle => 
+        cycle.cycleNumber === cycleNumber
+          ? {
+              ...cycle,
+              games: cycle.games.map(game =>
+                game.position === gamePosition
+                  ? { 
+                      ...game, 
+                      gameId: selectedGame.id || selectedGame.gameId,
+                      name: selectedGame.title || selectedGame.name || `${game.type} Oyunu`,
+                      status: game.status === 'completed' ? 'completed' : 'selected' // Tamamlanmış oyunları koru
+                    }
+                  : game
+              )
+            }
+          : cycle
+      )
+    };
+    
+    saveRouteState(newState);
+    console.log('✅ Cycle oyunu güncellendi');
+    return true;
+  };
+
+  const removeCycleGame = (cycleNumber, gamePosition) => {
+    console.log(`🗑️ Cycle ${cycleNumber} - Pozisyon ${gamePosition} oyunu kaldırılıyor`);
+    
+    const newState = {
+      ...routeState,
+      cycles: routeState.cycles.map(cycle => 
+        cycle.cycleNumber === cycleNumber
+          ? {
+              ...cycle,
+              games: cycle.games.map(game =>
+                game.position === gamePosition
+                  ? { 
+                      ...game, 
+                      gameId: null,
+                      name: `${game.type} Oyunu`,
+                      status: 'pending',
+                      progress: 0,
+                      actualHours: 0,
+                      startDate: null,
+                      endDate: null,
+                      notes: ''
+                    }
+                  : game
+              )
+            }
+          : cycle
+      )
+    };
+    
+    saveRouteState(newState);
+    console.log('✅ Cycle oyunu kaldırıldı');
+    return true;
+  };
+
+  const resetCycleGameStatus = (cycleNumber, gamePosition) => {
+    console.log(`🔄 Cycle ${cycleNumber} - Pozisyon ${gamePosition} oyun durumu sıfırlanıyor`);
+    
+    const newState = {
+      ...routeState,
+      cycles: routeState.cycles.map(cycle => 
+        cycle.cycleNumber === cycleNumber
+          ? {
+              ...cycle,
+              games: cycle.games.map(game =>
+                game.position === gamePosition && game.gameId
+                  ? { 
+                      ...game, 
+                      status: 'selected',
+                      progress: 0,
+                      actualHours: 0,
+                      startDate: null,
+                      endDate: null,
+                      notes: ''
+                    }
+                  : game
+              )
+            }
+          : cycle
+      )
+    };
+    
+    saveRouteState(newState);
+    console.log('✅ Cycle oyun durumu sıfırlandı');
+    return true;
+  };
+
+
+
   const value = {
     // State
     routeState,
@@ -315,6 +671,12 @@ export function RouteProvider({ children }) {
     completeGame,
     updateGameProgress,
     resetRoute,
+    refreshFromLibrary,
+    
+    // Cycle Editing Actions
+    updateCycleGame,
+    removeCycleGame,
+    resetCycleGameStatus,
     
     // Helpers
     getCurrentCycle,
