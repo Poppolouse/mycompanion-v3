@@ -1,54 +1,12 @@
 /* 🎮 Game Tracker - Phase 2 CSS - DARK THEME */
-/* DESKTOP ONLY - FORCED DESKTOP VIEW + PROGRESS SYSTEM */
-
-/* 🌙 Dark Theme Color Palette */
-:root {
-  /* Primary Dark Colors */
-  --dark-bg-primary: #0a0a0f;
-  --dark-bg-secondary: #1a1a2e;
-  --dark-bg-tertiary: #16213e;
-  --dark-bg-quaternary: #0f3460;
-  
-  /* Surface Colors */
-  --dark-surface-1: rgba(255, 255, 255, 0.03);
-  --dark-surface-2: rgba(255, 255, 255, 0.05);
-  --dark-surface-3: rgba(255, 255, 255, 0.08);
-  --dark-surface-4: rgba(255, 255, 255, 0.12);
-  
-  /* Border Colors */
-  --dark-border-1: rgba(255, 255, 255, 0.08);
-  --dark-border-2: rgba(255, 255, 255, 0.12);
-  --dark-border-3: rgba(255, 255, 255, 0.18);
-  
-  /* Text Colors */
-  --dark-text-primary: #ffffff;
-  --dark-text-secondary: rgba(255, 255, 255, 0.9);
-  --dark-text-tertiary: rgba(255, 255, 255, 0.7);
-  --dark-text-muted: rgba(255, 255, 255, 0.5);
-  
-  /* Accent Colors */
-  --dark-accent-primary: #667eea;
-  --dark-accent-secondary: #764ba2;
-  --dark-accent-success: #4caf50;
-  --dark-accent-warning: #ffc107;
-  --dark-accent-error: #f44336;
-  
-  /* Glassmorphism */
-  --dark-glass-bg: rgba(255, 255, 255, 0.05);
-  --dark-glass-border: rgba(255, 255, 255, 0.15);
-  --dark-glass-blur: blur(25px);
-}
+/* RESPONSIVE DESIGN + PROGRESS SYSTEM */
 
 /* 🎯 Enhanced UX & Accessibility */
 * {
   scroll-behavior: smooth;
 }
 
-/* 🌙 Force Dark Theme on Body */
-html, body {
-  background: var(--dark-bg-primary) !important;
-  color: var(--dark-text-primary) !important;
-}
+/* 🌙 GameTracker Specific Styles */
 
 *:focus {
   outline: none;
@@ -97,18 +55,17 @@ textarea:focus {
 /* Ana Sayfa Kapsayıcısı - Dark Theme */
 .game-tracker-page {
   min-height: 100vh;
-  min-width: 1400px !important;
-  width: 100vw !important;
+  width: 100vw;
   background: linear-gradient(135deg, 
-    var(--dark-bg-primary) 0%, 
-    var(--dark-bg-secondary) 25%, 
-    var(--dark-bg-tertiary) 50%, 
-    var(--dark-bg-quaternary) 100%) !important;
+    var(--bg-primary) 0%, 
+    var(--bg-secondary) 25%, 
+    var(--bg-tertiary) 50%, 
+    var(--bg-quaternary) 100%);
   padding: 0;
   position: relative;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow-x: auto !important;
-  color: var(--dark-text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  color: var(--text-primary);
 }
 
 /* 🏗️ Main Container Layout */
@@ -3542,6 +3499,84 @@ textarea:focus {
   margin-bottom: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* 📱 MOBILE RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .game-tracker {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .header-controls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .tracker-controls {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-tracker-page {
+    overflow-x: auto;
+  }
+  
+  .game-tracker {
+    padding: 0 0.75rem;
+    gap: 1rem;
+  }
+  
+  .header-left h1 {
+    font-size: 2rem;
+  }
+  
+  .header-left p {
+    font-size: 1rem;
+  }
+  
+  .tracker-controls {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+  
+  .games-list-view {
+    overflow-x: auto;
+  }
+  
+  .game-list-item {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-tracker {
+    padding: 0 0.5rem;
+  }
+  
+  .header-left h1 {
+    font-size: 1.75rem;
+  }
+  
+  .tracker-controls {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .header-controls {
+    gap: 0.75rem;
+  }
+  
+  .game-list-item {
+    min-width: 700px;
+  }
 }
 
 .cycle-game-item {

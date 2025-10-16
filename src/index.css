@@ -33,7 +33,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   width: 100vw;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%) !important;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-quaternary) 100%) !important;
   color: var(--text-primary);
   overflow-x: hidden !important;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
