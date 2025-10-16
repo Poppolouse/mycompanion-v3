@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { readExcelFile, parseGameList } from '../../utils/excelUtils';
 import './GameTracker.css';
@@ -13,6 +13,21 @@ function GameTracker() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+
+  // Sayfa yüklendiğinde localStorage'dan oyunları yükle
+  useEffect(() => {
+    const savedGames = localStorage.getItem('gameTracker_games');
+    if (savedGames) {
+      try {
+        const gameList = JSON.parse(savedGames);
+        setGames(gameList);
+        console.log('📊 LocalStorage\'dan yüklendi:', gameList.length, 'oyun');
+      } catch (err) {
+        console.error('❌ LocalStorage yükleme hatası:', err);
+        localStorage.removeItem('gameTracker_games');
+      }
+    }
+  }, []);
 
   // Ana sayfaya dönüş
   const handleGoHome = () => {
@@ -42,6 +57,9 @@ function GameTracker() {
       // State'i güncelle
       setGames(gameList);
       
+      // LocalStorage'a kaydet
+      localStorage.setItem('gameTracker_games', JSON.stringify(gameList));
+      
       console.log('📊 Excel yüklendi:', gameList.length, 'oyun');
     } catch (err) {
       console.error('❌ Excel yükleme hatası:', err);
@@ -49,6 +67,11 @@ function GameTracker() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Oyun detayına git
+  const handleGameClick = (gameId) => {
+    navigate(`/game-tracker/game/${gameId}`);
   };
 
   return (
@@ -114,7 +137,11 @@ function GameTracker() {
             
             <div className="games-grid">
               {games.map(game => (
-                <div key={game.id} className="game-card">
+                <div 
+                  key={game.id} 
+                  className="game-card clickable"
+                  onClick={() => handleGameClick(game.id)}
+                >
                   <div className="game-header">
                     <h3>{game.title || 'İsimsiz Oyun'}</h3>
                     <span className="game-type">{game.type || 'Bilinmiyor'}</span>

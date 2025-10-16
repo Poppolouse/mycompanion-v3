@@ -1,5 +1,66 @@
 # 📋 CHANGELOG - MyCompanion v3
 
+## 🚀 **v3.1.0** - 2024-12-28
+
+### ✨ **Yeni Özellikler**
+
+#### 🎮 **GameTracker Modülü - Phase 3: Game Detail Page**
+- **🔗 Routing Sistemi**
+  - ✅ `/game-tracker/game/:id` route implementasyonu
+  - ✅ GameTracker'dan GameDetail'e tıklama navigasyonu
+  - ✅ React Router useParams hook kullanımı
+  - ✅ Dinamik oyun ID'si ile sayfa yükleme
+
+- **📊 İlerleme Güncelleme Sistemi**
+  - ✅ Progress slider (0-100%) ile real-time güncelleme
+  - ✅ Status dropdown (Oynamadım, Oynuyorum, Tamamladım, Bıraktım)
+  - ✅ LocalStorage'a otomatik kaydetme
+  - ✅ Instant feedback ve smooth animations
+
+- **📝 Notlar Sistemi**
+  - ✅ Not ekleme/silme fonksiyonalitesi
+  - ✅ Timestamp ile not geçmişi
+  - ✅ Modern UI ile not listesi görünümü
+  - ✅ Real-time not güncelleme
+
+- **🏛️ Fraksiyonlar Detay Görünümü**
+  - ✅ Her fraksiyon için ayrı progress tracking
+  - ✅ Fraksiyon-specific notlar
+  - ✅ Görsel fraksiyon kartları
+  - ✅ Individual faction management
+
+- **💾 Data Persistence**
+  - ✅ LocalStorage entegrasyonu
+  - ✅ Sayfa yenileme sonrası veri korunması
+  - ✅ Otomatik veri senkronizasyonu
+  - ✅ Error handling ve data validation
+
+#### 🎨 **UI/UX İyileştirmeleri**
+- ✅ Modern GameDetail sayfası tasarımı
+- ✅ Glass morphism effects ve dark theme
+- ✅ Clickable game cards (hover effects)
+- ✅ Responsive detail page layout
+- ✅ Loading states ve error handling
+- ✅ Smooth transitions ve animations
+
+#### 🔧 **Teknik İyileştirmeler**
+- ✅ React Hooks (useState, useEffect, useParams, useNavigate)
+- ✅ Component modularization
+- ✅ CSS Grid/Flexbox advanced layouts
+- ✅ LocalStorage API integration
+- ✅ Modern ES6+ features
+
+### 🎯 **Kullanım - Phase 3**
+
+1. **GameTracker'da oyun kartına tıklayın**
+2. **GameDetail sayfası otomatik açılır**
+3. **Progress slider ile ilerleme güncelleyin**
+4. **Status dropdown ile durum değiştirin**
+5. **Notlar ekleyin/silin**
+6. **Fraksiyonlar için detay görüntüleyin**
+
+---
+
 ## 🚀 **v3.0.0** - 2024-12-28
 
 ### ✨ **Yeni Özellikler**

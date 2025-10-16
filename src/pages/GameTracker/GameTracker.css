@@ -185,6 +185,17 @@
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
 }
 
+.game-card.clickable {
+  cursor: pointer;
+}
+
+.game-card.clickable:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
 .game-header {
   display: flex;
   justify-content: space-between;
