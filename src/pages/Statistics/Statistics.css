@@ -117,9 +117,9 @@
 }
 
 .stat-card {
-  background: rgba(25, 30, 55, 0.95);
+  background: rgba(15, 20, 45, 1) !important;
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(60, 80, 180, 0.4);
+  border: 1px solid rgba(60, 80, 180, 0.6);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
@@ -144,9 +144,9 @@
 
 .stat-card:hover {
   transform: translateY(-5px);
-  background: rgba(30, 40, 80, 0.9);
-  border-color: rgba(80, 100, 200, 0.6);
-  box-shadow: 0 10px 30px rgba(60, 80, 180, 0.4);
+  background: rgba(20, 30, 60, 1) !important;
+  border-color: rgba(80, 100, 200, 0.8);
+  box-shadow: 0 10px 30px rgba(60, 80, 180, 0.6);
 }
 
 .stat-card:hover::before {
@@ -183,6 +183,27 @@
 .stat-card.backlog .stat-number { color: #60a5fa; }
 .stat-card.dropped .stat-number { color: #f87171; }
 .stat-card.progress .stat-number { color: #a78bfa; }
+
+/* Özel stat kartları background'ları - Beyaz görünümü önlemek için */
+.stat-card.total,
+.stat-card.completed,
+.stat-card.playing,
+.stat-card.backlog,
+.stat-card.dropped,
+.stat-card.progress {
+  background: rgba(15, 20, 45, 1) !important;
+  border: 1px solid rgba(60, 80, 180, 0.6) !important;
+}
+
+.stat-card.total:hover,
+.stat-card.completed:hover,
+.stat-card.playing:hover,
+.stat-card.backlog:hover,
+.stat-card.dropped:hover,
+.stat-card.progress:hover {
+  background: rgba(20, 30, 60, 1) !important;
+  border-color: rgba(80, 100, 200, 0.8) !important;
+}
 
 /* Detaylı Analizler */
 .stats-details {
