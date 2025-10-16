@@ -1,0 +1,419 @@
+/* Todo App Styles - Desktop First */
+
+.todo-app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  padding: 3rem 4rem;
+}
+
+.todo-container {
+  width: 100%;
+  background: rgba(30, 41, 59, 0.95);
+  border-radius: 24px;
+  padding: 3rem 4rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+  min-height: calc(100vh - 6rem);
+}
+
+/* Header */
+.todo-header {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.header-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.geri-btn {
+  background: #f3f4f6;
+  color: #374151;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.geri-btn:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.todo-baslik {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.istatistikler {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.istatistik-kart {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.istatistik-kart.aktif {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.istatistik-kart.tamamlanan {
+  background: #dcfce7;
+  border-color: #10b981;
+}
+
+.istatistik-sayi {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.istatistik-etiket {
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Main Content */
+.todo-main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Görev Ekleme Formu */
+.gorev-form {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.form-grup {
+  display: flex;
+  gap: 1rem;
+}
+
+.gorev-input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 50px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.gorev-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ekle-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ekle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Filtreler */
+.filtreler {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filtre-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #374151;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.filtre-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.filtre-btn.aktif {
+  background: rgba(255, 255, 255, 1);
+  border-color: #667eea;
+  color: #667eea;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.temizle-btn {
+  background: #fee2e2;
+  border: 2px solid #fecaca;
+  color: #dc2626;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+
+.temizle-btn:hover {
+  background: #fecaca;
+  border-color: #f87171;
+}
+
+/* Görevler Container */
+.gorevler-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  min-height: 300px;
+}
+
+/* Boş Durum */
+.bos-durum {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6b7280;
+}
+
+.bos-durum-ikon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.bos-durum h3 {
+  font-size: 1.5rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.bos-durum p {
+  line-height: 1.6;
+}
+
+/* Görevler Listesi */
+.gorevler-listesi {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gorev-kartı {
+  background: white;
+  border: 2px solid #f3f4f6;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.gorev-kartı:hover {
+  border-color: #e5e7eb;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.gorev-kartı.tamamlandi {
+  opacity: 0.7;
+  background: #f9fafb;
+}
+
+.gorev-sol {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.gorev-checkbox {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.gorev-checkbox:hover {
+  transform: scale(1.1);
+}
+
+.gorev-icerik {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.gorev-metin {
+  font-size: 1.1rem;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.gorev-kartı.tamamlandi .gorev-metin {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.gorev-tarih {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.gorev-sag {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.oncelik-secici {
+  padding: 0.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.oncelik-secici:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.sil-btn {
+  background: #fee2e2;
+  border: 2px solid #fecaca;
+  color: #dc2626;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.sil-btn:hover {
+  background: #fecaca;
+  border-color: #f87171;
+  transform: scale(1.1);
+}
+
+/* Animasyonlar */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .todo-app {
+    padding: 1rem;
+  }
+  
+  .header-ust {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .todo-baslik {
+    font-size: 2rem;
+  }
+  
+  .istatistikler {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .form-grup {
+    flex-direction: column;
+  }
+  
+  .filtreler {
+    justify-content: center;
+  }
+  
+  .gorev-kartı {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .gorev-sol {
+    justify-content: flex-start;
+  }
+  
+  .gorev-sag {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-header,
+  .gorev-form,
+  .gorevler-container {
+    padding: 1.5rem;
+  }
+  
+  .filtre-btn,
+  .temizle-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}

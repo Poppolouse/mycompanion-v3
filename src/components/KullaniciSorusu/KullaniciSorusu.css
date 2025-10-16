@@ -1,0 +1,238 @@
+/* Kullanıcı Sorusu Komponenti Stilleri */
+
+.kullanici-sorusu {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.soru-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 3rem;
+  color: white;
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.soru-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.soru-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.soru-baslik {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.soru-alt-baslik {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.cevaplar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cevap-kartı {
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  color: #1f2937;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.cevap-kartı:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.cevap-kartı:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.cevap-ikon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.cevap-icerik {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cevap-baslik {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.3;
+}
+
+.cevap-aciklama {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Cevap Onay Stilleri */
+.cevap-onay {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.onay-ikon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounceIn 0.8s ease-out;
+}
+
+.onay-baslik {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.onay-mesaj {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.tekrar-sor-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tekrar-sor-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Animasyonlar */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .kullanici-sorusu {
+    padding: 1rem;
+  }
+  
+  .soru-container {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+  
+  .soru-baslik {
+    font-size: 2rem;
+  }
+  
+  .soru-alt-baslik {
+    font-size: 1rem;
+  }
+  
+  .cevaplar-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .cevap-kartı {
+    padding: 1.5rem;
+  }
+  
+  .cevap-ikon {
+    font-size: 2.5rem;
+  }
+  
+  .cevap-baslik {
+    font-size: 1.1rem;
+  }
+  
+  .cevap-aciklama {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .soru-container {
+    padding: 1.5rem;
+  }
+  
+  .soru-baslik {
+    font-size: 1.8rem;
+  }
+  
+  .cevap-kartı {
+    padding: 1.2rem;
+  }
+}
