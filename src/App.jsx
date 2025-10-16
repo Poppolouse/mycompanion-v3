@@ -9,7 +9,10 @@ import NotDefteri from './pages/NotDefteri';
 import GameTracker from './pages/GameTracker';
 import GameDetail from './pages/GameDetail';
 import Statistics from './pages/Statistics';
+import RoutePlanner from './pages/RoutePlanner';
+import GameTrackingHub from './pages/GameTrackingHub';
 import AdminPanel from './components/AdminPanel';
+import { RouteProvider } from './contexts/RouteContext';
 import './App.css';
 
 /**
@@ -26,10 +29,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* GameTracker - Sidebar'sız bağımsız sayfa */}
+        {/* Game Tracking - Sidebar'sız bağımsız sayfalar */}
+        <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
         <Route path="/game-tracker" element={<GameTracker />} />
         <Route path="/game-tracker/game/:id" element={<GameDetail />} />
         <Route path="/statistics" element={<Statistics />} />
+        <Route path="/route-planner" element={
+          <RouteProvider>
+            <RoutePlanner />
+          </RouteProvider>
+        } />
         
         {/* Diğer sayfalar - Sidebar ile birlikte */}
         <Route path="/*" element={

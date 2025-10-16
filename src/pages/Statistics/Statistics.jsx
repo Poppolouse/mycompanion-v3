@@ -158,9 +158,14 @@ function Statistics() {
     <div className="statistics-page">
       {/* Header */}
       <div className="stats-header">
-        <button className="back-button" onClick={() => navigate('/gametracker')}>
-          ← Game Tracker'a Dön
-        </button>
+        <div className="header-buttons">
+          <button className="home-button" onClick={() => navigate('/')}>
+            🏠
+          </button>
+          <button className="back-button" onClick={() => navigate('/game-tracking-hub')}>
+            ← Oyun Hub'ına Dön
+          </button>
+        </div>
         <h1>📊 Oyun İstatistikleri</h1>
         
         {/* Period Selector */}

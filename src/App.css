@@ -134,8 +134,8 @@ input, textarea, select {
 
 /* Responsive Yardımcı Sınıflar */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 0 1rem;
 }
 

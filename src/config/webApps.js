@@ -61,6 +61,18 @@ export const webApps = [
     aktif: true
   },
   {
+    id: 'oyun-takibi',
+    baslik: '🎮 Oyun Takibi',
+    aciklama: 'Oyun koleksiyonunuzu yönetin ve ilerlemenizi takip edin',
+    icon: '🎮',
+    renk: '#7C3AED',
+    arkaplanRengi: '#F3E8FF',
+    kategori: 'Eğlence',
+    ozellikler: ['İstatistikler', 'Route Planner', 'Oyun Kütüphanesi'],
+    route: '/game-tracking-hub',
+    aktif: true
+  },
+  {
     id: 'qr-kod-olusturucu',
     baslik: '📱 QR Kod Oluşturucu',
     aciklama: 'Metinleriniz için QR kod oluşturun',
@@ -79,7 +91,8 @@ export const kategoriler = [
   'Tümü',
   'Verimlilik',
   'Araçlar',
-  'Bilgi'
+  'Bilgi',
+  'Eğlence'
 ];
 
 // Aktif uygulamaları getir

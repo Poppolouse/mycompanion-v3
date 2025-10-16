@@ -51,11 +51,11 @@ function Sidebar({ isOpen = true, onToggle }) {
       aciklama: 'Not alma ve düzenleme'
     },
     {
-      id: 'game-tracker',
+      id: 'game-tracking-hub',
       baslik: 'Oyun Takibi',
       ikon: '🎮',
-      yol: '/game-tracker',
-      aciklama: 'Oyun ilerleme takibi'
+      yol: '/game-tracking-hub',
+      aciklama: 'Oyun yönetim merkezi'
     }
   ];
 

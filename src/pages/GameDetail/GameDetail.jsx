@@ -64,7 +64,7 @@ function GameDetail() {
 
   // Geri dönüş
   const handleGoBack = () => {
-    navigate('/game-tracker');
+    navigate('/game-tracking-hub');
   };
 
   // İlerleme güncelleme
@@ -141,7 +141,7 @@ function GameDetail() {
     return (
       <div className="game-detail-page">
         <button className="back-button" onClick={handleGoBack}>
-          ← Game Tracker'a Dön
+          ← Oyun Takibi Hub'a Dön
         </button>
         <div className="error-state">
           <div className="error-icon">❌</div>
@@ -158,7 +158,7 @@ function GameDetail() {
       {/* Header */}
       <div className="detail-header">
         <button className="back-button" onClick={handleGoBack}>
-          ← Game Tracker
+          ← Oyun Takibi Hub
         </button>
         <h1>{game.title || 'İsimsiz Oyun'}</h1>
       </div>
