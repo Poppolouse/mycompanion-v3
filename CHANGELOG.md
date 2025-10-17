@@ -1,5 +1,45 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎨 **v3.8.0** - 2024-12-28 - **Route Planner Layout Optimizasyonu & Alan Genişlik Ayarlamaları**
+
+### ✨ **Yeni Özellikler**
+
+#### 📐 **Layout Optimizasyonu**
+- **🎮 Game Name Alanı Genişletildi**
+  - ✅ 300px → 400px (100px artış)
+  - ✅ Uzun oyun isimlerinin daha iyi görünmesi
+  - ✅ Text-overflow ellipsis ile düzgün kesim
+
+- **📅 Tarih Alanı Genişletildi**
+  - ✅ Start/End tarih alanı 180px → 250px (70px artış)
+  - ✅ Tarihlerin daha rahat okunması
+  - ✅ Ortalanmış tarih gösterimi
+
+- **📊 Progress Bar Tam Genişlik**
+  - ✅ Sabit 120px → Flex: 1 (kartın sonuna kadar uzanır)
+  - ✅ Progress bar kendisi de flex ile tam genişlik kullanır
+  - ✅ Minimum 70px genişlik korunur
+  - ✅ Responsive tasarıma uygun esnek yapı
+
+### 🎨 **UI/UX İyileştirmeleri**
+- ✅ Oyun kartlarında optimal alan kullanımı
+- ✅ Progress bar'ın kartın tüm genişliğini kullanması
+- ✅ Daha dengeli ve profesyonel görünüm
+- ✅ Responsive design korunarak layout optimizasyonu
+
+### 🔧 **Teknik İyileştirmeler**
+- ✅ CSS flex properties ile esnek layout
+- ✅ Min-width değerleri ile responsive güvenlik
+- ✅ Optimal alan dağılımı ve spacing
+- ✅ Cross-browser uyumlu flex implementation
+
+### 📱 **Layout Düzeni**
+```
+[🎮 Icon] [────── Game Name (400px) ──────] [──── Start→End (250px) ────] [Status] [═══════ Progress Bar (Kalan Alan) ═══════]
+```
+
+---
+
 ## 🎨 **v3.7.0** - 2024-12-28 - **Route Planner Dark Theme & UI Modernizasyonu**
 
 ### ✨ **Yeni Özellikler**

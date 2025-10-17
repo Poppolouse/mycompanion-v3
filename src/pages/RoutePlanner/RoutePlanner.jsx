@@ -54,6 +54,9 @@ function RoutePlanner() {
   // Toast notification state
   const [toasts, setToasts] = useState([]);
   
+  // Expandable cycle history state
+  const [expandedCycles, setExpandedCycles] = useState(new Set());
+  
 
   
   // Dark mode her zaman aktif (light mode kaldırıldı)
@@ -97,6 +100,19 @@ function RoutePlanner() {
   const handleEditCycle = (cycle) => {
     setEditingCycle(cycle);
     setShowEditCycleModal(true);
+  };
+
+  // Cycle expand/collapse fonksiyonu
+  const toggleCycleExpansion = (cycleNumber) => {
+    setExpandedCycles(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cycleNumber)) {
+        newSet.delete(cycleNumber);
+      } else {
+        newSet.add(cycleNumber);
+      }
+      return newSet;
+    });
   };
 
   const handleResetGameStatus = (cycleNumber, gameIndex) => {
@@ -510,165 +526,167 @@ function RoutePlanner() {
         {/* Ana İçerik */}
         <div className="route-planner__main">
           <div className="main-content slide-in-right">
-            {/* Detaylı Progress Section */}
-            <div className="detailed-progress-section fade-in">
-              <h2>📊 Route İlerlemesi</h2>
-              <div className="progress-stats">
-                <div className="stat-card fade-in" style={{'--animation-delay': '0.1s'}}>
-                  <h4>🎯 Genel İlerleme</h4>
-                  <div className="progress-circle">
-                    <span className="progress-text">{routeProgress}%</span>
-                  </div>
-                  <p>{analytics.completedGames}/{analytics.totalGames} Oyun</p>
+            {/* Route Command Center */}
+            <div className="route-command-center">
+              <h2>🎯 ROUTE COMMAND CENTER</h2>
+              <div className="metrics-grid">
+                <div className="metric-card total-cycles">
+                  <div className="metric-icon">📊</div>
+                  <div className="metric-value">39</div>
+                  <div className="metric-label">Total Cycle</div>
                 </div>
-                <div className="stat-card fade-in" style={{'--animation-delay': '0.2s'}}>
-                  <h4>🔥 Aktif Cycle</h4>
-                  <div className="cycle-progress">
-                    <span className="cycle-number">#{config.currentCycle}</span>
-                    <div className="cycle-status">
-                      {!config.currentCycleStarted ? '⏸️ Başlamadı' : 
-                       currentCycle?.games.filter(g => g.status === 'completed').length === 3 ? '✅ Tamamlandı' :
-                       '🎮 Devam Ediyor'}
-                    </div>
+                <div className="metric-card active-cycle">
+                  <div className="metric-icon">🔥</div>
+                  <div className="metric-value">
+                    {config.currentCycle ? `Cycle ${config.currentCycle}` : 'Cycle 1'}
                   </div>
-                  <p>{currentCycle?.games.filter(g => g.status !== 'not_started').length || 0}/3 Oyun Seçildi</p>
+                  <div className="metric-label">Aktif</div>
                 </div>
-                <div className="stat-card fade-in" style={{'--animation-delay': '0.3s'}}>
-                  <h4>⏱️ Zaman</h4>
-                  <div className="time-stats">
-                    <span className="hours-played">{analytics.totalHours}h</span>
-                    <span className="hours-estimated">/{analytics.estimatedHours}h</span>
+                <div className="metric-card completed-cycles">
+                  <div className="metric-icon">✅</div>
+                  <div className="metric-value">
+                    {routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length}
                   </div>
-                  <p>Tahmini Süre</p>
+                  <div className="metric-label">Tamamlandı</div>
+                </div>
+                <div className="metric-card remaining-cycles">
+                  <div className="metric-icon">⏳</div>
+                  <div className="metric-value">
+                    {39 - routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length}
+                  </div>
+                  <div className="metric-label">Kalan</div>
                 </div>
               </div>
             </div>
 
-            <h2>🎯 Aktif & Sonraki Cycle'lar</h2>
-            
-            <div className="cycle-cards">
-              {/* Aktif Cycle */}
-              {currentCycle && (
-                <div className="cycle-card active">
-                  <div className="cycle-header">
-                    <h3>🔥 AKTİF CYCLE - Cycle {currentCycle.cycleNumber}</h3>
-                    <div className="cycle-progress-bar">
-                      <div 
-                        className="progress-fill" 
-                        style={{width: `${Math.round((currentCycle.games.filter(g => g.status === 'completed').length / 3) * 100)}%`}}
-                      ></div>
-                    </div>
-                  </div>
-                  
-                  <div className="cycle-info">
-                    <div className="cycle-status">
-                      <span className="status-badge">
-                        {!config.currentCycleStarted ? '⏸️ Başlamadı' :
-                         currentCycle.games.filter(g => g.status === 'completed').length === 3 ? '✅ Tamamlandı' :
-                         '🎮 Devam Ediyor'}
-                      </span>
-                      <span className="game-count">
-                        {currentCycle.games.filter(g => g.status !== 'not_started').length}/3 Oyun
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="cycle-games">
-                    {currentCycle.games.map((game, index) => (
-                      <div key={index} className={`game-slot ${game.status}`}>
-                        <div className="game-type">
-                          {game.type === 'rpg' ? '🗡️ RPG' : 
-                           game.type === 'story' ? '📖 Story' : 
-                           game.type === 'strategy' ? '🏗️ Strategy' : '🎮 Game'}
-                        </div>
-                        <div className="game-name">
-                          {game.status === 'not_started' ? 'Oyun Seçilmedi' : 
-                           game.name || `${game.type.toUpperCase()} Oyunu`}
-                          {game.campaignName && (
-                            <div className="campaign-name">📚 {game.campaignName}</div>
-                          )}
-                        </div>
-                        <div className="game-actions">
-                          {game.status === 'not_started' && config.currentCycleStarted && (
-                            <button className="select-game-btn" onClick={() => selectGame(game.type)}>
-                              Seç
-                            </button>
-                          )}
-                          {game.status === 'selected' && (
-                            <button className="complete-game-btn" onClick={() => completeGame(game.type)}>
-                              Tamamla
-                            </button>
-                          )}
-                          {game.status === 'completed' && (
-                            <span className="completed-badge">✅</span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="cycle-actions">
-                    <button 
-                      className="cycle-btn primary"
-                      onClick={() => {
-                        if (!config.currentCycleStarted) {
-                          startCycle(currentCycle.cycleNumber);
-                        }
-                      }}
-                      disabled={config.currentCycleStarted}
-                    >
-                      {!config.currentCycleStarted ? '🚀 Cycle Başlat' : '🎮 Devam Ediyor'}
-                    </button>
-                    {config.currentCycleStarted && currentCycle.games.filter(g => g.status === 'completed').length === 3 && (
-                      <button className="cycle-btn success" onClick={goToNextCycle}>
-                        ➡️ Sonraki Cycle
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
+            {/* Cycle Roadmap Panel */}
+            <div className="cycle-roadmap-panel">
+              <h2>🎯 CYCLE {config.currentCycle || 1} ROADMAP</h2>
               
-              {/* Sonraki Cycle */}
-              {nextCycle && (
-                <div className="cycle-card next">
-                  <div className="cycle-header">
-                    <h3>⏳ SONRAKİ CYCLE - Cycle {nextCycle.cycleNumber}</h3>
-                    <div className="cycle-progress-bar">
-                      <div className="progress-fill" style={{width: '0%'}}></div>
-                    </div>
+              {/* Timeline Progress Bar */}
+              <div className="timeline-container">
+                <div className="timeline-progress">
+                  <div className="timeline-line">
+                    <div 
+                      className="timeline-fill" 
+                      style={{
+                        width: currentCycle ? 
+                          `${Math.round((currentCycle.games.filter(g => g.status === 'completed').length / 3) * 100)}%` : 
+                          '0%'
+                      }}
+                    ></div>
                   </div>
-                  
-                  <div className="cycle-info">
-                    <div className="cycle-status">
-                      <span className="status-badge">⏳ Beklemede</span>
-                      <span className="game-count">0/3 Oyun</span>
-                    </div>
-                  </div>
-
-                  <div className="cycle-games">
-                    {nextCycle.games.map((game, index) => (
-                      <div key={index} className="game-slot not_started">
-                        <div className="game-type">
-                          {game.type === 'rpg' ? '🗡️ RPG' : 
-                           game.type === 'story' ? '📖 Story' : 
-                           game.type === 'strategy' ? '🏗️ Strategy' : '🎮 Game'}
-                        </div>
-                        <div className="game-name">Beklemede</div>
-                        <div className="game-actions">
-                          <span className="waiting-badge">⏳</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="cycle-actions">
-                    <button className="cycle-btn disabled" disabled>
-                      🔒 Aktif Cycle'ı Tamamla
-                    </button>
+                  <div className="timeline-labels">
+                    <span className="timeline-start">START</span>
+                    <span className="timeline-progress-text">
+                      {currentCycle ? 
+                        `${Math.round((currentCycle.games.filter(g => g.status === 'completed').length / 3) * 100)}% PROGRESS` : 
+                        '0% PROGRESS'
+                      }
+                    </span>
+                    <span className="timeline-end">END</span>
                   </div>
                 </div>
-              )}
+              </div>
+
+              {/* Game Slots Timeline */}
+              <div className="game-slots-timeline">
+                {/* Gaming Progress Bar Background */}
+                <div className="gaming-progress-container">
+                  <div className="gaming-progress-bar">
+                    <div 
+                      className="gaming-progress-fill"
+                      style={{
+                        width: currentCycle ? 
+                          `${Math.round((currentCycle.games.filter(g => g.status === 'completed').length / 3) * 100)}%` : 
+                          '0%'
+                      }}
+                    ></div>
+                    <div className="progress-segments">
+                      <div className="segment segment-1"></div>
+                      <div className="segment segment-2"></div>
+                      <div className="segment segment-3"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Game Cards */}
+                <div className="game-cards-container">
+                  {currentCycle && currentCycle.games.map((game, index) => (
+                    <div key={index} className={`game-slot-timeline ${game.status}`}>
+                      <div className="slot-header">
+                        <div className="slot-type">
+                          {game.type === 'rpg' ? '🗡️ RPG' : 
+                           game.type === 'story' ? '📖 STORY' : 
+                           game.type === 'strategy' ? '🏗️ STRATEGY' : '🎮 GAME'}
+                        </div>
+                        <div className="slot-status">
+                          {game.status === 'completed' ? '✅ COMPLETE' :
+                           game.status === 'selected' ? '🎮 PLAYING' :
+                           '⏳ QUEUE'}
+                        </div>
+                      </div>
+                      <div className="slot-content">
+                        <div className="game-name">
+                          {game.status === 'not_started' ? 'Empty' : 
+                           game.name || `${game.type.charAt(0).toUpperCase() + game.type.slice(1)} Game`}
+                        </div>
+                        <div className="game-time">
+                          {game.status === 'completed' ? '45h / 45h' :
+                           game.status === 'selected' ? '12h / 20h' :
+                           '0h / ?h'}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="roadmap-actions">
+                <button 
+                  className="roadmap-btn primary"
+                  onClick={() => {
+                    if (!config.currentCycleStarted && currentCycle) {
+                      startCycle(currentCycle.cycleNumber);
+                    }
+                  }}
+                  disabled={config.currentCycleStarted}
+                >
+                  🚀 Next Phase
+                </button>
+                <button className="roadmap-btn secondary">
+                  ⏸️ Pause Cycle
+                </button>
+                <button className="roadmap-btn secondary">
+                  📊 Stats
+                </button>
+              </div>
             </div>
+
+            {/* Quick Actions */}
+            <div className="quick-actions-section">
+              <h2>⚡ QUICK ACTIONS</h2>
+              <div className="quick-actions-grid">
+                <button className="quick-action-btn game-select">
+                  <div className="action-icon">🎮</div>
+                  <div className="action-label">OYUN SEÇ</div>
+                </button>
+                <button className="quick-action-btn time-log">
+                  <div className="action-icon">⏱️</div>
+                  <div className="action-label">SÜRE KAYDET</div>
+                </button>
+                <button className="quick-action-btn report-gen">
+                  <div className="action-icon">📊</div>
+                  <div className="action-label">RAPOR OLUŞTUR</div>
+                </button>
+                <button className="quick-action-btn settings">
+                  <div className="action-icon">⚙️</div>
+                  <div className="action-label">AYAR PANEL</div>
+                </button>
+              </div>
+            </div>
+
             
             <h2>📋 Tüm Cycle'lar</h2>
             <div className="filter-info">
@@ -678,51 +696,124 @@ function RoutePlanner() {
                 </p>
               )}
             </div>
-            <div className="all-cycles">
-              <h3>Tüm Cycle'lar</h3>
-              
-              {getFilteredCycles().slice(0, 15).map((cycle) => {
-                const completedGames = cycle.games.filter(g => g.status === 'completed').length;
-                const progress = Math.round((completedGames / 3) * 100);
-                
-                return (
-                  <div key={cycle.cycleNumber} className="cycle-item">
-                    <span>Cycle {cycle.cycleNumber}</span>
-                    <span>{
-                      cycle.cycleNumber < config.currentCycle ? 'Tamamlandı' :
-                      cycle.cycleNumber === config.currentCycle ? 
-                        (!config.currentCycleStarted ? 'Başlamadı' : 'Devam Ediyor') :
-                      'Beklemede'
-                    }</span>
-                    <span>{cycle.games.filter(g => g.status !== 'not_started').length}/3</span>
-                    <span>%{progress}</span>
-                    <span className="cycle-games-preview">
-                      {cycle.games.map(g => 
-                        g.type === 'rpg' ? '🗡️' : 
-                        g.type === 'story' ? '📖' : 
-                        g.type === 'strategy' ? '🏗️' : '🎮'
-                      ).join(' ')}
-                    </span>
-                    <button 
-                      className="cycle-edit-btn"
-                      onClick={() => handleEditCycle(cycle)}
-                      title="Cycle'ı düzenle"
-                    >
-                      ✏️
-                    </button>
+            {/* Cycle History & Management */}
+            <div className="cycle-history-section">
+              <div className="section-header">
+                <h2>📋 CYCLE HISTORY & MANAGEMENT</h2>
+              </div>
+
+              <div className="history-timeline">
+                {getFilteredCycles().slice(0, 15).map((cycle) => {
+                  const completedGames = cycle.games.filter(g => g.status === 'completed').length;
+                  const progress = Math.round((completedGames / 3) * 100);
+                  const cycleStatus = 
+                    cycle.cycleNumber < config.currentCycle ? 'completed' :
+                    cycle.cycleNumber === config.currentCycle ? 
+                      (!config.currentCycleStarted ? 'pending' : 'in_progress') :
+                    'pending';
+                  
+                  const isExpanded = expandedCycles.has(cycle.cycleNumber);
+                  
+                  return (
+                    <div key={cycle.cycleNumber} className={`design2-cycle-card ${cycleStatus} ${isExpanded ? 'expanded' : 'collapsed'}`}>
+                      {/* Design 2: Progress Bar Focused Layout */}
+                      <div 
+                        className="design2-header clickable"
+                        onClick={() => toggleCycleExpansion(cycle.cycleNumber)}
+                      >
+                        {/* Minimal Header */}
+                        <div className="design2-title-row">
+                          <div className="expand-indicator">
+                            {isExpanded ? '▼' : '▶'}
+                          </div>
+                          <h3 className="design2-cycle-title">CYCLE {cycle.cycleNumber}</h3>
+                          <span className={`design2-status-badge ${cycleStatus}`}>
+                            {cycleStatus === 'completed' ? '✅' :
+                             cycleStatus === 'in_progress' ? '🎮' :
+                             '⏳'}
+                          </span>
+                          <span className="design2-games-count">{completedGames}/3 oyun</span>
+                        </div>
+                        
+                        {/* Cycle Genel Progress Bar */}
+                        <div className="cycle-overall-progress">
+                          <div className="cycle-progress-bar">
+                            <div 
+                              className={`cycle-progress-fill ${cycleStatus}`}
+                              style={{ width: `${progress}%` }}
+                            ></div>
+                          </div>
+                          <span className="cycle-progress-text">{progress}%</span>
+                        </div>
+                      </div>
+                        
+                        <div className={`cycle-details ${isExpanded ? 'expanded' : 'collapsed'}`}>
+                          <div className="cycle-games">
+                            {cycle.games.map((game, index) => {
+                              // Tarih bilgilerini hesapla
+                              const startDate = game.startDate || '—';
+                              const endDate = game.endDate || (game.status === 'completed' ? 'Tamamlandı' : '—');
+                              
+                              // Progress hesapla (örnek - gerçek progress logic'i buraya eklenebilir)
+                              const gameProgress = game.status === 'completed' ? 100 : 
+                                                 game.status === 'selected' ? 45 : 0;
+                              
+                              return (
+                                <div key={index} className={`game-mini compact ${game.status}`}>
+                                  <div className="game-single-row">
+                                    <div className="game-icon">
+                                      {game.type === 'rpg' ? '🗡️' : 
+                                       game.type === 'story' ? '📖' : 
+                                       game.type === 'strategy' ? '🏗️' : '🎮'}
+                                    </div>
+                                    <div className="game-name">
+                                      {game.name || (game.type === 'rpg' ? 'RPG Oyunu' :
+                                       game.type === 'story' ? 'Story Oyunu' :
+                                       game.type === 'strategy' ? 'Strategy Oyunu' : 'Oyun')}
+                                    </div>
+                                    <div className="game-dates-inline">
+                                      <span className="date-start">{startDate}</span>
+                                      <span className="date-separator">→</span>
+                                      <span className="date-end">{endDate}</span>
+                                    </div>
+                                    <div className="game-status">
+                                      {game.status === 'completed' ? '✅' :
+                                       game.status === 'selected' ? '🎮' :
+                                       '⏳'}
+                                    </div>
+                                    <div className="game-progress-container">
+                                      <div className="game-progress-bar-individual">
+                                        <div 
+                                          className={`game-progress-fill-individual ${game.status}`}
+                                          style={{ width: `${gameProgress}%` }}
+                                        ></div>
+                                      </div>
+                                      <span className="game-progress-text">{gameProgress}%</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                    </div>
+                  );
+                })}
+                {getFilteredCycles().length > 15 && (
+                  <div className="history-cycle-card more">
+                    <div className="cycle-content">
+                      <span>... ve {getFilteredCycles().length - 15} cycle daha</span>
+                    </div>
                   </div>
-                );
-              })}
-              {getFilteredCycles().length > 15 && (
-                <div className="cycle-item more">
-                  <span>... ve {getFilteredCycles().length - 15} cycle daha</span>
-                </div>
-              )}
-              {getFilteredCycles().length === 0 && (
-                <div className="cycle-item no-results">
-                  <span>🔍 Filtre kriterlerine uygun cycle bulunamadı</span>
-                </div>
-              )}
+                )}
+                {getFilteredCycles().length === 0 && (
+                  <div className="history-cycle-card no-results">
+                    <div className="cycle-content">
+                      <span>🔍 Filtre kriterlerine uygun cycle bulunamadı</span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

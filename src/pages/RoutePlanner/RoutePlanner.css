@@ -1871,6 +1871,929 @@
   display: none;
 }
 
+/* ===== TIMELINE/ROADMAP DESIGN STYLES ===== */
+
+/* Route Command Center */
+.route-command-center {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  animation: slideInUp 0.6s ease-out;
+}
+
+.route-command-center h2 {
+  color: var(--route-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--route-primary);
+}
+
+.metric-card:hover::before {
+  left: 100%;
+}
+
+.metric-icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--route-primary);
+  margin-bottom: var(--spacing-xs);
+  animation: countUp 0.8s ease-out;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Cycle Roadmap Panel */
+.cycle-roadmap-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  animation: slideInUp 0.6s ease-out 0.1s both;
+}
+
+.cycle-roadmap-panel h2 {
+  color: var(--route-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Timeline Progress Bar */
+.timeline-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.timeline-progress {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.timeline-line {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--route-primary), var(--route-secondary));
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.timeline-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.timeline-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-xs);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timeline-progress-text {
+  color: var(--route-primary);
+  font-weight: 600;
+}
+
+/* Game Slots Timeline - Gaming Progress Bar Style */
+.game-slots-timeline {
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Gaming Progress Bar Container */
+.gaming-progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  z-index: 1;
+}
+
+.gaming-progress-bar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-primary-500-rgb), 0.3);
+}
+
+.gaming-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    #00ff88 0%, 
+    #00cc6a 25%, 
+    #ffaa00 50%, 
+    #ff6600 75%, 
+    #ff0066 100%
+  );
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: xpFillPulse 2s infinite;
+  box-shadow: 
+    0 0 15px rgba(0, 255, 136, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.progress-segments {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.segment {
+  flex: 1;
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.segment:last-child {
+  border-right: none;
+}
+
+.segment::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -2px;
+  width: 4px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* Game Cards Container */
+.game-cards-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.game-slot-timeline {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* XP Points Display */
+.xp-points {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 
+    0 4px 15px rgba(255, 107, 53, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  animation: xpBounce 0.6s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-slot-timeline.completed {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.15);
+  position: relative;
+  overflow: visible;
+}
+
+.game-slot-timeline.completed::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #00ff88, #00cc6a, #00ff88);
+  border-radius: var(--border-radius);
+  z-index: -1;
+  animation: levelUpGlow 2s infinite;
+}
+
+.game-slot-timeline.completed .xp-points {
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  animation: xpBounce 0.6s ease-out, levelUpParticles 1s ease-out 0.3s;
+}
+
+.game-slot-timeline.selected {
+  border-color: var(--route-primary);
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  animation: pulse 2s infinite;
+}
+
+.game-slot-timeline.selected .xp-points {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  animation: xpBounce 0.6s ease-out;
+}
+
+.game-slot-timeline.not_started {
+  border-color: rgba(255, 255, 255, 0.2);
+  opacity: 0.7;
+}
+
+.game-slot-timeline.not_started .xp-points {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  opacity: 0.6;
+}
+
+.slot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.slot-type {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slot-status {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slot-content {
+  text-align: center;
+}
+
+.game-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  font-size: 0.9rem;
+}
+
+.game-time {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Gaming Progress Bar Animations */
+@keyframes xpFillPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 15px rgba(0, 255, 136, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 25px rgba(0, 255, 136, 0.9),
+      inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes xpBounce {
+  0% {
+    transform: translateX(-50%) translateY(10px) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes levelUpParticles {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes levelUpGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
+.timeline-arrow {
+  color: var(--route-primary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  align-self: center;
+  animation: arrowPulse 2s infinite;
+  text-shadow: 0 0 10px rgba(var(--color-primary-500-rgb), 0.5);
+  letter-spacing: -2px;
+  padding: 0 var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  z-index: 10;
+}
+
+/* Roadmap Actions */
+.roadmap-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.roadmap-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.roadmap-btn.primary {
+  background: var(--route-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(var(--color-primary-500-rgb), 0.3);
+}
+
+.roadmap-btn.primary:hover:not(:disabled) {
+  background: var(--route-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.4);
+}
+
+.roadmap-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.roadmap-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  border-color: var(--route-primary);
+}
+
+.roadmap-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Quick Actions Section */
+.quick-actions-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.quick-actions-section h2 {
+  color: var(--route-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.quick-action-btn {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+
+.quick-action-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--route-primary);
+}
+
+.quick-action-btn:hover::before {
+  left: 100%;
+}
+
+.action-icon {
+  font-size: 2rem;
+}
+
+.action-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+/* Cycle History Section */
+.cycle-history-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+.cycle-history-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.cycle-history-section h2 {
+  color: var(--route-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history-filters {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.history-timeline {
+  position: relative;
+}
+
+.history-cycle-card {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+}
+
+.cycle-timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--route-primary);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.history-cycle-card.completed .timeline-dot {
+  background: var(--color-success-500);
+}
+
+.history-cycle-card.in_progress .timeline-dot {
+  background: var(--route-primary);
+  animation: pulse 2s infinite;
+}
+
+.history-cycle-card.pending .timeline-dot {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.timeline-line {
+  width: 2px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 4px;
+}
+
+.history-cycle-card:last-child .timeline-line {
+  display: none;
+}
+
+.cycle-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cycle-content:hover {
+  transform: translateX(5px);
+  border-color: var(--route-primary);
+}
+
+.cycle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cycle-header.clickable {
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  margin: calc(-1 * var(--spacing-xs));
+  margin-bottom: var(--spacing-sm);
+}
+
+.cycle-header.clickable:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cycle-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cycle-title h3 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.expand-indicator {
+  color: var(--route-primary);
+  font-size: 0.8rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.cycle-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cycle-summary .progress-text {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.cycle-details {
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cycle-details.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.cycle-details.expanded {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-success-400);
+}
+
+.status-badge.in_progress {
+  background: rgba(var(--color-primary-500-rgb), 0.2);
+  color: var(--route-primary);
+}
+
+.status-badge.pending {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+.cycle-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.action-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action-btn.edit {
+  background: rgba(var(--color-primary-500-rgb), 0.2);
+  color: var(--route-primary);
+  border: 1px solid rgba(var(--color-primary-500-rgb), 0.3);
+}
+
+.action-btn.edit:hover {
+  background: rgba(var(--color-primary-500-rgb), 0.3);
+  transform: translateY(-1px);
+}
+
+.action-btn.delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+}
+
+.cycle-progress {
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.progress-percentage {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--route-primary);
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--route-primary), var(--route-secondary));
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cycle-games {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.game-mini {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: var(--spacing-xs);
+}
+
+.game-mini.completed {
+  border-color: var(--color-success-500);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.game-mini.selected {
+  border-color: var(--route-primary);
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+}
+
+.game-type {
+  font-size: 1rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.game-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.game-name {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.game-status {
+  font-size: 0.9rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
 /* Responsive Tasarım */
 @media (max-width: 1024px) {
   .route-planner__sidebar {
@@ -1897,6 +2820,53 @@
     grid-template-columns: 100px 1fr auto;
     gap: var(--spacing-sm);
   }
+  
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .game-slots-timeline {
+    flex-direction: column;
+  }
+  
+  .timeline-arrow {
+    transform: rotate(90deg);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .roadmap-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .roadmap-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .cycle-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  .cycle-history-section .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
   
   .cycle-actions {
     flex-direction: column;
@@ -2481,3 +3451,391 @@
     text-align: center;
   }
 }
+
+/* ========================================
+   DESIGN 2: PROGRESS BAR FOCUSED STYLES
+   ======================================== */
+
+.design2-cycle-card {
+  background: linear-gradient(135deg, #2a2d3a 0%, #1e1f2e 100%);
+  border: 1px solid #3a3d4a;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.design2-cycle-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+}
+
+.design2-cycle-card.completed {
+  border-color: #22c55e;
+}
+
+.design2-cycle-card.in_progress {
+  border-color: #f59e0b;
+}
+
+.design2-cycle-card.pending {
+  border-color: #4b5563;
+}
+
+/* Design 2: Header */
+.design2-header {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.design2-header:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* Design 2: Title Row */
+.design2-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.design2-cycle-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.design2-status-badge {
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.design2-status-badge.completed {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+}
+
+.design2-status-badge.in_progress {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: #fbbf24;
+}
+
+.design2-status-badge.pending {
+  background: rgba(156, 163, 175, 0.2);
+  border-color: rgba(156, 163, 175, 0.4);
+  color: #9ca3af;
+}
+
+/* Design 2: Progress Container */
+.design2-progress-container {
+  position: relative;
+}
+
+.design2-progress-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.design2-progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.design2-progress-fill.completed {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.design2-progress-fill.in_progress {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+}
+
+.design2-progress-fill.pending {
+  background: linear-gradient(90deg, #9ca3af, #6b7280);
+  box-shadow: 0 0 10px rgba(156, 163, 175, 0.4);
+}
+
+/* Progress fill animation */
+.design2-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Design 2: Progress Text */
+.design2-progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.design2-games-count {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-left: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cycle Genel Progress Bar */
+.cycle-overall-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cycle-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cycle-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.cycle-progress-fill.completed {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.cycle-progress-fill.in_progress {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.cycle-progress-fill.pending {
+  background: linear-gradient(90deg, #6b7280, #4b5563);
+}
+
+.cycle-progress-text {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: right;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Expand indicator for Design 2 */
+.expand-indicator {
+  font-size: 12px;
+  color: #667eea;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cycle details for Design 2 */
+.cycle-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cycle-details.expanded {
+  max-height: 500px;
+  padding: 0 8px 8px 8px;
+}
+
+/* Kompakt Game Mini Cards */
+.game-mini.compact {
+  display: block !important; /* Override eski flex */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.game-mini.compact:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.game-mini.compact.completed {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.game-mini.compact.selected {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.game-mini.compact.pending {
+  border-color: rgba(75, 85, 99, 0.3);
+}
+
+/* Yeni Layout - Tek Satır */
+.game-single-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-icon {
+  font-size: 16px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.game-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 400px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.game-dates-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #e2e8f0;
+  flex-shrink: 0;
+  width: 250px;
+  justify-content: center;
+}
+
+.date-start, .date-end {
+  font-weight: 500;
+}
+
+.date-separator {
+  color: #64748b;
+  font-size: 8px;
+}
+
+.game-status {
+  font-size: 14px;
+  width: 20px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+/* Progress Container - Yeşil Alan */
+.game-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.game-progress-bar-individual {
+  flex: 1;
+  min-width: 70px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.game-progress-fill-individual {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.game-progress-fill-individual.completed {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.game-progress-fill-individual.selected {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.game-progress-fill-individual.pending {
+  background: linear-gradient(90deg, #6b7280, #4b5563);
+}
+
+.game-progress-text {
+  font-size: 9px;
+  color: #94a3b8;
+  font-weight: 500;
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Expand Indicator */
+.design2-cycle-card .expand-indicator {
+  font-size: 10px;
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+  width: 12px;
+  text-align: center;
+}
+
+/* Design 2: Action Buttons */
+.design2-cycle-card .cycle-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.design2-cycle-card .action-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.design2-cycle-card .action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Cache Buster - Design 2 Updates Applied */
+/* Last Updated: 2024-12-27 15:30:00 */
+/* Version: 2.1.0 - Progress bars removed, dates added, padding optimized */
