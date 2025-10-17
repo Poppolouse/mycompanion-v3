@@ -147,7 +147,6 @@ textarea:focus {
     transparent, 
     rgba(255, 255, 255, 0.03), 
     transparent);
-  animation: shimmer 3s infinite;
   pointer-events: none;
 }
 
@@ -1360,14 +1359,7 @@ textarea:focus {
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
+
 
 /* 🎬 Enhanced Micro-interaction Animations */
 @keyframes glow {
@@ -1464,7 +1456,6 @@ textarea:focus {
     transparent, 
     rgba(255, 255, 255, 0.1), 
     transparent);
-  animation: shimmer 1.5s ease-in-out infinite;
 }
 
 .fade-enter {
@@ -2544,7 +2535,6 @@ textarea:focus {
 
 .game-card:hover::before {
   opacity: 1;
-  animation: shimmer 2s ease-in-out infinite;
 }
 
 .game-card:hover::after {
@@ -3001,12 +2991,6 @@ textarea:focus {
     rgba(255, 255, 255, 0.2) 0%, 
     transparent 50%, 
     rgba(255, 255, 255, 0.2) 100%);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
 }
 
 .game-info {

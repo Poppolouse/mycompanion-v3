@@ -655,6 +655,22 @@ function GameTracker() {
           </div>
           
           <div className="header-controls">
+            {/* View Switcher */}
+            <div className="view-switcher">
+              <button 
+                className={`view-btn ${currentView === 'library' ? 'active' : ''}`}
+                onClick={() => setCurrentView('library')}
+              >
+                📚 Kütüphane
+              </button>
+              <button 
+                className={`view-btn ${currentView === 'cycles' ? 'active' : ''}`}
+                onClick={() => setCurrentView('cycles')}
+              >
+                🔄 Cycle'lar
+              </button>
+            </div>
+
             {/* Navigation Buttons */}
             <div className="navigation-buttons">
               <button 
@@ -670,22 +686,6 @@ function GameTracker() {
                 title="Oyun Hub'ına Dön"
               >
                 🎮 Oyun Hub
-              </button>
-            </div>
-
-            {/* View Switcher */}
-            <div className="view-switcher">
-              <button 
-                className={`view-btn ${currentView === 'library' ? 'active' : ''}`}
-                onClick={() => setCurrentView('library')}
-              >
-                📚 Kütüphane
-              </button>
-              <button 
-                className={`view-btn ${currentView === 'cycles' ? 'active' : ''}`}
-                onClick={() => setCurrentView('cycles')}
-              >
-                🔄 Cycle'lar
               </button>
             </div>
 

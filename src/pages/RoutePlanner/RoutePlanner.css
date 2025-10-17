@@ -63,24 +63,24 @@
 
 /* 🎯 Header Layout - Container Uyumlu */
 .route-planner .tracker-header {
-  padding: 0 !important;
-  border-bottom: 1px solid var(--dark-border-2) !important;
-  background: var(--dark-glass-bg) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  width: 100vw !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  will-change: transform, opacity !important;
-  transform: translateZ(0) !important;
-  margin: 0 calc(-50vw + 50%) 2rem calc(-50vw + 50%) !important;
-  position: relative !important;
-  left: 50% !important;
-  right: 50% !important;
-  margin-left: -50vw !important;
-  margin-right: -50vw !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  padding: 2rem 0 1rem 0;
+  border-bottom: 1px solid var(--dark-border-2);
+  background: var(--dark-glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  margin: 0 calc(-50vw + 50%) 2rem calc(-50vw + 50%);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
 }
 
 .tracker-header::before {
@@ -108,18 +108,16 @@
     transparent, 
     rgba(255, 255, 255, 0.03), 
     transparent);
-  animation: shimmer 3s infinite;
   pointer-events: none;
 }
 
 .route-planner .header-content {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  gap: 2rem !important;
-  padding: 2rem 1rem !important;
-  max-width: none !important;
-  margin: 0 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 .header-left h1 {
@@ -157,7 +155,6 @@
 .navigation-buttons {
   display: flex;
   gap: 0.5rem;
-  margin-right: 1rem;
 }
 
 .nav-btn {
@@ -212,10 +209,7 @@
     0 0 10px rgba(102, 126, 234, 0.1);
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
+
 
 
 
@@ -394,7 +388,6 @@
     rgba(255, 255, 255, 0.05),
     transparent
   );
-  animation: shimmer 3s infinite;
 }
 
 /* Header - Başlık ve Yüzde */
@@ -456,7 +449,6 @@
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  animation: progressShimmer 2s infinite;
 }
 
 /* Alt Bilgi Satırı */
@@ -502,10 +494,7 @@
   z-index: 2;
 }
 
-@keyframes progressShimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
+
 
 /* Ana İçerik Layout - Width Harmony */
 .route-planner__content {
@@ -553,7 +542,6 @@
     rgba(255, 255, 255, 0.05),
     transparent
   );
-  animation: shimmer 3s infinite;
 }
 
 .sidebar-section {
@@ -697,7 +685,6 @@
     rgba(255, 255, 255, 0.08),
     transparent
   );
-  animation: shimmer 4s infinite;
   z-index: 1;
 }
 
@@ -843,7 +830,6 @@
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  animation: progressShimmer 2s infinite;
 }
 
 /* ===== CYCLE INFO ===== */
@@ -2131,7 +2117,6 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: shimmer 2s infinite;
 }
 
 .timeline-labels {
@@ -3106,7 +3091,6 @@
 .skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, var(--color-gray-300) 50%, #f0f0f0 75%);
   background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
 }
 
 .fade-in {
@@ -3705,7 +3689,7 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
+
 }
 
 /* Design 2: Progress Text */
@@ -4166,7 +4150,6 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
 }
 
 /* Shortcuts Section */

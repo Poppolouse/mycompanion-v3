@@ -32,19 +32,24 @@ function GameTrackingHub() {
 
   return (
     <div className="game-tracking-hub">
-      {/* Header */}
-      <header className="hub-header">
-        <button 
-          className="home-button"
-          onClick={handleGoHome}
-          title="Ana Sayfaya Dön"
-        >
-          🏠 Ana Sayfa
-        </button>
-        
-        <div className="header-title">
-          <h1>🎯 Oyun Takibi Merkezi</h1>
-          <p>Oyun deneyiminizi yönetmek için araçları seçin</p>
+      {/* Standart Header */}
+      <header className="tracker-header">
+        <div className="header-content">
+          <div className="header-left">
+            <h1>🎯 Oyun Takibi Merkezi</h1>
+            <p>Oyun deneyiminizi yönetmek için araçları seçin</p>
+          </div>
+          <div className="header-controls">
+            <div className="navigation-buttons">
+              <button 
+                className="nav-btn home-btn"
+                onClick={handleGoHome}
+                title="Ana Sayfaya Dön"
+              >
+                🏠 Ana Sayfa
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 

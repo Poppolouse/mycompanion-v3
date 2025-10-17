@@ -85,7 +85,6 @@
     transparent, 
     rgba(255, 255, 255, 0.03), 
     transparent);
-  animation: shimmer 3s infinite;
   pointer-events: none;
 }
 
@@ -133,7 +132,6 @@
 .navigation-buttons {
   display: flex;
   gap: 0.5rem;
-  margin-right: 1rem;
 }
 
 .nav-btn {
@@ -188,10 +186,7 @@
     0 0 10px rgba(102, 126, 234, 0.1);
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
+
 
 /* Period Selector */
 .period-selector {

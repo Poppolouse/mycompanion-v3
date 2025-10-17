@@ -10,28 +10,32 @@
 .session-container {
   max-width: 1920px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
 }
 
-/* 🎯 Header Layout - Enhanced Dark Glassmorphism */
-.session-container .page-header {
+/* ✅ STANDART Header */
+.tracker-header {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   padding: 2rem 0 1rem 0;
-  border-bottom: 1px solid var(--dark-border-2);
-  background: var(--dark-glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  margin: 0 calc(-50vw + 50%);
+  margin: 0;
   width: 100vw;
-  position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding-left: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
-  padding-right: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+  backdrop-filter: blur(15px) saturate(120%);
+  -webkit-backdrop-filter: blur(15px) saturate(120%);
+  position: relative;
   overflow: hidden;
-  will-change: transform, opacity;
-  transform: translateZ(0);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .session-container .page-header::before {
@@ -59,7 +63,6 @@
     transparent, 
     rgba(255, 255, 255, 0.03), 
     transparent);
-  animation: shimmer 3s infinite;
   pointer-events: none;
 }
 
@@ -110,10 +113,42 @@
   margin-right: 1rem;
 }
 
-.nav-button {
+/* 🧭 Navigation Buttons - Standart */
+.nav-btn {
+  /* ✅ ZORUNLU - Buton Boyutu */
+  padding: 0.8rem 1.5rem;
+  
+  /* ✅ ZORUNLU - Görsel Stil */
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(102, 126, 234, 0.1);
+}
+
+/* Eski nav-button class'ı - Geriye uyumluluk için */
+.nav-button {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   padding: 0.8rem 1.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -146,9 +181,9 @@
 }
 
 .nav-button:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   transform: translateY(-2px);
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.4),
@@ -168,15 +203,7 @@
   min-height: 60vh;
 }
 
-/* Shimmer Animation */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
+
 
 /* 📱 Responsive Design */
 @media (max-width: 768px) {

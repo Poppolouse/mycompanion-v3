@@ -17,7 +17,7 @@ function Session() {
     }}>
       <div className="session-container">
         {/* Header */}
-        <header className="page-header">
+        <header className="tracker-header">
           <div className="header-content">
             <div className="header-left">
               <h1>🎯 Session</h1>
@@ -28,14 +28,14 @@ function Session() {
               {/* Navigation Buttons */}
               <div className="navigation-buttons">
                 <button 
-                  className="nav-button"
+                  className="nav-btn home-btn"
                   onClick={() => navigate('/')}
                   title="Ana Sayfaya Dön"
                 >
                   🏠 Ana Sayfa
                 </button>
                 <button 
-                  className="nav-button"
+                  className="nav-btn hub-btn"
                   onClick={() => navigate('/game-tracking-hub')}
                   title="Oyun Hub'ına Dön"
                 >

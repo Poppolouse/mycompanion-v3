@@ -42,27 +42,30 @@ function AnaSayfa() {
 
   return (
     <div className="ana-sayfa">
-      {/* Header */}
-      <header className="ana-sayfa-header">
-        <div className="header-icerik">
-          <h1 className="ana-baslik">
-            <span className="baslik-ikon">🌟</span>
-            MyCompanion
-            <span className="baslik-alt">v3</span>
-          </h1>
-          <p className="ana-aciklama">
-            İhtiyacınıza uygun web uygulamalarını keşfedin ve hemen kullanmaya başlayın
-          </p>
+      {/* Standart Header */}
+      <header className="tracker-header">
+        <div className="header-content">
+          <div className="header-left">
+            <h1>
+              <span className="baslik-ikon">🌟</span>
+              MyCompanion
+              <span className="baslik-alt">v3</span>
+            </h1>
+            <p>İhtiyacınıza uygun web uygulamalarını keşfedin ve hemen kullanmaya başlayın</p>
+          </div>
+          <div className="header-controls">
+            <div className="navigation-buttons">
+              {kullaniciCevabi && (
+                <button 
+                  className="nav-btn restart-btn"
+                  onClick={handleYenidenBasla}
+                >
+                  🔄 Yeniden Başla
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        
-        {kullaniciCevabi && (
-          <button 
-            className="yeniden-basla-btn"
-            onClick={handleYenidenBasla}
-          >
-            🔄 Yeniden Başla
-          </button>
-        )}
       </header>
 
       {/* Ana İçerik */}

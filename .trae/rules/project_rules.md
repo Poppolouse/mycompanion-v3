@@ -349,7 +349,137 @@ color: #ffffff !important;
 </div>
 ```
 
-### 18 YENİ SAYFA OLUŞTURURKEN ZORUNLU ADIMLAR 📝
+### 18 HEADER STANDARDIZASYON KURALLARI 🎯
+
+**ZORUNLU:** Tüm sayfalarda header yapısı GameTracker standardına uygun olmalı!
+
+#### 📏 HEADER YAPISININ STANDART ELEMANLARI
+
+**1. HTML Yapısı (Zorunlu):**
+```jsx
+<header className="tracker-header">
+  <div className="header-content">
+    <div className="header-left">
+      <h1>🎮 Sayfa Başlığı</h1>
+      <p>Sayfa açıklaması</p>
+    </div>
+    <div className="header-controls">
+      {/* Buton grupları */}
+    </div>
+  </div>
+</header>
+```
+
+**2. CSS Sınıfları (Zorunlu):**
+- `.tracker-header` - Ana header container
+- `.header-content` - İçerik wrapper (max-width: 1920px, margin: 0 auto)
+- `.header-left` - Sol taraf (başlık + açıklama)
+- `.header-controls` - Sağ taraf (buton grupları)
+
+**3. Buton Grupları Hizalaması:**
+```jsx
+<div className="header-controls">
+  {/* Grup 1: View Switcher (varsa) */}
+  <div className="view-switcher">
+    <button className="view-btn">Kütüphane</button>
+    <button className="view-btn">Cycle'lar</button>
+  </div>
+  
+  {/* Grup 2: Navigation Buttons */}
+  <div className="navigation-buttons">
+    <button className="nav-btn home-btn">🏠 Ana Sayfa</button>
+    <button className="nav-btn hub-btn">🎮 Oyun Hub</button>
+  </div>
+  
+  {/* Grup 3: Utility Buttons (varsa) */}
+  <div className="utility-buttons">
+    <button className="legend-toggle-btn">🎨 Renkler</button>
+    <button className="legend-toggle-btn">⌨️ Kısayollar</button>
+  </div>
+</div>
+```
+
+#### 🎨 CSS STANDARTLARI
+
+**Header Container:**
+```css
+.tracker-header {
+  padding: 2rem 0 1rem 0;
+  border-bottom: 1px solid var(--dark-border-2);
+  background: var(--dark-glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  width: 100vw;
+  margin: 0 calc(-50vw + 50%);
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+  padding-right: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+}
+```
+
+**Header Content:**
+```css
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+```
+
+**Header Controls:**
+```css
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+```
+
+#### 🚫 YASAKLAR
+
+- ❌ **Farklı header yapısı:** Her sayfa aynı HTML yapısını kullanmalı
+- ❌ **Farklı CSS sınıfları:** `.page-header`, `.custom-header` gibi farklı sınıflar
+- ❌ **Buton grupları karışık:** Navigation ve utility butonları karışık yerleşim
+- ❌ **Farklı padding/margin:** Header boyutları tutarsız
+- ❌ **Responsive uyumsuzluk:** Mobilde header bozuk görünüm
+
+#### ✅ ZORUNLU KURALLAR
+
+1. **Tüm sayfalarda `.tracker-header` sınıfı kullanılmalı**
+2. **Header içeriği `.header-content` ile sarılmalı**
+3. **Sol taraf: başlık + açıklama, sağ taraf: buton grupları**
+4. **Buton grupları mantıklı şekilde gruplandırılmalı**
+5. **Navigation butonları her sayfada aynı sırada**
+6. **Responsive breakpoint'lerde tutarlı davranış**
+
+#### 📱 RESPONSIVE STANDARTLARI
+
+```css
+@media (max-width: 768px) {
+  .tracker-header {
+    padding: 1.5rem 0 1rem 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+```
+
+### 19 YENİ SAYFA OLUŞTURURKEN ZORUNLU ADIMLAR 📝
 
 **Her yeni sayfa oluştururken bu sırayı takip et:**
 
@@ -359,4 +489,4 @@ color: #ffffff !important;
 4. **Responsive Test:** Mobil uyumluluğunu kontrol et
 5. **Kontrast Kontrolü:** Koyu arka plan + açık font kuralını uygula
 
-14-
+15-

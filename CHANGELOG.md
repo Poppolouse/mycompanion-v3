@@ -1,5 +1,75 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎯 **v3.10.0** - 2024-12-28 - **Header Buton Standartlaştırması & Proje Kuralları Genişletmesi**
+
+### ✨ **Yeni Özellikler**
+
+#### 📏 **Header Buton Standartlaştırması**
+- **🎯 GameTracker Referans Analizi**
+  - ✅ GameTracker'daki header buton grupları detaylı analiz edildi
+  - ✅ `.view-switcher`, `.navigation-buttons`, `.nav-btn`, `.legend-toggle-btn` standartları tespit edildi
+  - ✅ Buton boyutları, gap değerleri ve görsel stiller dokümante edildi
+
+#### 📋 **Proje Kuralları Genişletmesi**
+- **📖 PROJE_KURALLARI.md Güncellendi**
+  - ✅ Header buton grupları için kapsamlı standartlar eklendi
+  - ✅ 5 farklı buton tipi için detaylı CSS kuralları
+  - ✅ Yasaklar ve kontrol listesi genişletildi
+  - ✅ Buton boyut standartları tablosu eklendi
+
+### 🔧 **Teknik İyileştirmeler**
+
+#### 🎨 **Buton Standartları**
+- **📏 Standart Buton Boyutları**
+  - ✅ `.view-btn`: `padding: 1rem 2rem`, `border-radius: 16px`
+  - ✅ `.nav-btn`: `padding: 0.8rem 1.5rem`, `border-radius: 12px`
+  - ✅ `.legend-toggle-btn`: `padding: 0.75rem 1.5rem`, `border-radius: 12px`
+  - ✅ `.header-controls`: `gap: 1.5rem`, `flex-wrap: wrap`
+  - ✅ Buton grupları: `gap: 0.5rem`
+
+#### 🎯 **Sayfa Standartlaştırması**
+- **✅ AnaSayfa**: Standart `.nav-btn` CSS'i eklendi
+- **✅ GameTrackingHub**: Standart `.nav-btn` CSS'i eklendi  
+- **✅ Session**: Header class'ı `tracker-header`'a çevrildi
+- **✅ RoutePlanner**: Zaten standartlara uygundu
+- **✅ Statistics**: Zaten standartlara uygundu
+
+#### 🎨 **Görsel Tutarlılık**
+- **🌟 Zorunlu Stil Kuralları**
+  - ✅ Tüm butonlarda `backdrop-filter: blur(10px)` zorunlu
+  - ✅ Standart transition süreleri: `0.3s-0.4s cubic-bezier(0.4, 0, 0.2, 1)`
+  - ✅ Hover efektleri: `translateY(-2px)` + glow efekti
+  - ✅ Tutarlı renk şeması ve gradient kullanımı
+
+### 🚫 **Yasaklar ve Kurallar**
+
+#### ❌ **Yeni Yasaklar Eklendi**
+- ✅ Farklı buton boyutları kullanma yasağı
+- ✅ Backdrop-filter kullanmama yasağı
+- ✅ Standart dışı gap değerleri yasağı
+- ✅ Border-radius değiştirme yasağı
+- ✅ Transition süresi değiştirme yasağı
+
+#### ✅ **Kontrol Listesi Genişletildi**
+- ✅ Header yapısı kontrolleri (5 madde)
+- ✅ Buton grupları kontrolleri (9 madde)
+- ✅ Yeni sayfa oluştururken takip edilecek adımlar
+
+### 📊 **Buton Boyut Standartları Tablosu**
+
+| Buton Tipi | Padding | Border Radius | Kullanım Alanı |
+|------------|---------|---------------|-----------------|
+| `.view-btn` | `1rem 2rem` | `16px` | Görünüm değiştirici |
+| `.nav-btn` | `0.8rem 1.5rem` | `12px` | Navigasyon butonları |
+| `.legend-toggle-btn` | `0.75rem 1.5rem` | `12px` | Özel işlev butonları |
+
+### 🎯 **Geriye Uyumluluk**
+- ✅ Eski `.nav-button` class'ları korundu
+- ✅ Mevcut sayfalar çalışmaya devam ediyor
+- ✅ Kademeli geçiş için eski CSS'ler bırakıldı
+
+---
+
 ## 🎯 **v3.9.0** - 2024-12-28 - **Session Sayfası Implementasyonu & Oyun Hub Genişletmesi**
 
 ### ✨ **Yeni Özellikler**
