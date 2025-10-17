@@ -2,23 +2,23 @@
 
 .game-tracking-hub {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  color: #ffffff;
+  background: var(--gradient-background);
+  color: var(--text-primary);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Header */
 .hub-header {
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--color-white-rgb), 0.05);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .hub-header .home-button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: rgba(var(--color-white-rgb), 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.2);
+  color: var(--text-primary);
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
   font-size: 1rem;
@@ -28,15 +28,15 @@
 }
 
 .hub-header .home-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(var(--color-black-rgb), 0.3);
 }
 
 .header-title h1 {
   font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -44,7 +44,7 @@
 
 .header-title p {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(var(--color-white-rgb), 0.8);
   margin: 0;
 }
 
@@ -66,13 +66,18 @@
 /* Hub Cards */
 .hub-card {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 2rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .hub-card::before {
@@ -82,15 +87,15 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .hub-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.4);
+  border-color: rgba(var(--color-white-rgb), 0.4);
 }
 
 .hub-card:hover::before {
@@ -102,20 +107,20 @@
   font-size: 4rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 4px 8px rgba(var(--color-black-rgb), 0.3));
 }
 
 /* Card Content */
 .card-content h2 {
   font-size: 1.8rem;
   margin: 0 0 1rem 0;
-  color: #ffffff;
+  color: var(--color-white);
   text-align: center;
 }
 
 .card-content p {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(var(--color-white-rgb), 0.8);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -130,7 +135,7 @@
 
 .feature-list li {
   padding: 0.5rem 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(var(--color-white-rgb), 0.9);
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -141,7 +146,7 @@
   content: '';
   width: 6px;
   height: 6px;
-  background: #667eea;
+  background: var(--color-primary-500);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -168,7 +173,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--color-white-rgb), 0.2), transparent);
   transition: left 0.5s ease;
 }
 
@@ -178,18 +183,18 @@
 
 /* Specific Button Styles */
 .statistics-button {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  color: var(--color-white);
 }
 
 .statistics-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.4);
 }
 
 .route-planner-button {
   background: linear-gradient(135deg, #f093fb, #f5576c);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .route-planner-button:hover {
@@ -199,7 +204,7 @@
 
 .library-button {
   background: linear-gradient(135deg, #4facfe, #00f2fe);
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .library-button:hover {
@@ -214,17 +219,17 @@
   gap: 2rem;
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .info-section h3 {
-  color: #667eea;
+  color: var(--color-primary-500);
   margin: 0 0 1rem 0;
   font-size: 1.3rem;
 }
 
 .info-section p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(var(--color-white-rgb), 0.8);
   line-height: 1.6;
   margin: 0;
 }
@@ -241,9 +246,9 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--color-white-rgb), 0.05);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .stat-icon {
@@ -251,7 +256,7 @@
 }
 
 .stat-label {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(var(--color-white-rgb), 0.9);
   font-weight: 500;
 }
 
@@ -365,7 +370,7 @@
 }
 
 .hub-card:hover .feature-list li::before {
-  background: #764ba2;
+  background: var(--color-secondary-500);
   transform: scale(1.2);
   transition: all 0.3s ease;
 }

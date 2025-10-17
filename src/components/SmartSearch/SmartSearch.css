@@ -343,11 +343,11 @@
 /* Dark Mode Adjustments */
 @media (prefers-color-scheme: dark) {
   .smart-search__suggestions {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.3);
   }
   
   .smart-search__suggestion--exact {
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.1), transparent);
+    background: linear-gradient(90deg, rgba(var(--color-success-500-rgb), 0.1), transparent);
   }
   
   .smart-search__suggestion--fuzzy {

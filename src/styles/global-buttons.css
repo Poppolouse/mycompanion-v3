@@ -1,0 +1,435 @@
+/* 🎨 GLOBAL BUTTON SYSTEM - DESIGN SYSTEM KURALLARINA UYGUN */
+
+/* ========================================
+ * BASE BUTTON STYLES - Tüm Butonlar İçin
+ * ======================================== */
+
+button,
+.btn,
+[type="button"],
+[type="submit"],
+[class*="button"],
+[class*="btn-"] {
+  /* Font & Text */
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-on-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  
+  /* Layout */
+  padding: 0.875rem 1.75rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  
+  /* Background - GLASSMORPHISM */
+  background: linear-gradient(135deg, 
+    rgba(60, 70, 90, 0.8) 0%,
+    rgba(70, 80, 110, 0.7) 100%
+  );
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  
+  /* Shadow - ELEVATED */
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 3px 10px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  /* Transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Performance */
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+}
+
+/* Hover State - GLOW + 2X SHADOW */
+button:hover,
+.btn:hover,
+[type="button"]:hover,
+[type="submit"]:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.25);
+  
+  /* 2 KAT SHADOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Active State - PRESSED EFFECT */
+button:active,
+.btn:active,
+[type="button"]:active,
+[type="submit"]:active {
+  transform: translateY(0) scale(0.98);
+  
+  /* REDUCED SHADOW */
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Disabled State */
+button:disabled,
+.btn:disabled,
+[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  background: rgba(60, 70, 90, 0.3) !important;
+}
+
+/* ========================================
+ * PRIMARY BUTTONS - Mavi (Ana Aksiyonlar)
+ * ======================================== */
+
+.btn-primary,
+button.primary,
+[class*="primary-btn"],
+.upload-btn,
+.distribute-btn {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-primary-500-rgb), 0.9) 0%, 
+    rgba(var(--color-secondary-500-rgb), 0.8) 100%
+  ) !important;
+  border-color: rgba(var(--color-primary-500-rgb), 0.4);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-primary-500-rgb), 0.2);
+}
+
+.btn-primary:hover,
+button.primary:hover,
+[class*="primary-btn"]:hover,
+.upload-btn:hover,
+.distribute-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-primary-500-rgb), 1) 0%, 
+    rgba(var(--color-secondary-500-rgb), 0.95) 100%
+  ) !important;
+  border-color: rgba(var(--color-primary-500-rgb), 0.6);
+  
+  /* 2 KAT GLOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(var(--color-primary-500-rgb), 0.6),
+    0 0 80px rgba(var(--color-primary-500-rgb), 0.3);
+}
+
+/* ========================================
+ * SUCCESS BUTTONS - Yeşil (Kaydet, Tamamla)
+ * ======================================== */
+
+.btn-success,
+button.success,
+[class*="success-btn"],
+.save-btn,
+.complete-btn {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-success-500-rgb), 0.9) 0%, 
+    rgba(16, 185, 129, 0.8) 100%
+  ) !important;
+  border-color: rgba(var(--color-success-500-rgb), 0.4);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-success-500-rgb), 0.2);
+}
+
+.btn-success:hover,
+button.success:hover,
+[class*="success-btn"]:hover,
+.save-btn:hover,
+.complete-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-success-500-rgb), 1) 0%, 
+    rgba(16, 185, 129, 0.95) 100%
+  ) !important;
+  border-color: rgba(var(--color-success-500-rgb), 0.6);
+  
+  /* 2 KAT GLOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(var(--color-success-500-rgb), 0.6),
+    0 0 80px rgba(var(--color-success-500-rgb), 0.3);
+}
+
+/* ========================================
+ * WARNING BUTTONS - Sarı (Uyarı, Debug)
+ * ======================================== */
+
+.btn-warning,
+button.warning,
+[class*="warning-btn"],
+.debug-btn,
+.legend-toggle-btn {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-warning-500-rgb), 0.9) 0%, 
+    rgba(251, 191, 36, 0.8) 100%
+  ) !important;
+  border-color: rgba(var(--color-warning-500-rgb), 0.4);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-warning-500-rgb), 0.2);
+}
+
+.btn-warning:hover,
+button.warning:hover,
+[class*="warning-btn"]:hover,
+.debug-btn:hover,
+.legend-toggle-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-warning-500-rgb), 1) 0%, 
+    rgba(251, 191, 36, 0.95) 100%
+  ) !important;
+  border-color: rgba(var(--color-warning-500-rgb), 0.6);
+  
+  /* 2 KAT GLOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(var(--color-warning-500-rgb), 0.6),
+    0 0 80px rgba(var(--color-warning-500-rgb), 0.3);
+}
+
+/* ACTIVE WARNING - %50 DAHA PARLAK */
+.legend-toggle-btn.active {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-warning-500-rgb), 1) 0%, 
+    rgba(251, 191, 36, 1) 100%
+  ) !important;
+  border: 3px solid rgba(var(--color-warning-500-rgb), 0.8);
+  
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(var(--color-warning-500-rgb), 0.5);
+}
+
+/* ========================================
+ * DANGER BUTTONS - Kırmızı (Sil, İptal)
+ * ======================================== */
+
+.btn-danger,
+.btn-error,
+button.danger,
+[class*="danger-btn"],
+[class*="delete-btn"],
+.cancel-btn,
+.clear-all-filters-btn {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-error-500-rgb), 0.9) 0%, 
+    rgba(220, 38, 38, 0.8) 100%
+  ) !important;
+  border-color: rgba(var(--color-error-500-rgb), 0.4);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-error-500-rgb), 0.2);
+}
+
+.btn-danger:hover,
+.btn-error:hover,
+button.danger:hover,
+[class*="danger-btn"]:hover,
+[class*="delete-btn"]:hover,
+.cancel-btn:hover,
+.clear-all-filters-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-error-500-rgb), 1) 0%, 
+    rgba(220, 38, 38, 0.95) 100%
+  ) !important;
+  border-color: rgba(var(--color-error-500-rgb), 0.6);
+  
+  /* 2 KAT GLOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(var(--color-error-500-rgb), 0.6),
+    0 0 80px rgba(var(--color-error-500-rgb), 0.3);
+}
+
+/* ========================================
+ * SECONDARY BUTTONS - Mor (İkincil)
+ * ======================================== */
+
+.btn-secondary,
+button.secondary,
+[class*="secondary-btn"],
+.sample-data-btn {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-secondary-500-rgb), 0.9) 0%, 
+    rgba(139, 92, 246, 0.8) 100%
+  ) !important;
+  border-color: rgba(var(--color-secondary-500-rgb), 0.4);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--color-secondary-500-rgb), 0.2);
+}
+
+.btn-secondary:hover,
+button.secondary:hover,
+[class*="secondary-btn"]:hover,
+.sample-data-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--color-secondary-500-rgb), 1) 0%, 
+    rgba(139, 92, 246, 0.95) 100%
+  ) !important;
+  border-color: rgba(var(--color-secondary-500-rgb), 0.6);
+  
+  /* 2 KAT GLOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(var(--color-secondary-500-rgb), 0.6),
+    0 0 80px rgba(var(--color-secondary-500-rgb), 0.3);
+}
+
+/* ========================================
+ * NAVIGATION BUTTONS - Glassmorphism
+ * ======================================== */
+
+.nav-btn,
+.home-btn,
+.hub-btn,
+.add-game-btn {
+  background: rgba(var(--color-black-rgb), 0.3) !important;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn:hover,
+.home-btn:hover,
+.hub-btn:hover,
+.add-game-btn:hover {
+  background: rgba(var(--color-black-rgb), 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--color-white);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(102, 126, 234, 0.2);
+}
+
+/* ========================================
+ * VIEW SWITCHER - Aktif/Pasif Durumlar
+ * ======================================== */
+
+.view-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.view-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  transform: translateY(-3px) scale(1.05);
+  
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(102, 126, 234, 0.4);
+}
+
+/* ACTIVE - %50 DAHA PARLAK + KALIN BORDER */
+.view-btn.active {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.6) 0%, 
+    rgba(118, 75, 162, 0.6) 100%
+  ) !important;
+  border: 3px solid rgba(102, 126, 234, 0.8);
+  color: var(--color-white);
+  
+  box-shadow: 
+    0 15px 50px rgba(102, 126, 234, 0.5),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  
+  transform: translateY(-3px) scale(1.05);
+  backdrop-filter: blur(20px) saturate(200%) brightness(130%);
+}
+
+/* ========================================
+ * SMALL BUTTONS - Kompakt Boyut
+ * ======================================== */
+
+.btn-sm,
+.small-button,
+button.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
+}
+
+/* ========================================
+ * LARGE BUTTONS - Büyük Boyut
+ * ======================================== */
+
+.btn-lg,
+.large-button,
+button.large {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 16px;
+}
+
+/* ========================================
+ * ICON BUTTONS - Sadece İkon
+ * ======================================== */
+
+.btn-icon,
+.icon-button,
+button.icon {
+  padding: 0.75rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+ * RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 768px) {
+  button,
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}

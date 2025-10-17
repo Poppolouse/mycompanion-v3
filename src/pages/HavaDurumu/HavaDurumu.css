@@ -2,7 +2,7 @@
 
 .hava-durumu {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: var(--gradient-background);
   padding: 3rem 4rem;
 }
 
@@ -11,7 +11,7 @@
   background: rgba(30, 41, 59, 0.95);
   border-radius: 24px;
   padding: 3rem 4rem;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 48px rgba(var(--color-black-rgb), 0.3);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   display: grid;
@@ -27,16 +27,16 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .geri-btn {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
@@ -46,15 +46,15 @@
 }
 
 .geri-btn:hover {
-  background: #e5e7eb;
-  border-color: #d1d5db;
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-300);
   transform: translateY(-2px);
 }
 
 .hava-baslik {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-gray-700);
   margin: 0;
   text-align: center;
   flex: 1;
@@ -69,11 +69,11 @@
   display: flex;
   max-width: 500px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 50px;
   padding: 0.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .sehir-input {
@@ -82,16 +82,16 @@
   border: none;
   background: transparent;
   font-size: 1.1rem;
-  color: #1f2937;
+  color: var(--color-gray-700);
   outline: none;
 }
 
 .sehir-input::placeholder {
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .ara-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-900) 100%);
   color: white;
   border: none;
   border-radius: 50px;
@@ -103,7 +103,7 @@
 }
 
 .ara-btn:hover {
-  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  background: linear-gradient(135deg, var(--color-primary-900) 0%, #1e3a8a 100%);
   transform: scale(1.05);
 }
 
@@ -115,17 +115,17 @@
 
 /* Favori Şehirler */
 .favori-sehirler {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .favori-sehirler h3 {
   margin: 0 0 1rem 0;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 1.2rem;
 }
 
@@ -138,36 +138,36 @@
 .favori-item {
   display: flex;
   align-items: center;
-  background: #f8fafc;
+  background: var(--color-gray-50);
   border-radius: 25px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-gray-200);
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .favori-item:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 4px 12px rgba(var(--color-info-500-rgb), 0.2);
 }
 
 .favori-btn {
   background: none;
   border: none;
   padding: 0.6rem 1rem;
-  color: #374151;
+  color: var(--color-gray-600);
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .favori-btn:hover {
-  background: #e2e8f0;
+  background: var(--color-gray-200);
 }
 
 .favori-sil {
   background: #fee2e2;
   border: none;
-  color: #dc2626;
+  color: var(--color-error-600);
   padding: 0.6rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -192,7 +192,7 @@
   border-radius: 16px;
   padding: 2rem;
   text-align: center;
-  color: #dc2626;
+  color: var(--color-error-600);
 }
 
 .hata-ikon {
@@ -202,12 +202,12 @@
 }
 
 .yukleniyor {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 3rem;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .yukleniyor-spinner {
@@ -223,11 +223,11 @@
 
 /* Mevcut Hava Durumu */
 .mevcut-hava {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .mevcut-header {
@@ -239,21 +239,21 @@
 
 .sehir-bilgi h2 {
   margin: 0 0 0.5rem 0;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 2rem;
   font-weight: 700;
 }
 
 .sehir-bilgi p {
   margin: 0;
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 1rem;
 }
 
 .favori-ekle-btn {
   background: #fef3c7;
   border: 2px solid #fbbf24;
-  color: #d97706;
+  color: var(--color-warning-600);
   border-radius: 50px;
   padding: 0.8rem 1rem;
   font-size: 1.5rem;
@@ -268,7 +268,7 @@
 }
 
 .favori-ekle-btn:disabled {
-  background: #f59e0b;
+  background: var(--color-warning-500);
   color: white;
   cursor: default;
 }
@@ -297,12 +297,12 @@
 .sicaklik {
   font-size: 4rem;
   font-weight: 300;
-  color: #1f2937;
+  color: var(--color-gray-700);
 }
 
 .durum {
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--color-gray-500);
   margin: 0;
   font-weight: 500;
 }
@@ -314,8 +314,8 @@
 }
 
 .bilgi-item {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 16px;
   padding: 1.5rem;
   text-align: center;
@@ -323,8 +323,8 @@
 }
 
 .bilgi-item:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 4px 12px rgba(var(--color-info-500-rgb), 0.1);
   transform: translateY(-2px);
 }
 
@@ -336,7 +336,7 @@
 
 .bilgi-label {
   display: block;
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -344,23 +344,23 @@
 
 .bilgi-deger {
   display: block;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 1.3rem;
   font-weight: 600;
 }
 
 /* Günlük Tahmin */
 .gunluk-tahmin {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .gunluk-tahmin h3 {
   margin: 0 0 1.5rem 0;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 1.5rem;
   font-weight: 600;
 }
@@ -372,8 +372,8 @@
 }
 
 .tahmin-item {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 16px;
   padding: 1.5rem;
   text-align: center;
@@ -381,14 +381,14 @@
 }
 
 .tahmin-item:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 4px 12px rgba(var(--color-info-500-rgb), 0.1);
   transform: translateY(-2px);
 }
 
 .gun-adi {
   font-weight: 600;
-  color: #374151;
+  color: var(--color-gray-600);
   margin-bottom: 0.8rem;
   font-size: 0.9rem;
 }
@@ -399,7 +399,7 @@
 }
 
 .gun-durum {
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 0.8rem;
   margin-bottom: 1rem;
   font-weight: 500;
@@ -413,29 +413,29 @@
 
 .gun-sicaklik .max {
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 1.1rem;
 }
 
 .gun-sicaklik .min {
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 1rem;
 }
 
 /* Footer */
 .hava-footer {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem;
   margin-top: 2rem;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .hava-footer p {
   margin: 0.5rem 0;
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 0.9rem;
 }
 

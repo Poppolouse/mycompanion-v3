@@ -157,45 +157,62 @@ function Statistics() {
   return (
     <div className="statistics-page">
       {/* Header */}
-      <div className="stats-header">
-        <div className="header-buttons">
-          <button className="home-button" onClick={() => navigate('/')}>
-            🏠
-          </button>
-          <button className="back-button" onClick={() => navigate('/game-tracking-hub')}>
-            ← Oyun Hub'ına Dön
-          </button>
+      <header className="tracker-header">
+        <div className="header-content">
+          <div className="header-left">
+            <h1>📊 Oyun İstatistikleri</h1>
+            <p>Oyun verilerinizi analiz edin ve ilerlemenizi takip edin</p>
+          </div>
+          
+          <div className="header-controls">
+            {/* Navigation Buttons */}
+            <div className="navigation-buttons">
+              <button 
+                className="nav-btn home-btn"
+                onClick={() => navigate('/')}
+                title="Ana Sayfaya Dön"
+              >
+                🏠 Ana Sayfa
+              </button>
+              <button 
+                className="nav-btn hub-btn"
+                onClick={() => navigate('/game-tracking-hub')}
+                title="Oyun Hub'ına Dön"
+              >
+                🎮 Oyun Hub
+              </button>
+            </div>
+
+            {/* Period Selector */}
+            <div className="period-selector">
+              <button 
+                className={selectedPeriod === 'all' ? 'active' : ''}
+                onClick={() => setSelectedPeriod('all')}
+              >
+                Tüm Zamanlar
+              </button>
+              <button 
+                className={selectedPeriod === 'week' ? 'active' : ''}
+                onClick={() => setSelectedPeriod('week')}
+              >
+                Son 7 Gün
+              </button>
+              <button 
+                className={selectedPeriod === 'month' ? 'active' : ''}
+                onClick={() => setSelectedPeriod('month')}
+              >
+                Son 30 Gün
+              </button>
+              <button 
+                className={selectedPeriod === 'year' ? 'active' : ''}
+                onClick={() => setSelectedPeriod('year')}
+              >
+                Son 1 Yıl
+              </button>
+            </div>
+          </div>
         </div>
-        <h1>📊 Oyun İstatistikleri</h1>
-        
-        {/* Period Selector */}
-        <div className="period-selector">
-          <button 
-            className={selectedPeriod === 'all' ? 'active' : ''}
-            onClick={() => setSelectedPeriod('all')}
-          >
-            Tüm Zamanlar
-          </button>
-          <button 
-            className={selectedPeriod === 'week' ? 'active' : ''}
-            onClick={() => setSelectedPeriod('week')}
-          >
-            Son 7 Gün
-          </button>
-          <button 
-            className={selectedPeriod === 'month' ? 'active' : ''}
-            onClick={() => setSelectedPeriod('month')}
-          >
-            Son 30 Gün
-          </button>
-          <button 
-            className={selectedPeriod === 'year' ? 'active' : ''}
-            onClick={() => setSelectedPeriod('year')}
-          >
-            Son 1 Yıl
-          </button>
-        </div>
-      </div>
+      </header>
 
       {/* Main Stats Grid */}
       <div className="stats-grid">

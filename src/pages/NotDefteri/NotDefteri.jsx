@@ -17,12 +17,12 @@ function NotDefteri() {
 
   // Kategoriler
   const kategoriler = [
-    { id: 'tumu', ad: 'Tümü', ikon: '📝', renk: '#6b7280' },
-    { id: 'kisisel', ad: 'Kişisel', ikon: '👤', renk: '#3b82f6' },
-    { id: 'is', ad: 'İş', ikon: '💼', renk: '#059669' },
-    { id: 'fikir', ad: 'Fikirler', ikon: '💡', renk: '#f59e0b' },
-    { id: 'gorev', ad: 'Görevler', ikon: '✅', renk: '#dc2626' },
-    { id: 'diger', ad: 'Diğer', ikon: '📋', renk: '#8b5cf6' }
+    { id: 'tumu', ad: 'Tümü', ikon: '📝', renk: 'var(--text-secondary)' },
+    { id: 'kisisel', ad: 'Kişisel', ikon: '👤', renk: 'var(--color-primary-500)' },
+    { id: 'is', ad: 'İş', ikon: '💼', renk: 'var(--success-500)' },
+    { id: 'fikir', ad: 'Fikirler', ikon: '💡', renk: 'var(--warning-500)' },
+    { id: 'gorev', ad: 'Görevler', ikon: '✅', renk: 'var(--error-500)' },
+    { id: 'diger', ad: 'Diğer', ikon: '📋', renk: 'var(--color-secondary-500)' }
   ];
 
   // localStorage'dan notları yükle

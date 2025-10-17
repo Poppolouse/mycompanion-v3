@@ -550,8 +550,8 @@ export function RouteProvider({ children }) {
   };
 
   // Cycle düzenleme fonksiyonları
-  const updateCycleGame = (cycleNumber, gamePosition, newGameId) => {
-    console.log(`🎮 Cycle ${cycleNumber} - Pozisyon ${gamePosition} oyunu güncelleniyor:`, newGameId);
+  const updateCycleGame = (cycleNumber, gamePosition, newGameId, gameData = null) => {
+    console.log(`🎮 Cycle ${cycleNumber} - Pozisyon ${gamePosition} oyunu güncelleniyor:`, newGameId, gameData);
     
     // Kütüphaneden oyun bilgilerini al
     const libraryGames = loadGamesFromLibrary();
@@ -562,6 +562,19 @@ export function RouteProvider({ children }) {
     if (!selectedGame) {
       console.error('❌ Seçilen oyun kütüphanede bulunamadı:', newGameId);
       return false;
+    }
+
+    // Campaign bilgilerini hazırla
+    let campaignInfo = {};
+    if (gameData && gameData.campaignId) {
+      const selectedCampaign = selectedGame.campaigns?.find(c => c.id === gameData.campaignId);
+      if (selectedCampaign) {
+        campaignInfo = {
+          campaignId: selectedCampaign.id,
+          campaignName: selectedCampaign.name,
+          campaignDescription: selectedCampaign.description
+        };
+      }
     }
 
     const newState = {
@@ -576,7 +589,8 @@ export function RouteProvider({ children }) {
                       ...game, 
                       gameId: selectedGame.id || selectedGame.gameId,
                       name: selectedGame.title || selectedGame.name || `${game.type} Oyunu`,
-                      status: game.status === 'completed' ? 'completed' : 'selected' // Tamamlanmış oyunları koru
+                      status: game.status === 'completed' ? 'completed' : 'selected', // Tamamlanmış oyunları koru
+                      ...campaignInfo // Campaign bilgilerini ekle
                     }
                   : game
               )
@@ -586,7 +600,7 @@ export function RouteProvider({ children }) {
     };
     
     saveRouteState(newState);
-    console.log('✅ Cycle oyunu güncellendi');
+    console.log('✅ Cycle oyunu güncellendi', campaignInfo.campaignName ? `(Campaign: ${campaignInfo.campaignName})` : '');
     return true;
   };
 
@@ -656,6 +670,101 @@ export function RouteProvider({ children }) {
     return true;
   };
 
+  // Yeni cycle oluştur
+  const createNewCycle = () => {
+    console.log('🆕 Yeni cycle oluşturuluyor...');
+    
+    const newCycleNumber = routeState.cycles.length + 1;
+    
+    // Maksimum cycle sayısını kontrol et
+    if (newCycleNumber > ROUTE_CONFIG.totalCycles) {
+      console.warn('⚠️ Maksimum cycle sayısına ulaşıldı');
+      return false;
+    }
+    
+    const newCycle = {
+      cycleNumber: newCycleNumber,
+      status: 'locked',
+      startDate: null,
+      endDate: null,
+      estimatedHours: 180,
+      actualHours: 0,
+      games: ROUTE_CONFIG.gameTypes.map((type, gameIndex) => ({
+        position: gameIndex + 1,
+        type: type.toLowerCase().replace('/', '_').replace(' ', '_'), // rpg, story_indie, strategy_sim
+        gameId: null,
+        name: null,
+        status: 'empty',
+        completionCriteria: getCompletionCriteria(type),
+        estimatedHours: getEstimatedHours(type),
+        actualHours: 0,
+        startDate: null,
+        endDate: null,
+        notes: '',
+        progress: 0
+      }))
+    };
+    
+    const newState = {
+      ...routeState,
+      cycles: [...routeState.cycles, newCycle],
+      config: {
+        ...routeState.config,
+        totalCycles: newCycleNumber
+      }
+    };
+    
+    saveRouteState(newState);
+    console.log(`✅ Cycle ${newCycleNumber} oluşturuldu`);
+    return newCycle;
+  };
+
+  // Cycle sil
+  const deleteCycle = (cycleNumber) => {
+    console.log(`🗑️ Cycle ${cycleNumber} siliniyor...`);
+    
+    // Aktif cycle'ı silmeye izin verme
+    if (cycleNumber === routeState.config.currentCycle) {
+      console.warn('⚠️ Aktif cycle silinemez');
+      return false;
+    }
+    
+    // Tamamlanmış cycle'ı silmeye izin verme
+    const cycleToDelete = routeState.cycles.find(c => c.cycleNumber === cycleNumber);
+    if (cycleToDelete?.status === 'completed') {
+      console.warn('⚠️ Tamamlanmış cycle silinemez');
+      return false;
+    }
+    
+    // Cycle'ı sil ve sonraki cycle'ların numaralarını güncelle
+    const filteredCycles = routeState.cycles
+      .filter(cycle => cycle.cycleNumber !== cycleNumber)
+      .map((cycle, index) => ({
+        ...cycle,
+        cycleNumber: index + 1
+      }));
+    
+    // Current cycle'ı güncelle (eğer silinen cycle'dan sonraysa)
+    let newCurrentCycle = routeState.config.currentCycle;
+    if (cycleNumber < routeState.config.currentCycle) {
+      newCurrentCycle = Math.max(1, routeState.config.currentCycle - 1);
+    }
+    
+    const newState = {
+      ...routeState,
+      cycles: filteredCycles,
+      config: {
+        ...routeState.config,
+        currentCycle: newCurrentCycle,
+        totalCycles: filteredCycles.length
+      }
+    };
+    
+    saveRouteState(newState);
+    console.log(`✅ Cycle ${cycleNumber} silindi`);
+    return true;
+  };
+
 
 
   const value = {
@@ -672,6 +781,10 @@ export function RouteProvider({ children }) {
     updateGameProgress,
     resetRoute,
     refreshFromLibrary,
+    
+    // Cycle Management Actions
+    createNewCycle,
+    deleteCycle,
     
     // Cycle Editing Actions
     updateCycleGame,

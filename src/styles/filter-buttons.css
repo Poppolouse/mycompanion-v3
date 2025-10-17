@@ -1,0 +1,181 @@
+/* 🎯 FILTER BUTTON STYLES - DESIGN SYSTEM KURALLARINA UYGUN */
+
+/* Hızlı Filtreler - Buttons */
+.quick-filter-btn,
+.filter-chip,
+[class*="filter-btn"] {
+  /* GRADIENT BACKGROUND */
+  background: linear-gradient(135deg, 
+    rgba(60, 70, 90, 0.9) 0%,
+    rgba(70, 80, 110, 0.8) 100%
+  );
+  backdrop-filter: blur(15px) saturate(180%);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-on-dark);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* SHADOW */
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 3px 10px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.quick-filter-btn:hover,
+.filter-chip:hover,
+[class*="filter-btn"]:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.25);
+  
+  /* 2 KAT SHADOW */
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ACTIVE STATE - %50 DAHA PARLAK */
+.quick-filter-btn.active,
+.filter-chip.active,
+[class*="filter-btn"].active {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.6) 0%, 
+    rgba(118, 75, 162, 0.6) 100%
+  ) !important;
+  border: 3px solid rgba(102, 126, 234, 0.8);
+  color: var(--text-on-dark);
+  
+  box-shadow: 
+    0 15px 50px rgba(102, 126, 234, 0.5),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  
+  transform: translateY(-3px) scale(1.05);
+  backdrop-filter: blur(20px) saturate(200%) brightness(130%);
+}
+
+/* Hızlı Filtreler Grid */
+.quick-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Her filtre kategorisi için farklı renk */
+.filter-chip[data-category="status-playing"] {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.25) 0%,
+    rgba(16, 185, 129, 0.2) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.filter-chip[data-category="status-completed"] {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.25) 0%,
+    rgba(37, 99, 235, 0.2) 100%
+  );
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.filter-chip[data-category="backlog"] {
+  background: linear-gradient(135deg, 
+    rgba(251, 191, 36, 0.25) 0%,
+    rgba(245, 158, 11, 0.2) 100%
+  );
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.filter-chip[data-category="high-priority"] {
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.25) 0%,
+    rgba(220, 38, 38, 0.2) 100%
+  );
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Platform filters */
+.filter-chip[data-category="pc"] {
+  background: linear-gradient(135deg, 
+    rgba(139, 92, 246, 0.25) 0%,
+    rgba(124, 58, 237, 0.2) 100%
+  );
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+/* Hover states for kategori butonları */
+.filter-chip[data-category="status-playing"]:hover {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.4) 0%,
+    rgba(16, 185, 129, 0.35) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(34, 197, 94, 0.6);
+}
+
+.filter-chip[data-category="status-completed"]:hover {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.4) 0%,
+    rgba(37, 99, 235, 0.35) 100%
+  );
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(59, 130, 246, 0.6);
+}
+
+.filter-chip[data-category="backlog"]:hover {
+  background: linear-gradient(135deg, 
+    rgba(251, 191, 36, 0.4) 0%,
+    rgba(245, 158, 11, 0.35) 100%
+  );
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(251, 191, 36, 0.6);
+}
+
+.filter-chip[data-category="high-priority"]:hover {
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.4) 0%,
+    rgba(220, 38, 38, 0.35) 100%
+  );
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(239, 68, 68, 0.6);
+}
+
+.filter-chip[data-category="pc"]:hover {
+  background: linear-gradient(135deg, 
+    rgba(139, 92, 246, 0.4) 0%,
+    rgba(124, 58, 237, 0.35) 100%
+  );
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(139, 92, 246, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .quick-filters-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .quick-filter-btn,
+  .filter-chip {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}

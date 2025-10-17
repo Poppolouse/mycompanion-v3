@@ -9,6 +9,8 @@ import GameListItem from '../../components/GameListItem';
 import EditGameModal from '../../components/EditGameModal';
 import { useNotifications } from '../../components/NotificationSystem';
 import './GameTracker.css';
+import './GameTracker_FORCE_FIX.css';
+import './GameTracker_NUCLEAR.css';
 
 /**
  * GameTracker - Ana oyun takip sayfası
@@ -17,7 +19,7 @@ import './GameTracker.css';
 function GameTracker() {
   // Router ve navigation
   const navigate = useNavigate();
-  const { routeState, updateCycleGame, removeCycleGame, resetCycleGameStatus } = useRoute();
+  const { routeState, updateCycleGame, removeCycleGame, resetCycleGameStatus, createNewCycle, deleteCycle } = useRoute();
   
   // Notifications
   const { showSuccess, showError, showWarning, showGameUpdate, showAchievement } = useNotifications();
@@ -53,6 +55,13 @@ function GameTracker() {
   const [selectedGameSlot, setSelectedGameSlot] = useState(null); // {cycleNumber, gameIndex, gameType}
   const [editingGameIndex, setEditingGameIndex] = useState(null);
   const [modalSearchTerm, setModalSearchTerm] = useState(''); // Modal için arama
+  
+  // Bulk Selection State
+  const [selectedCycles, setSelectedCycles] = useState(new Set());
+  const [isBulkSelectMode, setIsBulkSelectMode] = useState(false);
+  
+  // Cycle Floating Panel State
+  const [showCycleKeyboardHelp, setShowCycleKeyboardHelp] = useState(false);
 
   // Refs
   const fileInputRef = useRef(null);
@@ -96,8 +105,40 @@ function GameTracker() {
       
       // Escape - Seçimleri ve filtreleri temizle
       if (e.key === 'Escape') {
-        setSelectedGames(new Set());
-        clearAllFilters();
+        if (currentView === 'cycles') {
+          setSelectedCycles(new Set());
+          setIsBulkSelectMode(false);
+        } else {
+          setSelectedGames(new Set());
+          clearAllFilters();
+        }
+      }
+      
+      // Cycle görünümü için özel kısayollar
+      if (currentView === 'cycles') {
+        // Ctrl+N - Yeni cycle oluştur
+        if (e.ctrlKey && e.key === 'n') {
+          e.preventDefault();
+          handleCreateCycle();
+        }
+        
+        // B - Toplu seçim modunu aç/kapat
+        if (e.key === 'b' || e.key === 'B') {
+          e.preventDefault();
+          toggleBulkSelectMode();
+        }
+        
+        // Ctrl+A - Tüm cycle'ları seç (bulk mode'da)
+        if (e.ctrlKey && e.key === 'a' && isBulkSelectMode) {
+          e.preventDefault();
+          selectAllCycles();
+        }
+        
+        // Delete - Seçili cycle'ları sil
+        if (e.key === 'Delete' && selectedCycles.size > 0) {
+          e.preventDefault();
+          handleBulkDeleteCycles();
+        }
       }
       
       // Enter - İlk arama sonucunu aç
@@ -111,7 +152,7 @@ function GameTracker() {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [selectedGames, searchTerm, navigate]);
+  }, [selectedGames, selectedCycles, searchTerm, navigate, currentView, isBulkSelectMode]);
 
   // Oyun durumu belirleme fonksiyonu
   const getGameStatus = (game) => {
@@ -376,6 +417,86 @@ function GameTracker() {
     setEditingCycleNumber(null);
   };
 
+  // Cycle Management Functions
+  const handleCreateCycle = () => {
+    try {
+      const success = createNewCycle();
+      if (success) {
+        showSuccess('Yeni cycle oluşturuldu!');
+      } else {
+        showError('Maksimum cycle sayısına ulaşıldı (50)');
+      }
+    } catch (error) {
+      showError('Cycle oluşturulurken hata oluştu');
+    }
+  };
+
+  const handleDeleteCycle = (cycleNumber) => {
+    try {
+      const success = deleteCycle(cycleNumber);
+      if (success) {
+        showSuccess(`Cycle ${cycleNumber} silindi`);
+      } else {
+        showError('Cycle silinirken hata oluştu');
+      }
+    } catch (error) {
+      showError('Cycle silinirken hata oluştu');
+    }
+  };
+
+  // Toplu seçme fonksiyonları
+  const toggleBulkSelectMode = () => {
+    setIsBulkSelectMode(!isBulkSelectMode);
+    setSelectedCycles(new Set());
+  };
+
+  const toggleCycleSelection = (cycleNumber) => {
+    const newSelected = new Set(selectedCycles);
+    if (newSelected.has(cycleNumber)) {
+      newSelected.delete(cycleNumber);
+    } else {
+      newSelected.add(cycleNumber);
+    }
+    setSelectedCycles(newSelected);
+  };
+
+  const selectAllCycles = () => {
+    const allCycleNumbers = cycles.map(cycle => cycle.cycleNumber);
+    setSelectedCycles(new Set(allCycleNumbers));
+  };
+
+  const deselectAllCycles = () => {
+    setSelectedCycles(new Set());
+  };
+
+  const handleBulkDeleteCycles = () => {
+    if (selectedCycles.size === 0) {
+      showError('Silinecek cycle seçilmedi');
+      return;
+    }
+
+    const confirmMessage = `${selectedCycles.size} cycle silinecek. Emin misiniz?`;
+    if (window.confirm(confirmMessage)) {
+      try {
+        let deletedCount = 0;
+        selectedCycles.forEach(cycleNumber => {
+          const success = deleteCycle(cycleNumber);
+          if (success) deletedCount++;
+        });
+        
+        if (deletedCount > 0) {
+          showSuccess(`${deletedCount} cycle başarıyla silindi`);
+          setSelectedCycles(new Set());
+          setIsBulkSelectMode(false);
+        } else {
+          showError('Hiçbir cycle silinemedi');
+        }
+      } catch (error) {
+        showError('Toplu silme işlemi sırasında hata oluştu');
+      }
+    }
+  };
+
   const handleSelectGameForSlot = (cycleNumber, gameIndex, gameType) => {
     setSelectedGameSlot({ cycleNumber, gameIndex, gameType });
     setModalSearchTerm(''); // Arama kutusunu temizle
@@ -519,7 +640,12 @@ function GameTracker() {
   };
 
   return (
-    <div className="game-tracker">
+    <div className="game-tracker-page" style={{
+      background: 'linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%)',
+      minHeight: '100vh',
+      width: '100vw'
+    }}>
+      <div className="game-tracker">
       {/* Header */}
       <header className="tracker-header">
         <div className="header-content">
@@ -570,7 +696,7 @@ function GameTracker() {
               </button>
             </div>
 
-            {/* Color Legend Toggle */}
+            {/* Color Legend Toggle - Sadece kütüphane görünümünde göster */}
             {currentView === 'library' && games.length > 0 && (
               <button 
                 className="legend-toggle-btn"
@@ -581,7 +707,7 @@ function GameTracker() {
               </button>
             )}
 
-            {/* Keyboard Help Toggle */}
+            {/* Keyboard Help Toggle - Sadece kütüphane görünümünde göster */}
             {currentView === 'library' && games.length > 0 && (
               <button 
                 className="legend-toggle-btn"
@@ -598,7 +724,10 @@ function GameTracker() {
       </header>
 
       {/* Main Content */}
-      <main className="tracker-main">
+      <main className="tracker-main" style={{
+        background: 'transparent',
+        backdropFilter: 'none'
+      }}>
         {/* Controls */}
         <div className="tracker-controls">
           <input
@@ -688,7 +817,10 @@ function GameTracker() {
         {/* Content based on current view */}
         {currentView === 'library' ? (
           /* Oyun Kütüphanesi */
-          <div className="games-section">
+          <div className="games-section" style={{
+            background: 'rgba(20, 25, 40, 0.3)',
+            backdropFilter: 'blur(10px)'
+          }}>
             {/* Color Legend */}
             {showColorLegend && (
               <div className="color-legend">
@@ -789,6 +921,38 @@ function GameTracker() {
                   </div>
                 </div>
 
+                {/* Toplu İşlemler */}
+                {selectedGames.size > 0 && (
+                  <div className="bulk-operations">
+                    <div className="bulk-info">
+                      <span className="selected-count">{selectedGames.size} oyun seçildi</span>
+                    </div>
+                    <div className="bulk-actions">
+                      <button 
+                        className="bulk-btn status-btn"
+                        onClick={() => handleBulkStatusChange('playing')}
+                        title="Seçili oyunları 'Oynuyor' yap"
+                      >
+                        🎮 Oynuyor Yap
+                      </button>
+                      <button 
+                        className="bulk-btn status-btn"
+                        onClick={() => handleBulkStatusChange('completed')}
+                        title="Seçili oyunları 'Tamamlandı' yap"
+                      >
+                        ✅ Tamamlandı Yap
+                      </button>
+                      <button 
+                        className="bulk-btn delete-btn"
+                        onClick={handleBulkDelete}
+                        title="Seçili oyunları sil"
+                      >
+                        🗑️ Sil ({selectedGames.size})
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Oyun Listesi - List View */}
                 <div className="games-list-view ultra-compact-list">
                   <div className="list-header">
@@ -888,10 +1052,61 @@ function GameTracker() {
           </div>
         ) : (
           /* Cycle Viewer */
-          <div className="cycles-section">
+          <div className="cycles-section" style={{
+            background: 'rgba(20, 25, 40, 0.3)',
+            backdropFilter: 'blur(10px)'
+          }}>
             <div className="cycles-header">
-              <h2>🔄 Cycle Görüntüleyici</h2>
-              <p>Oyunlarınızın cycle'lara nasıl dağıtıldığını görün</p>
+              <div className="cycles-title-section">
+                <h2>🔄 Cycle Görüntüleyici</h2>
+                <p>Oyunlarınızın cycle'lara nasıl dağıtıldığını görün</p>
+              </div>
+              <div className="cycles-header-actions">
+                {/* Toplu seçme butonları */}
+                {isBulkSelectMode && (
+                  <div className="bulk-select-controls">
+                    <button 
+                      className="bulk-control-btn select-all"
+                      onClick={selectAllCycles}
+                      title="Tümünü Seç"
+                    >
+                      ☑️ Tümünü Seç
+                    </button>
+                    <button 
+                      className="bulk-control-btn deselect-all"
+                      onClick={deselectAllCycles}
+                      title="Seçimi Temizle"
+                    >
+                      ⬜ Temizle
+                    </button>
+                    <button 
+                      className="bulk-control-btn bulk-delete"
+                      onClick={handleBulkDeleteCycles}
+                      disabled={selectedCycles.size === 0}
+                      title={`${selectedCycles.size} Cycle'ı Sil`}
+                    >
+                      🗑️ Sil ({selectedCycles.size})
+                    </button>
+                  </div>
+                )}
+                
+                <button 
+                  className={`bulk-select-toggle ${isBulkSelectMode ? 'active' : ''}`}
+                  onClick={toggleBulkSelectMode}
+                  title={isBulkSelectMode ? 'Toplu Seçimi Kapat' : 'Toplu Seçimi Aç'}
+                >
+                  {isBulkSelectMode ? '❌ Toplu Seçimi Kapat' : '☑️ Toplu Seç'}
+                </button>
+                
+                <button 
+                  className="create-cycle-btn"
+                  onClick={handleCreateCycle}
+                  title="Yeni Cycle Oluştur"
+                >
+                  <span className="icon">➕</span>
+                  Yeni Cycle
+                </button>
+              </div>
             </div>
 
             {!routeState?.cycles || routeState.cycles.length === 0 ? (
@@ -903,7 +1118,18 @@ function GameTracker() {
             ) : (
               <div className="cycles-grid">
                 {routeState.cycles.map((cycle, cycleIndex) => (
-                  <div key={cycle.cycleNumber || cycleIndex} className="cycle-card">
+                  <div key={cycle.cycleNumber || cycleIndex} className={`cycle-card ${isBulkSelectMode ? 'bulk-select-mode' : ''} ${selectedCycles.has(cycle.cycleNumber) ? 'selected' : ''}`}>
+                    {/* Toplu seçim checkbox */}
+                    {isBulkSelectMode && (
+                      <div className="cycle-checkbox">
+                        <input 
+                          type="checkbox"
+                          checked={selectedCycles.has(cycle.cycleNumber)}
+                          onChange={() => toggleCycleSelection(cycle.cycleNumber)}
+                        />
+                      </div>
+                    )}
+                    
                     <div className="cycle-header">
                       <div className="cycle-title-section">
                         <h3>🔥 Cycle {cycle.cycleNumber}</h3>
@@ -932,6 +1158,14 @@ function GameTracker() {
                             ⚙️ Düzenle
                           </button>
                         )}
+                        {/* Silme butonu - tüm cycle'lar için */}
+                        <button 
+                          className="cycle-action-btn delete-btn"
+                          onClick={() => handleDeleteCycle(cycle.cycleNumber)}
+                          title="Cycle'ı Sil"
+                        >
+                          🗑️ Sil
+                        </button>
                       </div>
                     </div>
                     
@@ -998,6 +1232,84 @@ function GameTracker() {
               </div>
             )}
           </div>
+        )}
+
+        {/* Floating Panels - Cycle görünümünde */}
+        {currentView === 'cycles' && (
+          <>
+            {/* Floating Cycle Keyboard Help */}
+            {showCycleKeyboardHelp && (
+              <div className="floating-panel cycle-keyboard-help-floating">
+                <div className="floating-panel-header">
+                  <h3>⌨️ Cycle Klavye Kısayolları</h3>
+                  <button 
+                    className="floating-close-btn"
+                    onClick={() => setShowCycleKeyboardHelp(false)}
+                    title="Kapat"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="keyboard-shortcuts">
+                  <div className="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>N</kbd>
+                    <span>Yeni cycle oluştur</span>
+                  </div>
+                  <div className="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>A</kbd>
+                    <span>Tüm cycle'ları seç (Bulk Mode)</span>
+                  </div>
+                  <div className="shortcut-item">
+                    <kbd>Delete</kbd>
+                    <span>Seçili cycle'ları sil</span>
+                  </div>
+                  <div className="shortcut-item">
+                    <kbd>B</kbd>
+                    <span>Toplu seçim modunu aç/kapat</span>
+                  </div>
+                  <div className="shortcut-item">
+                    <kbd>Esc</kbd>
+                    <span>Seçimleri temizle</span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Floating Color Legend */}
+            {showColorLegend && (
+              <div className="floating-panel color-legend-floating">
+                <div className="floating-panel-header">
+                  <h3>🎨 Cycle Durumu Renk Açıklaması</h3>
+                  <button 
+                    className="floating-close-btn"
+                    onClick={() => setShowColorLegend(false)}
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="legend-items">
+                  <div className="legend-item">
+                    <div className="legend-color cycle-active"></div>
+                    <span>🟢 Aktif</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color cycle-pending"></div>
+                    <span>🟡 Beklemede</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color cycle-locked"></div>
+                    <span>🔒 Kilitli</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color cycle-completed"></div>
+                    <span>✅ Tamamlandı</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
+          </>
         )}
       </main>
 
@@ -1112,6 +1424,18 @@ function GameTracker() {
           </div>
         </div>
       )}
+
+      {/* Floating Keyboard Help Button - Cycle'a özel - Window'a bağlı */}
+      {currentView === 'cycles' && (
+        <button 
+          className="floating-keyboard-btn"
+          onClick={() => setShowCycleKeyboardHelp(!showCycleKeyboardHelp)}
+          title="Klavye kısayollarını göster/gizle"
+        >
+          ⌨️
+        </button>
+      )}
+      </div>
     </div>
   );
 }

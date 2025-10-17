@@ -1,8 +1,8 @@
 /* Admin Panel Styles - Desktop First */
 .admin-panel {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  color: #e2e8f0;
+  background: linear-gradient(135deg, var(--color-gray-900) 0%, var(--color-gray-800) 50%, var(--color-gray-700) 100%);
+  color: var(--color-gray-200);
   padding: 3rem 4rem;
 }
 
@@ -11,27 +11,27 @@
   background: rgba(30, 41, 59, 0.95);
   border-radius: 24px;
   padding: 3rem 4rem;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 48px rgba(var(--color-black-rgb), 0.3);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   min-height: calc(100vh - 6rem);
 }
 
 .admin-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(var(--color-black-rgb), 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .geri-button {
-  background: #667eea;
+  background: var(--color-primary-500);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -63,7 +63,7 @@
   background: #f7fafc;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-gray-200);
 }
 
 /* Bildirim */
@@ -89,7 +89,7 @@
 
 .bildirim--uyari {
   background: #fee140;
-  color: #2d3748;
+  color: var(--color-gray-700);
 }
 
 .bildirim--hata {
@@ -115,10 +115,10 @@
 
 .admin-sidebar {
   width: 250px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(var(--color-white-rgb), 0.9);
   backdrop-filter: blur(10px);
   padding: 2rem 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 10px rgba(var(--color-black-rgb), 0.1);
 }
 
 .admin-nav {
@@ -126,13 +126,13 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--color-gray-200);
   padding-bottom: 2rem;
 }
 
 .nav-button {
   padding: 1rem 2rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-gray-200);
   background: #f7fafc;
   color: #4a5568;
   border-radius: 12px;
@@ -150,15 +150,15 @@
 .nav-button:hover {
   background: #edf2f7;
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(var(--color-black-rgb), 0.1);
   border-color: #cbd5e0;
 }
 
 .nav-button.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
   color: white;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-  border-color: #667eea;
+  box-shadow: 0 8px 24px rgba(var(--color-primary-500-rgb), 0.3);
+  border-color: var(--color-primary-500);
   transform: translateY(-3px);
 }
 
@@ -182,17 +182,17 @@
 }
 
 .uygulama-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(var(--color-black-rgb), 0.1);
   transition: all 0.3s ease;
 }
 
 .uygulama-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(var(--color-black-rgb), 0.15);
 }
 
 .uygulama-header {
@@ -214,7 +214,7 @@
 .uygulama-info h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.1rem;
-  color: #2d3748;
+  color: var(--color-gray-700);
 }
 
 .uygulama-info p {
@@ -304,11 +304,11 @@
 }
 
 .uygulama-form {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(var(--color-black-rgb), 0.1);
   max-width: 800px;
 }
 
@@ -335,7 +335,7 @@
 .form-group select,
 .form-group textarea {
   padding: 0.75rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-gray-200);
   border-radius: 8px;
   font-size: 0.9rem;
   transition: all 0.2s ease;
@@ -345,8 +345,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-500-rgb), 0.1);
 }
 
 .form-group textarea {
@@ -381,7 +381,7 @@
 }
 
 .cancel-button {
-  background: #e2e8f0;
+  background: var(--color-gray-200);
   color: #4a5568;
 }
 
@@ -403,16 +403,16 @@
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(var(--color-black-rgb), 0.1);
 }
 
 .stat-card h3 {
   margin: 0 0 1rem 0;
-  color: #2d3748;
+  color: var(--color-gray-700);
   font-size: 1.1rem;
 }
 
@@ -421,7 +421,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .stat-item:last-child {
@@ -435,7 +435,7 @@
 
 .stat-item span:last-child {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--color-gray-700);
 }
 
 .popular-app {
@@ -445,7 +445,7 @@
   padding: 1rem;
   background: #f7fafc;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-gray-200);
 }
 
 .app-icon {
@@ -454,7 +454,7 @@
 
 .app-name {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--color-gray-700);
   flex: 1;
 }
 
@@ -480,16 +480,16 @@
 }
 
 .setting-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(var(--color-black-rgb), 0.1);
 }
 
 .setting-card h3 {
   margin: 0 0 1rem 0;
-  color: #2d3748;
+  color: var(--color-gray-700);
   font-size: 1.1rem;
 }
 
@@ -551,7 +551,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .info-item:last-child {
@@ -565,7 +565,7 @@
 
 .info-item span:last-child {
   font-weight: 500;
-  color: #2d3748;
+  color: var(--color-gray-700);
   font-size: 0.9rem;
 }
 

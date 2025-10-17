@@ -1,0 +1,192 @@
+/* 🎨 SAYFA ÖZEL METİN RENKLERİ - OKUNABILIRLIK FIX */
+
+/* ====================================
+ * ANA SAYFA - Sidebar Olan Sayfalar
+ * ==================================== */
+
+/* Ana Sayfa - Gradient arka planda beyaz metin */
+.ana-sayfa,
+.ana-sayfa * {
+  color: var(--text-on-gradient) !important;
+}
+
+.ana-sayfa h1,
+.ana-sayfa h2,
+.ana-sayfa h3,
+.ana-sayfa h4,
+.ana-sayfa h5,
+.ana-sayfa h6 {
+  color: var(--heading-on-dark) !important;
+}
+
+/* ====================================
+ * OYUN TAKİBİ MERKEZİ - Koyu Arka Plan
+ * ==================================== */
+
+/* Game Tracking Hub - Koyu arka planda beyaz metin */
+body:has([class*="game-tracking-hub"]),
+body:has([class*="GameTrackingHub"]) {
+  background: linear-gradient(135deg, #050508 0%, #0f0f1a 25%, #0a1020 50%, #061a2f 100%) !important;
+}
+
+[class*="game-tracking-hub"] *,
+[class*="GameTrackingHub"] * {
+  color: var(--text-on-dark) !important;
+}
+
+[class*="game-tracking-hub"] h1,
+[class*="game-tracking-hub"] h2,
+[class*="game-tracking-hub"] h3,
+[class*="GameTrackingHub"] h1,
+[class*="GameTrackingHub"] h2,
+[class*="GameTrackingHub"] h3 {
+  color: var(--heading-on-dark) !important;
+  background: var(--heading-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ====================================
+ * KARTLAR - Her Yerde Okunabilir
+ * ==================================== */
+
+/* Tüm kartlarda metin beyaz olsun */
+.card,
+.game-card,
+.cycle-card,
+.feature-card,
+[class*="card"] {
+  color: var(--text-on-card) !important;
+}
+
+.card h1, .card h2, .card h3, .card h4,
+.game-card h1, .game-card h2, .game-card h3,
+.cycle-card h1, .cycle-card h2, .cycle-card h3 {
+  color: var(--heading-on-dark) !important;
+}
+
+/* ====================================
+ * BUTONLAR - Her Yerde Okunabilir
+ * ==================================== */
+
+button,
+.btn,
+[class*="button"],
+[class*="btn-"] {
+  color: var(--text-on-dark) !important;
+}
+
+/* ====================================
+ * MODALLAR - Koyu Arka Planda Beyaz
+ * ==================================== */
+
+.modal,
+[class*="modal"] {
+  color: var(--text-on-dark) !important;
+}
+
+.modal h1, .modal h2, .modal h3,
+[class*="modal"] h1,
+[class*="modal"] h2,
+[class*="modal"] h3 {
+  color: var(--heading-on-dark) !important;
+}
+
+/* ====================================
+ * GENEL KURALLAR
+ * ==================================== */
+
+/* Body'de gradient varsa beyaz metin */
+body:has([style*="linear-gradient"]) {
+  color: var(--text-on-gradient) !important;
+}
+
+/* Koyu arka planda tüm metinler beyaz */
+body:has(.game-tracker-page) *,
+body:has([class*="game-tracking-hub"]) * {
+  color: var(--text-on-dark);
+}
+
+/* Başlıklar için özel stil */
+body:has(.game-tracker-page) h1,
+body:has(.game-tracker-page) h2,
+body:has(.game-tracker-page) h3,
+body:has([class*="game-tracking-hub"]) h1,
+body:has([class*="game-tracking-hub"]) h2,
+body:has([class*="game-tracking-hub"]) h3 {
+  color: var(--heading-on-dark) !important;
+}
+
+/* ====================================
+ * PLACEHOLDER VE DISABLED
+ * ==================================== */
+
+::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7;
+}
+
+:disabled,
+[disabled] {
+  color: var(--text-muted) !important;
+  opacity: 0.5;
+}
+
+/* ====================================
+ * LINKLER - Okunabilir Mavi
+ * ==================================== */
+
+a {
+  color: var(--text-link) !important;
+}
+
+a:hover {
+  color: var(--text-link-hover) !important;
+}
+
+/* ====================================
+ * INPUT VE FORM ELEMANLARI
+ * ==================================== */
+
+input,
+textarea,
+select {
+  color: var(--text-on-dark) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* ====================================
+ * SPESİFİK SAYFA DÜZELTMELERİ
+ * ==================================== */
+
+/* Ana Sayfa Kartları */
+.app-card h3,
+.feature-card h3 {
+  color: var(--heading-on-dark) !important;
+}
+
+.app-card p,
+.feature-card p {
+  color: var(--text-secondary) !important;
+}
+
+/* Oyun Takibi Merkezi Butonları */
+[class*="hub"] button,
+[class*="Hub"] button {
+  color: var(--text-on-dark) !important;
+  font-weight: 600;
+}
+
+/* Liste başlıkları */
+.list-header,
+.table-header,
+[class*="header"] {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}

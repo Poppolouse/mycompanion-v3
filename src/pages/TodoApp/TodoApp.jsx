@@ -82,9 +82,9 @@ function TodoApp() {
   const aktifGorev = toplamGorev - tamamlananGorev;
 
   const oncelikRenkleri = {
-    düşük: '#10b981',
-    normal: '#6b7280',
-    yüksek: '#ef4444'
+    düşük: 'var(--success-500)',
+    normal: 'var(--text-secondary)',
+    yüksek: 'var(--error-500)'
   };
 
   return (

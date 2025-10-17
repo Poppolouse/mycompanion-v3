@@ -47,49 +47,49 @@ function AdvancedFilters({
         name: '🎮 Şu An Oynuyor',
         description: 'Aktif olarak oynadığınız oyunlar',
         filters: { status: ['playing'] },
-        color: 'var(--success)'
+        color: '#10b981'
       },
       {
         id: 'completed',
         name: '✅ Tamamlananlar',
         description: '%100 tamamlanmış oyunlar',
         filters: { status: ['completed'] },
-        color: 'var(--primary)'
+        color: '#667eea'
       },
       {
         id: 'backlog',
         name: '📚 Backlog',
         description: 'Henüz başlanmamış oyunlar',
         filters: { status: ['not-started'] },
-        color: 'var(--warning)'
+        color: '#f59e0b'
       },
       {
         id: 'high-rated',
         name: '⭐ Yüksek Puanlı',
         description: '8+ puan alan oyunlar',
         filters: { rating: { min: 8, max: 10 } },
-        color: 'var(--accent)'
+        color: '#8b5cf6'
       },
       {
         id: 'recent',
         name: '🆕 Son Çıkanlar',
         description: 'Son 2 yılda çıkan oyunlar',
         filters: { releaseYear: { min: new Date().getFullYear() - 2, max: new Date().getFullYear() } },
-        color: 'var(--secondary)'
+        color: '#06b6d4'
       },
       {
         id: 'pc-games',
         name: '🖥️ PC Oyunları',
         description: 'PC platformundaki oyunlar',
         filters: { platform: ['PC', 'Steam', 'Epic Games'] },
-        color: 'var(--info)'
+        color: '#3b82f6'
       },
       {
         id: 'nearly-done',
         name: '🏁 Neredeyse Bitti',
         description: '%80+ ilerleme kaydedilen oyunlar',
         filters: { progress: { min: 80, max: 100 } },
-        color: 'var(--success)'
+        color: '#10b981'
       }
     ];
     setPresetFilters(presets);

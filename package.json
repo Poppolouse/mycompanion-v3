@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "css:validate": "node css-variable-validator.cjs",
+    "css:fix": "node css-variable-validator.cjs && echo '🔧 CSS sorunları tespit edildi. Manuel düzeltme gerekli.'"
   },
   "dependencies": {
     "react": "^19.1.1",

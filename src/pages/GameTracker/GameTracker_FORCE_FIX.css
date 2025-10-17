@@ -1,0 +1,56 @@
+/* 🔥 GAMETRACKER BEYAZ SORUN - KESİN ÇÖZÜM V2 */
+
+/* GameTracker sayfası için GLOBAL override */
+body:has(.game-tracker-page) {
+  background: linear-gradient(135deg, #050508 0%, #0f0f1a 25%, #0a1020 50%, #061a2f 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* GameTracker sayfa wrapper - ZORLA */
+.game-tracker-page {
+  background: linear-gradient(135deg, #050508 0%, #0f0f1a 25%, #0a1020 50%, #061a2f 100%) !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  position: relative !important;
+}
+
+/* Tracker main - TRANSPARENT */
+.game-tracker-page .tracker-main {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* Games section - HAFIF TINT */
+.game-tracker-page .games-section {
+  background: rgba(20, 25, 40, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Cycles section - HAFIF TINT */
+.game-tracker-page .cycles-section {
+  background: rgba(20, 25, 40, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Tracker controls - GLASSMORPHISM */
+.game-tracker-page .tracker-controls {
+  background: linear-gradient(135deg, 
+    rgba(40, 50, 70, 0.7) 0%,
+    rgba(50, 60, 85, 0.65) 100%
+  ) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+}
+
+/* Eğer başka bir arka plan varsa kaldır */
+.game-tracker-page * {
+  /* Beyaz arka planları temizle */
+}
+
+.game-tracker-page div:not(.game-card):not(.modal):not(.cycle-card) {
+  background-color: transparent;
+}
+
+/* Root element için de override */
+#root:has(.game-tracker-page) {
+  background: linear-gradient(135deg, #050508 0%, #0f0f1a 25%, #0a1020 50%, #061a2f 100%) !important;
+}

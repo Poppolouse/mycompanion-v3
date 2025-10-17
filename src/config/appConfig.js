@@ -21,37 +21,37 @@ export const uygulamaKategorileri = {
   verimlilik: {
     baslik: 'Verimlilik',
     ikon: '⚡',
-    renk: '#667eea',
+    renk: 'var(--color-primary-500)',
     aciklama: 'Günlük işlerinizi organize etmenize yardımcı uygulamalar'
   },
   hesaplama: {
     baslik: 'Hesaplama',
     ikon: '🧮',
-    renk: '#f093fb',
+    renk: 'var(--gradient-pink)',
     aciklama: 'Matematiksel hesaplamalar ve analiz araçları'
   },
   bilgi: {
     baslik: 'Bilgi',
     ikon: '📚',
-    renk: '#4facfe',
+    renk: 'var(--gradient-blue)',
     aciklama: 'Bilgi edinme ve araştırma uygulamaları'
   },
   genel: {
     baslik: 'Genel',
     ikon: '🔧',
-    renk: '#43e97b',
+    renk: 'var(--gradient-green)',
     aciklama: 'Genel amaçlı kullanışlı araçlar'
   },
   eglence: {
     baslik: 'Eğlence',
     ikon: '🎮',
-    renk: '#fa709a',
+    renk: 'var(--gradient-purple)',
     aciklama: 'Eğlenceli ve interaktif uygulamalar'
   },
   sosyal: {
     baslik: 'Sosyal',
     ikon: '👥',
-    renk: '#fee140',
+    renk: 'var(--gradient-orange)',
     aciklama: 'Sosyal ve iletişim araçları'
   }
 };
@@ -115,31 +115,31 @@ export const temaAyarlari = {
   light: {
     baslik: 'Açık Tema',
     renkler: {
-      primary: '#667eea',
-      secondary: '#764ba2',
-      success: '#43e97b',
-      warning: '#fee140',
-      error: '#fa709a',
-      info: '#4facfe',
-      background: '#ffffff',
-      surface: '#f8f9fa',
-      text: '#2d3748',
-      textSecondary: '#718096'
+      primary: 'var(--color-primary-500)',
+      secondary: 'var(--color-secondary-500)',
+      success: 'var(--color-success-500)',
+      warning: 'var(--color-warning-500)',
+      error: 'var(--color-error-500)',
+      info: 'var(--color-info-500)',
+      background: 'var(--color-white)',
+      surface: 'var(--surface-1)',
+      text: 'var(--color-gray-700)',
+      textSecondary: 'var(--text-secondary)'
     }
   },
   dark: {
     baslik: 'Koyu Tema',
     renkler: {
-      primary: '#667eea',
-      secondary: '#764ba2',
-      success: '#43e97b',
-      warning: '#fee140',
-      error: '#fa709a',
-      info: '#4facfe',
-      background: '#1a202c',
-      surface: '#2d3748',
-      text: '#f7fafc',
-      textSecondary: '#a0aec0'
+      primary: 'var(--color-primary-500)',
+      secondary: 'var(--color-secondary-500)',
+      success: 'var(--color-success-500)',
+      warning: 'var(--color-warning-500)',
+      error: 'var(--color-error-500)',
+      info: 'var(--color-info-500)',
+      background: 'var(--dark-surface-special)',
+      surface: 'var(--color-gray-700)',
+      text: 'var(--text-on-dark)',
+      textSecondary: 'var(--text-secondary)'
     }
   },
   auto: {

@@ -23,6 +23,30 @@ function GameListItem({
     return 'Oynanmadı';
   };
 
+  // Tür renklendirme fonksiyonu
+  const getGenreColor = (genre) => {
+    const genreColors = {
+      'Aksiyon': '#ff6b6b',        // Kırmızı - Heyecan
+      'RPG': '#4ecdc4',            // Turkuaz - Macera
+      'Strateji': '#45b7d1',       // Mavi - Zeka
+      'Spor': '#96ceb4',           // Yeşil - Aktivite
+      'Yarış': '#feca57',          // Sarı - Hız
+      'Simülasyon': '#ff9ff3',     // Pembe - Yaratıcılık
+      'Platform': '#54a0ff',       // Açık Mavi - Eğlence
+      'Bulmaca': '#5f27cd',        // Mor - Düşünce
+      'Korku': '#2d3436',          // Koyu Gri - Gerilim
+      'Macera': '#00b894',         // Yeşil - Keşif
+      'Savaş': '#e17055',          // Turuncu - Çatışma
+      'Indie': '#a29bfe',          // Lavanta - Özgünlük
+      'Multiplayer': '#fd79a8',    // Pembe - Sosyal
+      'Sandbox': '#fdcb6e',        // Altın - Özgürlük
+      'Survival': '#6c5ce7',       // Mor - Mücadele
+      'default': '#74b9ff'         // Varsayılan mavi
+    };
+    
+    return genreColors[genre] || genreColors['default'];
+  };
+
   // Oyun detay sayfasına git
   const handleGameClick = () => {
     navigate(`/game-tracker/game/${game.id || index}`);
@@ -75,7 +99,21 @@ function GameListItem({
 
       {/* Tür */}
       <div className="game-item-genre">
-        <span>{game.genre || game.tur || 'Aksiyon'}</span>
+        <span 
+          className="genre-badge"
+          style={{
+            backgroundColor: getGenreColor(game.genre || game.tur || 'Aksiyon'),
+            color: '#ffffff',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '0.8rem',
+            fontWeight: '600',
+            textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+            border: `1px solid ${getGenreColor(game.genre || game.tur || 'Aksiyon')}40`
+          }}
+        >
+          {game.genre || game.tur || 'Aksiyon'}
+        </span>
       </div>
 
       {/* Durum */}

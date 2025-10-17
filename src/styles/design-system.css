@@ -1,0 +1,428 @@
+/* 🎨 GAME TRACKER DESIGN SYSTEM
+ * ================================
+ * Bu dosya tüm uygulamanın renk paletini ve design token'larını içerir.
+ * Yeni bir renk eklerken mutlaka buraya ekleyin ve hangi amaçla kullanıldığını belirtin.
+ * 
+ * 📋 İÇERİK:
+ * 1. Ana Renk Paleti (Primary Colors)
+ * 2. Arka Plan Renkleri (Background Colors) 
+ * 3. Metin Renkleri (Text Colors)
+ * 4. Durum Renkleri (Status Colors)
+ * 5. Yardımcı Renkler (Utility Colors)
+ * 6. Glassmorphism Efektleri
+ * 7. Gölge ve Efektler
+ */
+
+:root {
+  /* ========================================
+   * 🔧 0. TEMEL DEĞERLER (BASE VALUES)
+   * ======================================== */
+  
+  /* 🎨 Temel Renkler */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-white-rgb: 255, 255, 255;
+  --color-black-rgb: 0, 0, 0;
+  
+  /* 📏 Spacing Sistemi */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  
+  /* 🔤 Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  
+  /* 🔘 Border Radius */
+  --radius-sm: 0.25rem;     /* 4px */
+  --radius-md: 0.5rem;      /* 8px */
+  --radius-lg: 0.75rem;     /* 12px */
+  --radius-xl: 1rem;        /* 16px */
+  --radius-2xl: 1.5rem;     /* 24px */
+  --radius-full: 9999px;    /* Tam yuvarlak */
+
+  /* ========================================
+   * 🎯 1. ANA RENK PALETİ (PRIMARY COLORS)
+   * ======================================== */
+  
+  /* 🔵 Mavi Tonları - Ana marka renkleri - BRIGHT */
+  --color-primary-50: #eff6ff;     /* En açık mavi - hover efektleri */
+  --color-primary-100: #dbeafe;    /* Çok açık mavi - background highlights */
+  --color-primary-200: #bfdbfe;    /* Açık mavi - disabled states */
+  --color-primary-300: #93c5fd;    /* Orta açık mavi - secondary buttons */
+  --color-primary-400: #60a5fa;    /* Orta mavi - info messages */
+  --color-primary-500: #3b82f6;    /* Ana mavi - primary buttons, links - PARLAK */
+  --color-primary-600: #2563eb;    /* Koyu mavi - button hover - PARLAK */
+  --color-primary-700: #1d4ed8;    /* Daha koyu mavi - active states - PARLAK */
+  --color-primary-800: #1e40af;    /* Çok koyu mavi - pressed states */
+  --color-primary-900: #1e3a8a;    /* En koyu mavi - dark theme accents */
+
+  /* 🟣 Mor Tonları - İkincil marka renkleri - BRIGHT */
+  --color-secondary-50: #faf5ff;   /* En açık mor - subtle backgrounds */
+  --color-secondary-100: #f3e8ff;  /* Çok açık mor - card backgrounds */
+  --color-secondary-200: #e9d5ff;  /* Açık mor - hover states */
+  --color-secondary-300: #d8b4fe;  /* Orta açık mor - borders */
+  --color-secondary-400: #c084fc;  /* Orta mor - secondary elements */
+  --color-secondary-500: #a855f7;  /* Ana mor - secondary buttons - PARLAK */
+  --color-secondary-600: #9333ea;  /* Koyu mor - hover effects - PARLAK */
+  --color-secondary-700: #7c3aed;  /* Daha koyu mor - active states - PARLAK */
+  --color-secondary-800: #6d28d9;  /* Çok koyu mor - dark accents */
+  --color-secondary-900: #581c87;  /* En koyu mor - deep shadows */
+
+  /* 🟢 Yeşil Tonları - Success renkleri - BRIGHT */
+  --color-success-50: #f0fdf4;     /* En açık yeşil - success backgrounds */
+  --color-success-100: #dcfce7;    /* Çok açık yeşil - success cards */
+  --color-success-200: #bbf7d0;    /* Açık yeşil - success borders */
+  --color-success-300: #86efac;    /* Orta açık yeşil - success highlights */
+  --color-success-400: #4ade80;    /* Orta yeşil - success secondary */
+  --color-success-500: #22c55e;    /* Ana yeşil - success buttons - PARLAK */
+  --color-success-600: #16a34a;    /* Koyu yeşil - success hover - PARLAK */
+  --color-success-700: #15803d;    /* Daha koyu yeşil - success active - PARLAK */
+  --color-success-800: #166534;    /* Çok koyu yeşil - success pressed */
+  --color-success-900: #14532d;    /* En koyu yeşil - success shadows */
+
+  /* 🟡 Sarı Tonları - Warning renkleri - BRIGHT */
+  --color-warning-50: #fffbeb;     /* En açık sarı - warning backgrounds */
+  --color-warning-100: #fef3c7;    /* Çok açık sarı - warning cards */
+  --color-warning-200: #fde68a;    /* Açık sarı - warning borders */
+  --color-warning-300: #fcd34d;    /* Orta açık sarı - warning highlights */
+  --color-warning-400: #fbbf24;    /* Orta sarı - warning secondary */
+  --color-warning-500: #f59e0b;    /* Ana sarı - warning buttons - PARLAK */
+  --color-warning-600: #d97706;    /* Koyu sarı - warning hover - PARLAK */
+  --color-warning-700: #b45309;    /* Daha koyu sarı - warning active - PARLAK */
+  --color-warning-800: #92400e;    /* Çok koyu sarı - warning pressed */
+  --color-warning-900: #78350f;    /* En koyu sarı - warning shadows */
+
+  /* 🔴 Kırmızı Tonları - Error renkleri - BRIGHT */
+  --color-error-50: #fef2f2;       /* En açık kırmızı - error backgrounds */
+  --color-error-100: #fee2e2;      /* Çok açık kırmızı - error cards */
+  --color-error-200: #fecaca;      /* Açık kırmızı - error borders */
+  --color-error-300: #fca5a5;      /* Orta açık kırmızı - error highlights */
+  --color-error-400: #f87171;      /* Orta kırmızı - error secondary */
+  --color-error-500: #ef4444;      /* Ana kırmızı - error buttons - PARLAK */
+  --color-error-600: #dc2626;      /* Koyu kırmızı - error hover - PARLAK */
+  --color-error-700: #b91c1c;      /* Daha koyu kırmızı - error active - PARLAK */
+  --color-error-800: #991b1b;      /* Çok koyu kırmızı - error pressed */
+  --color-error-900: #7f1d1d;      /* En koyu kırmızı - error shadows */
+
+  /* ⚫ Gri Tonları - Neutral renkleri */
+  --color-gray-50: #f9fafb;        /* En açık gri - subtle backgrounds */
+  --color-gray-100: #f3f4f6;       /* Çok açık gri - card backgrounds */
+  --color-gray-200: #e5e7eb;       /* Açık gri - borders */
+  --color-gray-300: #d1d5db;       /* Orta açık gri - disabled text */
+  --color-gray-400: #9ca3af;       /* Orta gri - placeholder text */
+  --color-gray-500: #6b7280;       /* Ana gri - secondary text */
+  --color-gray-600: #4b5563;       /* Koyu gri - primary text on light */
+  --color-gray-700: #374151;       /* Daha koyu gri - headings */
+  --color-gray-800: #1f2937;       /* Çok koyu gri - dark backgrounds */
+  --color-gray-900: #111827;       /* En koyu gri - darkest backgrounds */
+
+  /* 🎨 RGB Değerleri - Alpha channel kullanımı için */
+  --color-white-rgb: 255, 255, 255;           /* White RGB */
+  --color-black-rgb: 0, 0, 0;                 /* Black RGB */
+  --color-primary-500-rgb: 59, 130, 246;      /* Primary blue RGB */
+  --color-secondary-500-rgb: 168, 85, 247;    /* Secondary purple RGB */
+  --color-success-500-rgb: 34, 197, 94;       /* Success green RGB */
+  --color-warning-500-rgb: 245, 158, 11;      /* Warning yellow RGB */
+  --color-error-500-rgb: 239, 68, 68;         /* Error red RGB */
+  --color-info-500-rgb: 59, 130, 246;         /* Info blue RGB */
+  --color-gray-500-rgb: 107, 114, 128;        /* Gray RGB */
+
+  /* ========================================
+   * 🌙 2. ARKA PLAN RENKLERİ (BACKGROUNDS)
+   * ======================================== */
+  
+  /* 🌌 Ana Arka Plan Gradient Renkleri - EXTRA DARK */
+  --bg-gradient-1: #050508;        /* Gradient başlangıç - çok koyu siyah */
+  --bg-gradient-2: #0f0f1a;        /* Gradient 25% - çok koyu mavi */
+  --bg-gradient-3: #0a1020;        /* Gradient 50% - koyu mavi */
+  --bg-gradient-4: #061a2f;        /* Gradient bitiş - koyu mavi ton */
+  
+  /* 🏗️ Katman Arka Planları (Surface Colors) - BALANCED DARK */
+  --surface-0: transparent;                    /* Şeffaf - overlay'ler için */
+  --surface-1: rgba(var(--color-white-rgb), 0.05);    /* En hafif katman - subtle cards */
+  --surface-2: rgba(var(--color-white-rgb), 0.08);    /* Hafif katman - normal cards */
+  --surface-3: rgba(var(--color-white-rgb), 0.12);    /* Orta katman - elevated cards */
+  --surface-4: rgba(var(--color-white-rgb), 0.15);    /* Yüksek katman - modals, dropdowns */
+  --surface-5: rgba(255, 255, 255, 0.18);    /* En yüksek katman - tooltips */
+
+  /* 🎮 Component Özel Arka Planları - BALANCED DARK */
+  --bg-card: rgba(26, 26, 46, 0.95);         /* Oyun kartları arka planı */
+  --bg-modal: rgba(15, 15, 25, 0.98);        /* Modal arka planları */
+  --bg-sidebar: rgba(22, 33, 62, 0.95);      /* Sidebar arka planı */
+  --bg-header: rgba(15, 52, 96, 0.9);        /* Header arka planı */
+  --bg-input: rgba(36, 36, 56, 0.8);         /* Input field arka planları */
+
+  /* ========================================
+   * 📝 3. METİN RENKLERİ (TEXT COLORS)
+   * ======================================== */
+  
+  /* 🔤 Metin Hiyerarşisi - HIGH CONTRAST */
+  --text-primary: #ffffff;                              /* Ana metin - başlıklar, önemli text */
+  --text-secondary: rgba(255, 255, 255, 0.95);         /* İkincil metin - normal paragraflar */
+  --text-tertiary: rgba(255, 255, 255, 0.85);          /* Üçüncül metin - açıklamalar */
+  --text-muted: rgba(255, 255, 255, 0.7);              /* Soluk metin - placeholder, disabled */
+  --text-inverse: var(--bg-gradient-2);                /* Ters metin - light backgrounds üzerinde */
+
+  /* 🎯 Özel Metin Renkleri - BRIGHT */
+  --text-link: #8b9aff;                                /* Link metinleri - daha parlak */
+  --text-link-hover: #a5b4ff;                          /* Link hover durumu - daha parlak */
+  --text-accent: #b794f6;                              /* Vurgu metinleri - daha parlak */
+  
+  /* 📄 SAYFA ÖZELİNDE METİN RENKLERİ */
+  --text-on-dark: #ffffff;                             /* Koyu arka planda beyaz metin */
+  --text-on-light: #1a1d29;                            /* Açık arka planda koyu metin */
+  --text-on-gradient: #ffffff;                         /* Gradient arka planda beyaz metin */
+  --text-on-card: #ffffff;                             /* Kartlarda beyaz metin */
+  
+  /* 🎨 HEADING RENKLERİ - Sayfa Tiplerine Göre */
+  --heading-on-dark: #ffffff;                          /* Koyu sayfalarda başlık */
+  --heading-on-light: #1a1d29;                         /* Açık sayfalarda başlık */
+  --heading-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(200, 220, 255, 0.9) 100%);  /* Gradient başlık */
+
+  /* ========================================
+   * 🌈 4. ÖZEL RENKLER (SPECIAL COLORS)
+   * ======================================== */
+  
+  /* 🎮 Oyun Durumu Renkleri */
+  --game-status-playing: #2ed573;                      /* Oynanıyor - parlak yeşil */
+  --game-status-completed: #11998e;                    /* Tamamlandı - turkuaz */
+  --game-status-paused: #ff4757;                       /* Duraklatıldı - kırmızı */
+  --game-status-wishlist: #a0b0ff;                     /* İstek listesi - açık mavi */
+  
+  /* 🎨 Gradient Özel Renkleri */
+  --gradient-pink: linear-gradient(135deg, #f093fb, #f5576c);     /* Pembe gradient */
+  --gradient-blue: linear-gradient(135deg, #4facfe, #00f2fe);     /* Mavi gradient */
+  --gradient-green: linear-gradient(135deg, #43e97b, #38f9d7);    /* Yeşil gradient */
+  --gradient-purple: linear-gradient(135deg, #667eea, #764ba2);   /* Mor gradient */
+  --gradient-orange: linear-gradient(135deg, #fee140, #fa709a);   /* Turuncu gradient */
+  
+  /* 🌙 Koyu Tema Özel Renkleri */
+  --dark-surface-special: #2a2a3e;                     /* Özel koyu yüzey */
+  --dark-accent-teal: #11998e;                         /* Koyu tema turkuaz vurgu */
+  --dark-accent-bright-green: #2ed573;                 /* Koyu tema parlak yeşil */
+  --dark-accent-bright-red: #ff4757;                   /* Koyu tema parlak kırmızı */
+  --dark-accent-light-blue: #a0b0ff;                   /* Koyu tema açık mavi */
+
+  /* ========================================
+   * 🚦 5. DURUM RENKLERİ (STATUS COLORS)
+   * ======================================== */
+  
+  /* ✅ Başarı Renkleri (Success) */
+  --success-50: #f0fdf4;           /* Çok açık yeşil - success backgrounds */
+  --success-100: #dcfce7;          /* Açık yeşil - success cards */
+  --success-500: var(--color-success-500);          /* Ana yeşil - success buttons, completed games */
+  --success-600: var(--color-success-600);          /* Koyu yeşil - success hover */
+  --success-700: var(--color-success-700);          /* Daha koyu yeşil - success active */
+
+  /* ⚠️ Uyarı Renkleri (Warning) */
+  --warning-50: #fffbeb;           /* Çok açık sarı - warning backgrounds */
+  --warning-100: #fef3c7;          /* Açık sarı - warning cards */
+  --warning-500: var(--color-warning-500);          /* Ana sarı - warning buttons, playing games */
+  --warning-600: var(--color-warning-600);          /* Koyu sarı - warning hover */
+  --warning-700: var(--color-warning-700);          /* Daha koyu sarı - warning active */
+
+  /* 🔴 Hata Renkleri (Error/Danger) */
+  --error-50: #fef2f2;             /* Çok açık kırmızı - error backgrounds */
+  --error-100: #fee2e2;            /* Açık kırmızı - error cards */
+  --error-500: var(--color-error-500);            /* Ana kırmızı - error buttons, delete actions */
+  --error-600: var(--color-error-600);            /* Koyu kırmızı - error hover */
+  --error-700: var(--color-error-700);            /* Daha koyu kırmızı - error active */
+
+  /* 🔵 Bilgi Renkleri (Info) */
+  --info-50: #eff6ff;              /* Çok açık mavi - info backgrounds */
+  --info-100: #dbeafe;             /* Açık mavi - info cards */
+  --info-500: var(--color-primary-600);             /* Ana mavi - info buttons, paused games */
+  --info-600: var(--color-primary-700);             /* Koyu mavi - info hover */
+  --info-700: var(--color-primary-800);             /* Daha koyu mavi - info active */
+
+  /* 🎮 Oyun Durum Renkleri */
+  --game-completed: var(--success-500);       /* Tamamlanan oyunlar */
+  --game-playing: var(--warning-500);         /* Oynanan oyunlar */
+  --game-paused: var(--info-500);             /* Duraklatılan oyunlar */
+  --game-not-started: var(--text-muted);      /* Başlanmamış oyunlar */
+  --game-dropped: var(--error-500);           /* Bırakılan oyunlar */
+
+  /* ========================================
+   * 🎨 5. YARDIMCI RENKLER (UTILITY COLORS)
+   * ======================================== */
+  
+  /* 🔲 Border Renkleri - BALANCED CONTRAST */
+  --border-subtle: rgba(var(--color-white-rgb), 0.08);  /* Hafif border - cards */
+  --border-default: rgba(var(--color-white-rgb), 0.12); /* Normal border - inputs */
+  --border-strong: rgba(255, 255, 255, 0.18);  /* Güçlü border - focus states */
+  --border-accent: var(--color-primary-500);    /* Vurgu border - active elements */
+
+  /* 🌟 Glassmorphism Efektleri - BALANCED */
+  --glass-bg-light: rgba(var(--color-white-rgb), 0.08);  /* Hafif cam efekti */
+  --glass-bg-medium: rgba(var(--color-white-rgb), 0.12); /* Orta cam efekti */
+  --glass-bg-strong: rgba(var(--color-white-rgb), 0.18);  /* Güçlü cam efekti */
+  --glass-border: rgba(var(--color-white-rgb), 0.15);     /* Cam border */
+  --glass-blur: blur(20px);                      /* Cam bulanıklık efekti */
+
+  /* 🎨 RGB Değerleri (Transparency için) */
+  --color-primary-500-rgb: 102, 126, 234;       /* Primary rengin RGB değeri */
+  --color-secondary-500-rgb: 118, 75, 162;      /* Secondary rengin RGB değeri */
+  --color-success-500-rgb: 34, 197, 94;         /* Success rengin RGB değeri */
+  --color-warning-500-rgb: 245, 158, 11;        /* Warning rengin RGB değeri */
+  --color-error-500-rgb: 239, 68, 68;           /* Error rengin RGB değeri */
+  --color-info-500-rgb: 59, 130, 246;           /* Info rengin RGB değeri */
+
+  /* ========================================
+   * 🎭 6. GÖLGE VE EFEKTLER (SHADOWS & EFFECTS)
+   * ======================================== */
+  
+  /* 📦 Box Shadow'lar */
+  --shadow-sm: 0 1px 2px rgba(var(--color-black-rgb), 0.05);                    /* Küçük gölge */
+  --shadow-md: 0 4px 6px rgba(var(--color-black-rgb), 0.1);                     /* Orta gölge */
+  --shadow-lg: 0 10px 15px rgba(var(--color-black-rgb), 0.1);                   /* Büyük gölge */
+  --shadow-xl: 0 20px 25px rgba(var(--color-black-rgb), 0.15);                  /* Çok büyük gölge */
+  --shadow-glow: 0 0 20px rgba(var(--color-primary-500-rgb), 0.3);              /* Işıltı efekti */
+  --shadow-glow-success: 0 0 20px rgba(var(--color-success-500-rgb), 0.3);        /* Yeşil ışıltı */
+  --shadow-glow-warning: 0 0 20px rgba(var(--color-warning-500-rgb), 0.3);       /* Sarı ışıltı */
+  --shadow-glow-error: 0 0 20px rgba(var(--color-error-500-rgb), 0.3);          /* Kırmızı ışıltı */
+
+  /* 🌈 Gradient Efektleri */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  --gradient-success: linear-gradient(135deg, var(--success-500), var(--success-600));
+  --gradient-warning: linear-gradient(135deg, var(--warning-500), var(--warning-600));
+  --gradient-error: linear-gradient(135deg, var(--error-500), var(--error-600));
+  --gradient-glass: linear-gradient(135deg, var(--glass-bg-light), var(--glass-bg-medium));
+
+  /* 🎯 Ana Arka Plan Gradient */
+  --gradient-background: linear-gradient(135deg, 
+    var(--bg-gradient-1) 0%, 
+    var(--bg-gradient-2) 25%, 
+    var(--bg-gradient-3) 50%, 
+    var(--bg-gradient-4) 100%
+  );
+
+  /* ========================================
+   * ⚡ 7. ANİMASYON VE GEÇİŞLER (TRANSITIONS)
+   * ======================================== */
+  
+  /* ⏱️ Transition Süreleri */
+  --transition-fast: 0.15s ease;           /* Hızlı geçişler - hover effects */
+  --transition-normal: 0.3s ease;          /* Normal geçişler - button states */
+  --transition-slow: 0.5s ease;            /* Yavaş geçişler - modal animations */
+  --transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Bounce efekti */
+
+  /* 🎪 Özel Animasyon Easing'leri */
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-back: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* ========================================
+ * 📋 KULLANIM REHBERİ (USAGE GUIDE)
+ * ======================================== 
+ * 
+ * 🎯 ARKA PLAN RENKLERİ:
+ * - Ana sayfa arka planı: var(--gradient-background)
+ * - Kart arka planları: var(--surface-2) veya var(--surface-3)
+ * - Modal arka planları: var(--bg-modal)
+ * - Input arka planları: var(--bg-input)
+ * 
+ * 📝 METİN RENKLERİ:
+ * - Başlıklar: var(--text-primary)
+ * - Normal metin: var(--text-secondary)
+ * - Açıklamalar: var(--text-tertiary)
+ * - Placeholder: var(--text-muted)
+ * 
+ * 🎮 OYUN DURUMLARI:
+ * - Tamamlanan: var(--game-completed)
+ * - Oynanan: var(--game-playing)
+ * - Duraklatılan: var(--game-paused)
+ * - Başlanmamış: var(--game-not-started)
+ * - Bırakılan: var(--game-dropped)
+ * 
+ * 🔲 BORDER VE OUTLINE:
+ * - Normal border: var(--border-default)
+ * - Focus border: var(--border-accent)
+ * - Hafif border: var(--border-subtle)
+ * 
+ * 🌟 GLASSMORPHISM:
+ * - Hafif cam efekti: var(--glass-bg-light)
+ * - Orta cam efekti: var(--glass-bg-medium)
+ * - Güçlü cam efekti: var(--glass-bg-strong)
+ * - Cam border: var(--glass-border)
+ * - Bulanıklık: backdrop-filter: var(--glass-blur)
+ * 
+ * 📦 GÖLGELER:
+ * - Kartlar: var(--shadow-md)
+ * - Modaller: var(--shadow-xl)
+ * - Hover efektleri: var(--shadow-lg)
+ * - Glow efektleri: var(--shadow-glow)
+ * 
+ * ⚡ ANİMASYONLAR:
+ * - Hover: var(--transition-fast)
+ * - Button states: var(--transition-normal)
+ * - Modal açılış: var(--transition-slow)
+ * - Bounce efekt: var(--transition-bounce)
+ * 
+ * ========================================
+ * 🚨 ÖNEMLİ NOTLAR:
+ * ========================================
+ * 
+ * 1. YENİ RENK EKLERKEn:
+ *    - Mutlaka bu dosyaya ekleyin
+ *    - Hangi amaçla kullanıldığını yorum olarak belirtin
+ *    - Semantic isimlendirme kullanın (--button-primary değil --color-primary-500)
+ * 
+ * 2. HARDCODED RENK KULLANMAYIN:
+ *    - ❌ background: var(--bg-gradient-2);
+ *    - ✅ background: var(--bg-gradient-2);
+ * 
+ * 3. TUTARLILIK:
+ *    - Aynı amaç için hep aynı rengi kullanın
+ *    - Renk tonlarını karıştırmayın
+ *    - Design system'e sadık kalın
+ * 
+ * 4. ACCESSIBILITY:
+ *    - Kontrast oranlarına dikkat edin
+ *    - Color-blind friendly renkler seçin
+ *    - Dark theme uyumluluğunu koruyun
+ */
+
+  /* ========================================
+   * 🔘 BUTON RENKLERİ (BUTTON COLORS) - EXTRA BRIGHT
+   * ======================================== */
+  
+  /* 🔵 Primary Button - EXTRA BRIGHT */
+  --btn-primary-bg: var(--color-primary-500);           /* Ana buton arka plan - PARLAK */
+  --btn-primary-hover: var(--color-primary-400);        /* Hover - DAHA PARLAK */
+  --btn-primary-active: var(--color-primary-600);       /* Active - PARLAK */
+  --btn-primary-text: #ffffff;                          /* Buton metni - BEYAZ */
+  
+  /* 🟣 Secondary Button - EXTRA BRIGHT */
+  --btn-secondary-bg: var(--color-secondary-500);       /* İkincil buton arka plan - PARLAK */
+  --btn-secondary-hover: var(--color-secondary-400);    /* Hover - DAHA PARLAK */
+  --btn-secondary-active: var(--color-secondary-600);   /* Active - PARLAK */
+  --btn-secondary-text: #ffffff;                        /* Buton metni - BEYAZ */
+  
+  /* 🟢 Success Button - EXTRA BRIGHT */
+  --btn-success-bg: var(--color-success-500);           /* Başarı buton arka plan - PARLAK */
+  --btn-success-hover: var(--color-success-400);        /* Hover - DAHA PARLAK */
+  --btn-success-active: var(--color-success-600);       /* Active - PARLAK */
+  --btn-success-text: #ffffff;                          /* Buton metni - BEYAZ */
+  
+  /* 🟡 Warning Button - EXTRA BRIGHT */
+  --btn-warning-bg: var(--color-warning-500);           /* Uyarı buton arka plan - PARLAK */
+  --btn-warning-hover: var(--color-warning-400);        /* Hover - DAHA PARLAK */
+  --btn-warning-active: var(--color-warning-600);       /* Active - PARLAK */
+  --btn-warning-text: #ffffff;                          /* Buton metni - BEYAZ */
+  
+  /* 🔴 Error/Danger Button - EXTRA BRIGHT */
+  --btn-error-bg: var(--color-error-500);               /* Hata buton arka plan - PARLAK */
+  --btn-error-hover: var(--color-error-400);            /* Hover - DAHA PARLAK */
+  --btn-error-active: var(--color-error-600);           /* Active - PARLAK */
+  --btn-error-text: #ffffff;                            /* Buton metni - BEYAZ */
+  
+  /* 🔘 Outline Button - BRIGHT BORDERS */
+  --btn-outline-border: var(--color-primary-500);       /* Outline border - PARLAK */
+  --btn-outline-text: var(--color-primary-500);         /* Outline text - PARLAK */
+  --btn-outline-hover-bg: var(--color-primary-500);     /* Outline hover bg - PARLAK */
+  --btn-outline-hover-text: #ffffff;                    /* Outline hover text - BEYAZ */

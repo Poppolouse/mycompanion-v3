@@ -1,8 +1,7 @@
-/* AddGame.css */
+/* 🎮 ADD GAME PAGE - GLASSMORPHISM DESIGN */
 
-.add-game-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+.add-game-container {  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-gradient-2) 0%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%);
   padding: 20px;
   color: white;
 }
@@ -25,8 +24,8 @@
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.2);
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
@@ -37,14 +36,14 @@
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.2);
   transform: translateY(-2px);
 }
 
 .add-game-header h1 {
   margin: 0;
   font-size: 2.5rem;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -62,7 +61,7 @@
 }
 
 .import-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   border: none;
   color: white;
   padding: 12px 20px;
@@ -73,21 +72,21 @@
   transition: all 0.3s ease;
   display: inline-block;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(var(--color-primary-500-rgb), 0.3);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .import-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #7c8ef0 0%, #8a5cb8 100%);
+  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.4);
+  background: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-secondary-600) 100%);
 }
 
 .help-btn {
-  background: rgba(255, 193, 7, 0.2);
-  border: 1px solid rgba(255, 193, 7, 0.4);
-  color: #ffc107;
+  background: rgba(var(--color-warning-500-rgb), 0.2);
+  border: 1px solid rgba(var(--color-warning-500-rgb), 0.4);
+  color: var(--color-warning-500);
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -113,7 +112,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(var(--color-black-rgb), 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,14 +121,14 @@
 }
 
 .help-modal {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, var(--bg-gradient-2) 0%, var(--bg-gradient-3) 100%);
+  border: 1px solid rgba(var(--color-white-rgb), 0.2);
   border-radius: 20px;
   max-width: 700px;
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 50px rgba(var(--color-black-rgb), 0.5);
   backdrop-filter: blur(20px);
 }
 
@@ -138,22 +137,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 25px 30px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .modal-header h3 {
   margin: 0;
   color: white;
   font-size: 1.5rem;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .close-modal-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.2);
   color: white;
   width: 35px;
   height: 35px;
@@ -167,7 +166,7 @@
 }
 
 .close-modal-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.2);
   transform: scale(1.1);
 }
 
@@ -179,12 +178,12 @@
 .modal-content p {
   margin-bottom: 20px;
   font-size: 16px;
-  color: #e0e0e0;
+  color: var(--color-gray-300);
 }
 
 .format-example {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-black-rgb), 0.3);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
   border-radius: 10px;
   padding: 20px;
   margin: 20px 0;
@@ -192,16 +191,16 @@
 
 .format-example h4 {
   margin: 0 0 15px 0;
-  color: #667eea;
+  color: var(--color-primary-500);
   font-size: 1.1rem;
 }
 
 .format-example pre {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-black-rgb), 0.5);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
   border-radius: 8px;
   padding: 15px;
-  color: #f8f9fa;
+  color: var(--text-on-dark);
   font-family: 'Courier New', monospace;
   font-size: 13px;
   line-height: 1.5;
@@ -217,7 +216,7 @@
 .format-rules h4,
 .format-tips h4 {
   margin: 0 0 15px 0;
-  color: #764ba2;
+  color: var(--color-secondary-500);
   font-size: 1.1rem;
 }
 
@@ -230,7 +229,7 @@
 .format-rules li,
 .format-tips li {
   margin-bottom: 8px;
-  color: #e0e0e0;
+  color: var(--color-gray-300);
   line-height: 1.5;
 }
 
@@ -242,11 +241,11 @@
 .modal-footer {
   padding: 20px 30px 30px;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
 }
 
 .close-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   border: none;
   color: white;
   padding: 12px 30px;
@@ -255,12 +254,12 @@
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(var(--color-primary-500-rgb), 0.3);
 }
 
 .close-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.4);
 }
 
 /* Responsive Design */
@@ -300,12 +299,12 @@
 }
 
 .add-game-form {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--color-white-rgb), 0.05);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.3);
 }
 
 .form-group {
@@ -316,7 +315,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #e0e0e0;
+  color: var(--color-gray-300);
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -327,10 +326,10 @@
 .form-group textarea {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1) !important; /* Fallback - zorla uygula */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Fallback - zorla uygula */
   border-radius: 10px;
-  color: white;
+  color: white !important;
   font-size: 16px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
@@ -341,18 +340,18 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  border-color: #3b82f6 !important; /* Fallback - zorla uygula */
+  background: rgba(255, 255, 255, 0.15) !important; /* Fallback - zorla uygula */
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3) !important; /* Fallback - zorla uygula */
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5) !important; /* Fallback - zorla uygula */
 }
 
 .form-group select option {
-  background: #1a1a2e;
+  background: var(--bg-gradient-2);
   color: white;
 }
 
@@ -380,9 +379,9 @@
 }
 
 .error-message {
-  background: rgba(255, 82, 82, 0.2);
-  border: 1px solid rgba(255, 82, 82, 0.4);
-  color: #ff5252;
+  background: rgba(var(--color-error-500-rgb), 0.2);
+  border: 1px solid rgba(var(--color-error-500-rgb), 0.4);
+  color: var(--color-error-500);
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -391,9 +390,9 @@
 }
 
 .success-message {
-  background: rgba(76, 175, 80, 0.2);
-  border: 1px solid rgba(76, 175, 80, 0.4);
-  color: #4caf50;
+  background: rgba(var(--color-success-500-rgb), 0.2);
+  border: 1px solid rgba(var(--color-success-500-rgb), 0.4);
+  color: var(--color-success-500);
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -404,7 +403,7 @@
 .submit-btn {
   width: 100%;
   padding: 16px 32px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
   border: none;
   border-radius: 12px;
   color: white;
@@ -419,7 +418,7 @@
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 30px rgba(var(--color-primary-500-rgb), 0.4);
 }
 
 .submit-btn:disabled {
@@ -476,8 +475,8 @@
 
 /* Campaign Bölümü */
 .campaigns-section {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-white-rgb), 0.03);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
   border-radius: 15px;
   padding: 25px;
   margin-top: 20px;
@@ -485,13 +484,13 @@
 
 .campaigns-section h3 {
   margin: 0 0 15px 0;
-  color: #667eea;
+  color: var(--color-primary-500);
   font-size: 1.4rem;
   font-weight: 600;
 }
 
 .campaigns-info {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--color-white-rgb), 0.7);
   font-size: 14px;
   margin-bottom: 20px;
   font-style: italic;
@@ -503,7 +502,7 @@
 }
 
 .existing-campaigns h4 {
-  color: #e0e0e0;
+  color: var(--color-gray-300);
   margin: 0 0 15px 0;
   font-size: 1.1rem;
 }
@@ -515,8 +514,8 @@
 }
 
 .campaign-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-white-rgb), 0.05);
+  border: 1px solid rgba(var(--color-white-rgb), 0.1);
   border-radius: 10px;
   padding: 15px;
   display: flex;
@@ -526,8 +525,8 @@
 }
 
 .campaign-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--color-white-rgb), 0.08);
+  border-color: rgba(var(--color-white-rgb), 0.2);
 }
 
 .campaign-info strong {
@@ -538,7 +537,7 @@
 }
 
 .campaign-info .faction {
-  color: #667eea;
+  color: var(--color-primary-500);
   font-size: 14px;
   margin-left: 8px;
 }
@@ -547,20 +546,20 @@
   display: flex;
   gap: 15px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--color-white-rgb), 0.7);
 }
 
 .campaign-details span {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--color-white-rgb), 0.1);
   padding: 2px 8px;
   border-radius: 12px;
   font-weight: 500;
 }
 
 .remove-campaign-btn {
-  background: rgba(255, 82, 82, 0.2);
-  border: 1px solid rgba(255, 82, 82, 0.3);
-  color: #ff5252;
+  background: rgba(var(--color-error-500-rgb), 0.2);
+  border: 1px solid rgba(var(--color-error-500-rgb), 0.3);
+  color: var(--color-error-500);
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -569,18 +568,18 @@
 }
 
 .remove-campaign-btn:hover {
-  background: rgba(255, 82, 82, 0.3);
-  border-color: rgba(255, 82, 82, 0.5);
+  background: rgba(var(--color-error-500-rgb), 0.3);
+  border-color: rgba(var(--color-error-500-rgb), 0.5);
 }
 
 /* Yeni Campaign Ekleme */
 .add-campaign-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
   padding-top: 20px;
 }
 
 .add-campaign-section h4 {
-  color: #4caf50;
+  color: var(--color-success-500);
   margin: 0 0 15px 0;
   font-size: 1.1rem;
 }
@@ -602,7 +601,7 @@
 }
 
 .add-campaign-btn {
-  background: linear-gradient(45deg, #4caf50, #45a049);
+  background: linear-gradient(45deg, var(--color-success-500), var(--color-success-600));
   border: none;
   border-radius: 10px;
   color: white;

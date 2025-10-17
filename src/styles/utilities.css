@@ -388,10 +388,10 @@
 
 /* 🎯 Focus Utilities */
 .focus\:outline-none:focus { outline: none; }
-.focus\:ring:focus { box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3); }
-.focus\:ring-success:focus { box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.3); }
-.focus\:ring-warning:focus { box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3); }
-.focus\:ring-danger:focus { box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.3); }
+.focus\:ring:focus { box-shadow: 0 0 0 3px rgba(var(--color-primary-500-rgb), 0.3); }
+.focus\:ring-success:focus { box-shadow: 0 0 0 3px rgba(var(--color-success-500-rgb), 0.3); }
+.focus\:ring-warning:focus { box-shadow: 0 0 0 3px rgba(var(--color-warning-500-rgb), 0.3); }
+.focus\:ring-danger:focus { box-shadow: 0 0 0 3px rgba(var(--color-error-500-rgb), 0.3); }
 
 /* 🎨 Hover Utilities */
 .hover\:bg-primary:hover { background-color: var(--primary); }
@@ -416,7 +416,7 @@
 /* 🌙 Dark Mode Utilities */
 @media (prefers-color-scheme: dark) {
   .dark\:text-white { color: white; }
-  .dark\:text-gray-300 { color: #d1d5db; }
-  .dark\:bg-gray-800 { background-color: #1f2937; }
-  .dark\:bg-gray-900 { background-color: #111827; }
+  .dark\:text-gray-300 { color: var(--color-gray-300); }
+  .dark\:bg-gray-800 { background-color: var(--color-gray-700); }
+  .dark\:bg-gray-900 { background-color: var(--color-gray-800); }
 }

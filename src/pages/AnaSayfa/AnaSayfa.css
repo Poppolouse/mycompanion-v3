@@ -34,25 +34,25 @@
   justify-content: center;
   gap: 0.75rem;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(var(--color-black-rgb), 0.3);
 }
 
 .baslik-ikon {
   font-size: 3rem;
   animation: pulse 2s infinite;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(var(--color-black-rgb), 0.2));
 }
 
 .baslik-alt {
   font-size: 1.8rem;
-  background: linear-gradient(135deg, var(--dark-accent-tertiary) 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, var(--dark-accent-tertiary) 0%, var(--color-warning-500) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.3;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(var(--color-black-rgb), 0.3);
 }
 
 .ana-aciklama {
@@ -61,13 +61,13 @@
   margin: 0;
   font-weight: 500;
   line-height: 1.6;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(var(--color-black-rgb), 0.3);
   max-width: 600px;
   margin: 0 auto;
 }
 
 .yeniden-basla-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981 0%, var(--color-success-600) 100%);
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -110,7 +110,7 @@
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.5);
   border: 1px solid var(--dark-border-1);
   height: fit-content;
   position: sticky;
@@ -122,7 +122,7 @@
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.5);
   border: 1px solid var(--dark-border-1);
 }
 
@@ -137,7 +137,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.3;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(var(--color-black-rgb), 0.3);
   letter-spacing: -0.02em;
 }
 
@@ -183,7 +183,7 @@
 
 .ozet-ikon {
   font-size: 3rem;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, var(--color-warning-500) 100%);
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -246,7 +246,7 @@
   border-top: 1px solid var(--dark-border-1);
   padding: 3rem 0;
   margin-top: auto;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -4px 20px rgba(var(--color-black-rgb), 0.5);
 }
 
 .footer-icerik {
@@ -261,14 +261,14 @@
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
   font-weight: 500;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(var(--color-black-rgb), 0.3);
 }
 
 .footer-linkler {
   color: var(--dark-text-secondary);
   font-size: 1rem;
   font-weight: 400;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(var(--color-black-rgb), 0.2);
 }
 
 /* Animasyonlar */

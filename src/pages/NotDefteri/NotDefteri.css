@@ -2,7 +2,7 @@
 
 .not-defteri {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: var(--gradient-background);
   padding: 3rem 4rem;
 }
 
@@ -11,7 +11,7 @@
   background: rgba(30, 41, 59, 0.95);
   border-radius: 24px;
   padding: 3rem 4rem;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 48px rgba(var(--color-black-rgb), 0.3);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   display: grid;
@@ -27,16 +27,16 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .geri-btn {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
@@ -46,22 +46,22 @@
 }
 
 .geri-btn:hover {
-  background: #e5e7eb;
-  border-color: #d1d5db;
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-300);
   transform: translateY(-2px);
 }
 
 .not-baslik {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-gray-700);
   margin: 0;
   text-align: center;
   flex: 1;
 }
 
 .yeni-not-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -72,7 +72,7 @@
 }
 
 .yeni-not-btn:hover {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  background: linear-gradient(135deg, var(--color-secondary-600) 0%, #6d28d9 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
 }
@@ -88,11 +88,11 @@
 
 /* Sidebar */
 .not-sidebar {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -107,20 +107,20 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 50px;
   padding: 0.8rem 1rem;
   transition: all 0.3s ease;
 }
 
 .arama-kutusu:focus-within {
-  border-color: #8b5cf6;
+  border-color: var(--color-secondary-500);
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
 .arama-ikon {
-  color: #9ca3af;
+  color: var(--color-gray-400);
   margin-right: 0.8rem;
 }
 
@@ -129,18 +129,18 @@
   border: none;
   background: transparent;
   outline: none;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 0.95rem;
 }
 
 .arama-input::placeholder {
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .arama-temizle {
   background: none;
   border: none;
-  color: #9ca3af;
+  color: var(--color-gray-400);
   cursor: pointer;
   padding: 0.2rem;
   border-radius: 50%;
@@ -148,8 +148,8 @@
 }
 
 .arama-temizle:hover {
-  background: #e5e7eb;
-  color: #374151;
+  background: var(--color-gray-200);
+  color: var(--color-gray-600);
 }
 
 /* Filtreler */
@@ -159,7 +159,7 @@
 
 .filtre-bolumu h3 {
   margin: 0 0 1rem 0;
-  color: #374151;
+  color: var(--color-gray-600);
   font-size: 1rem;
   font-weight: 600;
 }
@@ -185,14 +185,14 @@
 }
 
 .kategori-btn:hover {
-  background: #f8fafc;
-  border-color: #e2e8f0;
+  background: var(--color-gray-50);
+  border-color: var(--color-gray-200);
 }
 
 .kategori-btn.aktif {
   background: rgba(139, 92, 246, 0.1);
-  border-color: var(--kategori-renk, #8b5cf6);
-  color: var(--kategori-renk, #8b5cf6);
+  border-color: var(--kategori-renk, var(--color-secondary-500));
+  color: var(--kategori-renk, var(--color-secondary-500));
 }
 
 .kategori-ikon {
@@ -205,8 +205,8 @@
 }
 
 .kategori-sayi {
-  background: #e5e7eb;
-  color: #6b7280;
+  background: var(--color-gray-200);
+  color: var(--color-gray-500);
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
   font-size: 0.8rem;
@@ -214,7 +214,7 @@
 }
 
 .kategori-btn.aktif .kategori-sayi {
-  background: var(--kategori-renk, #8b5cf6);
+  background: var(--kategori-renk, var(--color-secondary-500));
   color: white;
 }
 
@@ -224,12 +224,12 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 2px solid #f3f4f6;
+  border-bottom: 2px solid var(--color-gray-100);
 }
 
 .gorunum-kontrol {
   display: flex;
-  background: #f8fafc;
+  background: var(--color-gray-50);
   border-radius: 8px;
   padding: 0.2rem;
 }
@@ -246,16 +246,16 @@
 
 .gorunum-btn.aktif {
   background: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(var(--color-black-rgb), 0.1);
 }
 
 .siralama-select {
   flex: 1;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 8px;
   padding: 0.6rem;
-  color: #374151;
+  color: var(--color-gray-600);
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -270,7 +270,7 @@
 
 .liste-header h3 {
   margin: 0 0 1rem 0;
-  color: #374151;
+  color: var(--color-gray-600);
   font-size: 1rem;
   font-weight: 600;
 }
@@ -291,7 +291,7 @@
 
 .not-item {
   background: white;
-  border: 2px solid #f3f4f6;
+  border: 2px solid var(--color-gray-100);
   border-radius: 12px;
   padding: 1rem;
   cursor: pointer;
@@ -299,13 +299,13 @@
 }
 
 .not-item:hover {
-  border-color: #8b5cf6;
+  border-color: var(--color-secondary-500);
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
   transform: translateY(-2px);
 }
 
 .not-item.aktif {
-  border-color: #8b5cf6;
+  border-color: var(--color-secondary-500);
   background: rgba(139, 92, 246, 0.05);
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
 }
@@ -332,12 +332,12 @@
 }
 
 .favori-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-gray-100);
 }
 
 .not-item-baslik {
   margin: 0 0 0.5rem 0;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
@@ -345,7 +345,7 @@
 
 .not-item-ozet {
   margin: 0 0 1rem 0;
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 0.9rem;
   line-height: 1.4;
 }
@@ -357,14 +357,14 @@
 }
 
 .not-tarih {
-  color: #9ca3af;
+  color: var(--color-gray-400);
   font-size: 0.8rem;
 }
 
 .sil-btn {
   background: none;
   border: none;
-  color: #9ca3af;
+  color: var(--color-gray-400);
   cursor: pointer;
   padding: 0.3rem;
   border-radius: 4px;
@@ -374,14 +374,14 @@
 
 .sil-btn:hover {
   background: #fee2e2;
-  color: #dc2626;
+  color: var(--color-error-600);
 }
 
 /* Boş Liste */
 .bos-liste {
   text-align: center;
   padding: 3rem 1rem;
-  color: #6b7280;
+  color: var(--color-gray-500);
 }
 
 .bos-ikon {
@@ -396,7 +396,7 @@
 }
 
 .bos-yeni-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -413,10 +413,10 @@
 
 /* Editör */
 .not-editor {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -427,7 +427,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1.5rem 2rem;
-  border-bottom: 2px solid #f3f4f6;
+  border-bottom: 2px solid var(--color-gray-100);
 }
 
 .baslik-input {
@@ -436,12 +436,12 @@
   background: transparent;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--color-gray-700);
   outline: none;
 }
 
 .baslik-input::placeholder {
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .editor-kontroller {
@@ -451,18 +451,18 @@
 }
 
 .kategori-select {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 8px;
   padding: 0.6rem;
-  color: #374151;
+  color: var(--color-gray-600);
   cursor: pointer;
 }
 
 .editor-favori-btn,
 .editor-sil-btn {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
   border-radius: 8px;
   padding: 0.6rem;
   cursor: pointer;
@@ -495,24 +495,24 @@
   outline: none;
   font-size: 1rem;
   line-height: 1.6;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-family: inherit;
 }
 
 .icerik-textarea::placeholder {
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .editor-footer {
   padding: 1rem 2rem;
-  border-top: 2px solid #f3f4f6;
-  background: #f8fafc;
+  border-top: 2px solid var(--color-gray-100);
+  background: var(--color-gray-50);
 }
 
 .not-istatistik {
   display: flex;
   gap: 2rem;
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-size: 0.9rem;
 }
 
@@ -525,7 +525,7 @@
   justify-content: center;
   text-align: center;
   padding: 3rem;
-  color: #6b7280;
+  color: var(--color-gray-500);
 }
 
 .bos-editor-ikon {
@@ -535,7 +535,7 @@
 
 .bos-editor h2 {
   margin: 0 0 1rem 0;
-  color: #374151;
+  color: var(--color-gray-600);
   font-size: 2rem;
 }
 
@@ -546,7 +546,7 @@
 }
 
 .bos-editor-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -568,17 +568,17 @@
 }
 
 .notlar::-webkit-scrollbar-track {
-  background: #f3f4f6;
+  background: var(--color-gray-100);
   border-radius: 3px;
 }
 
 .notlar::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: var(--color-gray-300);
   border-radius: 3px;
 }
 
 .notlar::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: var(--color-gray-400);
 }
 
 /* Responsive Tasarım */

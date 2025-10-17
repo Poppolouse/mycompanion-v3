@@ -1,0 +1,37 @@
+/* 🔥 GAMETRACKER BEYAZ ARKA PLAN SORUNU - TAM ÇÖZÜM */
+/* Bu dosyayı GameTracker.css'in EN SONUNA ekleyin */
+
+/* 1️⃣ ANA SAYFA ARKA PLANI - DOĞRU DEĞİŞKENLER */
+.game-tracker-page,
+.game-tracker-page .main-content,
+body .main-content {
+  background: linear-gradient(135deg, 
+    var(--bg-gradient-1) 0%, 
+    var(--bg-gradient-2) 25%, 
+    var(--bg-gradient-3) 50%, 
+    var(--bg-gradient-4) 100%) !important;
+}
+
+/* 2️⃣ TRACKER-MAIN TRANSPARENT - ANA ARKA PLAN GÖZÜKSÜN */
+.tracker-main {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: none !important;
+}
+
+/* 3️⃣ TRACKER-CONTROLS - HAFİF GLASSMORPHISM KORUYALIM */
+.tracker-controls {
+  background: linear-gradient(135deg, 
+    rgba(40, 50, 70, 0.7) 0%,
+    rgba(50, 60, 85, 0.65) 100%
+  ) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+}
+
+/* 4️⃣ GAMES SECTION - TRANSPARENT AMA SLIGHT TINT */
+.games-section {
+  background: rgba(20, 25, 40, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}

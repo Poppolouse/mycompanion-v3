@@ -44,6 +44,8 @@ function RoutePlanner() {
   // Oyun seçimi için state'ler
   const [showGameSelector, setShowGameSelector] = useState(false);
   const [selectedGameType, setSelectedGameType] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
   
   // Cycle düzenleme için state'ler
   const [showEditCycleModal, setShowEditCycleModal] = useState(false);
@@ -102,6 +104,29 @@ function RoutePlanner() {
     showToast(`Cycle ${cycleNumber} - Oyun ${gameIndex + 1} durumu sıfırlandı`, 'success');
   };
   
+  // Oyun seçimi için mevcut oyunları getir
+  const getAvailableGames = (gameType) => {
+    const libraryGames = loadGamesFromLibrary();
+    
+    // Oyun tipine göre filtrele
+    const typeMapping = {
+      'rpg': ['RPG', 'Role-Playing'],
+      'story': ['Story', 'Indie', 'Adventure'],
+      'strategy': ['Strategy', 'Simulation', 'Management']
+    };
+    
+    const allowedGenres = typeMapping[gameType] || [];
+    
+    return libraryGames.filter(game => 
+      allowedGenres.some(genre => 
+        game.genre?.toLowerCase().includes(genre.toLowerCase())
+      )
+    );
+  };
+
+  // Seçilen oyun tipine göre mevcut oyunları al
+  const availableGames = selectedGameType ? getAvailableGames(selectedGameType) : [];
+
   // Basit oyun listesi (gerçek uygulamada API'den gelecek)
   const gameDatabase = {
     rpg: [
@@ -186,13 +211,29 @@ function RoutePlanner() {
     // Seçilen oyunun adını bul
     const selectedGame = gameDatabase[selectedGameType]?.find(game => game.id === gameId);
     
-    contextSelectGame(currentCycle.cycleNumber, gamePosition, gameId);
+    // Eğer oyunun birden fazla campaign'i varsa ve campaign seçilmemişse uyar
+    if (selectedGame?.campaigns && selectedGame.campaigns.length > 1 && !selectedCampaign) {
+      showToast('Bu oyunun birden fazla campaign\'i var. Lütfen bir campaign seçin.', 'warning');
+      return;
+    }
+
+    const gameData = {
+      gameId: selectedGame?.id,
+      campaignId: selectedCampaign?.id || null,
+      campaignName: selectedCampaign?.name || null
+    };
+    
+    contextSelectGame(currentCycle.cycleNumber, gamePosition, gameId, gameData);
     setShowGameSelector(false);
     setSelectedGameType(null);
+    setSelectedCampaign(null);
     
     // Toast notification göster
-    showToast(`🎮 ${selectedGame?.name || 'Oyun'} seçildi!`, 'success');
+    const campaignText = selectedCampaign ? ` (${selectedCampaign.name})` : '';
+    showToast(`🎮 ${selectedGame?.name || 'Oyun'}${campaignText} seçildi!`, 'success');
   };
+
+
 
   // Oyun tamamlama fonksiyonu
   const completeGame = (gameType) => {
@@ -256,40 +297,43 @@ function RoutePlanner() {
 
   return (
     <div className="route-planner">
-      {/* Genel İlerleme Barı */}
-      <div className="route-planner__progress-bar">
-        {/* Modern Header Card */}
-        <div className="modern-header">
+      <div className="route-planner-container">
+        {/* Header */}
+        <header className="tracker-header">
+        <div className="header-content">
           <div className="header-left">
-            <button 
-              className="nav-button home-button"
-              onClick={goToHome}
-              title="Ana Sayfaya Dön"
-            >
-              🏠
-            </button>
-            <button 
-              className="nav-button hub-button"
-              onClick={goToGameHub}
-              title="Oyun Hub'ına Dön"
-            >
-              🎮 Hub
-            </button>
+            <h1>🎯 VAULT ROUTE v2.2</h1>
+            <p>117 oyunluk route sistemini takip edin ve cycle'ları yönetin</p>
           </div>
           
-          <div className="header-center">
-            <h1 className="route-title">🎯 VAULT ROUTE v2.2</h1>
+          <div className="header-controls">
+            {/* Navigation Buttons */}
+            <div className="navigation-buttons">
+              <button 
+                className="nav-btn home-btn"
+                onClick={goToHome}
+                title="Ana Sayfaya Dön"
+              >
+                🏠 Ana Sayfa
+              </button>
+              <button 
+                className="nav-btn hub-btn"
+                onClick={goToGameHub}
+                title="Oyun Hub'ına Dön"
+              >
+                🎮 Oyun Hub
+              </button>
+            </div>
           </div>
         </div>
-        <div className="progress-info">
-          <span>
-            Cycle {config.currentCycle}/{ROUTE_CONFIG.totalCycles} • 
-            Oyun {analytics.completedGames + 1}/{ROUTE_CONFIG.totalGames}
-          </span>
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${routeProgress}%` }}></div>
-          </div>
-          <span>%{routeProgress} Tamamlandı</span>
+      </header>
+
+      {/* Coming Soon Card */}
+      <div className="route-progress-card coming-soon-card">
+        <div className="coming-soon-content">
+          <div className="coming-soon-icon">🚀</div>
+          <h3>Yakında Gelecek</h3>
+          <p>Bu alan için yeni özellikler geliştiriliyor...</p>
         </div>
       </div>
 
@@ -540,6 +584,9 @@ function RoutePlanner() {
                         <div className="game-name">
                           {game.status === 'not_started' ? 'Oyun Seçilmedi' : 
                            game.name || `${game.type.toUpperCase()} Oyunu`}
+                          {game.campaignName && (
+                            <div className="campaign-name">📚 {game.campaignName}</div>
+                          )}
                         </div>
                         <div className="game-actions">
                           {game.status === 'not_started' && config.currentCycleStarted && (
@@ -632,6 +679,8 @@ function RoutePlanner() {
               )}
             </div>
             <div className="all-cycles">
+              <h3>Tüm Cycle'lar</h3>
+              
               {getFilteredCycles().slice(0, 15).map((cycle) => {
                 const completedGames = cycle.games.filter(g => g.status === 'completed').length;
                 const progress = Math.round((completedGames / 3) * 100);
@@ -789,24 +838,84 @@ function RoutePlanner() {
               <div className="modal-body">
                 <div className="game-list">
                   {gameDatabase[selectedGameType]?.map(game => (
-                    <div key={game.id} className="game-option" onClick={() => confirmGameSelection(game.id)}>
+                    <div 
+                      key={game.id} 
+                      className={`game-option ${selectedGame?.id === game.id ? 'selected' : ''}`}
+                      onClick={() => {
+                        setSelectedGame(game);
+                        setSelectedCampaign(null); // Oyun değiştiğinde campaign seçimini sıfırla
+                      }}
+                    >
                       <div className="game-info">
                         <h4>{game.name}</h4>
                         <p>⏱️ Tahmini süre: {game.hours} saat</p>
+                        {game.campaigns && game.campaigns.length > 0 && (
+                          <span className="campaign-count">{game.campaigns.length} campaign</span>
+                        )}
                       </div>
-                      <button className="btn-select">Seç</button>
+                      <button 
+                        className="btn-select"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!game.campaigns || game.campaigns.length <= 1) {
+                            confirmGameSelection(game.id);
+                          }
+                        }}
+                      >
+                        Seç
+                      </button>
                     </div>
                   ))}
                 </div>
+
+                {/* Campaign Seçimi */}
+                {selectedGame && selectedGame.campaigns && selectedGame.campaigns.length > 1 && (
+                  <div className="campaign-selection">
+                    <h4>Campaign Seç:</h4>
+                    <div className="campaign-list">
+                      {selectedGame.campaigns.map(campaign => (
+                        <div 
+                          key={campaign.id}
+                          className={`campaign-item ${selectedCampaign?.id === campaign.id ? 'selected' : ''}`}
+                          onClick={() => setSelectedCampaign(campaign)}
+                        >
+                          <div className="campaign-info">
+                            <h5>{campaign.name}</h5>
+                            <p>{campaign.description}</p>
+                            <div className="campaign-meta">
+                              <span className={`status ${campaign.status.toLowerCase().replace(' ', '-')}`}>
+                                {campaign.status}
+                              </span>
+                              <span className="progress">{campaign.progress}%</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               
               <div className="modal-footer">
                 <button 
                   className="modal-btn secondary"
-                  onClick={() => setShowGameSelector(false)}
+                  onClick={() => {
+                    setShowGameSelector(false);
+                    setSelectedGame(null);
+                    setSelectedCampaign(null);
+                  }}
                 >
                   İptal
                 </button>
+                {selectedGame && (
+                  <button 
+                    className="modal-btn primary"
+                    onClick={() => confirmGameSelection(selectedGame.id)}
+                    disabled={selectedGame.campaigns && selectedGame.campaigns.length > 1 && !selectedCampaign}
+                  >
+                    Seç
+                  </button>
+                )}
               </div>
             </div>
            </div>
@@ -920,6 +1029,7 @@ function RoutePlanner() {
           ))}
         </div>
       </div>
+    </div>
     );
   }
   

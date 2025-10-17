@@ -2,7 +2,7 @@
 
 .todo-app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: var(--gradient-background);
   padding: 3rem 4rem;
 }
 
@@ -11,7 +11,7 @@
   background: rgba(30, 41, 59, 0.95);
   border-radius: 24px;
   padding: 3rem 4rem;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 48px rgba(var(--color-black-rgb), 0.3);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   display: grid;
@@ -25,11 +25,11 @@
 .todo-header {
   max-width: 800px;
   margin: 0 auto 2rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .header-ust {
@@ -40,8 +40,8 @@
 }
 
 .geri-btn {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
@@ -51,15 +51,15 @@
 }
 
 .geri-btn:hover {
-  background: #e5e7eb;
-  border-color: #d1d5db;
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-300);
   transform: translateY(-2px);
 }
 
 .todo-baslik {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-gray-700);
   margin: 0;
   text-align: center;
   flex: 1;
@@ -72,8 +72,8 @@
 }
 
 .istatistik-kart {
-  background: #f9fafb;
-  border: 2px solid #e5e7eb;
+  background: var(--surface-1);
+  border: 2px solid var(--color-gray-200);
   border-radius: 16px;
   padding: 1.5rem;
   text-align: center;
@@ -81,25 +81,25 @@
 }
 
 .istatistik-kart.aktif {
-  background: #dbeafe;
-  border-color: #3b82f6;
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
 }
 
 .istatistik-kart.tamamlanan {
-  background: #dcfce7;
-  border-color: #10b981;
+  background: var(--color-success-50);
+  border-color: var(--color-success-600);
 }
 
 .istatistik-sayi {
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-gray-700);
   margin-bottom: 0.5rem;
 }
 
 .istatistik-etiket {
-  color: #6b7280;
+  color: var(--color-gray-500);
   font-weight: 500;
   font-size: 0.9rem;
 }
@@ -112,12 +112,12 @@
 
 /* Görev Ekleme Formu */
 .gorev-form {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
 }
 
 .form-grup {
@@ -128,7 +128,7 @@
 .gorev-input {
   flex: 1;
   padding: 1rem 1.5rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-gray-200);
   border-radius: 50px;
   font-size: 1rem;
   outline: none;
@@ -137,12 +137,12 @@
 }
 
 .gorev-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-500-rgb), 0.1);
 }
 
 .ekle-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -156,7 +156,7 @@
 
 .ekle-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.3);
 }
 
 /* Filtreler */
@@ -168,9 +168,9 @@
 }
 
 .filtre-btn {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: #374151;
+  background: rgba(var(--color-white-rgb), 0.9);
+  border: 2px solid rgba(var(--color-white-rgb), 0.3);
+  color: var(--color-gray-600);
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
   font-weight: 500;
@@ -181,20 +181,20 @@
 
 .filtre-btn:hover {
   background: rgba(255, 255, 255, 1);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(var(--color-white-rgb), 0.5);
 }
 
 .filtre-btn.aktif {
   background: rgba(255, 255, 255, 1);
-  border-color: #667eea;
-  color: #667eea;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-500);
+  box-shadow: 0 4px 15px rgba(var(--color-primary-500-rgb), 0.2);
 }
 
 .temizle-btn {
-  background: #fee2e2;
-  border: 2px solid #fecaca;
-  color: #dc2626;
+  background: var(--color-error-50);
+  border: 2px solid var(--color-error-100);
+  color: var(--color-error-600);
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
   font-weight: 500;
@@ -204,17 +204,17 @@
 }
 
 .temizle-btn:hover {
-  background: #fecaca;
-  border-color: #f87171;
+  background: var(--color-error-100);
+  border-color: var(--color-error-500);
 }
 
 /* Görevler Container */
 .gorevler-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--color-white-rgb), 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
   min-height: 300px;
 }
 
@@ -222,7 +222,7 @@
 .bos-durum {
   text-align: center;
   padding: 3rem 2rem;
-  color: #6b7280;
+  color: var(--color-gray-500);
 }
 
 .bos-durum-ikon {
@@ -232,7 +232,7 @@
 
 .bos-durum h3 {
   font-size: 1.5rem;
-  color: #374151;
+  color: var(--color-gray-600);
   margin-bottom: 0.5rem;
 }
 
@@ -249,7 +249,7 @@
 
 .gorev-kartı {
   background: white;
-  border: 2px solid #f3f4f6;
+  border: 2px solid var(--color-gray-100);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
@@ -260,13 +260,13 @@
 }
 
 .gorev-kartı:hover {
-  border-color: #e5e7eb;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-color: var(--color-gray-200);
+  box-shadow: 0 4px 15px rgba(var(--color-black-rgb), 0.1);
 }
 
 .gorev-kartı.tamamlandi {
   opacity: 0.7;
-  background: #f9fafb;
+  background: var(--surface-1);
 }
 
 .gorev-sol {
@@ -296,18 +296,18 @@
 
 .gorev-metin {
   font-size: 1.1rem;
-  color: #1f2937;
+  color: var(--color-gray-700);
   font-weight: 500;
 }
 
 .gorev-kartı.tamamlandi .gorev-metin {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .gorev-tarih {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--color-gray-400);
 }
 
 .gorev-sag {
@@ -318,7 +318,7 @@
 
 .oncelik-secici {
   padding: 0.5rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-gray-200);
   border-radius: 8px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -328,13 +328,13 @@
 
 .oncelik-secici:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-500-rgb), 0.1);
 }
 
 .sil-btn {
-  background: #fee2e2;
-  border: 2px solid #fecaca;
-  color: #dc2626;
+  background: var(--color-error-50);
+  border: 2px solid var(--color-error-100);
+  color: var(--color-error-600);
   padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -343,8 +343,8 @@
 }
 
 .sil-btn:hover {
-  background: #fecaca;
-  border-color: #f87171;
+  background: var(--color-error-100);
+  border-color: var(--color-error-500);
   transform: scale(1.1);
 }
 
