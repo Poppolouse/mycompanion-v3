@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProfileDropdown from '../../../components/ProfileDropdown';
 import './Statistics.css';
 
 function Statistics() {
@@ -210,6 +211,7 @@ function Statistics() {
                 Son 1 Yıl
               </button>
             </div>
+            <ProfileDropdown />
           </div>
         </div>
       </header>

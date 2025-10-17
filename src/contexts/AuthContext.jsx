@@ -1,53 +1,69 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import userService from '../services/userService';
 
 const AuthContext = createContext(null);
 
 /**
- * AuthProvider - Giriş durumu yönetimi
+ * AuthProvider - Kullanıcı sistemi yönetimi
  * 
- * Kullanıcı adı: admin
- * Şifre: admin
+ * UserService ile entegre edilmiş merkezi kullanıcı yönetimi
  */
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // Sayfa yüklendiğinde localStorage'dan giriş durumunu kontrol et
+  // Sayfa yüklendiğinde localStorage'dan kullanıcı bilgilerini kontrol et
   useEffect(() => {
     const savedAuth = localStorage.getItem('vaulttracker:auth:isLoggedIn');
-    if (savedAuth === 'true') {
-      setIsAuthenticated(true);
+    const savedUser = localStorage.getItem('vaulttracker:auth:currentUser');
+    
+    if (savedAuth === 'true' && savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setIsAuthenticated(true);
+        setCurrentUser(user);
+      } catch (error) {
+        console.error('localStorage kullanıcı verisi parse edilemedi:', error);
+        // Hatalı veriyi temizle
+        localStorage.removeItem('vaulttracker:auth:isLoggedIn');
+        localStorage.removeItem('vaulttracker:auth:currentUser');
+      }
     }
     setIsLoading(false);
   }, []);
 
   // Giriş fonksiyonu
   const login = (username, password) => {
-    // Sabit kullanıcı adı ve şifre kontrolü
-    if (username === 'admin' && password === 'admin') {
+    // UserService ile kullanıcı doğrulama
+    const result = userService.authenticateUser(username, password);
+    
+    if (result.success) {
       setIsAuthenticated(true);
+      setCurrentUser(result.user);
       localStorage.setItem('vaulttracker:auth:isLoggedIn', 'true');
-      console.log('✅ Başarılı giriş yapıldı');
-      return { success: true };
+      localStorage.setItem('vaulttracker:auth:currentUser', JSON.stringify(result.user));
+      console.log('✅ Başarılı giriş yapıldı:', result.user.displayName);
+      return result;
     } else {
       console.log('❌ Hatalı kullanıcı adı veya şifre');
-      return { 
-        success: false, 
-        error: 'Kullanıcı adı veya şifre hatalı!' 
-      };
+      return result;
     }
   };
 
   // Çıkış fonksiyonu
   const logout = () => {
     setIsAuthenticated(false);
+    setCurrentUser(null);
     localStorage.removeItem('vaulttracker:auth:isLoggedIn');
+    localStorage.removeItem('vaulttracker:auth:currentUser');
     console.log('👋 Çıkış yapıldı');
   };
 
   const value = {
     isAuthenticated,
     isLoading,
+    currentUser,
     login,
     logout
   };

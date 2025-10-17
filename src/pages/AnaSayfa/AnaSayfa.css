@@ -9,6 +9,14 @@
   flex-direction: column;
 }
 
+/* Ana Sayfa Profil Butonu - Body üzerinde konumlandırılmış */
+.ana-sayfa-profile {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1000;
+}
+
 /* Standart Glassmorphic Header */
 .page-header {
   width: 100%;
@@ -202,6 +210,21 @@
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   border-color: rgba(16, 185, 129, 0.5);
   box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Ana Sayfa Header Responsive */
+@media (max-width: 768px) {
+  .ana-sayfa-profile {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ana-sayfa-profile {
+    top: 1rem;
+    right: 1rem;
+  }
 }
 
 /* Responsive */
@@ -589,7 +612,7 @@
 
 .karsilama-ekrani {
   width: 100%;
-  padding: 1rem 0 3rem 0;
+  padding: 1rem;
   background: linear-gradient(180deg, 
     rgba(15, 23, 42, 0.4) 0%, 
     rgba(15, 23, 42, 0.7) 30%, 
@@ -825,12 +848,16 @@
   border: 1px solid rgba(102, 126, 234, 0.2);
   border-radius: 20px;
   transition: all 0.3s ease;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
-.uygulama-kart::before {
+/* Aktif uygulama (sadece Game Tracking Hub) */
+.uygulama-kart.active-app {
+  cursor: pointer;
+}
+
+.uygulama-kart.active-app::before {
   content: '';
   position: absolute;
   top: 0;
@@ -844,14 +871,44 @@
   transition: left 0.5s ease;
 }
 
-.uygulama-kart:hover::before {
+.uygulama-kart.active-app:hover::before {
   left: 100%;
 }
 
-.uygulama-kart:hover {
+.uygulama-kart.active-app:hover {
   transform: translateY(-5px);
   border-color: rgba(102, 126, 234, 0.5);
   box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+}
+
+/* Çok Yakında kartları */
+.uygulama-kart.coming-soon {
+  cursor: default;
+  opacity: 0.7;
+  filter: grayscale(0.3);
+}
+
+.uygulama-kart.coming-soon:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+/* Çok Yakında Bandı */
+.coming-soon-banner {
+  position: absolute;
+  top: 15px;
+  right: -30px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  padding: 5px 40px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .kart-ikon {

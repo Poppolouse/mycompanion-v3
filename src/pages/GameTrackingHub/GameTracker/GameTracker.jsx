@@ -8,6 +8,7 @@ import AdvancedFilters from '../../../components/AdvancedFilters';
 import GameListItem from '../../../components/GameListItem';
 import EditGameModal from '../../../components/EditGameModal';
 import { useNotifications } from '../../../components/NotificationSystem';
+import ProfileDropdown from '../../../components/ProfileDropdown';
 import './GameTracker.css';
 import './GameTracker_FORCE_FIX.css';
 import './GameTracker_NUCLEAR.css';
@@ -711,7 +712,7 @@ function GameTracker() {
               </button>
             )}
 
-
+            <ProfileDropdown />
           </div>
         </div>
       </header>

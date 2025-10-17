@@ -236,6 +236,20 @@ header *,
   /* Sadece ana header container'ı düz olacak */
 }
 
+/* 👤 PROFIL DROPDOWN - HEADER İÇİN ÖZEL STILLER */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.header-controls .profile-dropdown {
+  margin-left: auto; /* Profil dropdown'unu en sağa it */
+}
+
   /* 🎮 Oyun Durumu Renkleri */
   --game-status-playing: #2ed573;                      /* Oynanıyor - parlak yeşil */
   --game-status-completed: #11998e;                    /* Tamamlandı - turkuaz */

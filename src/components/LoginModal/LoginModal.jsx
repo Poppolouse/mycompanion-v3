@@ -5,8 +5,8 @@ import './LoginModal.css';
 /**
  * LoginModal - Site girişinde çıkan giriş modal'ı
  * 
- * Kullanıcı adı: admin
- * Şifre: admin
+ * Kullanıcı adı: poppolouse
+ * Şifre: 123Ardat123
  */
 function LoginModal() {
   const { login } = useAuth();

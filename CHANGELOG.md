@@ -1,5 +1,37 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🐛 **v3.11.1** - 2024-12-28 - **Profil Ayarları UI/UX İyileştirmeleri & Bug Fix'ler**
+
+### 🔧 **Bug Fix'ler**
+
+#### 🛠️ **Admin Panel Erişim Sorunu**
+- **❌ Sorun**: `poppolouse` kullanıcısı admin yetkisine sahip olmasına rağmen admin panel butonuna erişemiyordu
+- **✅ Çözüm**: Admin butonu disabled koşulu ve localStorage senkronizasyonu düzeltildi
+- **🔍 Detay**: `currentUser?.role === 'admin'` kontrolü ve AuthContext entegrasyonu optimize edildi
+
+#### 🎨 **Profil Ayarları Görsel İyileştirmeleri**
+- **🌑 Sidebar Arkaplan**: Şeffaf arkaplan → Koyu opak arkaplan (`rgba(15, 23, 42, 0.9)`)
+- **📦 Kutucuk Arkaplanları**: Şeffaf → Koyu opak arkaplan (normal: `0.9`, hover: `0.95`)
+- **✨ Font Renkleri**: Tüm text elementleri parlak beyaz renklerle güncellendi
+  - Sidebar item'ları: `rgba(255, 255, 255, 0.9)`
+  - Form label'ları: `rgba(255, 255, 255, 0.95)`
+  - Section açıklamaları: `rgba(255, 255, 255, 0.8)`
+  - Başlıklar (h3): `rgba(255, 255, 255, 0.95)`
+
+### 🎯 **UI/UX İyileştirmeleri**
+
+#### 📱 **Okunabilirlik Artırıldı**
+- **✅ Kontrast**: Koyu arkaplan + parlak fontlar ile mükemmel kontrast
+- **✅ Hover Efektleri**: Sidebar ve kutucuklar için geliştirilmiş hover durumları
+- **✅ Tutarlılık**: Tüm profil ayarları sayfasında tutarlı renk paleti
+
+#### 🔧 **Teknik İyileştirmeler**
+- **✅ CSS Optimizasyonu**: ProfileSettings.css'te renk değerleri optimize edildi
+- **✅ Kod Temizliği**: Debug kodları ve geçici butonlar kaldırıldı
+- **✅ Performance**: Gereksiz console.log'lar temizlendi
+
+---
+
 ## 🎯 **v3.11.0** - 2024-12-28 - **Game Tracking Hub Dosya Organizasyonu & Alt Sayfa Yapılandırması**
 
 ### ✨ **Yeni Özellikler**

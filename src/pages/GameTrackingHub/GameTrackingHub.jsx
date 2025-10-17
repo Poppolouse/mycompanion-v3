@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import ProfileDropdown from '../../components/ProfileDropdown';
 import './GameTrackingHub.css';
 
 /**
@@ -15,15 +16,15 @@ function GameTrackingHub() {
 
   // Sayfa navigasyonları
   const navigateToStatistics = () => {
-    navigate('/statistics');
+    navigate('/game-tracking-hub/statistics');
   };
 
   const navigateToRoutePlanner = () => {
-    navigate('/route-planner');
+    navigate('/game-tracking-hub/route-planner');
   };
 
   const navigateToLibrary = () => {
-    navigate('/game-tracker');
+    navigate('/game-tracking-hub/game-tracker');
   };
 
   const navigateToSession = () => {
@@ -49,6 +50,7 @@ function GameTrackingHub() {
                 🏠 Ana Sayfa
               </button>
             </div>
+            <ProfileDropdown />
           </div>
         </div>
       </header>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRoute } from '../../../contexts/RouteContext';
+import ProfileDropdown from '../../../components/ProfileDropdown';
 import './RoutePlanner.css';
 
 /**
@@ -340,6 +341,7 @@ function RoutePlanner() {
                 🎮 Oyun Hub
               </button>
             </div>
+            <ProfileDropdown />
           </div>
         </div>
       </header>

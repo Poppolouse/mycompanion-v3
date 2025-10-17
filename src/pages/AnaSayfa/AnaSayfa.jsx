@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AnaSayfa.css';
+import ProfileDropdown from '../../components/ProfileDropdown/ProfileDropdown';
 
-/**
- * Ana sayfa komponenti
- * Kullanıcıya soru sorar ve cevabına göre uygun uygulamaları gösterir
- */
 function AnaSayfa() {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -23,21 +20,12 @@ function AnaSayfa() {
   const handleUygulamaGit = (route) => {
     navigate(route);
   };
-
   return (
     <div className="ana-sayfa">
-      {/* Standart Header */}
-      <header className="tracker-header">
-        <div className="header-content">
-          <div className="header-left">
-            <h1>
-              MyCompanion
-              <span className="baslik-alt">v3</span>
-            </h1>
-            <p>İhtiyacınıza uygun web uygulamalarını keşfedin ve hemen kullanmaya başlayın</p>
-          </div>
-        </div>
-      </header>
+      {/* Profile Button - Body üzerinde konumlandırılmış */}
+      <div className="ana-sayfa-profile">
+        <ProfileDropdown />
+      </div>
 
       {/* Karşılama Ekranı */}
       <section className="karsilama-ekrani">
@@ -110,39 +98,27 @@ function AnaSayfa() {
           <div className="uygulama-kartlari-bolumu">
             <h3>🚀 Tüm Uygulamalar</h3>
             <div className="uygulama-grid">
-              <div className="uygulama-kart" onClick={() => handleUygulamaGit('/game-tracking-hub')}>
+              <div className="uygulama-kart active-app" onClick={() => handleUygulamaGit('/game-tracking-hub')}>
                 <div className="kart-ikon">🎮</div>
                 <div className="kart-icerik">
                   <h4>Game Tracking Hub</h4>
                   <p>Oyun yönetimi merkezi</p>
                 </div>
               </div>
-              <div className="uygulama-kart" onClick={() => handleUygulamaGit('/todo')}>
-                <div className="kart-ikon">📝</div>
+              <div className="uygulama-kart coming-soon">
+                <div className="coming-soon-banner">Çok Yakında</div>
+                <div className="kart-ikon">🧟</div>
                 <div className="kart-icerik">
-                  <h4>Todo App</h4>
-                  <p>Görevlerini organize et</p>
+                  <h4>Zombososyal</h4>
+                  <p>Sosyal medya platformu</p>
                 </div>
               </div>
-              <div className="uygulama-kart" onClick={() => handleUygulamaGit('/hava-durumu')}>
-                <div className="kart-ikon">🌤️</div>
+              <div className="uygulama-kart coming-soon">
+                <div className="coming-soon-banner">Çok Yakında</div>
+                <div className="kart-ikon">📚</div>
                 <div className="kart-icerik">
-                  <h4>Hava Durumu</h4>
-                  <p>Güncel hava bilgileri</p>
-                </div>
-              </div>
-              <div className="uygulama-kart" onClick={() => handleUygulamaGit('/hesap-makinesi')}>
-                <div className="kart-ikon">🧮</div>
-                <div className="kart-icerik">
-                  <h4>Hesap Makinesi</h4>
-                  <p>Hızlı hesaplamalar</p>
-                </div>
-              </div>
-              <div className="uygulama-kart" onClick={() => handleUygulamaGit('/not-defteri')}>
-                <div className="kart-ikon">📝</div>
-                <div className="kart-icerik">
-                  <h4>Not Defteri</h4>
-                  <p>Notlarını yönet</p>
+                  <h4>Kitaba Kitab</h4>
+                  <p>Kitap okuma ve takip uygulaması</p>
                 </div>
               </div>
             </div>

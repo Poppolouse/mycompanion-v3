@@ -1,0 +1,1173 @@
+/* ProfileSettings - Site Uyumlu Tasarım */
+
+.profile-settings {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Standart Glassmorphic Header */
+.profile-settings .tracker-header {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+  padding: 2rem 0 1rem 0;
+  position: relative;
+  overflow: hidden;
+  margin: 0 calc(-50vw + 50%);
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+}
+
+.profile-settings .tracker-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+}
+
+.profile-settings .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.profile-settings .header-left h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.profile-settings .header-left p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.profile-settings .header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Navigation Buttons - Site Uyumlu */
+.profile-settings .navigation-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.profile-settings .nav-btn {
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: rgba(255, 255, 255, 0.95);
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.profile-settings .nav-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.profile-settings .nav-btn:hover::before {
+  left: 100%;
+}
+
+.profile-settings .nav-btn:hover {
+  background: rgba(102, 126, 234, 0.35);
+  border-color: rgba(102, 126, 234, 0.5);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(102, 126, 234, 0.1);
+}
+
+.profile-settings .nav-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(102, 126, 234, 0.05);
+}
+
+/* Admin Button Specific Styles */
+.profile-settings .nav-btn.admin-btn {
+  background: rgba(147, 51, 234, 0.2);
+  border-color: rgba(147, 51, 234, 0.3);
+  color: #a855f7;
+}
+
+.profile-settings .nav-btn.admin-btn:hover {
+  background: rgba(147, 51, 234, 0.3);
+  border-color: rgba(147, 51, 234, 0.5);
+  color: #c084fc;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(147, 51, 234, 0.3);
+}
+
+.profile-settings .nav-btn.admin-btn.active {
+  background: rgba(147, 51, 234, 0.4);
+  border-color: rgba(147, 51, 234, 0.6);
+  color: #e879f9;
+  box-shadow: 
+    0 0 20px rgba(147, 51, 234, 0.4),
+    inset 0 0 10px rgba(147, 51, 234, 0.2);
+}
+
+.profile-settings .nav-btn.admin-btn.disabled {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(147, 51, 234, 0.15);
+  color: rgba(168, 85, 247, 0.4);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.profile-settings .nav-btn.admin-btn.disabled:hover {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(147, 51, 234, 0.15);
+  color: rgba(168, 85, 247, 0.4);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Edit Actions */
+.profile-settings .edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.profile-settings .btn-edit, 
+.profile-settings .btn-save, 
+.profile-settings .btn-cancel {
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-settings .btn-edit {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.profile-settings .btn-edit:hover {
+  background: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+.profile-settings .btn-save {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.profile-settings .btn-save:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+}
+
+.profile-settings .btn-cancel {
+  background: rgba(107, 114, 128, 0.2);
+  color: #9ca3af;
+  border-color: rgba(107, 114, 128, 0.3);
+}
+
+.profile-settings .btn-cancel:hover {
+  background: rgba(107, 114, 128, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.2);
+}
+
+/* Layout */
+.profile-settings .settings-layout {
+  display: flex;
+  min-height: calc(100vh - 120px);
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Sidebar - Site Uyumlu Glassmorphism */
+.profile-settings .settings-sidebar {
+  width: 280px;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(25px);
+  border-radius: 20px;
+  margin-right: 2rem;
+  padding: 1.5rem 0;
+  box-shadow: 
+    0 6px 24px rgba(0, 0, 0, 0.08),
+    0 1px 6px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(var(--color-border-rgb), 0.18);
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.profile-settings .sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 1rem;
+}
+
+.profile-settings .sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: none;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-settings .sidebar-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(102, 126, 234, 0.1) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.profile-settings .sidebar-item:hover::before {
+  left: 100%;
+}
+
+.profile-settings .sidebar-item:hover {
+  background: rgba(102, 126, 234, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateX(4px);
+  box-shadow: 
+    0 4px 16px rgba(102, 126, 234, 0.15),
+    0 2px 8px rgba(102, 126, 234, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+.profile-settings .sidebar-item.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  color: #667eea;
+  border-left: 3px solid #667eea;
+  margin-left: -1rem;
+  padding-left: calc(1.25rem - 3px);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+}
+
+.profile-settings .sidebar-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.profile-settings .sidebar-text {
+  flex: 1;
+}
+
+/* Main Content */
+.profile-settings .settings-content {
+  flex: 1;
+  padding: 0 2rem;
+  max-width: 800px;
+}
+
+.profile-settings .settings-section {
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(var(--color-border-rgb), 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.profile-settings .settings-section:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(var(--color-border-rgb), 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(102, 126, 234, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Section Header */
+.profile-settings .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--dark-border-1);
+}
+
+.profile-settings .section-header h2 {
+  color: var(--dark-text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-settings .section-header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0 0;
+  line-height: 1.4;
+}
+
+/* Section Actions */
+.profile-settings .section-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.profile-settings .btn-edit-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-settings .btn-edit-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.profile-settings .btn-edit-section:hover::before {
+  left: 100%;
+}
+
+.profile-settings .btn-edit-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.profile-settings .btn-edit-section i {
+  font-size: 0.9rem;
+}
+
+/* Edit Actions */
+.profile-settings .edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.profile-settings .btn-save-section,
+.profile-settings .btn-cancel-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-settings .btn-save-section {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.profile-settings .btn-save-section:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.profile-settings .btn-cancel-section {
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--dark-text-secondary);
+  border: 1px solid var(--dark-border-1);
+}
+
+.profile-settings .btn-cancel-section:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+  padding-bottom: 1rem;
+}
+
+.section-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.section-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* Form Elements - Site Uyumlu */
+.profile-settings .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.profile-settings .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  letter-spacing: 0.025em;
+}
+
+.profile-settings .form-group input,
+.profile-settings .form-group textarea,
+.profile-settings .form-group select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: var(--dark-surface-3);
+  border: 1px solid var(--dark-border-1);
+  border-radius: 12px;
+  color: var(--dark-text-primary);
+  font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+
+.profile-settings .form-group input:focus,
+.profile-settings .form-group textarea:focus,
+.profile-settings .form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: var(--dark-surface-2);
+}
+
+.profile-settings .form-group input::placeholder,
+.profile-settings .form-group textarea::placeholder {
+  color: var(--dark-text-secondary);
+}
+
+.profile-settings .form-group input:disabled,
+.profile-settings .form-group textarea:disabled,
+.profile-settings .form-group select:disabled {
+  background: rgba(51, 65, 85, 0.3);
+  color: var(--dark-text-secondary);
+  cursor: not-allowed;
+}
+
+.profile-settings .form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Checkbox Groups */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  accent-color: #3b82f6;
+}
+
+.checkbox-group span {
+  color: #e2e8f0;
+  font-size: 0.875rem;
+}
+
+/* Info Cards */
+.info-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #60a5fa;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info-card p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Danger Zone */
+.danger-zone {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.danger-zone h3 {
+  margin: 0 0 0.5rem 0;
+  color: #f87171;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.danger-zone p {
+  margin: 0 0 1rem 0;
+  color: #fca5a5;
+  font-size: 0.875rem;
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Responsive Design - Site Uyumlu */
+@media (max-width: 1200px) {
+  .profile-settings .settings-layout {
+    padding: 1.5rem 0;
+  }
+  
+  .profile-settings .settings-sidebar {
+    width: 260px;
+    margin-right: 1.5rem;
+  }
+  
+  .profile-settings .settings-content {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-settings .settings-layout {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  
+  .profile-settings .settings-sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 2rem;
+    border-radius: 16px;
+    position: static;
+  }
+  
+  .profile-settings .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .profile-settings .sidebar-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .profile-settings .sidebar-item {
+    flex-shrink: 0;
+    min-width: 160px;
+    justify-content: center;
+    padding: 1rem 1.25rem;
+    white-space: nowrap;
+  }
+  
+  .profile-settings .sidebar-item.active {
+    border-left: none;
+    border-bottom: 3px solid #667eea;
+    margin-left: 0;
+    padding-left: 1.25rem;
+    margin-bottom: -1rem;
+    padding-bottom: calc(1rem - 3px);
+  }
+  
+  .profile-settings .settings-content {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-settings .tracker-header .header-content {
+    padding: 0 1rem;
+  }
+  
+  .profile-settings .header-controls {
+    gap: 0.5rem;
+  }
+  
+  .profile-settings .nav-btn,
+  .profile-settings .edit-btn {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    min-width: 44px;
+  }
+  
+  .profile-settings .nav-btn span,
+  .profile-settings .edit-btn span {
+    display: none;
+  }
+  
+  .profile-settings .settings-content {
+    padding: 0;
+  }
+  
+  .profile-settings .settings-section {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .profile-settings .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .profile-settings .section-actions {
+    justify-content: flex-end;
+  }
+  
+  .profile-settings .btn-edit-section {
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .profile-settings .btn-save-section,
+  .profile-settings .btn-cancel-section {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
+  }
+  
+  .profile-settings .form-actions {
+    flex-direction: column;
+  }
+  
+  .profile-settings .btn-primary,
+  .profile-settings .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .profile-settings .sidebar-item {
+    min-width: 140px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-settings .settings-layout {
+    padding: 0.5rem 0;
+  }
+  
+  .profile-settings .settings-sidebar {
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .profile-settings .sidebar-nav {
+    padding: 0 0.75rem;
+  }
+  
+  .profile-settings .sidebar-item {
+    min-width: 120px;
+    font-size: 0.8rem;
+    padding: 0.875rem 1rem;
+  }
+  
+  .profile-settings .sidebar-icon {
+    font-size: 1.1rem;
+    width: 20px;
+  }
+  
+  .profile-settings .settings-section {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
+  
+  .profile-settings .section-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .profile-settings .section-header p {
+    font-size: 0.8rem;
+  }
+  
+  .profile-settings .btn-edit-section {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.75rem;
+  }
+  
+  .profile-settings .btn-edit-section span {
+    display: none;
+  }
+  
+  .profile-settings .edit-actions {
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  
+  .profile-settings .btn-save-section,
+  .profile-settings .btn-cancel-section {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.7rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .profile-settings .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .profile-settings .form-input,
+  .profile-settings .form-select {
+    padding: 0.875rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+  
+  .profile-settings .btn-primary,
+  .profile-settings .btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+}
+
+/* Admin Panel Styles */
+.profile-settings .admin-panel {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(var(--color-border-rgb), 0.15);
+}
+
+.profile-settings .btn-add-user {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.profile-settings .btn-add-user:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Add User Form */
+.profile-settings .add-user-form {
+  background: rgba(var(--color-surface-rgb), 0.12);
+  border: 1px solid rgba(var(--color-border-rgb), 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  backdrop-filter: blur(10px);
+}
+
+.profile-settings .add-user-form h3 {
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.profile-settings .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Users List */
+.profile-settings .users-list {
+  margin-top: 2rem;
+}
+
+.profile-settings .users-list h3 {
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Users Table */
+.profile-settings .users-table {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(var(--color-border-rgb), 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.profile-settings .table-header {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1.5fr;
+  background: rgba(102, 126, 234, 0.15);
+  padding: 1rem;
+  font-weight: 600;
+  color: var(--dark-text-primary);
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.2);
+}
+
+.profile-settings .table-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1.5fr;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.1);
+  transition: all 0.3s ease;
+}
+
+.profile-settings .table-row:hover {
+  background: rgba(var(--color-surface-rgb), 0.12);
+}
+
+.profile-settings .table-row:last-child {
+  border-bottom: none;
+}
+
+.profile-settings .table-cell {
+  display: flex;
+  align-items: center;
+  color: var(--dark-text-secondary);
+  font-size: 0.9rem;
+}
+
+.profile-settings .user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-settings .user-info strong {
+  color: var(--dark-text-primary);
+  font-weight: 600;
+}
+
+.profile-settings .user-info small {
+  color: var(--dark-text-tertiary);
+  font-size: 0.8rem;
+}
+
+/* Status and Role Badges */
+.profile-settings .status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-settings .status.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.profile-settings .status.inactive {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.profile-settings .role {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-settings .role.admin {
+  background: rgba(147, 51, 234, 0.2);
+  color: #9333ea;
+  border: 1px solid rgba(147, 51, 234, 0.3);
+}
+
+.profile-settings .role.user {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Action Buttons */
+.profile-settings .table-cell:last-child {
+  gap: 0.5rem;
+}
+
+.profile-settings .btn-edit,
+.profile-settings .btn-toggle,
+.profile-settings .btn-delete,
+.profile-settings .btn-save,
+.profile-settings .btn-cancel {
+  background: rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-settings .btn-edit:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+}
+
+.profile-settings .btn-toggle:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+}
+
+.profile-settings .btn-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.profile-settings .btn-save {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  padding: 0.5rem 1rem;
+  width: auto;
+}
+
+.profile-settings .btn-save:hover {
+  background: rgba(16, 185, 129, 0.3);
+}
+
+.profile-settings .btn-cancel {
+  background: rgba(107, 114, 128, 0.2);
+  border-color: rgba(107, 114, 128, 0.3);
+  color: #6b7280;
+  padding: 0.5rem 1rem;
+  width: auto;
+}
+
+.profile-settings .btn-cancel:hover {
+  background: rgba(107, 114, 128, 0.3);
+}
+
+/* Form Inputs in Table */
+.profile-settings .table-cell input,
+.profile-settings .table-cell select {
+  background: rgba(var(--color-surface-rgb), 0.15);
+  border: 1px solid rgba(var(--color-border-rgb), 0.2);
+  color: var(--dark-text-primary);
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.profile-settings .table-cell input:focus,
+.profile-settings .table-cell select:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Responsive Admin Panel */
+@media (max-width: 1024px) {
+  .profile-settings .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .profile-settings .table-header,
+  .profile-settings .table-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .profile-settings .table-cell {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(var(--color-border-rgb), 0.1);
+  }
+  
+  .profile-settings .table-cell:last-child {
+    border-bottom: none;
+    padding-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-settings .add-user-form {
+    padding: 1.5rem;
+  }
+  
+  .profile-settings .btn-add-user {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .profile-settings .table-cell:last-child {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
+  .profile-settings .btn-edit,
+  .profile-settings .btn-toggle,
+  .profile-settings .btn-delete {
+    flex: 1;
+    min-width: 44px;
+  }
+}
+
+/* Smooth Animations */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}

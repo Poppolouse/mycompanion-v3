@@ -16,6 +16,7 @@ import AddGame from './pages/GameTrackingHub/AddGame';
 import EditGame from './pages/GameTrackingHub/EditGame';
 import AdminPanel from './components/AdminPanel';
 import LoginModal from './components/LoginModal';
+import { ProfileSettings } from './components/UserProfile';
 import { RouteProvider } from './contexts/RouteContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotificationProvider } from './components/NotificationSystem';
@@ -62,6 +63,9 @@ function AppContent() {
         {/* Sidebar'sız bağımsız sayfalar */}
         {/* Ana sayfa - Kullanıcı sorusu ve uygulama listesi */}
         <Route path="/" element={<AnaSayfa />} />
+        
+        {/* Profil Ayarları */}
+        <Route path="/profile-settings" element={<ProfileSettings />} />
         
         {/* Game Tracking Hub - Ana sayfa ve alt sayfaları */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
