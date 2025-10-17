@@ -11,6 +11,7 @@ import GameDetail from './pages/GameDetail';
 import Statistics from './pages/Statistics';
 import RoutePlanner from './pages/RoutePlanner';
 import GameTrackingHub from './pages/GameTrackingHub';
+import Session from './pages/Session';
 import AddGame from './pages/AddGame';
 import EditGame from './pages/EditGame';
 import AdminPanel from './components/AdminPanel';
@@ -60,6 +61,7 @@ function AppContent() {
         <Routes>
         {/* Game Tracking - Sidebar'sız bağımsız sayfalar */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
+        <Route path="/session" element={<Session />} />
         <Route path="/game-tracker" element={
           <RouteProvider>
             <GameTracker />

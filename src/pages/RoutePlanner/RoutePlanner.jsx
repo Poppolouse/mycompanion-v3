@@ -344,182 +344,198 @@ function RoutePlanner() {
         </div>
       </header>
 
-      {/* Coming Soon Card */}
-      <div className="route-progress-card coming-soon-card">
-        <div className="coming-soon-content">
-          <div className="coming-soon-icon">🚀</div>
-          <h3>Yakında Gelecek</h3>
-          <p>Bu alan için yeni özellikler geliştiriliyor...</p>
+      {/* Cycle Overview Card */}
+      <div className="route-progress-card cycle-overview-card">
+        <div className="cycle-overview-content">
+          <div className="cycle-overview-header">
+            <div className="cycle-overview-icon">📊</div>
+            <h3>CYCLE GENEL DURUMU</h3>
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="cycle-progress-container">
+            <div className="cycle-progress-bar">
+              <div 
+                className="cycle-progress-fill" 
+                style={{
+                  width: `${Math.round((routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length / 39) * 100)}%`
+                }}
+              ></div>
+            </div>
+            <div className="cycle-progress-text">
+              {Math.round((routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length / 39) * 100)}% Tamamlandı
+            </div>
+          </div>
+
+          {/* Statistics Grid */}
+          <div className="cycle-stats-grid">
+            <div className="cycle-stat-item">
+              <div className="cycle-stat-icon">🎯</div>
+              <div className="cycle-stat-info">
+                <div className="cycle-stat-value">39</div>
+                <div className="cycle-stat-label">Toplam Cycle</div>
+              </div>
+            </div>
+            <div className="cycle-stat-item">
+              <div className="cycle-stat-icon">✅</div>
+              <div className="cycle-stat-info">
+                <div className="cycle-stat-value">
+                  {routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length}
+                </div>
+                <div className="cycle-stat-label">Tamamlanan</div>
+              </div>
+            </div>
+            <div className="cycle-stat-item">
+              <div className="cycle-stat-icon">🔥</div>
+              <div className="cycle-stat-info">
+                <div className="cycle-stat-value">{config.currentCycle || 1}</div>
+                <div className="cycle-stat-label">Aktif Cycle</div>
+              </div>
+            </div>
+            <div className="cycle-stat-item">
+              <div className="cycle-stat-icon">⏳</div>
+              <div className="cycle-stat-info">
+                <div className="cycle-stat-value">
+                  {39 - routeState.cycles.filter(c => c.cycleNumber < config.currentCycle).length}
+                </div>
+                <div className="cycle-stat-label">Kalan</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Info */}
+          <div className="cycle-additional-info">
+            <div className="cycle-info-item">
+              <span className="cycle-info-icon">🎮</span>
+              <span className="cycle-info-text">
+                Aktif Cycle'da {currentCycle ? currentCycle.games.filter(g => g.status === 'completed').length : 0}/3 oyun tamamlandı
+              </span>
+            </div>
+            <div className="cycle-info-item">
+              <span className="cycle-info-icon">📈</span>
+              <span className="cycle-info-text">
+                Ortalama cycle tamamlama süresi: ~2 hafta
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="route-planner__content">
-        {/* Sol Sidebar */}
+        {/* Sol Sidebar - Gaming Navigation Hub */}
         <div className="route-planner__sidebar slide-in-left">
-          <div className="sidebar-section fade-in">
-            <h3>🎯 AKTİF CYCLE</h3>
-            <div className="active-cycle-info">
-              <p>Cycle {config.currentCycle}/{ROUTE_CONFIG.totalCycles}</p>
-              <p>
-                {activeGame 
-                  ? `Aktif: ${activeGame.type} Oyunu`
-                  : `Oyun Seçilmedi`
-                }
-              </p>
-              <p>İlerleme: %{currentCycle ? Math.round(
-                (currentCycle.games.filter(g => g.status === 'completed').length / 3) * 100
-              ) : 0}</p>
-              <p>
-                Toplam Süre: {analytics.totalHoursPlayed}h / 
-                {currentCycle ? currentCycle.estimatedHours : 0}h
-              </p>
+          {/* Header */}
+          <div className="sidebar-header">
+            <h2>🎮 GAMING NAVIGATION HUB</h2>
+          </div>
+
+          {/* Oyun Modu Sekciyonu */}
+          <div className="sidebar-section gaming-mode-section">
+            <h3>🎮 OYUN MODU</h3>
+            <div className="current-game-card">
+              <div className="game-status-indicator">
+                <span className="status-dot active"></span>
+                <span className="status-text">ŞU AN OYNUYOR</span>
+              </div>
+              <div className="game-info">
+                <div className="game-title">
+                  {activeGame ? activeGame.name : 'Oyun Seçilmedi'}
+                </div>
+                <div className="game-details">
+                  <span>Başlama: {new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</span>
+                  <span>Süre: 2s 15dk</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="sidebar-section">
-            <h3>⚡ QUICK ACCESS</h3>
-            <div className="quick-actions">
-              <button 
-                className="quick-btn"
-                onClick={() => {
-                  if (!config.routeStarted) {
-                    startRoute();
-                  } else if (!config.currentCycleStarted) {
-                    startCycle();
-                  }
-                }}
-                disabled={config.routeStarted && config.currentCycleStarted}
-              >
-                {!config.routeStarted ? '🚀 Route Başlat' : 
-                 !config.currentCycleStarted ? '🎯 Cycle Başlat' : 
-                 '🎮 Oyun Seç'}
+          {/* Bu Hafta Sekciyonu */}
+          <div className="sidebar-section weekly-summary-section">
+            <h3>📅 BU HAFTA</h3>
+            <div className="weekly-summary-card">
+              <div className="weekly-stats">
+                <div className="stat-row">
+                  <span className="stat-icon">🎯</span>
+                  <span className="stat-label">Hedef:</span>
+                  <span className="stat-value">15 saat</span>
+                </div>
+                <div className="stat-row">
+                  <span className="stat-icon">⏱️</span>
+                  <span className="stat-label">Oynanan:</span>
+                  <span className="stat-value">8.5 saat</span>
+                </div>
+                <div className="stat-row">
+                  <span className="stat-icon">📊</span>
+                  <span className="stat-label">İlerleme:</span>
+                  <span className="stat-value">%57</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Hızlı Kısayollar Sekciyonu */}
+          <div className="sidebar-section shortcuts-section">
+            <h3>⚡ HIZLI KISAYOLLAR</h3>
+            <div className="shortcuts-grid">
+              <button className="shortcut-btn" onClick={() => window.location.href = '/game-tracker'}>
+                <span className="shortcut-icon">📁</span>
+                <span className="shortcut-label">Oyun Kütüphanesi</span>
               </button>
-              <button 
-                className="quick-btn"
-                disabled={!activeGame}
-              >
-                ✅ Tamamla
+              <button className="shortcut-btn">
+                <span className="shortcut-icon">💾</span>
+                <span className="shortcut-label">Veri Yedekleme</span>
               </button>
-              <button 
-                className="quick-btn"
-                disabled={!currentCycle || currentCycle.games.filter(g => g.status === 'completed').length < 3}
-              >
-                ⏭️ Sonraki Cycle
+              <button className="shortcut-btn">
+                <span className="shortcut-icon">📤</span>
+                <span className="shortcut-label">Veri İçe/Dışa Aktarma</span>
               </button>
-              <button 
-                className="quick-btn"
-                onClick={() => window.location.href = '/statistics'}
-              >
-                📊 İstatistikler
-              </button>
-              <button 
-                className="quick-btn"
-                onClick={refreshFromLibrary}
-              >
-                🔄 Kütüphane Yenile
+              <button className="shortcut-btn" onClick={refreshFromLibrary}>
+                <span className="shortcut-icon">🔄</span>
+                <span className="shortcut-label">Senkronizasyon</span>
               </button>
             </div>
           </div>
 
-          <div className="sidebar-section">
-            <h3>📋 FİLTRELER</h3>
-            
-            {/* Game Type Filters */}
-            <div className="filter-group">
-              <h4>Oyun Türü</h4>
-              <button 
-                className={`filter-btn ${activeFilters.rpg ? 'active' : ''}`}
-                onClick={() => toggleFilter('rpg')}
-              >
-                🗡️ RPG
-              </button>
-              <button 
-                className={`filter-btn ${activeFilters.story ? 'active' : ''}`}
-                onClick={() => toggleFilter('story')}
-              >
-                📖 Story/Indie
-              </button>
-              <button 
-                className={`filter-btn ${activeFilters.strategy ? 'active' : ''}`}
-                onClick={() => toggleFilter('strategy')}
-              >
-                🏗️ Strategy/Sim
-              </button>
+          {/* Son Aktiviteler Sekciyonu */}
+          <div className="sidebar-section activities-section">
+            <h3>📊 SON AKTİVİTELER</h3>
+            <div className="activities-feed">
+              <div className="activity-item">
+                <span className="activity-icon">✅</span>
+                <span className="activity-text">Witcher 3 tamamlandı</span>
+              </div>
+              <div className="activity-item">
+                <span className="activity-icon">🎯</span>
+                <span className="activity-text">Cycle 12 başlatıldı</span>
+              </div>
+              <div className="activity-item">
+                <span className="activity-icon">📚</span>
+                <span className="activity-text">3 oyun eklendi</span>
+              </div>
+              <div className="activity-item">
+                <span className="activity-icon">💾</span>
+                <span className="activity-text">Backup alındı</span>
+              </div>
             </div>
-
-            {/* Status Filters */}
-            <div className="filter-group">
-              <h4>Durum</h4>
-              <button 
-                className={`filter-btn ${activeFilters.status === 'all' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('all')}
-              >
-                📋 Tümü
-              </button>
-              <button 
-                className={`filter-btn ${activeFilters.status === 'active' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('active')}
-              >
-                🔥 Aktif
-              </button>
-              <button 
-                className={`filter-btn ${activeFilters.status === 'completed' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('completed')}
-              >
-                ✅ Tamamlandı
-              </button>
-              <button 
-                className={`filter-btn ${activeFilters.status === 'pending' ? 'active' : ''}`}
-                onClick={() => setStatusFilter('pending')}
-              >
-                ⏳ Beklemede
-              </button>
-            </div>
-
-            {/* Clear Filters */}
-            <button 
-              className="clear-filters-btn"
-              onClick={() => setActiveFilters({
-                rpg: false,
-                story: false,
-                strategy: false,
-                favorites: false,
-                status: 'all'
-              })}
-            >
-              🗑️ Filtreleri Temizle
-            </button>
           </div>
 
-          <div className="sidebar-section">
-            <h3>📖 KURAL KILAVUZU</h3>
-            <button 
-              className="rule-btn"
-              onClick={() => {
-                setRuleGuideType('completion');
-                setShowRuleGuide(true);
-              }}
-            >
-              ✅ Tamamlama Kriterleri
-            </button>
-            <button 
-              className="rule-btn"
-              onClick={() => {
-                setRuleGuideType('route');
-                setShowRuleGuide(true);
-              }}
-            >
-              🎯 Route Sistemi
-            </button>
-            <button 
-              className="rule-btn"
-              onClick={() => {
-                setRuleGuideType('tips');
-                setShowRuleGuide(true);
-              }}
-            >
-              💡 İpuçları & Stratejiler
-            </button>
+          {/* Sistem Durumu Sekciyonu */}
+          <div className="sidebar-section system-status-section">
+            <h3>🔧 SİSTEM DURUMU</h3>
+            <div className="status-grid">
+              <div className="status-item">
+                <span className="status-indicator online"></span>
+                <span className="status-label">Bağlantı: Aktif</span>
+              </div>
+              <div className="status-item">
+                <span className="status-indicator synced"></span>
+                <span className="status-label">Veri: Senkronize</span>
+              </div>
+              <div className="status-item">
+                <span className="status-indicator updated"></span>
+                <span className="status-label">Son Güncelleme: 2dk önce</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -687,8 +703,6 @@ function RoutePlanner() {
               </div>
             </div>
 
-            
-            <h2>📋 Tüm Cycle'lar</h2>
             <div className="filter-info">
               {Object.values(activeFilters).some(f => f !== false && f !== 'all') && (
                 <p className="active-filters">
@@ -698,9 +712,6 @@ function RoutePlanner() {
             </div>
             {/* Cycle History & Management */}
             <div className="cycle-history-section">
-              <div className="section-header">
-                <h2>📋 CYCLE HISTORY & MANAGEMENT</h2>
-              </div>
 
               <div className="history-timeline">
                 {getFilteredCycles().slice(0, 15).map((cycle) => {

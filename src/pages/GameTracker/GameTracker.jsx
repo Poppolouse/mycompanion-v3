@@ -671,13 +671,6 @@ function GameTracker() {
               >
                 🎮 Oyun Hub
               </button>
-              <button 
-                className="nav-btn add-game-btn"
-                onClick={() => navigate('/add-game')}
-                title="Yeni Oyun Ekle"
-              >
-                ➕ Oyun Ekle
-              </button>
             </div>
 
             {/* View Switcher */}
@@ -745,6 +738,14 @@ function GameTracker() {
               disabled={loading}
             >
               {loading ? '📤 Yükleniyor...' : '📁 Excel Dosyası Yükle'}
+            </button>
+            
+            <button 
+              className="add-game-btn"
+              onClick={() => navigate('/add-game')}
+              title="Yeni Oyun Ekle"
+            >
+              ➕ Oyun Ekle
             </button>
             
             <button 

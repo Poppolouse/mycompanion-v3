@@ -26,6 +26,10 @@ function GameTrackingHub() {
     navigate('/game-tracker');
   };
 
+  const navigateToSession = () => {
+    navigate('/session');
+  };
+
   return (
     <div className="game-tracking-hub">
       {/* Header */}
@@ -89,6 +93,27 @@ function GameTrackingHub() {
             </button>
           </div>
 
+          {/* Session Card */}
+          <div className="hub-card session-card">
+            <div className="card-icon">🎯</div>
+            <div className="card-content">
+              <h2>Session</h2>
+              <p>Aktif oyun session'ınızı yönetin ve takip edin. O anlık oynadığınız oyun hakkında işlemler yapın.</p>
+              <ul className="feature-list">
+                <li>🎮 Aktif oyun takibi</li>
+                <li>⏱️ Session süre takibi</li>
+                <li>📊 Anlık istatistikler</li>
+                <li>🎯 Session hedefleri</li>
+              </ul>
+            </div>
+            <button 
+              className="hub-button session-button"
+              onClick={navigateToSession}
+            >
+              🎯 Session'a Git
+            </button>
+          </div>
+
           {/* Library Card */}
           <div className="hub-card library-card">
             <div className="card-icon">📚</div>
@@ -124,7 +149,7 @@ function GameTrackingHub() {
           <div className="quick-stats">
             <div className="stat-item">
               <span className="stat-icon">🎮</span>
-              <span className="stat-label">3 Araç</span>
+              <span className="stat-label">4 Araç</span>
             </div>
             <div className="stat-item">
               <span className="stat-icon">⚡</span>

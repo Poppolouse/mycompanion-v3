@@ -160,4 +160,203 @@
 **Sorun:** Header tam ekran, content container içinde
 **Çözüm:** Header'ı container sistemine uyarla VEYA content'i full-width yap
 
+### 16 KOYU ARKA PLAN - AÇIK FONT KURALI 🌙
+
+**ZORUNLU KURAL:** Koyu arka plana asla koyu font kullanma!
+
+#### 📋 KONTRAST KURALLARI
+
+**✅ DOĞRU Kombinasyonlar:**
+```css
+/* Koyu arka plan + Açık font */
+background: #1a1a1a;
+color: #ffffff;  /* Beyaz */
+color: #f8f9fa;  /* Açık gri */
+color: #e2e8f0;  /* Çok açık gri */
+
+/* Açık arka plan + Koyu font */
+background: #ffffff;
+color: #1a1a1a;  /* Koyu gri */
+color: #374151;  /* Orta koyu gri */
+```
+
+**❌ YANLIŞ Kombinasyonlar:**
+```css
+/* ASLA YAPMA - Koyu arka plan + Koyu font */
+background: #1a1a1a;
+color: #374151;  /* Görünmez! */
+color: #64748b;  /* Okunmaz! */
+color: #94a3b8;  /* Zor okunur! */
+```
+
+#### 🎯 KONTRAST ORANI STANDARTLARI
+
+- **Minimum:** 4.5:1 (WCAG AA)
+- **İdeal:** 7:1 (WCAG AAA)
+- **Koyu arka plan (#1a1a1a) için güvenli renkler:**
+  - `#ffffff` (Beyaz) - 11.6:1 ✅
+  - `#f8f9fa` (Açık gri) - 10.8:1 ✅
+  - `#e2e8f0` (Çok açık gri) - 8.2:1 ✅
+
+#### 🚨 HIZLI KONTROL
+
+**Şüpheli renk gördüğünde:**
+1. Arka plan koyu mu? (hex < #808080)
+2. Font koyu mu? (hex < #808080)
+3. İkisi de koyu ise → HEMEN DEĞİŞTİR!
+
+**Hızlı çözüm:**
+```css
+/* Koyu arka planda her zaman beyaz font */
+color: #ffffff !important;
+```
+
+### 17 HEADER VE NAVİGASYON TASARIM KURALLARI 🎯
+
+**ZORUNLU KURAL:** Tüm sayfalarda header tasarımı aynı olmalı!
+
+#### 📋 HEADER STANDARTLARI
+
+**✅ Referans Header:** GameTracker sayfasındaki header tasarımı tüm sayfalarda kullanılmalı
+
+**🎨 Header Tasarım Özellikleri:**
+```css
+/* Header temel yapısı */
+.page-header {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+```
+
+#### 🧭 NAVİGASYON BUTON TASARIMLARI
+
+**1️⃣ Header İçi Navigasyon Butonları (Fotoğraf 1 Referansı):**
+```css
+/* Ana navigasyon butonları - header içinde */
+.nav-button {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.nav-button:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.nav-button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: rgba(102, 126, 234, 0.8);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+```
+
+**2️⃣ Sayfa İçi Bölüm Geçiş Butonları (Fotoğraf 2 Referansı):**
+```css
+/* Bölüm geçiş butonları - sayfa içinde */
+.section-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.section-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.section-tab.active {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+```
+
+#### 🎯 UYGULAMA KURALLARI
+
+**✅ ZORUNLU:**
+1. **Header Tutarlılığı:** Her sayfa GameTracker header'ını referans almalı
+2. **Navigasyon Hiyerarşisi:** 
+   - Header içi = Ana navigasyon (sayfa arası geçiş)
+   - Sayfa içi = Bölüm navigasyonu (aynı sayfa içi geçiş)
+3. **Renk Tutarlılığı:** Tüm navigasyon elementleri aynı renk paletini kullanmalı
+4. **Responsive Uyumluluk:** Mobilde navigasyon butonları uygun şekilde küçülmeli
+
+**❌ YASAKLAR:**
+- ❌ Farklı sayfalarda farklı header tasarımı
+- ❌ Navigasyon butonlarında farklı renk şemaları
+- ❌ Tutarsız padding/margin değerleri
+- ❌ Farklı border-radius değerleri
+
+#### 📱 RESPONSIVE NAVİGASYON
+
+```css
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+  .nav-button {
+    padding: 10px 16px;
+    font-size: 0.875rem;
+  }
+  
+  .section-tab {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+```
+
+#### 🎨 HEADER LAYOUT ÖRNEĞİ
+
+```jsx
+/* Standart header yapısı */
+<div className="page-header">
+  <div className="header-content">
+    <div className="header-title">
+      <h1>Sayfa Başlığı</h1>
+    </div>
+    <div className="header-navigation">
+      <button className="nav-button active">Ana Sayfa</button>
+      <button className="nav-button">Oyun Hub</button>
+      <button className="nav-button">Oyun Ekle</button>
+    </div>
+  </div>
+</div>
+
+/* Sayfa içi bölüm navigasyonu */
+<div className="section-navigation">
+  <button className="section-tab active">Kütüphane</button>
+  <button className="section-tab">Cycle'lar</button>
+</div>
+```
+
+### 18 YENİ SAYFA OLUŞTURURKEN ZORUNLU ADIMLAR 📝
+
+**Her yeni sayfa oluştururken bu sırayı takip et:**
+
+1. **Header Ekle:** GameTracker referansını kullanarak header oluştur
+2. **Navigasyon Belirle:** Ana navigasyon vs bölüm navigasyonu kararı ver
+3. **Renk Sistemi:** Design system'deki renkleri kullan
+4. **Responsive Test:** Mobil uyumluluğunu kontrol et
+5. **Kontrast Kontrolü:** Koyu arka plan + açık font kuralını uygula
+
 14-

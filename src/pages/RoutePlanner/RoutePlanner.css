@@ -238,48 +238,147 @@
   box-sizing: border-box;
 }
 
-/* Coming Soon Card Özel Stilleri */
-.coming-soon-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
+/* Cycle Overview Card Özel Stilleri */
+.cycle-overview-card {
+  min-height: 200px;
   background: linear-gradient(135deg, 
     rgba(30, 30, 30, 0.95) 0%,
     rgba(40, 40, 40, 0.95) 100%
   );
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
-.coming-soon-content {
-  text-align: center;
+.cycle-overview-content {
   position: relative;
   z-index: 2;
 }
 
-.coming-soon-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  animation: float 3s ease-in-out infinite;
+.cycle-overview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-.coming-soon-content h3 {
-  margin: 0 0 0.5rem 0;
-  color: rgba(255, 255, 255, 0.9);
+.cycle-overview-icon {
   font-size: 1.5rem;
-  font-weight: 600;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-.coming-soon-content p {
+.cycle-overview-header h3 {
   margin: 0;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1rem;
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Progress Bar */
+.cycle-progress-container {
+  margin-bottom: 24px;
+}
+
+.cycle-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.cycle-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+}
+
+.cycle-progress-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Statistics Grid */
+.cycle-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cycle-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.cycle-stat-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.cycle-stat-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.cycle-stat-info {
+  flex: 1;
+}
+
+.cycle-stat-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.cycle-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Additional Info */
+.cycle-additional-info {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cycle-info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cycle-info-icon {
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.cycle-info-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .route-progress-card::before {
@@ -1334,7 +1433,7 @@
 .campaign-meta .status.başlanmadı,
 .campaign-meta .status.not-started {
   background: rgba(156, 163, 175, 0.2);
-  color: #9ca3af;
+  color: #e2e8f0;
 }
 
 .campaign-meta .status.oynuyor,
@@ -1387,6 +1486,30 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive Design for Cycle Overview */
+@media (max-width: 768px) {
+  .cycle-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .cycle-stat-item {
+    padding: 10px;
+  }
+  
+  .cycle-stat-value {
+    font-size: 1rem;
+  }
+  
+  .cycle-additional-info {
+    padding-top: 12px;
+  }
+  
+  .cycle-info-text {
+    font-size: 0.8rem;
   }
 }
 
@@ -2428,7 +2551,7 @@
 
 .action-label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #ffffff !important;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 0.9rem;
@@ -3533,7 +3656,7 @@
 .design2-status-badge.pending {
   background: rgba(156, 163, 175, 0.2);
   border-color: rgba(156, 163, 175, 0.4);
-  color: #9ca3af;
+  color: #e2e8f0;
 }
 
 /* Design 2: Progress Container */
@@ -3636,8 +3759,8 @@
 }
 
 .cycle-progress-text {
-  font-size: 10px;
-  color: #94a3b8;
+  font-size: 12px;
+  color: #e2e8f0;
   font-weight: 500;
   min-width: 30px;
   text-align: right;
@@ -3729,7 +3852,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 14px;
   color: #e2e8f0;
   flex-shrink: 0;
   width: 250px;
@@ -3741,8 +3864,8 @@
 }
 
 .date-separator {
-  color: #64748b;
-  font-size: 8px;
+  color: #e2e8f0;
+  font-size: 12px;
 }
 
 .game-status {
@@ -3789,8 +3912,8 @@
 }
 
 .game-progress-text {
-  font-size: 9px;
-  color: #94a3b8;
+  font-size: 12px;
+  color: #e2e8f0;
   font-weight: 500;
   width: 30px;
   text-align: right;
@@ -3799,8 +3922,8 @@
 
 /* Expand Indicator */
 .design2-cycle-card .expand-indicator {
-  font-size: 10px;
-  color: #94a3b8;
+  font-size: 12px;
+  color: #e2e8f0;
   transition: transform 0.3s ease;
   width: 12px;
   text-align: center;
@@ -3839,3 +3962,381 @@
 /* Cache Buster - Design 2 Updates Applied */
 /* Last Updated: 2024-12-27 15:30:00 */
 /* Version: 2.1.0 - Progress bars removed, dates added, padding optimized */
+
+/* ========================================
+   GAMING NAVIGATION HUB - YENİ SIDEBAR
+   ======================================== */
+
+/* Sidebar Header */
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gaming Mode Section */
+.gaming-mode-section {
+  margin-bottom: 24px;
+}
+
+.current-game-card {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.game-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.active {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.game-info {
+  margin-bottom: 16px;
+}
+
+.game-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.game-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.game-details span {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.game-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pause-btn:hover {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.stop-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Weekly Summary Section */
+.weekly-summary-section {
+  margin-bottom: 24px;
+}
+
+.weekly-summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.weekly-stats {
+  margin-bottom: 16px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.stat-row:last-child {
+  margin-bottom: 0;
+}
+
+.stat-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.progress-bar-container {
+  margin-top: 12px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Shortcuts Section */
+.shortcuts-section {
+  margin-bottom: 24px;
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.shortcut-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.shortcut-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.shortcut-icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+
+.shortcut-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Activities Section */
+.activities-section {
+  margin-bottom: 24px;
+}
+
+.activities-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.activity-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.activity-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
+}
+
+/* System Status Section */
+.system-status-section {
+  margin-bottom: 0;
+}
+
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.status-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator.online {
+  background: #10b981;
+  box-shadow: 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+.status-indicator.synced {
+  background: #3b82f6;
+  box-shadow: 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.status-indicator.updated {
+  background: #8b5cf6;
+  box-shadow: 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+.status-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .route-planner__sidebar {
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  .shortcuts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .shortcut-btn {
+    padding: 10px 14px;
+  }
+  
+  .shortcut-label {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .route-planner__sidebar {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-header h2 {
+    font-size: 0.9rem;
+  }
+  
+  .game-controls {
+    flex-direction: column;
+  }
+  
+  .control-btn {
+    padding: 10px;
+  }
+}

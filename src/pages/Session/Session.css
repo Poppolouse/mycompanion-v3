@@ -1,0 +1,215 @@
+/* 🎯 Session Page - Ana Stil Dosyası */
+
+/* Sayfa Container */
+.session-page {
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.session-container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* 🎯 Header Layout - Enhanced Dark Glassmorphism */
+.session-container .page-header {
+  padding: 2rem 0 1rem 0;
+  border-bottom: 1px solid var(--dark-border-2);
+  background: var(--dark-glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  margin: 0 calc(-50vw + 50%);
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+  padding-right: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.session-container .page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+}
+
+.session-container .page-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.03), 
+    transparent);
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+/* Header Content */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.header-left h1 {
+  /* YÜKSEK KONTRAST - Ana başlık */
+  color: rgba(255, 255, 255, 0.98);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(200, 220, 255, 0.9) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.header-left p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Header Controls */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* 🧭 Navigation Buttons - Dark Glassmorphism */
+.navigation-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
+
+.nav-button {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nav-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.nav-button:hover::before {
+  left: 100%;
+}
+
+.nav-button:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(102, 126, 234, 0.1);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(102, 126, 234, 0.1);
+}
+
+/* Ana İçerik */
+.session-main {
+  padding: 2rem 0;
+  min-height: 60vh;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .session-container {
+    padding: 0 1rem;
+  }
+  
+  .session-container .page-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .header-left h1 {
+    font-size: 2rem;
+  }
+  
+  .header-left p {
+    font-size: 1rem;
+  }
+  
+  .navigation-buttons {
+    margin-right: 0;
+    justify-content: center;
+  }
+  
+  .nav-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+}
