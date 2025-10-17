@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRoute } from '../../contexts/RouteContext';
+import { useRoute } from '../../../contexts/RouteContext';
 import './RoutePlanner.css';
 
 /**

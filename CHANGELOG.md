@@ -1,5 +1,97 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎯 **v3.11.0** - 2024-12-28 - **Game Tracking Hub Dosya Organizasyonu & Alt Sayfa Yapılandırması**
+
+### ✨ **Yeni Özellikler**
+
+#### 🗂️ **Game Tracking Hub Dosya Organizasyonu**
+- **📁 Alt Sayfa Yapılandırması**
+  - ✅ `AddGame`, `EditGame`, `Session`, `GameDetail` sayfaları `GameTrackingHub` klasörüne taşındı
+  - ✅ Tüm oyun yönetimi sayfaları tek merkezi konumda toplandı
+  - ✅ Dosya sistemi organizasyonu kuralları `PROJE_KURALLARI.md`'ye eklendi
+  - ✅ Alt sayfa organizasyon standartları belirlendi
+
+#### 🛣️ **Routing Yapısı Güncellendi**
+- **🔄 Nested Routing Implementasyonu**
+  - ✅ `/game-tracking-hub/add-game` - Yeni oyun ekleme
+  - ✅ `/game-tracking-hub/edit-game/:gameId` - Oyun düzenleme
+  - ✅ `/game-tracking-hub/session` - Oyun seansı
+  - ✅ `/game-tracking-hub/game-tracker/game/:id` - Oyun detayları
+  - ✅ Tüm navigation path'leri güncellendi
+
+### 🔧 **Teknik İyileştirmeler**
+
+#### 📂 **Dosya Sistemi Organizasyonu**
+- **🏗️ Yeni Klasör Yapısı**
+  ```
+  src/pages/GameTrackingHub/
+  ├── GameTrackingHub.jsx     # Ana hub sayfası
+  ├── Statistics/             # İstatistikler
+  ├── RoutePlanner/          # Rota planlayıcı  
+  ├── GameTracker/           # Oyun takipçisi
+  ├── AddGame/               # ✨ Yeni oyun ekleme
+  ├── EditGame/              # ✨ Oyun düzenleme
+  ├── Session/               # ✨ Oyun seansı
+  └── GameDetail/            # ✨ Oyun detayları
+  ```
+
+#### 🔗 **Import Path Düzeltmeleri**
+- **✅ GameTracker.jsx**: Tüm relative import path'leri `../../../` olarak güncellendi
+- **✅ RoutePlanner.jsx**: Import path'leri düzeltildi
+- **✅ Navigation Path'leri**: Tüm component'lerde yeni routing yapısına uygun güncellendi
+
+#### 🎯 **Navigation Güncellemeleri**
+- **🔄 GameTracker Component'i**
+  - ✅ "➕ Oyun Ekle" butonu → `/game-tracking-hub/add-game`
+  - ✅ Oyun detay linkleri → `/game-tracking-hub/game-tracker/game/:id`
+- **🔄 GameTrackingHub Component'i**
+  - ✅ "🎯 Session" butonu → `/game-tracking-hub/session`
+- **🔄 GameListItem Component'i**
+  - ✅ Oyun kartları → `/game-tracking-hub/game-tracker/game/:id`
+
+### 📋 **Proje Kuralları Güncellemeleri**
+
+#### 📖 **PROJE_KURALLARI.md Genişletmesi**
+- **🗂️ Dosya Sistemi Organizasyonu Bölümü Eklendi**
+  - ✅ Alt sayfa organizasyon kuralları
+  - ✅ Klasör yapısı standartları
+  - ✅ Import path düzenleme kuralları
+  - ✅ Navigation path güncelleme prosedürleri
+
+#### 🎯 **Organizasyon Standartları**
+- **📁 Alt Sayfa Kuralları**
+  - ✅ Ana sayfa altında maksimum 3 seviye derinlik
+  - ✅ İlgili sayfalar aynı klasörde gruplandırılmalı
+  - ✅ Her alt sayfa kendi klasöründe olmalı
+  - ✅ Index.js export point'leri zorunlu
+
+### 🧪 **Test ve Doğrulama**
+
+#### ✅ **Başarılı Test Sonuçları**
+- **🔍 Import Path Kontrolleri**
+  - ✅ Tüm relative import'lar düzeltildi
+  - ✅ Component import'ları çalışıyor
+  - ✅ Utility import'ları başarılı
+- **🛣️ Routing Testleri**
+  - ✅ Tüm navigation path'leri çalışıyor
+  - ✅ Nested routing başarılı
+  - ✅ URL yapısı tutarlı
+- **🎮 Fonksiyonalite Testleri**
+  - ✅ HMR güncellemeleri başarılı
+  - ✅ Browser'da hata yok
+  - ✅ Preview çalışıyor
+
+### 🚀 **Performans İyileştirmeleri**
+
+#### 📦 **Modül Organizasyonu**
+- **🎯 Daha İyi Kod Organizasyonu**
+  - ✅ İlgili sayfalar gruplandırıldı
+  - ✅ Import path'leri kısaldı
+  - ✅ Dosya bulma kolaylığı arttı
+  - ✅ Geliştirici deneyimi iyileşti
+
+---
+
 ## 🎯 **v3.10.0** - 2024-12-28 - **Header Buton Standartlaştırması & Proje Kuralları Genişletmesi**
 
 ### ✨ **Yeni Özellikler**

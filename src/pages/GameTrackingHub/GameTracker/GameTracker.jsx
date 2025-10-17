@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { readExcelFile, parseGameList } from '../../utils/excelUtils';
-import { organizeCurrentData } from '../../utils/organizeCurrentData';
-import { useRoute } from '../../contexts/RouteContext';
-import SmartSearch from '../../components/SmartSearch';
-import AdvancedFilters from '../../components/AdvancedFilters';
-import GameListItem from '../../components/GameListItem';
-import EditGameModal from '../../components/EditGameModal';
-import { useNotifications } from '../../components/NotificationSystem';
+import { readExcelFile, parseGameList } from '../../../utils/excelUtils';
+import { organizeCurrentData } from '../../../utils/organizeCurrentData';
+import { useRoute } from '../../../contexts/RouteContext';
+import SmartSearch from '../../../components/SmartSearch';
+import AdvancedFilters from '../../../components/AdvancedFilters';
+import GameListItem from '../../../components/GameListItem';
+import EditGameModal from '../../../components/EditGameModal';
+import { useNotifications } from '../../../components/NotificationSystem';
 import './GameTracker.css';
 import './GameTracker_FORCE_FIX.css';
 import './GameTracker_NUCLEAR.css';
@@ -145,7 +145,7 @@ function GameTracker() {
       if (e.key === 'Enter' && searchTerm) {
         const filteredGames = getSmartFilteredGames();
         if (filteredGames.length > 0) {
-          navigate(`/game-tracker/game/${filteredGames[0].id || 0}`);
+          navigate(`/game-tracking-hub/game-tracker/game/${filteredGames[0].id || 0}`);
         }
       }
     };
@@ -742,7 +742,7 @@ function GameTracker() {
             
             <button 
               className="add-game-btn"
-              onClick={() => navigate('/add-game')}
+              onClick={() => navigate('/game-tracking-hub/add-game')}
               title="Yeni Oyun Ekle"
             >
               ➕ Oyun Ekle
@@ -885,7 +885,7 @@ function GameTracker() {
                     <div 
                       key={`recent-${index}`} 
                       className="recent-game-item"
-                      onClick={() => navigate(`/game-tracker/game/${game.id || index}`)}
+                      onClick={() => navigate(`/game-tracking-hub/game-tracker/game/${game.id || index}`)}
                     >
                       <div className="recent-game-info">
                         <span className="recent-game-name">{game.title || game.name}</span>

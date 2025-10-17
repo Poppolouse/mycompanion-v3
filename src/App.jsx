@@ -6,14 +6,14 @@ import TodoApp from './pages/TodoApp';
 import HesapMakinesi from './pages/HesapMakinesi';
 import HavaDurumu from './pages/HavaDurumu';
 import NotDefteri from './pages/NotDefteri';
-import GameTracker from './pages/GameTracker';
-import GameDetail from './pages/GameDetail';
-import Statistics from './pages/Statistics';
-import RoutePlanner from './pages/RoutePlanner';
+import GameTracker from './pages/GameTrackingHub/GameTracker';
+import GameDetail from './pages/GameTrackingHub/GameDetail';
+import Statistics from './pages/GameTrackingHub/Statistics';
+import RoutePlanner from './pages/GameTrackingHub/RoutePlanner';
 import GameTrackingHub from './pages/GameTrackingHub';
-import Session from './pages/Session';
-import AddGame from './pages/AddGame';
-import EditGame from './pages/EditGame';
+import Session from './pages/GameTrackingHub/Session';
+import AddGame from './pages/GameTrackingHub/AddGame';
+import EditGame from './pages/GameTrackingHub/EditGame';
 import AdminPanel from './components/AdminPanel';
 import LoginModal from './components/LoginModal';
 import { RouteProvider } from './contexts/RouteContext';
@@ -59,23 +59,27 @@ function AppContent() {
     <NotificationProvider>
       <Router>
         <Routes>
-        {/* Game Tracking - Sidebar'sız bağımsız sayfalar */}
+        {/* Sidebar'sız bağımsız sayfalar */}
+        {/* Ana sayfa - Kullanıcı sorusu ve uygulama listesi */}
+        <Route path="/" element={<AnaSayfa />} />
+        
+        {/* Game Tracking Hub - Ana sayfa ve alt sayfaları */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
-        <Route path="/session" element={<Session />} />
-        <Route path="/game-tracker" element={
+        <Route path="/game-tracking-hub/session" element={<Session />} />
+        <Route path="/game-tracking-hub/game-tracker" element={
           <RouteProvider>
             <GameTracker />
           </RouteProvider>
         } />
-        <Route path="/game-tracker/game/:id" element={<GameDetail />} />
-        <Route path="/statistics" element={<Statistics />} />
-        <Route path="/route-planner" element={
+        <Route path="/game-tracking-hub/game-tracker/game/:id" element={<GameDetail />} />
+        <Route path="/game-tracking-hub/statistics" element={<Statistics />} />
+        <Route path="/game-tracking-hub/route-planner" element={
           <RouteProvider>
             <RoutePlanner />
           </RouteProvider>
         } />
-        <Route path="/add-game" element={<AddGame />} />
-        <Route path="/edit-game/:gameId" element={<EditGame />} />
+        <Route path="/game-tracking-hub/add-game" element={<AddGame />} />
+        <Route path="/game-tracking-hub/edit-game/:gameId" element={<EditGame />} />
         
         {/* Diğer sayfalar - Sidebar ile birlikte */}
         <Route path="/*" element={
@@ -83,8 +87,6 @@ function AppContent() {
             <Sidebar isOpen={sidebarAcik} onToggle={sidebarToggle} />
             <main className={`main-content ${sidebarAcik ? 'sidebar-acik' : 'sidebar-kapali'}`}>
               <Routes>
-                {/* Ana sayfa - Kullanıcı sorusu ve uygulama listesi */}
-                <Route path="/" element={<AnaSayfa />} />
                 
                 {/* Web Uygulamaları */}
                 <Route path="/todo" element={<TodoApp />} />

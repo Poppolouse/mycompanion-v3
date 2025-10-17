@@ -198,6 +198,55 @@
   --gradient-blue: linear-gradient(135deg, #4facfe, #00f2fe);     /* Mavi gradient */
   --gradient-green: linear-gradient(135deg, #43e97b, #38f9d7);    /* Yeşil gradient */
   --gradient-purple: linear-gradient(135deg, #667eea, #764ba2);   /* Mor gradient */
+
+  /* ========================================
+   * 🔲 5. GLOBAL HEADER KURALLARI
+   * ======================================== */
+  
+  /* 🚫 TÜM HEADER'LARIN KÖŞELERİNİ DÜZ YAP - GLOBAL OVERRIDE */
+  --header-border-radius: 0;                           /* Header köşeleri düz */
+}
+
+/* 🔥 GLOBAL HEADER OVERRIDE - TÜM HEADER'LAR DÜZ KÖŞE */
+header,
+.header,
+.tracker-header,
+.page-header,
+.modal-header,
+.section-header,
+[class*="header"],
+[class*="Header"] {
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* 🔥 ÖZEL DURUMLAR - Header içindeki elementler de düz olsun */
+header *,
+.header *,
+.tracker-header *,
+.page-header *,
+.modal-header *,
+.section-header *,
+[class*="header"] *,
+[class*="Header"] * {
+  /* Header içindeki butonlar ve elementler normal border-radius kullanabilir */
+  /* Sadece ana header container'ı düz olacak */
+}
+
+  /* 🎮 Oyun Durumu Renkleri */
+  --game-status-playing: #2ed573;                      /* Oynanıyor - parlak yeşil */
+  --game-status-completed: #11998e;                    /* Tamamlandı - turkuaz */
+  --game-status-paused: #ff4757;                       /* Duraklatıldı - kırmızı */
+  --game-status-wishlist: #a0b0ff;                     /* İstek listesi - açık mavi */
+  
+  /* 🎨 Gradient Özel Renkleri */
+  --gradient-pink: linear-gradient(135deg, #f093fb, #f5576c);     /* Pembe gradient */
+  --gradient-blue: linear-gradient(135deg, #4facfe, #00f2fe);     /* Mavi gradient */
+  --gradient-green: linear-gradient(135deg, #43e97b, #38f9d7);    /* Yeşil gradient */
+  --gradient-purple: linear-gradient(135deg, #667eea, #764ba2);   /* Mor gradient */
   --gradient-orange: linear-gradient(135deg, #fee140, #fa709a);   /* Turuncu gradient */
   
   /* 🌙 Koyu Tema Özel Renkleri */
@@ -314,7 +363,6 @@
   --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-in-out-back: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-}
 
 /* ========================================
  * 📋 KULLANIM REHBERİ (USAGE GUIDE)
@@ -386,43 +434,3 @@
  *    - Color-blind friendly renkler seçin
  *    - Dark theme uyumluluğunu koruyun
  */
-
-  /* ========================================
-   * 🔘 BUTON RENKLERİ (BUTTON COLORS) - EXTRA BRIGHT
-   * ======================================== */
-  
-  /* 🔵 Primary Button - EXTRA BRIGHT */
-  --btn-primary-bg: var(--color-primary-500);           /* Ana buton arka plan - PARLAK */
-  --btn-primary-hover: var(--color-primary-400);        /* Hover - DAHA PARLAK */
-  --btn-primary-active: var(--color-primary-600);       /* Active - PARLAK */
-  --btn-primary-text: #ffffff;                          /* Buton metni - BEYAZ */
-  
-  /* 🟣 Secondary Button - EXTRA BRIGHT */
-  --btn-secondary-bg: var(--color-secondary-500);       /* İkincil buton arka plan - PARLAK */
-  --btn-secondary-hover: var(--color-secondary-400);    /* Hover - DAHA PARLAK */
-  --btn-secondary-active: var(--color-secondary-600);   /* Active - PARLAK */
-  --btn-secondary-text: #ffffff;                        /* Buton metni - BEYAZ */
-  
-  /* 🟢 Success Button - EXTRA BRIGHT */
-  --btn-success-bg: var(--color-success-500);           /* Başarı buton arka plan - PARLAK */
-  --btn-success-hover: var(--color-success-400);        /* Hover - DAHA PARLAK */
-  --btn-success-active: var(--color-success-600);       /* Active - PARLAK */
-  --btn-success-text: #ffffff;                          /* Buton metni - BEYAZ */
-  
-  /* 🟡 Warning Button - EXTRA BRIGHT */
-  --btn-warning-bg: var(--color-warning-500);           /* Uyarı buton arka plan - PARLAK */
-  --btn-warning-hover: var(--color-warning-400);        /* Hover - DAHA PARLAK */
-  --btn-warning-active: var(--color-warning-600);       /* Active - PARLAK */
-  --btn-warning-text: #ffffff;                          /* Buton metni - BEYAZ */
-  
-  /* 🔴 Error/Danger Button - EXTRA BRIGHT */
-  --btn-error-bg: var(--color-error-500);               /* Hata buton arka plan - PARLAK */
-  --btn-error-hover: var(--color-error-400);            /* Hover - DAHA PARLAK */
-  --btn-error-active: var(--color-error-600);           /* Active - PARLAK */
-  --btn-error-text: #ffffff;                            /* Buton metni - BEYAZ */
-  
-  /* 🔘 Outline Button - BRIGHT BORDERS */
-  --btn-outline-border: var(--color-primary-500);       /* Outline border - PARLAK */
-  --btn-outline-text: var(--color-primary-500);         /* Outline text - PARLAK */
-  --btn-outline-hover-bg: var(--color-primary-500);     /* Outline hover bg - PARLAK */
-  --btn-outline-hover-text: #ffffff;                    /* Outline hover text - BEYAZ */

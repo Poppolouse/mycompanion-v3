@@ -49,7 +49,7 @@ function GameListItem({
 
   // Oyun detay sayfasına git
   const handleGameClick = () => {
-    navigate(`/game-tracker/game/${game.id || index}`);
+    navigate(`/game-tracking-hub/game-tracker/game/${game.id || index}`);
   };
 
   // Checkbox değişimi

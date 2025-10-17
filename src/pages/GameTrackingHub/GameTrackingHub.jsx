@@ -27,7 +27,7 @@ function GameTrackingHub() {
   };
 
   const navigateToSession = () => {
-    navigate('/session');
+    navigate('/game-tracking-hub/session');
   };
 
   return (

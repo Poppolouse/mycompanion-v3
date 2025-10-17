@@ -34,6 +34,10 @@ Tüm sayfalarda header yapısı aşağıdaki gibi olmalıdır:
   background: var(--dark-glass-bg);
   backdrop-filter: blur(20px);
   
+  /* ✅ ZORUNLU - HEADER KÖŞE KURALI */
+  border-radius: 0 !important;  /* TÜM HEADER'LAR DÜZ KÖŞE OLMALI */
+  overflow: visible;             /* Köşe etkilerini engellemek için */
+  
   /* ✅ ZORUNLU - Full Width Layout */
   margin: 0 calc(-50vw + 50%);
   width: 100vw;
@@ -46,11 +50,35 @@ Tüm sayfalarda header yapısı aşağıdaki gibi olmalıdır:
   /* ✅ ZORUNLU - Responsive Padding */
   padding-left: calc(50vw - 50%);
   padding-right: calc(50vw - 50%);
-  
-  /* ✅ ZORUNLU - Performans */
-  overflow: hidden;
 }
 ```
+
+### 🚫 HEADER KÖŞE KURALLARI - GLOBAL OVERRIDE
+
+**ÖNEMLI:** Tüm header'ların köşeleri düz dikdörtgen olmalıdır. Bu kural `design-system.css` dosyasında global olarak uygulanmıştır:
+
+```css
+/* 🔥 GLOBAL HEADER OVERRIDE - TÜM HEADER'LAR DÜZ KÖŞE */
+.tracker-header,
+.page-header,
+.header,
+.main-header,
+.app-header,
+[class*="header"],
+[class*="Header"] {
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+```
+
+**Yasaklar:**
+- ❌ Header'larda `border-radius` kullanmak
+- ❌ Header'larda `overflow: hidden` kullanmak  
+- ❌ Header köşelerini yuvarlatmak
+
+**İzin verilenler:**
+- ✅ Header içindeki butonlar normal `border-radius` kullanabilir
+- ✅ Header içindeki kartlar ve componentler normal köşe stillerine sahip olabilir
 
 #### 2. `.header-content` - İçerik Container
 
@@ -370,6 +398,175 @@ Header sorunları için:
 
 ---
 
-**Son Güncelleme:** 2024 - Header standardizasyonu tamamlandı
-**Referans:** GameTracker.css
+## 📁 DOSYA SİSTEMİ ORGANİZASYONU
+
+### 🏗️ Alt Sayfa Organizasyon Kuralları
+
+#### 📋 Temel Kural
+**Alt sayfalar her zaman parent sayfanın klasörü içinde olmalıdır.**
+
+#### 🎯 Organizasyon Yapısı
+
+```
+src/pages/
+├── ParentPage/
+│   ├── ParentPage.jsx          # Ana sayfa
+│   ├── ParentPage.css          # Ana sayfa stilleri
+│   ├── index.js                # Export point
+│   ├── SubPage1/               # Alt sayfa 1
+│   │   ├── SubPage1.jsx
+│   │   ├── SubPage1.css
+│   │   └── index.js
+│   ├── SubPage2/               # Alt sayfa 2
+│   │   ├── SubPage2.jsx
+│   │   ├── SubPage2.css
+│   │   └── index.js
+│   └── components/             # Parent'a özel componentler
+│       ├── SharedComponent.jsx
+│       └── SharedComponent.css
+```
+
+#### ✅ Örnek: Game Tracking Hub
+
+```
+src/pages/GameTrackingHub/
+├── GameTrackingHub.jsx         # Ana hub sayfası
+├── GameTrackingHub.css
+├── index.js
+├── GameTracker/                # Alt sayfa
+│   ├── GameTracker.jsx
+│   ├── GameTracker.css
+│   └── index.js
+├── Statistics/                 # Alt sayfa
+│   ├── Statistics.jsx
+│   ├── Statistics.css
+│   └── index.js
+├── RoutePlanner/              # Alt sayfa
+│   ├── RoutePlanner.jsx
+│   ├── RoutePlanner.css
+│   └── index.js
+└── components/                # Hub'a özel componentler
+    ├── GameCard.jsx
+    └── StatCard.jsx
+```
+
+#### 🛣️ Routing Yapısı
+
+**Parent ve alt sayfalar nested route olarak organize edilmelidir:**
+
+```jsx
+// App.jsx
+<Route path="/game-tracking-hub" element={<GameTrackingHub />}>
+  <Route path="game-tracker" element={<GameTracker />} />
+  <Route path="statistics" element={<Statistics />} />
+  <Route path="route-planner" element={<RoutePlanner />} />
+</Route>
+```
+
+**URL Yapısı:**
+- Ana sayfa: `/game-tracking-hub`
+- Alt sayfa 1: `/game-tracking-hub/game-tracker`
+- Alt sayfa 2: `/game-tracking-hub/statistics`
+- Alt sayfa 3: `/game-tracking-hub/route-planner`
+
+#### 🏠 Ana Sayfa Kuralları
+
+**Ana sayfada sadece parent uygulamalar görünmelidir:**
+
+✅ **DOĞRU - Ana sayfada görünür:**
+- Game Tracking Hub
+- Todo App
+- Hava Durumu
+- Hesap Makinesi
+
+❌ **YANLIŞ - Ana sayfada görünmez:**
+- Game Tracker (alt sayfa)
+- Statistics (alt sayfa)
+- Route Planner (alt sayfa)
+
+#### 📦 Import Yapısı
+
+**Alt sayfalar parent klasöründen import edilir:**
+
+```jsx
+// App.jsx
+import GameTrackingHub from '@/pages/GameTrackingHub';
+import GameTracker from '@/pages/GameTrackingHub/GameTracker';
+import Statistics from '@/pages/GameTrackingHub/Statistics';
+import RoutePlanner from '@/pages/GameTrackingHub/RoutePlanner';
+```
+
+#### 🔄 Navigasyon Kuralları
+
+**Parent sayfadan alt sayfalara navigasyon:**
+
+```jsx
+// GameTrackingHub.jsx
+import { useNavigate } from 'react-router-dom';
+
+function GameTrackingHub() {
+  const navigate = useNavigate();
+  
+  const handleSubPageNavigation = (subPage) => {
+    navigate(`/game-tracking-hub/${subPage}`);
+  };
+  
+  return (
+    <div>
+      <button onClick={() => handleSubPageNavigation('game-tracker')}>
+        Game Tracker
+      </button>
+      <button onClick={() => handleSubPageNavigation('statistics')}>
+        Statistics
+      </button>
+    </div>
+  );
+}
+```
+
+#### 🚫 Yasaklar
+
+❌ **Alt sayfaları root level'da tutmak:**
+```
+src/pages/
+├── GameTracker/     # ❌ YANLIŞ
+├── Statistics/      # ❌ YANLIŞ
+├── RoutePlanner/    # ❌ YANLIŞ
+```
+
+❌ **Alt sayfaları ana sayfada göstermek:**
+```jsx
+// AnaSayfa.jsx - ❌ YANLIŞ
+<div onClick={() => navigate('/game-tracker')}>Game Tracker</div>
+<div onClick={() => navigate('/statistics')}>Statistics</div>
+```
+
+❌ **Flat routing yapısı:**
+```jsx
+// ❌ YANLIŞ
+<Route path="/game-tracker" element={<GameTracker />} />
+<Route path="/statistics" element={<Statistics />} />
+```
+
+#### ✅ Zorunlu Kontroller
+
+Yeni alt sayfa oluştururken:
+
+- [ ] Alt sayfa parent klasörü içinde mi?
+- [ ] Routing nested olarak yapılandırıldı mı?
+- [ ] Ana sayfada sadece parent uygulama görünüyor mu?
+- [ ] URL yapısı `/parent/sub-page` formatında mı?
+- [ ] Import path'leri doğru mu?
+- [ ] Parent sayfadan alt sayfalara navigasyon var mı?
+
+#### 📝 Uygulama Notları
+
+1. **Mevcut Yapı:** Game Tracking Hub bu kurallara göre organize edilmiştir
+2. **Gelecek Uygulamalar:** Tüm yeni parent-child ilişkileri bu yapıya uymalıdır
+3. **Refactoring:** Mevcut flat yapılar bu kurallara göre düzenlenmelidir
+
+---
+
+**Son Güncelleme:** 2024 - Header standardizasyonu ve alt sayfa organizasyonu tamamlandı
+**Referans:** GameTracker.css, GameTrackingHub klasör yapısı
 **Durum:** ✅ Aktif
