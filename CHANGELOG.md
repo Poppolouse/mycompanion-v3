@@ -1,5 +1,55 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎨 **v3.7.0** - 2024-12-28 - **Route Planner Dark Theme & UI Modernizasyonu**
+
+### ✨ **Yeni Özellikler**
+
+#### 🎯 **Route Planner Dark Theme Redesign**
+- **🎨 Modern Dark Theme Tasarımı**
+  - ✅ Route Planner orta alanı için kapsamlı dark theme uygulaması
+  - ✅ GameTracker renk paletine uyumlu mavi/mor tonları (`rgba(102, 126, 234)`)
+  - ✅ Glassmorphism efektleri ile modern görünüm
+  - ✅ Tutarlı renk şeması ve gradient'ler
+
+- **🃏 Cycle Kartları Yeniden Tasarımı**
+  - ✅ Kartlar ile dış kutu arasına boşluk eklendi (padding ve background)
+  - ✅ GameTracker'ın renk paletine uygun gradient backgrounds
+  - ✅ Hover animasyonları ve purple glow efektleri
+  - ✅ Aktif/sonraki cycle için farklı görsel durumlar
+  - ✅ Glassmorphism border ve backdrop-filter efektleri
+
+- **📊 Progress Bar Modernizasyonu**
+  - ✅ Mor gradient fill ile modern görünüm
+  - ✅ Shimmer animasyon efektleri
+  - ✅ Glassmorphism ve glow efektleri
+  - ✅ Enhanced box-shadow ve border-radius
+
+- **🚀 "Yakında Gelecek" Kartı**
+  - ✅ Route İlerlemesi bölümü "Coming Soon" kartına dönüştürüldü
+  - ✅ Animasyonlu roket ikonu (floating animation)
+  - ✅ Gelecek özellikler için placeholder tasarımı
+  - ✅ Modern typography ve spacing
+
+### 🎨 **UI/UX İyileştirmeleri**
+- ✅ Cycle header'ları GameTracker paletine uygun güncellendi
+- ✅ Border colors ve opacity değerleri optimize edildi
+- ✅ Responsive design korunarak modern görünüm sağlandı
+- ✅ Accessibility dostu renk kontrastları
+- ✅ Smooth transition animasyonları
+
+### 🔧 **Teknik İyileştirmeler**
+- ✅ CSS değişkenleri ile tutarlı renk yönetimi
+- ✅ Glassmorphism efektleri için backdrop-filter optimizasyonu
+- ✅ Animation keyframes ve timing functions iyileştirmesi
+- ✅ Component structure ve styling organization
+
+### 📱 **Responsive Design**
+- ✅ Tüm değişiklikler responsive tasarıma uygun
+- ✅ Mobile, tablet ve desktop uyumluluğu korundu
+- ✅ Flexible layout ve spacing adjustments
+
+---
+
 ## 🚀 **v3.6.0** - 2024-12-28 - **117 Oyun Route Sistemi & Cycle Editing Düzeltmeleri**
 
 ### 🐛 **Kritik Hata Düzeltmeleri**

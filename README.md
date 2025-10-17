@@ -64,6 +64,10 @@ Vault Tracker, oyun koleksiyonunuzu profesyonel düzeyde takip etmenizi sağlaya
 - **📱 Responsive Design** - Mobil ve masaüstü uyumlu
 - **🎨 Gradient Backgrounds** - Renkli geçişli arka planlar
 - **🔄 Smooth Transitions** - Akıcı geçiş animasyonları
+- **🎯 Route Planner Dark Theme** - Modern mavi/mor tonları ile yeniden tasarlanmış Route Planner
+- **🃏 Glassmorphism Cycle Cards** - Cycle kartları için modern cam efektleri
+- **📊 Enhanced Progress Bars** - Shimmer animasyonlu mor gradient progress bar'lar
+- **🚀 Coming Soon Placeholders** - Gelecek özellikler için animasyonlu placeholder'lar
 
 ## 🚀 **Kurulum**
 
@@ -154,7 +158,15 @@ Elden Ring     | RPG     | PS5      | Backlog   | High     | 0        | Tarnishe
 - **Arama Özelliği:** Modal'da oyun adı veya türüne göre arama yapın
 - **Otomatik Kayıt:** Tüm değişiklikler anında RouteContext'e kaydedilir
 
-### 8. 💾 Veri Yönetimi
+### 8. 🎯 Route Planner Dark Theme (v3.7.0)
+- **🎨 Modern Tasarım:** GameTracker ile uyumlu mavi/mor renk paleti
+- **🃏 Glassmorphism Kartlar:** Cycle kartları için modern cam efektleri ve blur
+- **📊 Enhanced Progress Bars:** Shimmer animasyonlu mor gradient progress bar'lar
+- **🚀 Coming Soon Alanları:** Gelecek özellikler için animasyonlu placeholder kartlar
+- **✨ Hover Efektleri:** Kartlarda purple glow ve smooth transition animasyonları
+- **📱 Responsive Layout:** Tüm cihazlarda optimize edilmiş görünüm
+
+### 9. 💾 Veri Yönetimi
 - **Yedekleme:** 💾 "Yedekle" butonuna tıklayarak JSON dosyası indirin
 - **Geri Yükleme:** 📥 "Geri Yükle" butonuna tıklayarak yedek dosyası seçin
 - **Onay:** İçe aktarılacak veriler hakkında bilgi alın ve onaylayın
