@@ -1,5 +1,35 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎮 **v3.11.2** - 2024-12-28 - **Session Sayfası Media Kartları Optimizasyonu**
+
+### ✨ **Yeni Özellikler**
+
+#### 📸 **Media Kartları Yeniden Düzenlendi**
+- **🔄 Kart Ayrımı**: Tek media kartı → 2 ayrı kart
+  - ✅ **Screenshots Section** (📸 Screenshots)
+  - ✅ **Video Clips Section** (🎬 Video Clips)
+- **🎯 Odaklanmış Deneyim**: Her media türü için özelleştirilmiş arayüz
+
+#### 🎨 **Horizontal Scroll Optimizasyonu**
+- **📏 Sabit Boyutlar**: Media item'lar için 150px sabit genişlik
+- **✨ Hover Efektleri**: Scale 1.05 ile smooth hover animasyonu
+- **🔄 Smooth Transitions**: 0.2s ease transition animasyonları
+- **📱 Responsive**: Horizontal scroll ile mobil uyumlu tasarım
+
+### 🗑️ **Temizlik & Optimizasyon**
+
+#### ❌ **Gereksiz Kartlar Kaldırıldı**
+- **📝 Notes & Journal Section** → Kaldırıldı
+- **🏆 Achievements & Milestones Section** → Kaldırıldı
+- **🎯 Sonuç**: Daha temiz ve odaklanmış sayfa yapısı
+
+#### 🚀 **Performance İyileştirmeleri**
+- **📦 Kod Temizliği**: Kullanılmayan component'ler kaldırıldı
+- **🎨 CSS Optimizasyonu**: Media item styling'i iyileştirildi
+- **📱 UX İyileştirmesi**: Daha hızlı ve akıcı kullanıcı deneyimi
+
+---
+
 ## 🐛 **v3.11.1** - 2024-12-28 - **Profil Ayarları UI/UX İyileştirmeleri & Bug Fix'ler**
 
 ### 🔧 **Bug Fix'ler**
