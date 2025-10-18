@@ -6,7 +6,7 @@ import TodoApp from './pages/TodoApp';
 import HesapMakinesi from './pages/HesapMakinesi';
 import HavaDurumu from './pages/HavaDurumu';
 import NotDefteri from './pages/NotDefteri';
-import GameTracker from './pages/GameTrackingHub/GameTracker';
+import GameTracker from './components/GameTracker';
 import GameDetail from './pages/GameTrackingHub/GameDetail';
 import Statistics from './pages/GameTrackingHub/Statistics';
 import RoutePlanner from './pages/GameTrackingHub/RoutePlanner';
@@ -14,7 +14,7 @@ import GameTrackingHub from './pages/GameTrackingHub';
 import Session from './pages/GameTrackingHub/Session';
 import AddGame from './pages/GameTrackingHub/AddGame';
 import EditGame from './pages/GameTrackingHub/EditGame';
-import AdminPanel from './components/AdminPanel';
+import AdminPanel from './pages/AdminPanel';
 import LoginModal from './components/LoginModal';
 import { ProfileSettings } from './components/UserProfile';
 import { RouteProvider } from './contexts/RouteContext';
@@ -67,6 +67,9 @@ function AppContent() {
         {/* Profil Ayarları */}
         <Route path="/profile-settings" element={<ProfileSettings />} />
         
+        {/* Admin Panel */}
+        <Route path="/admin" element={<AdminPanel />} />
+        
         {/* Game Tracking Hub - Ana sayfa ve alt sayfaları */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
         <Route path="/game-tracking-hub/session" element={<Session />} />
@@ -97,7 +100,6 @@ function AppContent() {
                 <Route path="/hesap-makinesi" element={<HesapMakinesi />} />
                 <Route path="/hava-durumu" element={<HavaDurumu />} />
                 <Route path="/not-defteri" element={<NotDefteri />} />
-                <Route path="/admin" element={<AdminPanel />} />
                 
                 {/* Gelecekte eklenecek uygulamalar için hazır yapı */}
                 {/* <Route path="/pomodoro" element={<Pomodoro />} /> */}

@@ -1,1 +1,1 @@
-export { default } from './GameTracker';
+export { default } from '../../../components/GameTracker';

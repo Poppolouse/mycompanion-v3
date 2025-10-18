@@ -48,6 +48,72 @@
 ## 🚫 ASLA YAPMA
 
 - ❌ `background: white;` veya `background: #fff;`
+
+---
+
+## 📏 DOSYA BOYUTU VE ORGANİZASYON KURALLARI
+
+### 14 DOSYA BOYUTU LİMİTİ
+- **❌ HİÇBİR DOSYA 500 SATIRDAN FAZLA OLAMAZ**
+- 500 satırı geçecek dosya varsa MUTLAKA bölünmeli
+- Component, page, utility - hepsi için geçerli
+- Satır sayısı kontrolü: VS Code'da `Ctrl+G` ile git
+
+### 15 DOSYA BÖLME STRATEJİSİ
+- **Component Bölme**: Büyük component'i alt component'lere böl
+- **Page Bölme**: Sayfa içi bölümleri ayrı component'lere çıkar
+- **Logic Bölme**: Custom hook'lara taşı
+- **Style Bölme**: CSS'i modüllere böl
+
+### 16 SAYFA-SPESİFİK ORGANİZASYON
+- Sadece o sayfada kullanılan component'ler → `pages/SayfaAdi/components/`
+- Sadece o sayfada kullanılan hook'lar → `pages/SayfaAdi/hooks/`
+- Sadece o sayfada kullanılan style'lar → `pages/SayfaAdi/styles/`
+
+**Örnek: Session sayfası**
+```
+pages/
+├── GameTrackingHub/
+│   ├── Session/
+│   │   ├── Session.jsx (ana sayfa - max 500 satır)
+│   │   ├── components/
+│   │   │   ├── SessionHeader.jsx
+│   │   │   ├── GameBanner.jsx
+│   │   │   ├── SessionControls.jsx
+│   │   │   ├── SessionStats.jsx
+│   │   │   ├── MediaCapture.jsx
+│   │   │   └── SessionNotes.jsx
+│   │   ├── hooks/
+│   │   │   ├── useSessionTimer.js
+│   │   │   └── useSessionData.js
+│   │   └── styles/
+│   │       └── Session.css
+```
+
+### 17 GENEL COMPONENT ORGANİZASYONU
+- Birden fazla sayfada kullanılan → `src/components/`
+- Genel hook'lar → `src/hooks/`
+- Genel utility'ler → `src/utils/`
+
+### 18 DOSYA ADLANDIRMA
+- Component dosyaları: `PascalCase.jsx`
+- Hook dosyaları: `useCamelCase.js`
+- Utility dosyaları: `camelCase.js`
+- Style dosyaları: `ComponentName.css`
+
+### 19 BÖLME KONTROL LİSTESİ
+Dosya 500 satırı geçiyorsa:
+1. ✅ JSX return'ü 100+ satır mı? → Alt component'lere böl
+2. ✅ useState/useEffect çok mu? → Custom hook'a taşı
+3. ✅ Utility fonksiyonlar var mı? → Ayrı dosyaya çıkar
+4. ✅ CSS çok mu? → Modüllere böl
+5. ✅ Sadece bu sayfada mı kullanılıyor? → Sayfa klasörüne koy
+
+### 20 BÖLME SONRASI KONTROL
+- ✅ Her dosya 500 satırdan az
+- ✅ Import/export düzgün çalışıyor
+- ✅ Sunucu hatasız çalışıyor
+- ✅ Functionality bozulmamış
 - ❌ `var(--undefined-color)` gibi tanımsız değişken
 - ❌ Her sayfada farklı body arka planı
 - ❌ Koyu arka planda koyu metin

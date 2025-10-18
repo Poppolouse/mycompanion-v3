@@ -1,4 +1,306 @@
-# 🎯 PROJE KURALLARI - HEADER STANDARTLARI
+# 🎯 PROJE KURALLARI - GENEL STANDARTLAR
+
+## 🗂️ DOSYA ORGANİZASYONU KURALLARI
+
+### 📁 Klasör Yapısı Standardı
+
+```
+src/
+├── components/                  ← SADECE paylaşılan componentler
+│   ├── UI/                     ← Button, Input, Modal (temel UI)
+│   ├── Layout/                 ← Header, Sidebar, Footer
+│   └── Common/                 ← Loading, ErrorBoundary
+├── pages/
+│   └── [PageName]/
+│       ├── [PageName].jsx      ← Ana sayfa component
+│       ├── [PageName].css      ← Sayfa layout stilleri
+│       ├── components/         ← Bu sayfaya ÖZEL componentler
+│       │   └── [ComponentName]/
+│       │       ├── [ComponentName].jsx
+│       │       ├── [ComponentName].module.css
+│       │       └── index.js
+│       ├── hooks/              ← Sayfaya özel custom hooks
+│       ├── utils/              ← Sayfaya özel utility'ler
+│       └── index.js            ← Barrel export
+```
+
+### 🚫 YASAKLAR - Dosya Organizasyonu
+
+❌ **Component'i yanlış yere koymak:**
+```
+❌ src/components/GameCard/  (sadece GameTracker'da kullanılıyor)
+✅ src/pages/GameTracker/components/GameCard/
+```
+
+❌ **Rastgele CSS dosyaları:**
+```
+❌ src/SomeComponent.css
+❌ src/styles/component-specific.css
+✅ src/pages/PageName/components/ComponentName/ComponentName.module.css
+```
+
+❌ **Uzun import path'leri:**
+```
+❌ import GameCard from './components/GameTracker/components/GameCard/GameCard.jsx';
+✅ import { GameCard } from './components/GameTracker';
+```
+
+## 🎨 CSS STANDARDIZASYON KURALLARI
+
+### 📋 CSS Modules Zorunluluğu
+
+**✅ ZORUNLU:** Tüm component CSS'leri `.module.css` olmalı
+
+```css
+/* ✅ DOĞRU: GameCard.module.css */
+.gameCard {
+  padding: var(--spacing-md);
+}
+
+.gameTitle {
+  font-size: var(--font-lg);
+}
+```
+
+```jsx
+/* ✅ DOĞRU: GameCard.jsx */
+import styles from './GameCard.module.css';
+
+function GameCard() {
+  return (
+    <div className={styles.gameCard}>
+      <h3 className={styles.gameTitle}>Game Title</h3>
+    </div>
+  );
+}
+```
+
+### 🚫 CSS YASAKLARI
+
+❌ **Global CSS'de component stilleri:**
+```css
+/* ❌ YANLIŞ: global.css içinde */
+.game-card { ... }
+.search-input { ... }
+```
+
+❌ **!important abuse:**
+```css
+/* ❌ YANLIŞ */
+.component {
+  color: red !important;
+  background: blue !important;
+}
+
+/* ✅ DOĞRU */
+.component {
+  color: var(--color-error);
+  background: var(--color-primary);
+}
+```
+
+❌ **Hardcoded değerler:**
+```css
+/* ❌ YANLIŞ */
+.component {
+  padding: 16px;
+  color: #667eea;
+  font-size: 18px;
+}
+
+/* ✅ DOĞRU */
+.component {
+  padding: var(--spacing-md);
+  color: var(--color-primary);
+  font-size: var(--font-lg);
+}
+```
+
+### 📐 CSS Naming Convention
+
+**✅ ZORUNLU:** CSS Modules için camelCase
+
+```css
+/* ✅ DOĞRU: ComponentName.module.css */
+.componentContainer { }
+.primaryButton { }
+.isActive { }
+.hasError { }
+```
+
+**✅ ZORUNLU:** Global CSS için kebab-case + BEM
+
+```css
+/* ✅ DOĞRU: global.css */
+.page-header { }
+.page-header__title { }
+.page-header__title--large { }
+```
+
+### 🎯 CSS Variable Zorunluluğu
+
+**✅ ZORUNLU:** Tüm değerler design-system.css'den alınmalı
+
+```css
+/* ✅ DOĞRU */
+.component {
+  /* Renkler */
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  
+  /* Spacing */
+  padding: var(--spacing-md);
+  margin: var(--spacing-lg);
+  gap: var(--spacing-sm);
+  
+  /* Typography */
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  
+  /* Border Radius */
+  border-radius: var(--radius-md);
+  
+  /* Shadows */
+  box-shadow: var(--shadow-md);
+  
+  /* Transitions */
+  transition: all var(--transition-normal);
+}
+```
+
+### 🔧 CSS Override Önleme Kuralları
+
+**✅ ZORUNLU:** CSS specificity kontrolü
+
+1. **Media query'lerde override yapmak yasak:**
+```css
+/* ❌ YANLIŞ */
+@media (max-width: 768px) {
+  .search-input-wrapper {
+    padding: 0.5rem; /* Ana kuralı override ediyor */
+  }
+}
+
+/* ✅ DOĞRU */
+.searchInputWrapper {
+  padding: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .searchInputWrapper {
+    padding: var(--spacing-sm); /* Aynı class, farklı değer */
+  }
+}
+```
+
+2. **Duplicate selector yasağı:**
+```css
+/* ❌ YANLIŞ: Aynı selector 2 farklı dosyada */
+/* FileA.css */
+.search-input { color: red; }
+
+/* FileB.css */  
+.search-input { color: blue; } /* Çakışma! */
+
+/* ✅ DOĞRU: CSS Modules */
+/* FileA.module.css */
+.searchInput { color: var(--color-error); }
+
+/* FileB.module.css */
+.searchInput { color: var(--color-primary); } /* Çakışmıyor! */
+```
+
+## 📦 IMPORT/EXPORT KURALLARI
+
+### 🎯 Barrel Export Zorunluluğu
+
+**✅ ZORUNLU:** Her klasörde index.js
+
+```javascript
+// ✅ DOĞRU: components/GameTracker/index.js
+export { default as GameTracker } from './GameTracker';
+export { default as GameGrid } from './components/GameGrid';
+export { default as FilterSidebar } from './components/FilterSidebar';
+export { default as GameStats } from './components/GameStats';
+```
+
+```javascript
+// ✅ DOĞRU: Kullanım
+import { GameTracker, GameGrid } from './components/GameTracker';
+```
+
+### 🚫 Import Yasakları
+
+❌ **Uzun relative path'ler:**
+```javascript
+❌ import GameCard from '../../../components/GameTracker/components/GameCard/GameCard.jsx';
+✅ import { GameCard } from '../components/GameTracker';
+```
+
+❌ **CSS import'u component'in ortasında:**
+```javascript
+❌ 
+import React from 'react';
+import { useState } from 'react';
+import './Component.css';  // Yanlış yer
+
+✅
+import React, { useState } from 'react';
+import styles from './Component.module.css';  // En üstte
+```
+
+## 🔍 SORUN TESPİT KURALLARI
+
+### 🚨 Değişiklik Öncesi Kontrol Listesi
+
+**✅ ZORUNLU:** Her CSS değişikliği öncesi:
+
+1. **DevTools Inspect:** Hangi CSS kuralları aktif?
+2. **File Search:** Aynı selector başka yerde var mı?
+3. **Media Query Check:** Responsive kurallar override ediyor mu?
+4. **Specificity Calculate:** Hangi kural daha güçlü?
+
+### 🧪 Değişiklik Sonrası Test Listesi
+
+**✅ ZORUNLU:** Her değişiklik sonrası:
+
+1. **Hard Refresh:** Ctrl+Shift+R
+2. **DevTools Computed:** Styles doğru uygulandı mı?
+3. **Responsive Test:** Farklı ekran boyutlarında çalışıyor mu?
+4. **CSS Cascade Check:** Beklenmedik override var mı?
+
+## 🎯 AI PROMPT KURALLARI
+
+### 📝 CSS Değişikliği İçin Prompt Template
+
+```
+# CSS DEĞİŞİKLİĞİ TALEBİ
+
+## HEDEF: [Açık hedef tanımı]
+
+## MEVCUT DURUM:
+- Hangi component/sayfa: [ComponentName]
+- Hangi CSS dosyası: [FileName.module.css]
+- Mevcut stil: [Mevcut CSS kuralı]
+
+## İSTENEN DEĞİŞİKLİK:
+- [Detaylı açıklama]
+
+## KONTROL EDİLECEKLER:
+- CSS Modules kullanılsın
+- CSS variables kullanılsın
+- Override kontrolü yapılsın
+- Responsive test edilsin
+
+## ÇIKTI BEKLENTİSİ:
+- Değişiklik preview'ı göster
+- Hangi dosyaların etkilendiğini belirt
+- CSS specificity sorunlarını açıkla
+```
+
+# 📏 HEADER STANDARTLARI
 
 ## 📏 HEADER CSS STANDARTLARI
 
@@ -269,6 +571,40 @@ Tüm sayfalarda header yapısı aşağıdaki gibi olmalıdır:
 ```
 
 ### 🚫 YASAKLAR
+
+#### ❌ Mock Data - KESINLIKLE YASAK:
+
+**KURAL:** Mock data asla eklenmez! Kullanıcı açıkça istemediği sürece hiçbir yere mock/sahte veri eklenmez.
+
+```javascript
+// ❌ YANLIŞ - Mock data ekleme
+const mockUsers = [
+  { id: 1, name: 'Test User', email: 'test@example.com' },
+  { id: 2, name: 'Demo User', email: 'demo@example.com' }
+];
+
+// ❌ YANLIŞ - Sahte API response
+const mockApiResponse = {
+  data: [{ id: 1, title: 'Sample Game' }]
+};
+
+// ✅ DOĞRU - Boş state veya gerçek API
+const [users, setUsers] = useState([]);
+const [games, setGames] = useState([]);
+```
+
+**Yasaklar:**
+- ❌ Mock kullanıcı verileri
+- ❌ Mock oyun verileri  
+- ❌ Mock API response'ları
+- ❌ Test/demo verileri
+- ❌ Placeholder içerikler (kullanıcı istemediği sürece)
+
+**İzin verilenler:**
+- ✅ Boş state'ler
+- ✅ Loading state'leri
+- ✅ Error state'leri
+- ✅ Gerçek API'den gelen veriler
 
 #### ❌ Header Yapısı - Asla Yapılmaması Gerekenler:
 
@@ -567,6 +903,123 @@ Yeni alt sayfa oluştururken:
 
 ---
 
-**Son Güncelleme:** 2024 - Header standardizasyonu ve alt sayfa organizasyonu tamamlandı
-**Referans:** GameTracker.css, GameTrackingHub klasör yapısı
+## 🔓 BAĞIMSIZLAŞTIRMA KURALLARI
+
+### 🎯 "Bağımsızlaştır" Komutu İçin Standart Çözüm
+
+Kullanıcı bir bölümü "bağımsızlaştır" dediğinde, aşağıdaki adımları uygula:
+
+#### 1. 🏗️ HTML Yapısı Düzeltme
+
+**❌ Sorunlu Yapı:**
+```jsx
+<div className="main-content">
+  <section className="games-section">
+    <div className="problem-section">
+      {/* Bu bölüm container'a bağımlı */}
+    </div>
+  </section>
+</div>
+```
+
+**✅ Bağımsız Yapı:**
+```jsx
+<div className="main-content">
+  <section className="games-section">
+    {/* Diğer bölümler */}
+  </section>
+</div>
+
+{/* Tamamen bağımsız bölüm */}
+<div className="independent-section-fullwidth">
+  {/* Bağımsızlaştırılan içerik */}
+</div>
+```
+
+#### 2. 🎨 CSS Güçlendirme
+
+**Bağımsız bölüm için zorunlu CSS:**
+```css
+.independent-section-fullwidth {
+  /* ✅ ZORUNLU - Tam genişlik */
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  width: 100vw !important;
+  
+  /* ✅ ZORUNLU - Konumlandırma */
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  
+  /* ✅ ZORUNLU - Z-index ve overflow */
+  z-index: 10 !important;
+  overflow-x: hidden !important;
+  
+  /* ✅ ZORUNLU - Padding */
+  padding: 2rem !important;
+  
+  /* ✅ ZORUNLU - Background (opsiyonel) */
+  background: var(--dark-bg-primary);
+}
+```
+
+#### 3. 🔧 JSX Fragment Kullanımı
+
+**Birden fazla bağımsız bölüm varsa:**
+```jsx
+{condition && (
+  <>
+    <div className="main-content">
+      {/* Ana içerik */}
+    </div>
+    
+    <div className="independent-section-fullwidth">
+      {/* Bağımsız bölüm */}
+    </div>
+  </>
+)}
+```
+
+#### 4. 📋 Kontrol Listesi
+
+Bağımsızlaştırma işlemi için:
+
+- [ ] Bölüm parent container'dan çıkarıldı mı?
+- [ ] `-fullwidth` class'ı eklendi mi?
+- [ ] CSS'te `!important` kuralları var mı?
+- [ ] `100vw` genişlik ayarları yapıldı mı?
+- [ ] `position: relative` eklendi mi?
+- [ ] `margin-left/right: -50vw` ayarlandı mı?
+- [ ] JSX syntax hataları kontrol edildi mi?
+- [ ] Fragment (`<>`) gerekiyorsa eklendi mi?
+
+#### 5. 🚨 Yaygın Hatalar
+
+**❌ Yapılmaması gerekenler:**
+- Parent container içinde bırakmak
+- CSS'te `!important` kullanmamak
+- Sadece `width: 100%` kullanmak (yetersiz)
+- JSX fragment kullanmayı unutmak
+- Z-index ayarlamamak
+
+**✅ Doğru yaklaşım:**
+- Tamamen parent'tan ayırmak
+- Güçlü CSS kuralları (`!important`)
+- Viewport genişliği (`100vw`) kullanmak
+- Proper JSX structure
+- Z-index ile katman yönetimi
+
+#### 6. 📝 Örnek Uygulama
+
+**Referans:** GameSelectionScreen kütüphane bölümü bağımsızlaştırması
+- **Dosya:** `GameSelectionScreen.jsx`
+- **CSS:** `GameSelectionScreen.css` - `.library-section-fullwidth`
+- **Tarih:** 2024 - Kütüphane tam genişlik sorunu çözümü
+
+---
+
+**Son Güncelleme:** 2024 - Bağımsızlaştırma kuralları eklendi
+**Referans:** GameTracker.css, GameTrackingHub klasör yapısı, GameSelectionScreen bağımsızlaştırma çözümü
 **Durum:** ✅ Aktif

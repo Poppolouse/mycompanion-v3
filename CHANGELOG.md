@@ -1,5 +1,36 @@
 # 📋 CHANGELOG - Vault Tracker v3
 
+## 🎮 **v3.11.3** - 2024-12-28 - **GameSelectionScreen Session Uyumlu Tasarım**
+
+### ✨ **Yeni Özellikler**
+
+#### 🎨 **Session Uyumlu Tasarım**
+- **🚫 Header Kaldırıldı**: Modern header tamamen kaldırıldı
+- **🌟 Şeffaf Arkaplan**: Session arkaplanını kullanmak için şeffaf background
+- **📦 Bağımsız Bölümler**: Her bölüm kendi glassmorphism container'ında
+  - ✅ **Son Oynanan Oyunlar** bölümü
+  - ✅ **Önerilen Oyunlar** bölümü  
+  - ✅ **Oyun Kütüphanesi** bölümü
+
+#### 🎯 **Öneriler Bölümü Optimizasyonu**
+- **🚫 Scroll Kaldırıldı**: Horizontal scroll yerine grid layout
+- **📏 Maksimum 7 Kart**: Responsive grid ile maksimum 7 kart genişliği
+- **📐 3:4 Aspect Ratio**: Tüm oyun kartları standart 3:4 oranında
+
+### 🔧 **UI/UX İyileştirmeleri**
+
+#### 🎮 **Oyun Kartları Standardizasyonu**
+- **📐 Aspect Ratio**: Tüm kartlar (Son Oynanan, Öneriler, Kütüphane) 3:4 oranında
+- **🎨 Tutarlı Görünüm**: Boyutlar aynı, sadece oran güncellendi
+- **✨ Glassmorphism**: Her bölüm kendi şeffaf container'ında
+
+#### 🔄 **Layout Optimizasyonu**
+- **📏 Padding Azaltıldı**: Daha kompakt görünüm
+- **📦 Bölüm Boşlukları**: Optimize edilmiş spacing
+- **🎯 Kapatma Butonu**: Sağ üst köşede minimal tasarım
+
+---
+
 ## 🎮 **v3.11.2** - 2024-12-28 - **Session Sayfası Media Kartları Optimizasyonu**
 
 ### ✨ **Yeni Özellikler**

@@ -9,6 +9,10 @@ html {
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
 }
 
 body {
@@ -20,10 +24,10 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   overflow-y: auto;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  min-height: 100vh !important;
 }
 
 /* App Layout */
@@ -50,7 +54,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
-  background: linear-gradient(135deg, var(--dark-background) 0%, var(--dark-surface-1) 25%, var(--dark-surface-2) 50%, var(--dark-surface-3) 100%) !important;
+  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%) !important;
 }
 
 /* 🔥 GAMETRACKER SAYFASINDA MAIN-CONTENT TRANSPARENT */
@@ -100,10 +104,10 @@ button {
   padding: 0.875rem 1.75rem;
   font-weight: 600;
   
-  /* GLASSMORPHISM + GRADIENT */
+  /* GLASSMORPHISM + GRADIENT - DARK THEME */
   background: linear-gradient(135deg, 
-    rgba(60, 70, 90, 0.8) 0%,
-    rgba(70, 80, 110, 0.7) 100%
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.7) 100%
   );
   backdrop-filter: blur(15px) saturate(180%);
   

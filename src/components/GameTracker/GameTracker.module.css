@@ -1,12 +1,12 @@
-/* 🎮 Game Tracker - Phase 2 CSS - DARK THEME */
+﻿/* ðŸŽ® Game Tracker - Phase 2 CSS - DARK THEME */
 /* RESPONSIVE DESIGN + PROGRESS SYSTEM */
 
-/* 🎯 Enhanced UX & Accessibility */
+/* ðŸŽ¯ Enhanced UX & Accessibility */
 * {
   scroll-behavior: smooth;
 }
 
-/* 🌙 GameTracker Specific Styles */
+/* ðŸŒ™ GameTracker Specific Styles */
 
 *:focus {
   outline: none;
@@ -22,9 +22,9 @@ textarea:focus {
   transition: all 0.3s ease;
 }
 
-/* 🎨 Custom Dark Scrollbar */
+/* ðŸŽ¨ Custom Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: var(--spacing-sm);
 }
 
 ::-webkit-scrollbar-track {
@@ -46,14 +46,14 @@ textarea:focus {
     rgba(var(--color-secondary-500-rgb), 0.9) 100%);
 }
 
-/* 🎭 Selection Styling */
+/* ðŸŽ­ Selection Styling */
 ::selection {
   background: rgba(102, 126, 234, 0.3);
   color: var(--text-primary);
 }
 
-/* Ana Sayfa Kapsayıcısı - Ana Sayfa ile Aynı Arka Plan */
-.game-tracker-page {
+/* Ana Sayfa KapsayÄ±cÄ±sÄ± - Ana Sayfa ile AynÄ± Arka Plan */
+.gameTrackerPage {
   min-height: 100vh;
   width: 100vw;
   padding: 0;
@@ -63,51 +63,51 @@ textarea:focus {
   color: var(--text-primary);
 }
 
-/* ZORLA ANA SAYFA ARKA PLANI - DOĞRU DEĞİŞKENLER */
-.game-tracker-page,
-.game-tracker-page .main-content {
+/* ZORLA ANA SAYFA ARKA PLANI - DOÄžRU DEÄžÄ°ÅžKENLER */
+.gameTrackerPage,
+.gameTrackerPage .main-content {
   background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%) !important;
 }
 
-/* 🏗️ Main Container Layout */
-.game-tracker {
+/* ðŸ—ï¸ Main Container Layout */
+.gameTracker {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1920px;
+  max-width: 19var(--radius-2xl);
   margin: 0 auto;
   padding: 0 2rem;
   gap: 2rem;
   background: transparent;
 }
 
-/* 📱 Responsive Container Padding */
+/* ðŸ“± Responsive Container Padding */
 @media (max-width: 1600px) {
-  .game-tracker {
+  .gameTracker {
     padding: 0 1.5rem;
   }
 }
 
 @media (max-width: 1200px) {
-  .game-tracker {
+  .gameTracker {
     padding: 0 1rem;
   }
 }
 
-@media (max-width: 768px) {
-  .game-tracker {
+@media (max-width: 76var(--spacing-sm)) {
+  .gameTracker {
     padding: 0 0.75rem;
     gap: 1.5rem;
   }
 }
 
-/* 🎯 Header Layout - Enhanced Dark Glassmorphism */
-.tracker-header {
+/* ðŸŽ¯ Header Layout - Enhanced Dark Glassmorphism */
+.trackerHeader {
   padding: 2rem 0 1rem 0;
   border-bottom: 1px solid var(--dark-border-2);
   background: var(--dark-glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(var(--radius-2xl)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--radius-2xl)) saturate(180%);
   margin: 0 calc(-50vw + 50%);
   width: 100vw;
   position: relative;
@@ -115,14 +115,14 @@ textarea:focus {
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding-left: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
-  padding-right: max(2rem, calc((100vw - 1920px) / 2 + 2rem));
+  padding-left: max(2rem, calc((100vw - 19var(--radius-2xl)) / 2 + 2rem));
+  padding-right: max(2rem, calc((100vw - 19var(--radius-2xl)) / 2 + 2rem));
   overflow: hidden;
   will-change: transform, opacity;
   transform: translateZ(0);
 }
 
-.tracker-header::before {
+.trackerHeader::before {
   content: '';
   position: absolute;
   top: 0;
@@ -130,13 +130,13 @@ textarea:focus {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
+    var(--hover-overlay) 0%, 
+    var(--glass-bg) 50%, 
     rgba(255, 255, 255, 0.02) 100%);
   pointer-events: none;
 }
 
-.tracker-header::after {
+.trackerHeader::after {
   content: '';
   position: absolute;
   top: 0;
@@ -150,23 +150,23 @@ textarea:focus {
   pointer-events: none;
 }
 
-.header-content {
+.headerContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  max-width: 1920px;
+  max-width: 19var(--radius-2xl);
   margin: 0 auto;
 }
 
 .header-left h1 {
-  /* YÜKSEK KONTRAST - Ana başlık */
+  /* YÃœKSEK KONTRAST - Ana baÅŸlÄ±k */
   color: rgba(255, 255, 255, 0.98);
   font-size: 2.5rem;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.95) 0%, 
+    var(--text-primary) 0%, 
     rgba(200, 220, 255, 0.9) 100%
   );
   -webkit-background-clip: text;
@@ -175,7 +175,7 @@ textarea:focus {
   letter-spacing: 0.5px;
 }
 
-/* 🎯 HİZLI FİLTRELER - DESIGN SYSTEM BUTTONS */
+/* ðŸŽ¯ HÄ°ZLI FÄ°LTRELER - DESIGN SYSTEM BUTTONS */
 .quick-filters button,
 .quick-filters .filter-btn,
 [class*="Hizli Filterler"] button {
@@ -186,7 +186,7 @@ textarea:focus {
   ) !important;
   backdrop-filter: blur(15px) saturate(180%) !important;
   border: 2px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-lg) !important;
   padding: 0.75rem 1.25rem !important;
   color: var(--text-on-dark) !important;
   font-weight: 600 !important;
@@ -196,9 +196,9 @@ textarea:focus {
   
   /* SHADOW */
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
     0 3px 10px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    inset 0 1px 0 var(--hover-overlay) !important;
 }
 
 .quick-filters button:hover,
@@ -208,8 +208,8 @@ textarea:focus {
   
   /* 2 KAT SHADOW */
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
-    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
+    0 var(--radius-sm) var(--radius-2xl) rgba(0, 0, 0, 0.4),
     0 0 30px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
@@ -230,7 +230,7 @@ textarea:focus {
 }
 
 .header-left p {
-  /* YÜKSEK KONTRAST - Alt başlık */
+  /* YÃœKSEK KONTRAST - Alt baÅŸlÄ±k */
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.1rem;
   margin: 0;
@@ -238,49 +238,49 @@ textarea:focus {
   line-height: 1.5;
 }
 
-.header-controls {
+.headerControls {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-/* 🎮 Main Content Layout */
-.tracker-main {
+/* ðŸŽ® Main Content Layout */
+.trackerMain {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--glass-bg);
   margin: 1rem 0;
   box-shadow: none;
 }
 
-.tracker-controls {
+.trackerControls {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  /* KATMAN 3: AÇIK - Vurgulu elementler */
+  /* KATMAN 3: AÃ‡IK - Vurgulu elementler */
   background: linear-gradient(135deg, 
-    rgba(40, 50, 70, 0.9) 0%,     /* Açık ton */
-    rgba(50, 60, 85, 0.85) 100%   /* Daha açık */
+    rgba(40, 50, 70, 0.9) 0%,     /* AÃ§Ä±k ton */
+    rgba(50, 60, 85, 0.85) 100%   /* Daha aÃ§Ä±k */
   );
   backdrop-filter: blur(25px) saturate(200%) brightness(120%);
   -webkit-backdrop-filter: blur(25px) saturate(200%) brightness(120%);
   border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   padding: 2rem;
   position: relative;
   overflow: hidden;
   box-shadow: 
     0 15px 50px rgba(0, 0, 0, 0.4),
-    0 5px 20px rgba(102, 126, 234, 0.1),
+    0 5px var(--radius-2xl) rgba(102, 126, 234, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.tracker-controls::before {
+.trackerControls::before {
   content: '';
   position: absolute;
   top: 0;
@@ -288,45 +288,45 @@ textarea:focus {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
+    var(--hover-overlay) 0%, 
+    var(--glass-bg) 50%, 
     rgba(255, 255, 255, 0.02) 100%);
   pointer-events: none;
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
 }
 
-.control-buttons {
+.controlButtons {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.smart-filters-section {
+.smartFiltersSection {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* ENHANCED GLASSMORPHISM - Şeffaf arka plan */
+  /* ENHANCED GLASSMORPHISM - Åžeffaf arka plan */
   background: linear-gradient(135deg, 
     rgba(45, 55, 75, 0.85) 0%,
     rgba(55, 65, 90, 0.8) 100%
   );
-  /* GÜÇLÜ BLUR + SATURATE */
+  /* GÃœÃ‡LÃœ BLUR + SATURATE */
   backdrop-filter: blur(30px) saturate(200%) brightness(125%);
   -webkit-backdrop-filter: blur(30px) saturate(200%) brightness(125%);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 18px;
+  border-radius: 1var(--spacing-sm);
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
   box-shadow: 
     0 15px 50px rgba(0, 0, 0, 0.3),
-    0 5px 20px rgba(0, 0, 0, 0.2),
+    0 5px var(--radius-2xl) rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    inset 0 -1px 0 var(--hover-overlay);
 }
 
-.smart-filters-section::before {
+.smartFiltersSection::before {
   content: '';
   position: absolute;
   top: 0;
@@ -334,20 +334,20 @@ textarea:focus {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 100%);
+    var(--hover-overlay) 0%, 
+    var(--glass-bg) 100%);
   pointer-events: none;
-  border-radius: 18px;
+  border-radius: 1var(--spacing-sm);
 }
 
-/* 📱 Responsive Header */
+/* ðŸ“± Responsive Header */
 @media (max-width: 1200px) {
-  .tracker-header {
-    padding-left: max(1.5rem, calc((100vw - 1920px) / 2 + 1.5rem));
-    padding-right: max(1.5rem, calc((100vw - 1920px) / 2 + 1.5rem));
+  .trackerHeader {
+    padding-left: max(1.5rem, calc((100vw - 19var(--radius-2xl)) / 2 + 1.5rem));
+    padding-right: max(1.5rem, calc((100vw - 19var(--radius-2xl)) / 2 + 1.5rem));
   }
   
-  .header-content {
+  .headerContent {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
@@ -357,16 +357,16 @@ textarea:focus {
     font-size: 2rem;
   }
   
-  .header-controls {
+  .headerControls {
     width: 100%;
     justify-content: flex-start;
   }
 }
 
-@media (max-width: 768px) {
-  .tracker-header {
-    padding-left: max(1rem, calc((100vw - 1920px) / 2 + 1rem));
-    padding-right: max(1rem, calc((100vw - 1920px) / 2 + 1rem));
+@media (max-width: 76var(--spacing-sm)) {
+  .trackerHeader {
+    padding-left: max(1rem, calc((100vw - 19var(--radius-2xl)) / 2 + 1rem));
+    padding-right: max(1rem, calc((100vw - 19var(--radius-2xl)) / 2 + 1rem));
     padding-top: 1.5rem;
   }
   
@@ -378,18 +378,18 @@ textarea:focus {
     font-size: 1rem;
   }
   
-  .header-controls {
+  .headerControls {
     gap: 1rem;
   }
   
-  .control-buttons {
+  .controlButtons {
     flex-direction: column;
     align-items: stretch;
   }
 }
 
-/* Üst Navigasyon */
-.top-navigation {
+/* Ãœst Navigasyon */
+.topNavigation {
   position: absolute;
   top: 2rem;
   left: 2rem;
@@ -400,7 +400,7 @@ textarea:focus {
   flex-wrap: wrap;
 }
 
-.header-buttons {
+.headerButtons {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -432,7 +432,7 @@ textarea:focus {
 
 .modal-search-input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 0.75rem 1rem;
@@ -452,21 +452,12 @@ textarea:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.available-games-list {
-  max-height: 400px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding-right: 0.5rem;
-}
-
 .available-games-list::-webkit-scrollbar {
-  width: 6px;
+  width: var(--radius-sm);
 }
 
 .available-games-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border-radius: 3px;
 }
 
@@ -476,9 +467,9 @@ textarea:focus {
 }
 
 .selectable-game-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--radius-lg);
   padding: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -523,29 +514,6 @@ textarea:focus {
 .hub-button,
 .stats-button,
 .route-button,
-.add-game-button {
-  /* GRADIENT BACKGROUND - Proje kuralı */
-  background: linear-gradient(135deg, 
-    rgba(60, 70, 90, 0.9) 0%,
-    rgba(70, 80, 110, 0.8) 100%
-  );
-  backdrop-filter: blur(15px) saturate(180%);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  color: var(--text-primary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  /* GÖLGE EFEKTİ - Proje kuralı */
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 3px 10px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 
 .home-button:hover,
 .hub-button:hover,
@@ -559,10 +527,10 @@ textarea:focus {
   );
   border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-3px) scale(1.02);
-  /* GÖLGE 2 KAT ARTIŞ - Proje kuralı */
+  /* GÃ–LGE 2 KAT ARTIÅž - Proje kuralÄ± */
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
-    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
+    0 var(--radius-sm) var(--radius-2xl) rgba(0, 0, 0, 0.4),
     0 0 30px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -575,8 +543,8 @@ textarea:focus {
   );
   border-color: rgba(102, 126, 234, 0.4);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(102, 126, 234, 0.1);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
+    0 0 var(--radius-2xl) rgba(102, 126, 234, 0.1);
 }
 
 .stats-button:hover {
@@ -587,7 +555,7 @@ textarea:focus {
   );
   border-color: rgba(102, 126, 234, 0.6);
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(102, 126, 234, 0.4);
 }
 
@@ -599,8 +567,8 @@ textarea:focus {
   );
   border-color: rgba(118, 75, 162, 0.4);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(118, 75, 162, 0.1);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
+    0 0 var(--radius-2xl) rgba(118, 75, 162, 0.1);
 }
 
 .route-button:hover {
@@ -611,20 +579,8 @@ textarea:focus {
   );
   border-color: rgba(118, 75, 162, 0.6);
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(118, 75, 162, 0.4);
-}
-
-.add-game-button {
-  /* SUCCESS GRADIENT */
-  background: linear-gradient(135deg, 
-    rgba(34, 197, 94, 0.2) 0%,
-    rgba(16, 185, 129, 0.15) 100%
-  );
-  border-color: rgba(34, 197, 94, 0.4);
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(34, 197, 94, 0.1);
 }
 
 .add-game-button:hover {
@@ -635,11 +591,11 @@ textarea:focus {
   );
   border-color: rgba(34, 197, 94, 0.6);
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(34, 197, 94, 0.4);
 }
 
-/* 🎨 Legend Toggle Button */
+/* ðŸŽ¨ Legend Toggle Button */
 .legend-toggle-btn,
 .keyboard-help-btn {
   /* WARNING GRADIENT */
@@ -650,15 +606,15 @@ textarea:focus {
   border: 2px solid rgba(245, 158, 11, 0.4);
   color: var(--color-white);
   padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(15px) saturate(180%);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(245, 158, 11, 0.1);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
+    0 0 var(--radius-2xl) rgba(245, 158, 11, 0.1);
 }
 
 .legend-toggle-btn:hover {
@@ -670,7 +626,7 @@ textarea:focus {
   border-color: rgba(245, 158, 11, 0.6);
   transform: translateY(-3px) scale(1.02);
   box-shadow: 
-    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 var(--spacing-md) 50px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(245, 158, 11, 0.4);
 }
 
@@ -682,12 +638,12 @@ textarea:focus {
   );
   border: 3px solid rgba(245, 158, 11, 0.8);
   box-shadow: 
-    0 12px 35px rgba(0, 0, 0, 0.5),
+    0 var(--radius-lg) 35px rgba(0, 0, 0, 0.5),
     0 0 30px rgba(245, 158, 11, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* 🧭 Navigation Buttons - Dark Glassmorphism */
+/* ðŸ§­ Navigation Buttons - Dark Glassmorphism */
 .navigation-buttons {
   display: flex;
   gap: 0.5rem;
@@ -696,10 +652,10 @@ textarea:focus {
 
 .nav-btn {
   background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--hover-overlay);
   color: rgba(255, 255, 255, 0.9);
   padding: 0.8rem 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -720,7 +676,7 @@ textarea:focus {
   height: 100%;
   background: linear-gradient(90deg, 
     transparent 0%, 
-    rgba(255, 255, 255, 0.1) 50%, 
+    var(--hover-overlay) 50%, 
     transparent 100%);
   transition: left 0.5s ease;
 }
@@ -735,8 +691,8 @@ textarea:focus {
   color: var(--color-white);
   transform: translateY(-2px);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(102, 126, 234, 0.1);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.4),
+    0 0 var(--radius-2xl) rgba(102, 126, 234, 0.1);
 }
 
 .nav-btn:active {
@@ -746,43 +702,43 @@ textarea:focus {
     0 0 10px rgba(102, 126, 234, 0.1);
 }
 
-/* Özel nav button renkleri */
+/* Ã–zel nav button renkleri */
 .home-btn:hover {
   border-color: rgba(var(--success-500-rgb), 0.3);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(var(--success-500-rgb), 0.2);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.4),
+    0 0 var(--radius-2xl) rgba(var(--success-500-rgb), 0.2);
 }
 
 .hub-btn:hover {
   border-color: rgba(102, 126, 234, 0.3);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(102, 126, 234, 0.2);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.4),
+    0 0 var(--radius-2xl) rgba(102, 126, 234, 0.2);
 }
 
 .add-game-btn:hover {
   border-color: rgba(var(--warning-500-rgb), 0.3);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(var(--warning-500-rgb), 0.2);
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.4),
+    0 0 var(--radius-2xl) rgba(var(--warning-500-rgb), 0.2);
 }
 
-/* 🎯 View Switcher (Library/Cycles) - Dark Glassmorphism */
+/* ðŸŽ¯ View Switcher (Library/Cycles) - Dark Glassmorphism */
 .view-switcher {
   display: flex;
   gap: 0.5rem;
   background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--spacing-md);
   padding: 0.6rem;
   backdrop-filter: blur(15px) saturate(120%);
   -webkit-backdrop-filter: blur(15px) saturate(120%);
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 4px var(--radius-2xl) rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 var(--hover-overlay);
 }
 
 .view-switcher::before {
@@ -796,7 +752,7 @@ textarea:focus {
     rgba(0, 0, 0, 0.2) 0%, 
     rgba(0, 0, 0, 0.1) 100%);
   pointer-events: none;
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
 }
 
 .view-btn {
@@ -804,7 +760,7 @@ textarea:focus {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.8);
   padding: 1rem 2rem;
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 600;
@@ -839,11 +795,11 @@ textarea:focus {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 100%);
+    var(--hover-overlay) 0%, 
+    var(--glass-bg) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
 }
 
 .view-btn:hover::before {
@@ -857,10 +813,10 @@ textarea:focus {
 .view-btn:hover {
   color: var(--color-white);
   transform: translateY(-3px) scale(1.05);
-  /* HOVER GLOW EFEKTİ - View butonları */
+  /* HOVER GLOW EFEKTÄ° - View butonlarÄ± */
   box-shadow: 
     0 15px 40px rgba(0, 0, 0, 0.3),
-    0 8px 20px rgba(0, 0, 0, 0.2),
+    0 var(--spacing-sm) var(--radius-2xl) rgba(0, 0, 0, 0.2),
     0 0 30px rgba(102, 126, 234, 0.4),
     0 0 60px rgba(102, 126, 234, 0.2);
   animation: float 2s ease-in-out infinite;
@@ -877,41 +833,40 @@ textarea:focus {
     0 0 40px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-3px) scale(1.05);
-  backdrop-filter: blur(20px) saturate(200%) brightness(130%);
-  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(130%);
-  /* KALIN BORDER - Proje kuralı */
+  backdrop-filter: blur(var(--radius-2xl)) saturate(200%) brightness(130%);
+  -webkit-backdrop-filter: blur(var(--radius-2xl)) saturate(200%) brightness(130%);
+  /* KALIN BORDER - Proje kuralÄ± */
   border: 3px solid rgba(102, 126, 234, 0.8);
 }
 
 .view-btn.active::after {
   background: linear-gradient(135deg, 
     rgba(255, 255, 255, 0.2) 0%, 
-    rgba(255, 255, 255, 0.1) 100%);
+    var(--hover-overlay) 100%);
   opacity: 1;
 }
 
-/* 📋 View Mode Switcher (Grid/List) */
+/* ðŸ“‹ View Mode Switcher (Grid/List) */
 
-
-/* 🎨 Control Buttons - Enhanced Glassmorphism + Performance */
+/* ðŸŽ¨ Control Buttons - Enhanced Glassmorphism + Performance */
 .upload-btn,
 .distribute-btn,
 .debug-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--color-white);
   padding: 1rem 2rem;
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 600;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px) saturate(180%) brightness(110%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(110%);
+  backdrop-filter: blur(var(--radius-2xl)) saturate(180%) brightness(110%);
+  -webkit-backdrop-filter: blur(var(--radius-2xl)) saturate(180%) brightness(110%);
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.1),
+    0 4px var(--radius-2xl) rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   will-change: transform, opacity;
   transform: translateZ(0);
@@ -926,7 +881,7 @@ textarea:focus {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, var(--hover-overlay), transparent);
   transition: left 0.5s ease;
 }
 
@@ -968,10 +923,10 @@ textarea:focus {
   );
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-3px) scale(1.02);
-  /* HOVER GLOW EFEKTİ - Control butonları */
+  /* HOVER GLOW EFEKTÄ° - Control butonlarÄ± */
   box-shadow: 
     0 15px 45px rgba(0, 0, 0, 0.4),
-    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
     0 0 35px rgba(255, 255, 255, 0.3),
     0 0 70px rgba(255, 255, 255, 0.15);
   animation: float 3s ease-in-out infinite;
@@ -1025,19 +980,19 @@ textarea:focus {
   color: var(--color-white);
 }
 
-/* 🎨 Color Legend */
+/* ðŸŽ¨ Color Legend */
 .color-legend {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
   padding: 1.5rem;
   margin-bottom: 2rem;
   animation: slideDown 0.3s ease;
 }
 
 .color-legend h3 {
-  /* H3 HİYERARŞİ - Orta seviye başlık */
+  /* H3 HÄ°YERARÅžÄ° - Orta seviye baÅŸlÄ±k */
   color: rgba(255, 255, 255, 0.88);
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
@@ -1061,8 +1016,8 @@ textarea:focus {
 }
 
 .legend-color {
-  width: 16px;
-  height: 16px;
+  width: var(--spacing-md);
+  height: var(--spacing-md);
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
@@ -1084,22 +1039,22 @@ textarea:focus {
 
 .legend-color.not-started {
   background: var(--error-500);
-  box-shadow: 0 0 8px rgba(var(--error-500-rgb), 0.5);
+  box-shadow: 0 0 var(--spacing-sm) rgba(var(--error-500-rgb), 0.5);
 }
 
-/* ⌨️ Klavye Kısayolları Yardımı */
+/* âŒ¨ï¸ Klavye KÄ±sayollarÄ± YardÄ±mÄ± */
 .keyboard-help {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--spacing-md);
   padding: 1.5rem;
   margin-bottom: 2rem;
   animation: slideDown 0.3s ease-out;
 }
 
 .keyboard-help h3 {
-  /* H3 HİYERARŞİ - Orta seviye başlık */
+  /* H3 HÄ°YERARÅžÄ° - Orta seviye baÅŸlÄ±k */
   color: rgba(255, 255, 255, 0.88);
   margin-bottom: 1rem;
   font-size: 1.2rem;
@@ -1123,14 +1078,14 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--spacing-sm);
   transition: all 0.3s ease;
 }
 
 .shortcut-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   transform: translateY(-2px);
 }
 
@@ -1152,7 +1107,7 @@ textarea:focus {
   margin-left: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76var(--spacing-sm)) {
   .keyboard-shortcuts {
     grid-template-columns: 1fr;
   }
@@ -1168,12 +1123,7 @@ textarea:focus {
   }
 }
 
-/* 📦 Toplu İşlemler */
-.bulk-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+/* ðŸ“¦ Toplu Ä°ÅŸlemler */
 
 .selected-count {
   color: var(--warning-500);
@@ -1181,56 +1131,12 @@ textarea:focus {
   font-size: 0.9rem;
 }
 
-/* 🔄 Toplu İşlemler */
-.bulk-operations {
-  background: var(--surface-2);
-  border: 1px solid var(--border-primary);
-  border-radius: 12px;
-  padding: 1rem;
-  margin: 1rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  backdrop-filter: blur(10px);
-  animation: slideInDown 0.3s ease-out;
-}
-
-.bulk-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+/* ðŸ”„ Toplu Ä°ÅŸlemler */
 
 .selected-count {
   color: var(--text-primary);
   font-weight: 600;
   font-size: 0.9rem;
-}
-
-.bulk-actions {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-.bulk-buttons {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.bulk-btn {
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
 }
 
 .bulk-btn.status-btn {
@@ -1266,41 +1172,15 @@ textarea:focus {
   transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-  .bulk-operations {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.75rem;
-  }
-  
-  .bulk-info {
-    width: 100%;
-  }
-  
-  .bulk-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    width: 100%;
-  }
-  
-  .bulk-buttons {
-    width: 100%;
-    justify-content: flex-start;
-  }
-  
-  .bulk-btn {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-  }
+@media (max-width: 76var(--spacing-sm)) {
+
 }
 
-/* 🎬 Animations */
+/* ðŸŽ¬ Animations */
 @keyframes slideInDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-var(--radius-2xl));
   }
   to {
     opacity: 1;
@@ -1311,7 +1191,7 @@ textarea:focus {
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-var(--radius-2xl));
   }
   to {
     opacity: 1;
@@ -1359,12 +1239,10 @@ textarea:focus {
   }
 }
 
-
-
-/* 🎬 Enhanced Micro-interaction Animations */
+/* ðŸŽ¬ Enhanced Micro-interaction Animations */
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 var(--radius-2xl) rgba(102, 126, 234, 0.3);
   }
   50% {
     box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
@@ -1376,7 +1254,7 @@ textarea:focus {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-var(--spacing-sm));
   }
 }
 
@@ -1438,7 +1316,7 @@ textarea:focus {
   }
 }
 
-/* 🎯 Loading States & Smooth Transitions */
+/* ðŸŽ¯ Loading States & Smooth Transitions */
 .loading-state {
   opacity: 0.6;
   pointer-events: none;
@@ -1454,44 +1332,22 @@ textarea:focus {
   bottom: 0;
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(255, 255, 255, 0.1), 
+    var(--hover-overlay), 
     transparent);
 }
 
-.fade-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.fade-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.fade-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* ⏰ Son Oynananlar */
+/* â° Son Oynananlar */
 .recent-games-section {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .recent-games-section h3 {
-  /* H3 HİYERARŞİ - Orta seviye başlık */
+  /* H3 HÄ°YERARÅžÄ° - Orta seviye baÅŸlÄ±k */
   color: rgba(255, 255, 255, 0.88);
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
@@ -1508,9 +1364,9 @@ textarea:focus {
 }
 
 .recent-game-item {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 1rem;
   min-width: 200px;
   cursor: pointer;
@@ -1523,7 +1379,7 @@ textarea:focus {
 .recent-game-item:hover {
   background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3);
 }
 
 .recent-game-info {
@@ -1544,43 +1400,43 @@ textarea:focus {
 }
 
 .recent-game-status {
-  width: 12px;
-  height: 12px;
+  width: var(--radius-lg);
+  height: var(--radius-lg);
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .recent-game-status.completed {
   background: var(--success-500);
-  box-shadow: 0 0 8px rgba(var(--success-500-rgb), 0.5);
+  box-shadow: 0 0 var(--spacing-sm) rgba(var(--success-500-rgb), 0.5);
 }
 
 .recent-game-status.playing {
   background: var(--warning-500);
-  box-shadow: 0 0 8px rgba(var(--warning-500-rgb), 0.5);
+  box-shadow: 0 0 var(--spacing-sm) rgba(var(--warning-500-rgb), 0.5);
 }
 
 .recent-game-status.paused {
   background: var(--info-500);
-  box-shadow: 0 0 8px rgba(var(--info-500-rgb), 0.5);
+  box-shadow: 0 0 var(--spacing-sm) rgba(var(--info-500-rgb), 0.5);
 }
 
 .recent-game-status.not-started {
   background: var(--error-500);
-  box-shadow: 0 0 8px rgba(var(--error-500-rgb), 0.5);
+  box-shadow: 0 0 var(--spacing-sm) rgba(var(--error-500-rgb), 0.5);
 }
 
-/* 📋 List View - Dark Glassmorphism + Performance */
+/* ðŸ“‹ List View - Dark Glassmorphism + Performance */
 .games-list {
   background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px) saturate(120%);
-  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  backdrop-filter: blur(var(--radius-2xl)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--radius-2xl)) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
   overflow: hidden;
   box-shadow: 
-    0 12px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 var(--radius-lg) var(--spacing-xl) rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 var(--glass-bg);
   animation: fadeInUp 0.6s ease;
   position: relative;
   will-change: transform, opacity;
@@ -1599,20 +1455,20 @@ textarea:focus {
     rgba(0, 0, 0, 0.1) 50%, 
     rgba(0, 0, 0, 0.05) 100%);
   pointer-events: none;
-  border-radius: 16px;
+  border-radius: var(--spacing-md);
 }
 
-/* 🎯 List Header - Compact */
+/* ðŸŽ¯ List Header - Compact */
 .list-header {
   display: grid;
-  grid-template-columns: 50px 80px 1fr 120px 120px 100px 120px 120px 80px;
+  grid-template-columns: 50px 80px 1fr 1var(--radius-2xl) 1var(--radius-2xl) 100px 1var(--radius-2xl) 1var(--radius-2xl) 80px;
   gap: 0.5rem;
   padding: 0.6rem 0.8rem;
   background: rgba(0, 0, 0, 0.4);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-weight: 700;
-  /* YÜKSEK KONTRAST - Liste başlıkları */
-  color: rgba(255, 255, 255, 0.95);
+  /* YÃœKSEK KONTRAST - Liste baÅŸlÄ±klarÄ± */
+  color: var(--text-primary);
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -1655,16 +1511,16 @@ textarea:focus {
   transform: none;
 }
 
-/* 🎮 List Items - YÜKSEK KONTRAST */
+/* ðŸŽ® List Items - YÃœKSEK KONTRAST */
 .game-list-item {
   display: grid !important;
-  grid-template-columns: 50px 80px 1fr 120px 120px 100px 120px 120px 80px !important;
+  grid-template-columns: 50px 80px 1fr 1var(--radius-2xl) 1var(--radius-2xl) 100px 1var(--radius-2xl) 1var(--radius-2xl) 80px !important;
   gap: 0.3rem !important;
   padding: 0.2rem 0.6rem !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid var(--hover-overlay) !important;
   cursor: pointer !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-height: 28px !important;
+  min-height: 2var(--spacing-sm) !important;
   max-height: 35px !important;
   align-items: center !important;
   position: relative !important;
@@ -1687,11 +1543,11 @@ textarea:focus {
   width: 4px;
 }
 
-/* 📱 Responsive List View - ULTRA COMPACT FORCED */
+/* ðŸ“± Responsive List View - ULTRA COMPACT FORCED */
 @media (max-width: 1600px) {
   .list-header,
   .game-list-item {
-    grid-template-columns: 50px 80px 1fr 120px 120px 100px 120px 120px 80px !important;
+    grid-template-columns: 50px 80px 1fr 1var(--radius-2xl) 1var(--radius-2xl) 100px 1var(--radius-2xl) 1var(--radius-2xl) 80px !important;
     gap: 0.3rem !important;
     padding: 0.2rem 0.6rem !important;
   }
@@ -1715,12 +1571,12 @@ textarea:focus {
   }
   
   .game-list-item {
-    min-height: 28px !important;
+    min-height: 2var(--spacing-sm) !important;
     max-height: 35px !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76var(--spacing-sm)) {
   .list-header,
   .game-list-item {
     grid-template-columns: 35px 1fr 80px 60px !important;
@@ -1734,7 +1590,7 @@ textarea:focus {
   }
   
   .game-list-item {
-    min-height: 28px !important;
+    min-height: 2var(--spacing-sm) !important;
     max-height: 35px !important;
   }
   
@@ -1754,7 +1610,7 @@ textarea:focus {
   }
   
   .game-list-item {
-    min-height: 28px !important;
+    min-height: 2var(--spacing-sm) !important;
     max-height: 35px !important;
   }
   
@@ -1764,7 +1620,6 @@ textarea:focus {
     display: none;
   }
 }
-}
 
 .game-list-item:hover {
   background: rgba(255, 255, 255, 0.15) !important;
@@ -1773,16 +1628,16 @@ textarea:focus {
 }
 
 .game-list-item.selected {
-  /* GÜÇLÜ GRADIENT - Seçili oyun */
+  /* GÃœÃ‡LÃœ GRADIENT - SeÃ§ili oyun */
   background: linear-gradient(135deg, 
     rgba(102, 126, 234, 0.5) 0%,
     rgba(118, 75, 162, 0.4) 100%
   ) !important;
-  /* KALIN BORDER - Proje kuralı */
+  /* KALIN BORDER - Proje kuralÄ± */
   border: 2px solid rgba(102, 126, 234, 0.9) !important;
   border-left: 4px solid rgba(102, 126, 234, 1) !important;
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.4),
     0 0 25px rgba(102, 126, 234, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   transform: translateX(2px) translateY(-1px) !important;
@@ -1797,7 +1652,7 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* YÜKSEK KONTRAST - Liste hücreleri */
+  /* YÃœKSEK KONTRAST - Liste hÃ¼creleri */
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   font-weight: 500;
@@ -1815,8 +1670,8 @@ textarea:focus {
 /* Checkbox Styling */
 .list-item-cell input[type="checkbox"],
 .list-header-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 1var(--spacing-sm);
+  height: 1var(--spacing-sm);
   accent-color: var(--color-primary-500);
   cursor: pointer;
 }
@@ -1825,9 +1680,9 @@ textarea:focus {
 .game-cover-placeholder {
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border-radius: var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1842,44 +1697,44 @@ textarea:focus {
 
 /* Status Indicator */
 .status-indicator {
-  width: 16px;
-  height: 16px;
+  width: var(--spacing-md);
+  height: var(--spacing-md);
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .status-indicator.completed {
   background: rgba(34, 197, 94, 1);
-  /* GÜÇLÜ STATUS GLOW - Tamamlandı */
+  /* GÃœÃ‡LÃœ STATUS GLOW - TamamlandÄ± */
   box-shadow: 
-    0 0 20px rgba(34, 197, 94, 0.8),
+    0 0 var(--radius-2xl) rgba(34, 197, 94, 0.8),
     0 0 40px rgba(34, 197, 94, 0.4),
     0 0 60px rgba(34, 197, 94, 0.2);
 }
 
 .status-indicator.playing {
   background: rgba(251, 191, 36, 1);
-  /* GÜÇLÜ STATUS GLOW - Oynanıyor */
+  /* GÃœÃ‡LÃœ STATUS GLOW - OynanÄ±yor */
   box-shadow: 
-    0 0 20px rgba(251, 191, 36, 0.8),
+    0 0 var(--radius-2xl) rgba(251, 191, 36, 0.8),
     0 0 40px rgba(251, 191, 36, 0.4),
     0 0 60px rgba(251, 191, 36, 0.2);
 }
 
 .status-indicator.paused {
   background: rgba(59, 130, 246, 1);
-  /* GÜÇLÜ STATUS GLOW - Duraklatıldı */
+  /* GÃœÃ‡LÃœ STATUS GLOW - DuraklatÄ±ldÄ± */
   box-shadow: 
-    0 0 20px rgba(59, 130, 246, 0.8),
+    0 0 var(--radius-2xl) rgba(59, 130, 246, 0.8),
     0 0 40px rgba(59, 130, 246, 0.4),
     0 0 60px rgba(59, 130, 246, 0.2);
 }
 
 .status-indicator.not-started {
   background: rgba(239, 68, 68, 1);
-  /* GÜÇLÜ STATUS GLOW - Başlanmadı */
+  /* GÃœÃ‡LÃœ STATUS GLOW - BaÅŸlanmadÄ± */
   box-shadow: 
-    0 0 20px rgba(239, 68, 68, 0.8),
+    0 0 var(--radius-2xl) rgba(239, 68, 68, 0.8),
     0 0 40px rgba(239, 68, 68, 0.4),
     0 0 60px rgba(239, 68, 68, 0.2);
 }
@@ -1888,9 +1743,9 @@ textarea:focus {
 .progress-bar {
   position: relative;
   width: 100%;
-  height: 12px;
+  height: var(--radius-lg);
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -1900,11 +1755,11 @@ textarea:focus {
     rgba(102, 126, 234, 1) 0%, 
     rgba(118, 75, 162, 1) 100%
   );
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   transition: width 0.3s ease;
-  /* PROGRESS BAR GLOW EFEKTİ */
+  /* PROGRESS BAR GLOW EFEKTÄ° */
   box-shadow: 
-    0 0 20px rgba(102, 126, 234, 0.6),
+    0 0 var(--radius-2xl) rgba(102, 126, 234, 0.6),
     0 0 40px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
@@ -1921,20 +1776,6 @@ textarea:focus {
 }
 
 /* Action Menu Button */
-.action-menu-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
 
 .action-menu-btn:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -1966,7 +1807,7 @@ textarea:focus {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76var(--spacing-sm)) {
   .list-header,
   .game-list-item {
     grid-template-columns: 40px 50px 1fr 60px 40px;
@@ -1982,17 +1823,17 @@ textarea:focus {
   }
 }
 
-/* 🔍 Akıllı Filtreleme Sistemi */
-.smart-filters-section {
-  background: rgba(255, 255, 255, 0.05);
+/* ðŸ” AkÄ±llÄ± Filtreleme Sistemi */
+.smartFiltersSection {
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--spacing-md);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
-/* Arama Çubuğu */
+/* Arama Ã‡ubuÄŸu */
 .search-bar {
   position: relative;
   margin-bottom: 1.5rem;
@@ -2002,7 +1843,7 @@ textarea:focus {
   width: 100%;
   padding: 0.8rem 1.2rem;
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--hover-overlay);
   border-radius: 10px;
   color: var(--color-white);
   font-size: 0.95rem;
@@ -2013,29 +1854,11 @@ textarea:focus {
 .smart-search-input:focus {
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 0 var(--radius-2xl) rgba(102, 126, 234, 0.3);
 }
 
 .smart-search-input::placeholder {
   color: rgba(255, 255, 255, 0.6);
-}
-
-.clear-search-btn {
-  position: absolute;
-  right: 0.8rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.3);
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
 }
 
 .clear-search-btn:hover {
@@ -2043,18 +1866,12 @@ textarea:focus {
   transform: translateY(-50%) scale(1.1);
 }
 
-/* Hızlı Filtreler */
+/* HÄ±zlÄ± Filtreler */
 .quick-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   align-items: end;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .filter-group label {
@@ -2065,9 +1882,9 @@ textarea:focus {
 
 .smart-filter-select {
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border-radius: var(--spacing-sm);
   color: var(--color-white);
   font-size: 0.9rem;
   cursor: pointer;
@@ -2085,21 +1902,9 @@ textarea:focus {
   color: var(--color-white);
 }
 
-.clear-all-filters-btn {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--error-500) 0%, var(--color-error-600) 100%);
-  border: none;
-  border-radius: 8px;
-  color: var(--color-white);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
-
 .clear-all-filters-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(var(--error-500-rgb), 0.4);
+  box-shadow: 0 var(--spacing-sm) 25px rgba(var(--error-500-rgb), 0.4);
 }
 
 .clear-all-filters-btn:disabled {
@@ -2110,47 +1915,6 @@ textarea:focus {
 }
 
 /* Aktif Filtreler */
-.active-filters {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.active-filters-label {
-  font-weight: 600;
-  color: var(--color-white);
-  margin-bottom: 0.75rem;
-  display: block;
-}
-
-.active-filter-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.filter-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  /* %50 PARLAK GRADIENT - Aktif filtre */
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.3) 0%,
-    rgba(118, 75, 162, 0.25) 100%
-  );
-  /* KALIN BORDER - Proje kuralı */
-  border: 2px solid rgba(102, 126, 234, 0.5);
-  border-radius: 20px;
-  color: var(--color-white);
-  font-size: 0.85rem;
-  font-weight: 600;
-  backdrop-filter: blur(10px) saturate(150%);
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.2),
-    0 0 15px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 
 .filter-tag button {
   background: none;
@@ -2158,8 +1922,8 @@ textarea:focus {
   color: var(--color-white);
   cursor: pointer;
   font-size: 1rem;
-  width: 20px;
-  height: 20px;
+  width: var(--radius-2xl);
+  height: var(--radius-2xl);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2172,7 +1936,7 @@ textarea:focus {
 }
 
 /* Responsive Design for Smart Filters */
-@media (max-width: 768px) {
+@media (max-width: 76var(--spacing-sm)) {
   .quick-filters {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -2182,13 +1946,10 @@ textarea:focus {
     font-size: 0.9rem;
     padding: 0.875rem 1.25rem;
   }
-  
-  .active-filter-tags {
-    justify-content: center;
-  }
+
 }
 
-/* Sayfa Başlığı */
+/* Sayfa BaÅŸlÄ±ÄŸÄ± */
 .page-header {
   text-align: center;
   margin: 60px 0 40px 0;
@@ -2199,7 +1960,7 @@ textarea:focus {
   font-size: 3rem;
   margin: 0 0 10px 0;
   font-weight: 800;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px var(--radius-2xl) rgba(0, 0, 0, 0.3);
 }
 
 .page-header p {
@@ -2209,29 +1970,25 @@ textarea:focus {
   font-weight: 500;
 }
 
-/* Ana İçerik */
+/* Ana Ä°Ã§erik */
 .main-content {
   width: 1200px !important;
   min-width: 1200px !important;
   max-width: none !important;
   margin: 0 auto;
   background: rgba(30, 30, 50, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--radius-2xl);
   padding: 40px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }
 
-/* Boş Durum */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-}
+/* BoÅŸ Durum */
 
 .empty-icon {
   font-size: 4rem;
-  margin-bottom: 20px;
+  margin-bottom: var(--radius-2xl);
   opacity: 0.8;
 }
 
@@ -2249,7 +2006,7 @@ textarea:focus {
   font-weight: 500;
 }
 
-/* Import Tuşu */
+/* Import TuÅŸu */
 .import-button {
   background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
   color: white;
@@ -2265,30 +2022,20 @@ textarea:focus {
 
 .import-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(79, 70, 229, 0.6);
+  box-shadow: 0 var(--radius-sm) 25px rgba(79, 70, 229, 0.6);
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
 }
 
 /* Error Message */
-.error-message {
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid var(--color-error-600);
-  color: var(--color-error-500);
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 500;
-}
 
 /* Oyun Listesi */
 .games-list {
-  margin-top: 20px;
+  margin-top: var(--radius-2xl);
 }
 
 .games-list h2 {
   font-size: 1.8rem;
-  margin: 0 0 20px 0;
+  margin: 0 0 var(--radius-2xl) 0;
   color: var(--color-gray-300);
   font-weight: 700;
 }
@@ -2304,7 +2051,7 @@ textarea:focus {
 
 .games-header h2 {
   margin: 0;
-  /* YÜKSEK KONTRAST - Bölüm başlıkları */
+  /* YÃœKSEK KONTRAST - BÃ¶lÃ¼m baÅŸlÄ±klarÄ± */
   color: rgba(255, 255, 255, 0.92);
   font-weight: 700;
   font-size: 1.4rem;
@@ -2312,7 +2059,7 @@ textarea:focus {
   letter-spacing: 0.4px;
 }
 
-/* 💾 AŞAMA 5: Header Actions */
+/* ðŸ’¾ AÅžAMA 5: Header Actions */
 .header-actions {
   display: flex;
   gap: 10px;
@@ -2321,17 +2068,17 @@ textarea:focus {
 }
 
 .import-button.small {
-  padding: 8px 16px;
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: 0.9rem;
   min-width: auto;
 }
 
-/* 💾 AŞAMA 5: Export Button */
+/* ðŸ’¾ AÅžAMA 5: Export Button */
 .export-button {
   background: linear-gradient(135deg, #10b981, var(--color-success-600));
   border: 1px solid rgba(16, 185, 129, 0.6);
   color: white;
-  padding: 12px 24px;
+  padding: var(--radius-lg) var(--spacing-lg);
   border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
@@ -2339,18 +2086,16 @@ textarea:focus {
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
-
-
-/* 🎯 Distribute Button */
+/* ðŸŽ¯ Distribute Button */
 .distribute-btn {
   background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-600));
   border: none;
   color: white;
-  padding: 12px 24px;
+  padding: var(--radius-lg) var(--spacing-lg);
   border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
@@ -2358,14 +2103,14 @@ textarea:focus {
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 .distribute-btn:hover {
   background: linear-gradient(135deg, var(--color-secondary-600), #6d28d9);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 var(--radius-sm) var(--radius-2xl) rgba(139, 92, 246, 0.4);
 }
 
 .distribute-btn:disabled {
@@ -2375,20 +2120,20 @@ textarea:focus {
   box-shadow: none;
 }
 
-/* 🔍 Debug Button */
+/* ðŸ” Debug Button */
 .debug-btn {
   background: linear-gradient(135deg, var(--color-warning-500), var(--color-warning-600));
   border: none;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--spacing-sm);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--radius-sm);
   box-shadow: 0 2px 10px rgba(var(--color-warning-500-rgb), 0.3);
 }
 
@@ -2398,12 +2143,10 @@ textarea:focus {
   box-shadow: 0 4px 15px rgba(var(--color-warning-500-rgb), 0.4);
 }
 
-
-
 .export-button:hover {
   background: linear-gradient(135deg, var(--color-success-600), #047857);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 var(--radius-sm) var(--radius-2xl) rgba(16, 185, 129, 0.4);
 }
 
 .export-button:disabled {
@@ -2414,38 +2157,38 @@ textarea:focus {
 }
 
 .export-button.small {
-  padding: 8px 16px;
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: 0.9rem;
   min-width: auto;
 }
 
-/* 🎮 Games Section Layout - TRANSPARENT AMA SLIGHT TINT */
+/* ðŸŽ® Games Section Layout - TRANSPARENT AMA SLIGHT TINT */
 .games-section {
   display: flex;
   flex-direction: column;
-  /* ARTIRILMIŞ BOŞLUK - Bölümler arası */
+  /* ARTIRILMIÅž BOÅžLUK - BÃ¶lÃ¼mler arasÄ± */
   gap: 2.5rem;
   flex: 1;
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   padding: 2.5rem;
-  /* SUBTLE BORDER - Görsel ayrım */
+  /* SUBTLE BORDER - GÃ¶rsel ayrÄ±m */
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 4px var(--spacing-md) rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 var(--glass-bg);
 }
 
-/* 🎯 Games Grid */
+/* ðŸŽ¯ Games Grid */
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  /* ARTIRILMIŞ BOŞLUK - Kartlar arası görsel ayrım */
+  /* ARTIRILMIÅž BOÅžLUK - Kartlar arasÄ± gÃ¶rsel ayrÄ±m */
   gap: 2.5rem;
   padding: 1.5rem 0;
   animation: fadeInUp 0.6s ease;
 }
 
-/* 📱 Responsive Grid */
+/* ðŸ“± Responsive Grid */
 @media (max-width: 1600px) {
   .games-grid {
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -2455,12 +2198,12 @@ textarea:focus {
 
 @media (max-width: 1200px) {
   .games-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(3var(--radius-2xl), 1fr));
     gap: 2rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76var(--spacing-sm)) {
   .games-grid {
     grid-template-columns: 1fr;
     gap: 1.75rem;
@@ -2474,25 +2217,25 @@ textarea:focus {
   }
 }
 
-/* 🎨 Game Card - ENHANCED GLASSMORPHISM - Proje kuralı */
+/* ðŸŽ¨ Game Card - ENHANCED GLASSMORPHISM - Proje kuralÄ± */
 .game-card {
-  /* AÇIKLAŞTIRILMIŞ ARKA PLAN - Okunabilirlik için */
+  /* AÃ‡IKLAÅžTIRILMIÅž ARKA PLAN - Okunabilirlik iÃ§in */
   background: linear-gradient(135deg, 
     rgba(40, 50, 75, 0.85) 0%,
     rgba(50, 60, 90, 0.8) 100%
   );
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   padding: 2rem;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  /* GÜÇLÜ GLASSMORPHISM - Daha az şeffaf */
+  /* GÃœÃ‡LÃœ GLASSMORPHISM - Daha az ÅŸeffaf */
   backdrop-filter: blur(25px) saturate(200%) brightness(130%);
   -webkit-backdrop-filter: blur(25px) saturate(200%) brightness(130%);
   position: relative;
   overflow: hidden;
   box-shadow: 
     0 15px 50px rgba(0, 0, 0, 0.4),
-    0 5px 20px rgba(0, 0, 0, 0.2),
+    0 5px var(--radius-2xl) rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
     inset 0 -1px 0 rgba(255, 255, 255, 0.15);
   will-change: transform, opacity, box-shadow;
@@ -2513,7 +2256,7 @@ textarea:focus {
     var(--color-primary-500) 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
 .game-card::after {
@@ -2524,13 +2267,13 @@ textarea:focus {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
+    var(--hover-overlay) 0%, 
+    var(--glass-bg) 50%, 
     rgba(255, 255, 255, 0.02) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
 }
 
 .game-card:hover::before {
@@ -2544,9 +2287,9 @@ textarea:focus {
 .game-card:hover {
   transform: translateY(-4px) scale(1.02);
   border-color: rgba(102, 126, 234, 0.6);
-  /* HOVER GLOW EFEKTİ - Proje kuralı */
+  /* HOVER GLOW EFEKTÄ° - Proje kuralÄ± */
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 var(--radius-2xl) 60px rgba(0, 0, 0, 0.4),
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 40px rgba(102, 126, 234, 0.4),
     0 0 80px rgba(102, 126, 234, 0.2),
@@ -2567,19 +2310,19 @@ textarea:focus {
 }
 
 .game-card.clickable:hover {
-  /* ULTRA GÜÇLÜ INTERACTIVE - Kart hover */
-  transform: translateY(-12px) scale(1.05);
+  /* ULTRA GÃœÃ‡LÃœ INTERACTIVE - Kart hover */
+  transform: translateY(-var(--radius-lg)) scale(1.05);
   background: linear-gradient(135deg, 
     rgba(55, 65, 95, 0.95) 0%,
     rgba(65, 75, 105, 0.9) 100%
   );
   border-color: rgba(102, 126, 234, 0.9);
-  /* GÜÇLÜ HOVER GLOW - Clickable kartlar */
+  /* GÃœÃ‡LÃœ HOVER GLOW - Clickable kartlar */
   box-shadow: 
     0 30px 80px rgba(0, 0, 0, 0.6),
-    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 var(--radius-2xl) 50px rgba(0, 0, 0, 0.4),
     0 0 60px rgba(102, 126, 234, 0.8),
-    0 0 120px rgba(102, 126, 234, 0.5),
+    0 0 1var(--radius-2xl) rgba(102, 126, 234, 0.5),
     0 0 180px rgba(102, 126, 234, 0.2),
     inset 0 2px 0 rgba(255, 255, 255, 0.5);
   animation: glow 2s ease-in-out infinite alternate;
@@ -2615,7 +2358,7 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-md);
 }
 
 .game-title-section {
@@ -2623,11 +2366,11 @@ textarea:focus {
 }
 
 .game-title {
-  margin: 0 0 8px 0;
+  margin: 0 0 var(--spacing-sm) 0;
   font-size: 1.2rem;
   font-weight: 700;
-  /* YÜKSEK KONTRAST - Oyun başlıkları */
-  color: rgba(255, 255, 255, 0.95);
+  /* YÃœKSEK KONTRAST - Oyun baÅŸlÄ±klarÄ± */
+  color: var(--text-primary);
   cursor: pointer;
   transition: color 0.2s ease;
   /* OKUNABILIRLIK - Letter spacing */
@@ -2647,34 +2390,22 @@ textarea:focus {
   justify-content: flex-start;
 }
 
-.edit-btn {
-  background: rgba(102, 126, 234, 0.15);
-  border: 1px solid var(--dark-accent-primary);
-  color: var(--dark-accent-primary);
-  padding: 2px 6px;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 0.7rem;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
 .edit-btn:hover {
-  /* GÜÇLÜ INTERACTIVE - Edit buton hover */
+  /* GÃœÃ‡LÃœ INTERACTIVE - Edit buton hover */
   background: rgba(102, 126, 234, 0.35);
   border-color: var(--dark-accent-primary);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 
-    0 8px 25px rgba(102, 126, 234, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.2);
+    0 var(--spacing-sm) 25px rgba(102, 126, 234, 0.3),
+    0 4px var(--radius-lg) rgba(0, 0, 0, 0.2);
 }
 
-/* ⏱️ AŞAMA 4: Timer Button Styles */
+/* â±ï¸ AÅžAMA 4: Timer Button Styles */
 .timer-btn {
   background: rgba(46, 213, 115, 0.2);
   border: 1px solid rgba(46, 213, 115, 0.3);
   color: var(--game-status-playing);
-  padding: 2px 6px;
+  padding: 2px var(--radius-sm);
   border-radius: 3px;
   cursor: pointer;
   font-size: 0.7rem;
@@ -2682,16 +2413,16 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 28px;
+  min-width: 2var(--spacing-sm);
   white-space: nowrap;
 }
 
 .timer-btn:hover {
-  /* GÜÇLÜ INTERACTIVE - Timer buton hover */
+  /* GÃœÃ‡LÃœ INTERACTIVE - Timer buton hover */
   transform: translateY(-2px) scale(1.08);
   box-shadow: 
-    0 8px 20px rgba(46, 213, 115, 0.35),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+    0 var(--spacing-sm) var(--radius-2xl) rgba(46, 213, 115, 0.35),
+    0 4px var(--radius-lg) rgba(0, 0, 0, 0.15);
   background: rgba(46, 213, 115, 0.3);
   border-color: rgba(46, 213, 115, 0.5);
 }
@@ -2703,13 +2434,13 @@ textarea:focus {
 }
 
 .play-btn:hover {
-  /* GÜÇLÜ INTERACTIVE - Play buton hover */
+  /* GÃœÃ‡LÃœ INTERACTIVE - Play buton hover */
   background: rgba(46, 213, 115, 0.4);
   border-color: rgba(46, 213, 115, 0.6);
   transform: translateY(-2px) scale(1.08);
   box-shadow: 
-    0 8px 20px rgba(46, 213, 115, 0.35),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+    0 var(--spacing-sm) var(--radius-2xl) rgba(46, 213, 115, 0.35),
+    0 4px var(--radius-lg) rgba(0, 0, 0, 0.15);
 }
 
 .stop-btn {
@@ -2719,22 +2450,22 @@ textarea:focus {
 }
 
 .stop-btn:hover {
-  /* GÜÇLÜ INTERACTIVE - Stop buton hover */
+  /* GÃœÃ‡LÃœ INTERACTIVE - Stop buton hover */
   background: rgba(255, 71, 87, 0.4);
   border-color: rgba(255, 71, 87, 0.6);
   transform: translateY(-2px) scale(1.08);
   box-shadow: 
-    0 8px 20px rgba(255, 71, 87, 0.35),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+    0 var(--spacing-sm) var(--radius-2xl) rgba(255, 71, 87, 0.35),
+    0 4px var(--radius-lg) rgba(0, 0, 0, 0.15);
 }
 
 .timer-section {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   background: rgba(20, 20, 35, 0.8);
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: var(--radius-sm) var(--radius-lg);
+  border-radius: var(--spacing-sm);
   border: 1px solid rgba(46, 213, 115, 0.2);
 }
 
@@ -2753,14 +2484,14 @@ textarea:focus {
   color: #2ed573;
 }
 
-/* ⏱️ AŞAMA 4: Global Timer Styles */
+/* â±ï¸ AÅžAMA 4: Global Timer Styles */
 .global-timer {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--radius-lg);
   background: rgba(20, 20, 35, 0.9);
-  padding: 8px 16px;
-  border-radius: 12px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
   border: 2px solid rgba(46, 213, 115, 0.3);
   backdrop-filter: blur(10px);
   animation: pulse-glow 2s ease-in-out infinite alternate;
@@ -2771,7 +2502,7 @@ textarea:focus {
     box-shadow: 0 0 5px rgba(46, 213, 115, 0.3);
   }
   to {
-    box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
+    box-shadow: 0 0 var(--radius-2xl) rgba(46, 213, 115, 0.5);
   }
 }
 
@@ -2799,8 +2530,8 @@ textarea:focus {
   background: rgba(255, 71, 87, 0.2);
   border: 1px solid rgba(255, 71, 87, 0.4);
   color: #ff4757;
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: var(--radius-sm) 10px;
+  border-radius: var(--spacing-sm);
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.2s ease;
@@ -2812,8 +2543,8 @@ textarea:focus {
   transform: scale(1.05);
 }
 
-@media (max-width: 768px) {
-  .game-tracker-page {
+@media (max-width: 76var(--spacing-sm)) {
+  .gameTrackerPage {
     padding: 15px;
   }
   
@@ -2823,7 +2554,7 @@ textarea:focus {
     justify-content: center;
   }
   
-  .top-navigation {
+  .topNavigation {
     flex-direction: column;
     gap: 10px;
   }
@@ -2840,21 +2571,12 @@ textarea:focus {
   .game-card {
     padding: 15px;
   }
-  
-  .filter-bar {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .filter-section {
-    width: 100%;
-  }
-  
-  /* 💾 AŞAMA 5: Mobile Export/Import */
+
+  /* ðŸ’¾ AÅžAMA 5: Mobile Export/Import */
   .header-actions {
     flex-direction: column;
     width: 100%;
-    gap: 8px;
+    gap: var(--spacing-sm);
   }
   
   .header-actions button {
@@ -2872,31 +2594,27 @@ textarea:focus {
     text-align: center;
   }
 }
-  align-items: flex-start;
-  margin-bottom: 15px;
-  gap: 10px;
-}
 
 .game-header h3 {
   margin: 0;
   color: var(--color-white);
-  font-size: 18px;
+  font-size: 1var(--spacing-sm);
   font-weight: 600;
   flex: 1;
   line-height: 1.3;
 }
 
-/* 🎮 AŞAMA 3: Game Badges */
+/* ðŸŽ® AÅžAMA 3: Game Badges */
 .game-badges {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--radius-sm);
   align-items: flex-end;
 }
 
 .status-badge,
 .priority-badge {
-  padding: 2px 6px;
+  padding: 2px var(--radius-sm);
   border-radius: 4px;
   font-size: 0.65rem;
   font-weight: 500;
@@ -2912,13 +2630,13 @@ textarea:focus {
 .status-badge:hover,
 .priority-badge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px var(--spacing-sm) rgba(0, 0, 0, 0.2);
 }
 
 .game-type {
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
   color: white;
-  padding: 2px 6px;
+  padding: 2px var(--radius-sm);
   border-radius: 4px;
   font-size: 10px;
   font-weight: 500;
@@ -2927,7 +2645,7 @@ textarea:focus {
 
 .status-badge {
   color: white !important;
-  padding: 2px 6px;
+  padding: 2px var(--radius-sm);
   border-radius: 4px;
   font-size: 9px;
   font-weight: 600;
@@ -2936,20 +2654,20 @@ textarea:focus {
   letter-spacing: 0.3px;
 }
 
-/* 🎯 AŞAMA 2: Progress Bar Stilleri */
+/* ðŸŽ¯ AÅžAMA 2: Progress Bar Stilleri */
 .progress-section {
   margin: 15px 0;
-  padding: 12px;
+  padding: var(--radius-lg);
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--spacing-sm);
+  border: 1px solid var(--hover-overlay);
 }
 
 .progress-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .progress-label {
@@ -2966,8 +2684,8 @@ textarea:focus {
 
 .progress-bar {
   width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  height: var(--spacing-sm);
+  background: var(--hover-overlay);
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -3001,7 +2719,7 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-sm);
   padding: 5px 0;
 }
 
@@ -3010,8 +2728,8 @@ textarea:focus {
 }
 
 .info-row .label {
-  /* YÜKSEK KONTRAST - Info etiketleri */
-  color: rgba(255, 255, 255, 0.75);
+  /* YÃœKSEK KONTRAST - Info etiketleri */
+  color: var(--text-secondary);
   font-size: 14px;
   font-weight: 600;
   line-height: 1.5;
@@ -3019,7 +2737,7 @@ textarea:focus {
 }
 
 .info-row .value {
-  /* YÜKSEK KONTRAST - Info değerleri */
+  /* YÃœKSEK KONTRAST - Info deÄŸerleri */
   color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
   font-weight: 700;
@@ -3028,7 +2746,7 @@ textarea:focus {
 }
 
 .game-factions {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--hover-overlay);
   padding-top: 15px;
   margin-top: 15px;
 }
@@ -3038,41 +2756,25 @@ textarea:focus {
   font-size: 14px;
   font-weight: 500;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-sm);
 }
 
-.factions-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.faction-tag {
-  background: rgba(102, 126, 234, 0.2);
-  color: var(--dark-accent-light-blue);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-}
-
-/* 🏰 AŞAMA 2: Faction Progress System Styles */
+/* ðŸ° AÅžAMA 2: Faction Progress System Styles */
 .game-factions {
-  margin-top: 16px;
-  padding: 16px;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
   background: rgba(40, 40, 60, 0.8);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--spacing-sm);
+  border: 1px solid var(--hover-overlay);
 }
 
 .factions-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--radius-lg);
+  border-bottom: 1px solid var(--hover-overlay);
 }
 
 .factions-label {
@@ -3081,31 +2783,17 @@ textarea:focus {
   font-size: 1rem;
 }
 
-.factions-summary {
-  font-size: 0.85rem;
-  color: var(--color-gray-400);
-  background: rgba(0, 0, 0, 0.2);
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.factions-progress-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .faction-progress-card {
   background: rgba(30, 30, 50, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
+  border: 1px solid var(--hover-overlay);
+  border-radius: var(--spacing-sm);
+  padding: var(--radius-lg);
   transition: all 0.2s ease;
 }
 
 .faction-progress-card:hover {
   border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 2px var(--spacing-sm) rgba(102, 126, 234, 0.1);
 }
 
 .faction-progress-card.editing {
@@ -3117,13 +2805,13 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: var(--radius-lg);
 }
 
 .faction-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--radius-lg);
 }
 
 .faction-name {
@@ -3132,20 +2820,11 @@ textarea:focus {
   font-size: 0.95rem;
 }
 
-.faction-status {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
 .edit-faction-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 4px var(--spacing-sm);
   border-radius: 4px;
   font-size: 0.9rem;
   transition: all 0.2s ease;
@@ -3164,17 +2843,17 @@ textarea:focus {
 }
 
 .faction-progress {
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .faction-editor {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--radius-lg);
+  padding-top: var(--radius-lg);
+  border-top: 1px solid var(--hover-overlay);
   animation: slideDown 0.2s ease-out;
 }
 
-/* 🎯 AŞAMA 2: Progress Editor Stilleri */
+/* ðŸŽ¯ AÅžAMA 2: Progress Editor Stilleri */
 .game-card.editing {
   border-color: rgba(102, 126, 234, 0.6);
   background: rgba(102, 126, 234, 0.1);
@@ -3185,7 +2864,7 @@ textarea:focus {
 .progress-editor {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 8px;
+  border-radius: var(--spacing-sm);
   padding: 15px;
   margin-top: 10px;
   animation: slideDown 0.2s ease-out;
@@ -3205,8 +2884,8 @@ textarea:focus {
 .editor-row {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: var(--radius-sm);
+  margin-bottom: var(--radius-lg);
 }
 
 .editor-row label {
@@ -3218,10 +2897,10 @@ textarea:focus {
 .progress-input,
 .status-select,
 .priority-select {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--radius-lg);
   color: var(--color-white);
   font-size: 14px;
   transition: all 0.3s ease;
@@ -3243,21 +2922,12 @@ textarea:focus {
 
 .editor-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-sm);
   justify-content: flex-end;
   margin-top: 15px;
 }
 
 .save-btn,
-.cancel-btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: none;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
 
 .save-btn {
   background: linear-gradient(135deg, #10b981, var(--color-success-600));
@@ -3267,13 +2937,7 @@ textarea:focus {
 .save-btn:hover {
   background: linear-gradient(135deg, var(--color-success-600), #047857);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-.cancel-btn {
-  background: rgba(var(--error-500-rgb), 0.2);
-  color: #fca5a5;
-  border: 1px solid rgba(var(--error-500-rgb), 0.3);
+  box-shadow: 0 4px var(--radius-lg) rgba(16, 185, 129, 0.3);
 }
 
 .cancel-btn:hover {
@@ -3285,8 +2949,8 @@ textarea:focus {
 /* Phase Bilgisi */
 .phase-info {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: var(--radius-2xl);
+  right: var(--radius-2xl);
   display: flex;
   gap: 10px;
   z-index: 1000;
@@ -3296,9 +2960,9 @@ textarea:focus {
 .status-badge {
   background: rgba(30, 30, 50, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: var(--spacing-sm) 15px;
+  border-radius: var(--radius-2xl);
+  font-size: var(--radius-lg);
   font-weight: 600;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -3313,8 +2977,8 @@ textarea:focus {
 
 /* Priority Badge Styles */
 .priority-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 4px var(--spacing-sm);
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-white);
@@ -3327,7 +2991,7 @@ textarea:focus {
 
 .priority-badge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px var(--spacing-sm) rgba(0, 0, 0, 0.2);
 }
 
 .priority-badge.high {
@@ -3342,26 +3006,7 @@ textarea:focus {
   background: linear-gradient(135deg, #2ed573, #1dd1a1);
 }
 
-/* 🔍 AŞAMA 3: Filter Bar Styles */
-.filter-bar {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 20px;
-  background: rgba(30, 30, 50, 0.8);
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  flex-wrap: wrap;
-}
-
-.filter-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 150px;
-}
+/* ðŸ” AÅžAMA 3: Filter Bar Styles */
 
 .filter-section label {
   font-size: 0.85rem;
@@ -3371,15 +3016,6 @@ textarea:focus {
 }
 
 .search-input,
-.filter-select {
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  background: rgba(20, 20, 35, 0.8);
-  color: var(--color-white);
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
 
 .search-input:focus,
 .filter-select:focus {
@@ -3392,47 +3028,16 @@ textarea:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.filter-stats {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-/* 🔍 Gelişmiş Filtreleme Stilleri */
-.filters-section {
-  /* AÇIKLAŞTIRILMIŞ ARKA PLAN - Okunabilirlik için */
-  background: rgba(45, 50, 75, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(10px);
-}
-
-.filter-row {
-  display: flex;
-  gap: 15px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
-}
+/* ðŸ” GeliÅŸmiÅŸ Filtreleme Stilleri */
 
 .filter-row:last-child {
   margin-bottom: 0;
 }
 
 .advanced-filters {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--hover-overlay);
   padding-top: 15px;
   margin-top: 15px;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 150px;
-  flex: 1;
 }
 
 .filter-group label {
@@ -3445,12 +3050,12 @@ textarea:focus {
 .search-input,
 .filter-select,
 .year-input {
-  padding: 10px 12px;
+  padding: 10px var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  /* AÇIKLAŞTIRILMIŞ ARKA PLAN - Input alanları */
+  border-radius: var(--spacing-sm);
+  /* AÃ‡IKLAÅžTIRILMIÅž ARKA PLAN - Input alanlarÄ± */
   background: rgba(35, 40, 60, 0.85);
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -3477,7 +3082,7 @@ textarea:focus {
 .year-inputs {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .year-input {
@@ -3490,19 +3095,6 @@ textarea:focus {
   font-weight: 600;
 }
 
-.clear-filters-button {
-  background: rgba(255, 107, 107, 0.2);
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  color: var(--color-error-500);
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
 .clear-filters-button:hover {
   background: rgba(255, 107, 107, 0.3);
   border-color: rgba(255, 107, 107, 0.5);
@@ -3513,33 +3105,20 @@ textarea:focus {
   font-size: 0.9rem;
   color: var(--color-primary-500);
   font-weight: 600;
-  padding: 8px 16px;
+  padding: var(--spacing-sm) var(--spacing-md);
   background: rgba(102, 126, 234, 0.1);
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   border: 1px solid rgba(102, 126, 234, 0.2);
 }
 
-@media (max-width: 768px) {
-  .filter-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-  }
-  
-  .filter-section {
-    min-width: auto;
-  }
-  
-  .filter-stats {
-    margin-left: 0;
-    justify-content: center;
-  }
+@media (max-width: 76var(--spacing-sm)) {
+
 }
 
 /* DESKTOP ONLY - NO MOBILE SUPPORT */
-/* Mobil responsive tamamen kaldırıldı */
+/* Mobil responsive tamamen kaldÄ±rÄ±ldÄ± */
 
-/* 🎯 CYCLE VIEWER STYLES */
+/* ðŸŽ¯ CYCLE VIEWER STYLES */
 
 /* View Switcher Buttons */
 .view-switcher {
@@ -3549,12 +3128,12 @@ textarea:focus {
 }
 
 .view-button {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-overlay);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--color-white);
   padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -3573,11 +3152,11 @@ textarea:focus {
     rgba(102, 126, 234, 0.45) 0%,
     rgba(118, 75, 162, 0.4) 100%
   );
-  /* KALIN BORDER - Proje kuralı */
+  /* KALIN BORDER - Proje kuralÄ± */
   border: 3px solid rgba(102, 126, 234, 0.7);
   color: var(--color-white);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 var(--spacing-sm) 25px rgba(0, 0, 0, 0.3),
     0 0 25px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-2px) scale(1.02);
@@ -3588,8 +3167,8 @@ textarea:focus {
   background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   border: none;
   color: white;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: var(--radius-lg) var(--radius-2xl);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
@@ -3599,7 +3178,7 @@ textarea:focus {
 
 .distribute-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 var(--radius-sm) var(--radius-2xl) rgba(102, 126, 234, 0.4);
 }
 
 .distribute-button:disabled {
@@ -3615,7 +3194,7 @@ textarea:focus {
   margin: 0 auto;
 }
 
-/* Cycle Header Düzenleme */
+/* Cycle Header DÃ¼zenleme */
 .cycles-header {
   display: flex;
   justify-content: space-between;
@@ -3628,29 +3207,6 @@ textarea:focus {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.bulk-select-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bulk-control-btn {
-  background: rgba(102, 126, 234, 0.2);
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  color: var(--color-primary-500);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.8rem;
-  font-weight: 500;
-  white-space: nowrap;
 }
 
 .bulk-control-btn:hover {
@@ -3674,18 +3230,6 @@ textarea:focus {
 .bulk-control-btn.bulk-delete:hover:not(:disabled) {
   background: rgba(239, 68, 68, 0.3);
   border-color: rgba(239, 68, 68, 0.5);
-}
-
-.bulk-select-toggle {
-  background: rgba(251, 191, 36, 0.2);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  color: rgba(251, 191, 36, 1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 
 .bulk-select-toggle:hover {
@@ -3721,24 +3265,9 @@ textarea:focus {
   margin: 0;
 }
 
-.create-cycle-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 8px;
-  padding: 12px 18px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .create-cycle-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 var(--spacing-sm) 25px rgba(102, 126, 234, 0.3);
 }
 
 .create-cycle-btn .icon {
@@ -3756,23 +3285,6 @@ textarea:focus {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.cycle-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.cycle-action-btn {
-  background: rgba(102, 126, 234, 0.2);
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  color: var(--color-primary-500);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 
 .cycle-action-btn:hover {
@@ -3830,9 +3342,9 @@ textarea:focus {
 .cycles-empty-state {
   text-align: center;
   padding: 4rem 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--hover-overlay);
 }
 
 .cycles-empty-icon {
@@ -3862,24 +3374,6 @@ textarea:focus {
 }
 
 /* Cycle Card - ENHANCED GLASSMORPHISM */
-.cycle-card {
-  /* ŞEFFAF ARKA PLAN + BLUR + BORDER */
-  background: linear-gradient(135deg, 
-    rgba(40, 50, 70, 0.8) 0%,
-    rgba(50, 60, 85, 0.7) 100%
-  );
-  /* GÜÇLÜ GLASSMORPHISM */
-  backdrop-filter: blur(20px) saturate(180%) brightness(115%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(115%);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 2rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    0 4px 15px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
 
 .cycle-card:hover {
   transform: translateY(-5px);
@@ -3887,7 +3381,7 @@ textarea:focus {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Toplu seçim modunda cycle kartları */
+/* Toplu seÃ§im modunda cycle kartlarÄ± */
 .cycle-card.bulk-select-mode {
   padding-left: 3rem;
 }
@@ -3901,56 +3395,25 @@ textarea:focus {
   transform: translateY(-2px);
   box-shadow: 
     0 15px 35px rgba(102, 126, 234, 0.3),
-    0 6px 20px rgba(102, 126, 234, 0.2),
+    0 var(--radius-sm) var(--radius-2xl) rgba(102, 126, 234, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.cycle-checkbox {
-  position: absolute;
-  left: 1rem;
-  top: 1.5rem;
-  z-index: 10;
-}
-
 .cycle-checkbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 1var(--spacing-sm);
+  height: 1var(--spacing-sm);
   accent-color: var(--color-primary-500);
   cursor: pointer;
   border-radius: 4px;
 }
 
-/* Floating Keyboard Button - Cycle'a özel */
-.floating-keyboard-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, 
-    var(--color-primary-500) 0%,
-    var(--color-primary-600) 100%
-  );
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 9999;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 4px 16px rgba(var(--color-primary-500-rgb), 0.4);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* Floating Keyboard Button - Cycle'a Ã¶zel */
 
 .floating-keyboard-btn:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    0 6px 20px rgba(var(--color-primary-500-rgb), 0.5);
+    0 var(--radius-lg) 40px rgba(0, 0, 0, 0.4),
+    0 var(--radius-sm) var(--radius-2xl) rgba(var(--color-primary-500-rgb), 0.5);
   background: linear-gradient(135deg, 
     var(--color-primary-400) 0%,
     var(--color-primary-500) 100%
@@ -3961,35 +3424,7 @@ textarea:focus {
   transform: translateY(0);
 }
 
-/* Floating Panels - Cycle görünümünde */
-.floating-panel {
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  width: 350px;
-  max-height: auto;
-  overflow-y: visible;
-  z-index: 1000;
-  
-  /* Enhanced Glassmorphism */
-  background: linear-gradient(135deg, 
-    rgba(40, 50, 70, 0.95) 0%,
-    rgba(50, 60, 85, 0.9) 100%
-  );
-  backdrop-filter: blur(25px) saturate(180%) brightness(115%);
-  -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(115%);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 1.5rem;
-  
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  
-  animation: floatIn 0.3s ease-out;
-}
+/* Floating Panels - Cycle gÃ¶rÃ¼nÃ¼mÃ¼nde */
 
 @keyframes floatIn {
   from {
@@ -4002,15 +3437,6 @@ textarea:focus {
   }
 }
 
-.floating-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .floating-panel-header h3 {
   margin: 0;
   font-size: 1rem;
@@ -4018,32 +3444,15 @@ textarea:focus {
   color: var(--color-white);
 }
 
-.floating-close-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
-}
-
 .floating-close-btn:hover {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.4);
   color: rgba(239, 68, 68, 1);
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px var(--radius-lg) rgba(239, 68, 68, 0.3);
 }
 
-/* Color Legend için özel renkler */
+/* Color Legend iÃ§in Ã¶zel renkler */
 .legend-color.cycle-active {
   background: #10b981;
 }
@@ -4062,24 +3471,11 @@ textarea:focus {
 
 /* Responsive floating panels */
 @media (max-width: 1200px) {
-  .floating-panel {
-    right: 1rem;
-    width: 280px;
-  }
+  
 }
 
-@media (max-width: 768px) {
-  .floating-panel {
-    position: fixed;
-    top: auto;
-    bottom: 2rem;
-    right: 1rem;
-    left: 1rem;
-    width: auto;
-    transform: none;
-    max-height: 60vh;
-  }
-  
+@media (max-width: 76var(--spacing-sm)) {
+
   @keyframes floatIn {
     from {
       opacity: 0;
@@ -4092,27 +3488,10 @@ textarea:focus {
   }
 }
 
-.cycle-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .cycle-number {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-primary-500);
-}
-
-.cycle-status {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
 }
 
 .cycle-status.active {
@@ -4122,14 +3501,14 @@ textarea:focus {
     rgba(16, 185, 129, 0.25) 100%
   );
   color: var(--color-white);
-  /* KALIN BORDER - Proje kuralı */
+  /* KALIN BORDER - Proje kuralÄ± */
   border: 2px solid rgba(34, 197, 94, 0.6);
-  /* GÜÇLÜ CYCLE STATUS GLOW - Aktif */
+  /* GÃœÃ‡LÃœ CYCLE STATUS GLOW - Aktif */
   box-shadow: 
     0 4px 15px rgba(0, 0, 0, 0.2),
     0 0 25px rgba(34, 197, 94, 0.6),
     0 0 50px rgba(34, 197, 94, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    inset 0 1px 0 var(--hover-overlay);
   backdrop-filter: blur(10px) saturate(150%);
 }
 
@@ -4137,7 +3516,7 @@ textarea:focus {
   background: rgba(102, 126, 234, 0.2);
   color: rgba(102, 126, 234, 1);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  /* CYCLE STATUS GLOW - Tamamlandı */
+  /* CYCLE STATUS GLOW - TamamlandÄ± */
   box-shadow: 
     0 0 15px rgba(102, 126, 234, 0.4),
     0 0 30px rgba(102, 126, 234, 0.2);
@@ -4158,19 +3537,7 @@ textarea:focus {
   margin-bottom: 1rem;
 }
 
-/* Cycle Game Düzenleme */
-.cycle-game {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
-  transition: all 0.3s ease;
-  position: relative;
-  min-height: 60px;
-}
+/* Cycle Game DÃ¼zenleme */
 
 .cycle-game.editing {
   border-color: rgba(102, 126, 234, 0.3);
@@ -4200,7 +3567,7 @@ textarea:focus {
 .game-edit-btn {
   background: rgba(102, 126, 234, 0.2);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 8px;
+  border-radius: var(--spacing-sm);
   padding: 0.5rem 0.75rem;
   color: var(--color-primary-500);
   cursor: pointer;
@@ -4241,35 +3608,35 @@ textarea:focus {
   letter-spacing: 0.5px;
 }
 
-/* 📱 MOBILE RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .game-tracker {
+/* ðŸ“± MOBILE RESPONSIVE DESIGN */
+@media (max-width: 10var(--spacing-lg)) {
+  .gameTracker {
     padding: 0 1rem;
     gap: 1.5rem;
   }
   
-  .header-content {
+  .headerContent {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
   
-  .header-controls {
+  .headerControls {
     justify-content: center;
     flex-wrap: wrap;
   }
   
-  .tracker-controls {
+  .trackerControls {
     padding: 1.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .game-tracker-page {
+@media (max-width: 76var(--spacing-sm)) {
+  .gameTrackerPage {
     overflow-x: auto;
   }
   
-  .game-tracker {
+  .gameTracker {
     padding: 0 0.75rem;
     gap: 1rem;
   }
@@ -4282,7 +3649,7 @@ textarea:focus {
     font-size: 1rem;
   }
   
-  .tracker-controls {
+  .trackerControls {
     padding: 1rem;
     border-radius: 15px;
   }
@@ -4290,7 +3657,7 @@ textarea:focus {
   .games-list-view {
     overflow-x: auto;
     background: var(--dark-surface-2);
-    border-radius: 16px;
+    border-radius: var(--spacing-md);
     padding: 1.5rem;
     border: 1px solid var(--dark-border-2);
   }
@@ -4301,7 +3668,7 @@ textarea:focus {
 }
 
 @media (max-width: 480px) {
-  .game-tracker {
+  .gameTracker {
     padding: 0 0.5rem;
   }
   
@@ -4309,12 +3676,12 @@ textarea:focus {
     font-size: 1.75rem;
   }
   
-  .tracker-controls {
+  .trackerControls {
     padding: 0.75rem;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
   }
   
-  .header-controls {
+  .headerControls {
     gap: 0.75rem;
   }
   
@@ -4328,7 +3695,7 @@ textarea:focus {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--glass-bg);
 }
 
 .cycle-game-item:last-child {
@@ -4354,20 +3721,9 @@ textarea:focus {
   margin-bottom: 0.25rem;
 }
 
-.cycle-game-details {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.cycle-game-hours {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
 .cycle-game-status {
   padding: 0.2rem 0.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -4389,12 +3745,6 @@ textarea:focus {
 }
 
 /* Cycle Stats */
-.cycle-stats {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
 
 .cycle-stat {
   text-align: center;
@@ -4413,7 +3763,7 @@ textarea:focus {
   text-transform: uppercase;
 }
 
-/* 🚀 CSS Performance Optimization & Cleanup */
+/* ðŸš€ CSS Performance Optimization & Cleanup */
 
 /* Remove will-change after animations complete for better performance */
 .game-card:not(:hover) {
@@ -4431,7 +3781,7 @@ textarea:focus {
 }
 
 /* Critical rendering path optimization */
-.tracker-header,
+.trackerHeader,
 .games-list,
 .game-card {
   contain: layout style paint;
@@ -4450,42 +3800,42 @@ textarea:focus {
 
 /* Optimize backdrop-filter performance */
 @supports (backdrop-filter: blur(1px)) {
-  .tracker-header,
+  .trackerHeader,
   .games-list,
   .game-card,
   .view-btn,
   .upload-btn,
   .distribute-btn,
   .debug-btn {
-    -webkit-backdrop-filter: blur(var(--blur-amount, 20px));
-    backdrop-filter: blur(var(--blur-amount, 20px));
+    -webkit-backdrop-filter: blur(var(--blur-amount, var(--radius-2xl)));
+    backdrop-filter: blur(var(--blur-amount, var(--radius-2xl)));
   }
 }
 
 /* Fallback for browsers without backdrop-filter support */
 @supports not (backdrop-filter: blur(1px)) {
-  .tracker-header,
+  .trackerHeader,
   .games-list,
   .game-card {
     background: rgba(255, 255, 255, 0.2);
   }
 }
 
-/* 🎯 Final Performance Tweaks */
+/* ðŸŽ¯ Final Performance Tweaks */
 /* Prevent layout thrashing */
 * {
   box-sizing: border-box;
 }
 
 /* Optimize font rendering */
-.game-tracker-page {
+.gameTrackerPage {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* GPU acceleration for critical elements */
-.tracker-header,
+.trackerHeader,
 .game-card,
 .games-list {
   transform: translateZ(0);
@@ -4493,16 +3843,16 @@ textarea:focus {
   perspective: 1000px;
 }
 
-/* 🚀 MODERN GAME LIST - 70PX HEIGHT */
+/* ðŸš€ MODERN GAME LIST - 70PX HEIGHT */
 .game-list-item {
   min-height: 70px !important;
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  margin-bottom: 8px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
+  margin-bottom: var(--spacing-sm) !important;
+  background: var(--glass-bg) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -4512,34 +3862,23 @@ textarea:focus {
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
-}
-
-.action-btn {
-  width: 36px !important;
-  height: 36px !important;
-  font-size: 14px !important;
-  padding: 0.5rem !important;
-  border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  backdrop-filter: blur(10px) !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
 }
 
 .progress-bar {
   width: 100% !important;
-  height: 12px !important;
-  border-radius: 6px !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  height: var(--radius-lg) !important;
+  border-radius: var(--radius-sm) !important;
+  background-color: var(--hover-overlay) !important;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .status-indicator {
-  padding: 8px 12px !important;
+  padding: var(--spacing-sm) var(--radius-lg) !important;
   font-size: 0.95rem !important;
-  min-width: 120px !important;
+  min-width: 1var(--radius-2xl) !important;
   height: 70px !important;
-  border-radius: 8px !important;
+  border-radius: var(--spacing-sm) !important;
   backdrop-filter: blur(10px) !important;
 }
 
@@ -4549,19 +3888,19 @@ textarea:focus {
   font-weight: 500 !important;
 }
 
-/* 💥 MODERN HIGH SPECIFICITY SELECTORS - 70PX HEIGHT */
+/* ðŸ’¥ MODERN HIGH SPECIFICITY SELECTORS - 70PX HEIGHT */
 .ultra-compact-list .game-list-item {
   height: 70px !important;
   min-height: 70px !important;
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  margin-bottom: 8px !important;
+  margin-bottom: var(--spacing-sm) !important;
   line-height: 1.4 !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
+  background: var(--glass-bg) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -4572,35 +3911,26 @@ textarea:focus {
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
 }
 
-.ultra-compact-list .game-list-item .action-btn {
-  width: 36px !important;
-  height: 36px !important;
-  font-size: 14px !important;
-  padding: 0.5rem !important;
-  border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  backdrop-filter: blur(10px) !important;
-}
+.ultra-compact-list .game-list-item 
 
 .ultra-compact-list .game-list-item .progress-bar {
   width: 100% !important;
-  height: 12px !important;
-  border-radius: 6px !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  height: var(--radius-lg) !important;
+  border-radius: var(--radius-sm) !important;
+  background-color: var(--hover-overlay) !important;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .ultra-compact-list .game-list-item .status-indicator {
-  padding: 8px 12px !important;
+  padding: var(--spacing-sm) var(--radius-lg) !important;
   font-size: 0.95rem !important;
-  min-width: 120px !important;
+  min-width: 1var(--radius-2xl) !important;
   height: 70px !important;
   line-height: 1.4 !important;
-  border-radius: 8px !important;
+  border-radius: var(--spacing-sm) !important;
   backdrop-filter: blur(10px) !important;
 }
 
@@ -4615,12 +3945,12 @@ textarea:focus {
   font-size: 1.05rem !important;
   line-height: 1.4 !important;
   font-weight: 600 !important;
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: var(--text-primary) !important;
 }
 
 .ultra-compact-list .game-list-item .game-meta span {
   font-size: 0.95rem !important;
-  padding: 8px 0 !important;
+  padding: var(--spacing-sm) 0 !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
@@ -4631,10 +3961,10 @@ textarea:focus {
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
+  background: var(--glass-bg) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -4645,10 +3975,10 @@ textarea:focus {
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
   gap: 1rem !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
 }
 
-/* 🔥 CSS CUSTOM PROPERTIES OVERRIDE - RUNTIME CONTROL */
+/* ðŸ”¥ CSS CUSTOM PROPERTIES OVERRIDE - RUNTIME CONTROL */
 :root {
   --item-height: 70px;
   --item-padding: 1.2rem 1.5rem;
@@ -4675,10 +4005,10 @@ textarea:focus {
   min-height: 70px !important;
   max-height: 70px !important;
   padding: 1.2rem 1.5rem !important;
-  margin-bottom: 8px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
+  margin-bottom: var(--spacing-sm) !important;
+  background: var(--glass-bg) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
   overflow: hidden !important;
 }
@@ -4691,7 +4021,6 @@ textarea:focus {
   gap: 1rem !important;
   overflow: hidden !important;
   align-items: center !important;
-  grid-template-columns: 60px 100px 2fr 150px 150px 120px 150px 150px 100px !important;
+  grid-template-columns: 60px 100px 2fr 150px 150px 1var(--radius-2xl) 150px 150px 100px !important;
 }
-  letter-spacing: 0.5px;
-}
+

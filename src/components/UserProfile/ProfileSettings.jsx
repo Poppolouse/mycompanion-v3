@@ -51,19 +51,14 @@ function ProfileSettings() {
     setUsers(allUsers);
   };
 
-  // Kategori listesi - Admin olmayan kullanıcılar için admin paneli kaldırılır
-  const allCategories = [
+  // Kategori listesi
+  const categories = [
     { id: 'personal', name: 'Kişisel Bilgiler', icon: '👤' },
     { id: 'preferences', name: 'Tercihler', icon: '⚙️' },
     { id: 'notifications', name: 'Bildirimler', icon: '🔔' },
     { id: 'privacy', name: 'Gizlilik', icon: '🔒' },
-    { id: 'account', name: 'Hesap', icon: '👤' },
-    { id: 'admin', name: 'Admin Paneli', icon: '🛠️' }
+    { id: 'account', name: 'Hesap', icon: '👤' }
   ];
-
-  const categories = allCategories.filter(category => 
-    category.id !== 'admin' || currentUser?.role === 'admin'
-  );
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -138,8 +133,6 @@ function ProfileSettings() {
         return renderPrivacy();
       case 'account':
         return renderAccount();
-      case 'admin':
-        return renderAdminPanel();
       default:
         return renderPersonalInfo();
     }
@@ -555,193 +548,7 @@ function ProfileSettings() {
     }
   };
 
-  // Admin Paneli içeriği
-  const renderAdminPanel = () => {
 
-    return (
-      <div className="settings-section admin-panel">
-        <div className="section-header">
-          <h2>🛠️ Admin Paneli</h2>
-          <p>Site yönetim araçları ve kullanıcı yönetimi</p>
-          <div className="section-actions">
-            <button 
-              className="btn-add-user"
-              onClick={() => setShowAddUserForm(!showAddUserForm)}
-            >
-              <i className="fas fa-plus"></i>
-              Yeni Kullanıcı Ekle
-            </button>
-          </div>
-        </div>
-
-        {/* Yeni Kullanıcı Ekleme Formu */}
-        {showAddUserForm && (
-          <div className="add-user-form">
-            <h3>Yeni Kullanıcı Ekle</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Kullanıcı Adı</label>
-                <input
-                  type="text"
-                  value={newUser.username}
-                  onChange={(e) => setNewUser({...newUser, username: e.target.value})}
-                  placeholder="Kullanıcı adı"
-                />
-              </div>
-              <div className="form-group">
-                <label>Ad Soyad</label>
-                <input
-                  type="text"
-                  value={newUser.displayName}
-                  onChange={(e) => setNewUser({...newUser, displayName: e.target.value})}
-                  placeholder="Ad Soyad"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>E-posta</label>
-                <input
-                  type="email"
-                  value={newUser.email}
-                  onChange={(e) => setNewUser({...newUser, email: e.target.value})}
-                  placeholder="E-posta adresi"
-                />
-              </div>
-              <div className="form-group">
-                <label>Şifre</label>
-                <input
-                  type="password"
-                  value={newUser.password}
-                  onChange={(e) => setNewUser({...newUser, password: e.target.value})}
-                  placeholder="Şifre"
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Rol</label>
-              <select
-                value={newUser.role}
-                onChange={(e) => setNewUser({...newUser, role: e.target.value})}
-              >
-                <option value="user">Kullanıcı</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-            <div className="form-actions">
-              <button className="btn-primary" onClick={handleAddUser}>
-                Kullanıcı Ekle
-              </button>
-              <button className="btn-secondary" onClick={() => setShowAddUserForm(false)}>
-                İptal
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Kullanıcı Listesi */}
-        <div className="users-list">
-          <h3>Mevcut Kullanıcılar</h3>
-          <div className="users-table">
-            <div className="table-header">
-              <div className="table-cell">Kullanıcı</div>
-              <div className="table-cell">E-posta</div>
-              <div className="table-cell">Rol</div>
-              <div className="table-cell">Durum</div>
-              <div className="table-cell">İşlemler</div>
-            </div>
-            {users.map(user => (
-              <div key={user.id} className="table-row">
-                {editingUser && editingUser.id === user.id ? (
-                  <>
-                    <div className="table-cell">
-                      <input
-                        type="text"
-                        value={editingUser.displayName}
-                        onChange={(e) => setEditingUser({...editingUser, displayName: e.target.value})}
-                      />
-                    </div>
-                    <div className="table-cell">
-                      <input
-                        type="email"
-                        value={editingUser.email}
-                        onChange={(e) => setEditingUser({...editingUser, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="table-cell">
-                      <select
-                        value={editingUser.role}
-                        onChange={(e) => setEditingUser({...editingUser, role: e.target.value})}
-                      >
-                        <option value="user">Kullanıcı</option>
-                        <option value="admin">Admin</option>
-                      </select>
-                    </div>
-                    <div className="table-cell">
-                      <span className={`status ${editingUser.isActive ? 'active' : 'inactive'}`}>
-                        {editingUser.isActive ? 'Aktif' : 'Pasif'}
-                      </span>
-                    </div>
-                    <div className="table-cell">
-                      <button className="btn-save" onClick={handleSaveUser}>
-                        Kaydet
-                      </button>
-                      <button className="btn-cancel" onClick={() => setEditingUser(null)}>
-                        İptal
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="table-cell">
-                      <div className="user-info">
-                        <strong>{user.displayName}</strong>
-                        <small>@{user.username}</small>
-                      </div>
-                    </div>
-                    <div className="table-cell">{user.email}</div>
-                    <div className="table-cell">
-                      <span className={`role ${user.role}`}>
-                        {user.role === 'admin' ? 'Admin' : 'Kullanıcı'}
-                      </span>
-                    </div>
-                    <div className="table-cell">
-                      <span className={`status ${user.isActive ? 'active' : 'inactive'}`}>
-                        {user.isActive ? 'Aktif' : 'Pasif'}
-                      </span>
-                    </div>
-                    <div className="table-cell">
-                      <button 
-                        className="btn-edit" 
-                        onClick={() => handleEditUser(user)}
-                        title="Düzenle"
-                      >
-                        ✏️
-                      </button>
-                      <button 
-                        className="btn-toggle" 
-                        onClick={() => toggleUserStatus(user.id)}
-                        title={user.isActive ? 'Pasif Yap' : 'Aktif Yap'}
-                      >
-                        {user.isActive ? '🔒' : '🔓'}
-                      </button>
-                      <button 
-                        className="btn-delete" 
-                        onClick={() => handleDeleteUser(user.id)}
-                        title="Sil"
-                      >
-                        🗑️
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="profile-settings">
@@ -769,10 +576,10 @@ function ProfileSettings() {
                 🏠 Ana Sayfa
               </button>
               <button 
-                className={`nav-btn admin-btn ${activeCategory === 'admin' ? 'active' : ''} ${!currentUser?.role || currentUser.role !== 'admin' ? 'disabled' : ''}`}
+                className={`nav-btn admin-btn ${!currentUser?.role || currentUser.role !== 'admin' ? 'disabled' : ''}`}
                 onClick={() => {
                   if (currentUser?.role === 'admin') {
-                    setActiveCategory('admin');
+                    navigate('/admin');
                   }
                 }}
                 disabled={!currentUser?.role || currentUser.role !== 'admin'}

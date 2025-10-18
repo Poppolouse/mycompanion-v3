@@ -59,15 +59,6 @@ function Sidebar({ isOpen = true, onToggle }) {
     }
   ];
 
-  // Admin menü öğesi
-  const adminItem = {
-    id: 'admin',
-    baslik: 'Yönetim Paneli',
-    ikon: '⚙️',
-    yol: '/admin',
-    aciklama: 'Sistem yönetimi'
-  };
-
   const aktifSayfa = (yol) => {
     return location.pathname === yol;
   };
@@ -119,29 +110,6 @@ function Sidebar({ isOpen = true, onToggle }) {
                 </Link>
               </li>
             ))}
-          </ul>
-        </div>
-
-        {/* Admin Bölümü */}
-        <div className="nav-section admin-section">
-          {isOpen && <h3 className="section-title">Yönetim</h3>}
-          <ul className="nav-list">
-            <li className="nav-item">
-              <Link
-                to={adminItem.yol}
-                className={`nav-link admin-link ${aktifSayfa(adminItem.yol) ? 'aktif' : ''}`}
-                title={!isOpen ? adminItem.baslik : ''}
-              >
-                <span className="nav-ikon">{adminItem.ikon}</span>
-                {isOpen && (
-                  <div className="nav-content">
-                    <span className="nav-baslik">{adminItem.baslik}</span>
-                    <span className="nav-aciklama">{adminItem.aciklama}</span>
-                  </div>
-                )}
-                {aktifSayfa(adminItem.yol) && <div className="aktif-indicator"></div>}
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>

@@ -67,82 +67,74 @@ function GameListItem({
   };
 
   return (
-    <div className="game-list-item" onClick={handleGameClick}>
-      {/* Checkbox */}
-      <div className="game-item-checkbox">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={handleCheckboxChange}
-          onClick={(e) => e.stopPropagation()}
-        />
-      </div>
-
-      {/* Oyun Resmi */}
-      <div className="game-item-image">
-        {game.imageUrl ? (
-          <img src={game.imageUrl} alt={game.name || game.title} />
-        ) : (
-          <div className="game-placeholder">🎮</div>
+    <div 
+      className={`game-list-item ${isSelected ? 'selected' : ''}`}
+      onClick={handleGameClick}
+    >
+      {/* Afiş Resmi */}
+      <div 
+        className="game-poster-image"
+        style={{
+          backgroundImage: game.imageUrl 
+            ? `url(${game.imageUrl})` 
+            : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        }}
+      >
+        {!game.imageUrl && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            fontSize: '3rem',
+            color: 'rgba(255, 255, 255, 0.7)'
+          }}>
+            🎮
+          </div>
         )}
       </div>
 
-      {/* Oyun Adı */}
-      <div className="game-item-name">
-        <span className="game-title">{game.name || game.title || 'Bilinmeyen Oyun'}</span>
-      </div>
-
-      {/* Platform */}
-      <div className="game-item-platform">
-        <span>{game.platform || game.sistem || 'PC'}</span>
-      </div>
-
-      {/* Tür */}
-      <div className="game-item-genre">
-        <span 
-          className="genre-badge"
-          style={{
-            backgroundColor: getGenreColor(game.genre || game.tur || 'Aksiyon'),
-            color: '#ffffff',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '0.8rem',
-            fontWeight: '600',
-            textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-            border: `1px solid ${getGenreColor(game.genre || game.tur || 'Aksiyon')}40`
-          }}
-        >
-          {game.genre || game.tur || 'Aksiyon'}
-        </span>
-      </div>
-
-      {/* Durum */}
-      <div className="game-item-status">
-        <select 
-          value={getGameStatus(game)} 
-          onChange={handleStatusChange}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <option value="Oynanmadı">Oynanmadı</option>
-          <option value="Oynuyor">Oynuyor</option>
-          <option value="Tamamlandı">Tamamlandı</option>
-          <option value="Bırakıldı">Bırakıldı</option>
-        </select>
-      </div>
-
-      {/* İlerleme */}
-      <div className="game-item-progress">
-        <span>{game.progress || 0}%</span>
-        <div className="progress-bar">
+      {/* Afiş İçeriği */}
+      <div className="game-poster-content">
+        <div className="game-poster-title">
+          {game.name || game.title || 'Bilinmeyen Oyun'}
+        </div>
+        
+        <div className="game-poster-info">
           <div 
-            className="progress-fill" 
-            style={{ width: `${game.progress || 0}%` }}
-          ></div>
+            className="game-poster-genre"
+            style={{
+              backgroundColor: getGenreColor(game.genre || game.tur || 'Aksiyon'),
+              color: '#ffffff'
+            }}
+          >
+            {game.genre || game.tur || 'Aksiyon'}
+          </div>
+          
+          <div className="game-poster-status">
+            {getGameStatus(game)} • {game.progress || 0}%
+          </div>
         </div>
       </div>
 
-      {/* Son Oynanma */}
-      <div className="game-item-last-played">
+      {/* Gizli elementler (eski format için) */}
+      <div className="game-item-checkbox" style={{ display: 'none' }}>
+        <input 
+          type="checkbox" 
+          checked={isSelected} 
+          onChange={(e) => {
+            e.stopPropagation();
+            if (onSelect) onSelect(game, e.target.checked);
+          }}
+        />
+      </div>
+      <div className="game-item-platform" style={{ display: 'none' }}>
+        <span>{game.platform || game.sistem || 'PC'}</span>
+      </div>
+      <div className="game-item-progress" style={{ display: 'none' }}>
+        <span>{game.progress || 0}%</span>
+      </div>
+      <div className="game-item-last-played" style={{ display: 'none' }}>
         <span>
           {game.lastPlayed 
             ? new Date(game.lastPlayed).toLocaleDateString('tr-TR')
@@ -150,29 +142,9 @@ function GameListItem({
           }
         </span>
       </div>
-
-      {/* Aksiyonlar */}
-      <div className="game-item-actions">
-        <button 
-          className="action-btn edit-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (onEdit) onEdit(game);
-          }}
-          title="Düzenle"
-        >
-          ✏️
-        </button>
-        <button 
-          className="action-btn delete-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (onDelete) onDelete(game);
-          }}
-          title="Sil"
-        >
-          🗑️
-        </button>
+      <div className="game-item-actions" style={{ display: 'none' }}>
+        <button onClick={(e) => { e.stopPropagation(); if (onEdit) onEdit(game); }}>✏️</button>
+        <button onClick={(e) => { e.stopPropagation(); if (onDelete) onDelete(game); }}>🗑️</button>
       </div>
     </div>
   );

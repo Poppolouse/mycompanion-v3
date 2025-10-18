@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './SmartSearch.css';
+import styles from './SmartSearch.module.css';
 
 /**
  * SmartSearch - Gelişmiş arama componenti
@@ -320,7 +320,7 @@ function SmartSearch({
   };
 
   return (
-    <div className="smart-search" ref={suggestionsRef}>
+    <div className={styles.smartSearch} ref={suggestionsRef}>
       <div className="smart-search__input-container">
         <div className="smart-search__input-wrapper">
           <span className="smart-search__icon">🔍</span>

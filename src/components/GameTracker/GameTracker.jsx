@@ -1,17 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { readExcelFile, parseGameList } from '../../../utils/excelUtils';
-import { organizeCurrentData } from '../../../utils/organizeCurrentData';
-import { useRoute } from '../../../contexts/RouteContext';
-import SmartSearch from '../../../components/SmartSearch';
-import AdvancedFilters from '../../../components/AdvancedFilters';
-import GameListItem from '../../../components/GameListItem';
-import EditGameModal from '../../../components/EditGameModal';
-import { useNotifications } from '../../../components/NotificationSystem';
-import ProfileDropdown from '../../../components/ProfileDropdown';
-import './GameTracker.css';
-import './GameTracker_FORCE_FIX.css';
-import './GameTracker_NUCLEAR.css';
+import { readExcelFile, parseGameList } from '../../utils/excelUtils';
+import { organizeCurrentData } from '../../utils/organizeCurrentData';
+import { useRoute } from '../../contexts/RouteContext';
+import SmartSearch from '../SmartSearch';
+import AdvancedFilters from '../AdvancedFilters';
+import GameListItem from '../GameListItem';
+import EditGameModal from '../EditGameModal';
+import GameSearchModal from '../GameSearchModal';
+import styles from './GameTracker.module.css';
+import { useNotifications } from '../NotificationSystem';
+import ProfileDropdown from '../ProfileDropdown';
 
 /**
  * GameTracker - Ana oyun takip sayfası
@@ -48,6 +47,9 @@ function GameTracker() {
   // Edit Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingGame, setEditingGame] = useState(null);
+
+  // Game Search Modal State
+  const [isGameSearchModalOpen, setIsGameSearchModalOpen] = useState(false);
 
   // Cycle Edit State
   const [isEditingCycle, setIsEditingCycle] = useState(false);
@@ -407,6 +409,23 @@ function GameTracker() {
     }
   };
 
+  // Game Search Modal Handlers
+  const handleGameSearchModalClose = () => {
+    setIsGameSearchModalOpen(false);
+  };
+
+  const handleGameSelect = (selectedGame) => {
+    // Modal'ı kapat
+    setIsGameSearchModalOpen(false);
+    
+    // Seçilen oyun bilgileriyle AddGame sayfasına git
+    navigate('/game-tracking-hub/add-game', { 
+      state: { 
+        prefilledData: selectedGame 
+      } 
+    });
+  };
+
   // Cycle Edit Functions
   const handleEditCycle = (cycleNumber) => {
     setEditingCycleNumber(cycleNumber);
@@ -641,23 +660,23 @@ function GameTracker() {
   };
 
   return (
-    <div className="game-tracker-page" style={{
+    <div className={styles.gameTrackerPage} style={{
       background: 'linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%)',
       minHeight: '100vh',
       width: '100vw'
     }}>
-      <div className="game-tracker">
+      <div className={styles.gameTracker}>
       {/* Header */}
-      <header className="tracker-header">
-        <div className="header-content">
-          <div className="header-left">
+      <header className={styles.trackerHeader}>
+        <div className={styles.headerContent}>
+          <div className={styles.headerLeft}>
             <h1>🎮 Game Tracker</h1>
             <p>Oyun kütüphanenizi yönetin ve cycle'lara organize edin</p>
           </div>
           
-          <div className="header-controls">
+          <div className={styles.headerControls}>
             {/* View Switcher */}
-            <div className="view-switcher">
+            <div className={styles.viewSwitcher}>
               <button 
                 className={`view-btn ${currentView === 'library' ? 'active' : ''}`}
                 onClick={() => setCurrentView('library')}
@@ -673,16 +692,16 @@ function GameTracker() {
             </div>
 
             {/* Navigation Buttons */}
-            <div className="navigation-buttons">
+            <div className={styles.navigationButtons}>
               <button 
-                className="nav-btn home-btn"
+                className={`${styles.navBtn} ${styles.home-btn}`}
                 onClick={() => navigate('/')}
                 title="Ana Sayfaya Dön"
               >
                 🏠 Ana Sayfa
               </button>
               <button 
-                className="nav-btn hub-btn"
+                className={`${styles.navBtn} ${styles.hub-btn}`}
                 onClick={() => navigate('/game-tracking-hub')}
                 title="Oyun Hub'ına Dön"
               >
@@ -693,7 +712,7 @@ function GameTracker() {
             {/* Color Legend Toggle - Sadece kütüphane görünümünde göster */}
             {currentView === 'library' && games.length > 0 && (
               <button 
-                className="legend-toggle-btn"
+                className={styles.legendToggleBtn}
                 onClick={() => setShowColorLegend(!showColorLegend)}
                 title="Renk açıklamasını göster/gizle"
               >
@@ -704,7 +723,7 @@ function GameTracker() {
             {/* Keyboard Help Toggle - Sadece kütüphane görünümünde göster */}
             {currentView === 'library' && games.length > 0 && (
               <button 
-                className="legend-toggle-btn"
+                className={styles.legendToggleBtn}
                 onClick={() => setShowKeyboardHelp(!showKeyboardHelp)}
                 title="Klavye kısayollarını göster/gizle"
               >
@@ -718,12 +737,12 @@ function GameTracker() {
       </header>
 
       {/* Main Content */}
-      <main className="tracker-main" style={{
+      <main className={styles.trackerMain} style={{
         background: 'transparent',
         backdropFilter: 'none'
       }}>
         {/* Controls */}
-        <div className="tracker-controls">
+        <div className={styles.trackerControls}>
           <input
             type="file"
             ref={fileInputRef}
@@ -732,9 +751,9 @@ function GameTracker() {
             style={{ display: 'none' }}
           />
           
-          <div className="control-buttons">
+          <div className={styles.controlButtons}>
             <button 
-              className="upload-btn"
+              className={styles.uploadBtn}
               onClick={() => fileInputRef.current?.click()}
               disabled={loading}
             >
@@ -742,15 +761,15 @@ function GameTracker() {
             </button>
             
             <button 
-              className="add-game-btn"
-              onClick={() => navigate('/game-tracking-hub/add-game')}
+              className={styles.addGameBtn}
+              onClick={() => setIsGameSearchModalOpen(true)}
               title="Yeni Oyun Ekle"
             >
               ➕ Oyun Ekle
             </button>
             
             <button 
-              className="sample-data-btn"
+              className={styles.sampleDataBtn}
               onClick={handleLoadSampleData}
               disabled={loading}
               title="Örnek oyun verilerini yükle"
@@ -761,14 +780,14 @@ function GameTracker() {
             {games.length > 0 && (
               <>
                 <button 
-                  className="distribute-btn"
+                  className={styles.distributeBtn}
                   onClick={handleDistributeGamesToCycles}
                   disabled={loading}
                 >
                   {loading ? '🔄 Dağıtılıyor...' : '🎯 Cycle\'lara Böl'}
                 </button>
                 <button 
-                  className="debug-btn"
+                  className={styles.debugBtn}
                   onClick={handleDebugTotalWar}
                   title="localStorage verilerini kontrol et"
                 >
@@ -780,7 +799,7 @@ function GameTracker() {
 
           {/* Akıllı Filtreler */}
           {currentView === 'library' && games.length > 0 && (
-            <div className="smart-filters-section">
+            <div className={styles.smartFiltersSection}>
               {/* Smart Search */}
               <SmartSearch
                 games={games}
@@ -819,13 +838,13 @@ function GameTracker() {
         {/* Content based on current view */}
         {currentView === 'library' ? (
           /* Oyun Kütüphanesi */
-          <div className="games-section" style={{
+          <div className={styles.gamesSection} style={{
             background: 'rgba(20, 25, 40, 0.3)',
             backdropFilter: 'blur(10px)'
           }}>
             {/* Color Legend */}
             {showColorLegend && (
-              <div className="color-legend">
+              <div className={styles.colorLegend}>
                 <h3>🎨 Oyun Durumu Renk Açıklaması</h3>
                 <div className="legend-items">
                   <div className="legend-item">
@@ -1436,6 +1455,15 @@ function GameTracker() {
         >
           ⌨️
         </button>
+      )}
+
+      {/* Game Search Modal */}
+      {isGameSearchModalOpen && (
+        <GameSearchModal
+          isOpen={isGameSearchModalOpen}
+          onClose={handleGameSearchModalClose}
+          onGameSelect={handleGameSelect}
+        />
       )}
       </div>
     </div>

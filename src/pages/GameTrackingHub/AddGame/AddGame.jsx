@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './AddGame.css';
 
 function AddGame() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -32,6 +33,26 @@ function AddGame() {
     progress: 0,
     notes: ''
   });
+
+  // GameSearchModal'dan gelen prefilled data'yı handle et
+  useEffect(() => {
+    if (location.state?.prefilledData) {
+      const prefilledData = location.state.prefilledData;
+      
+      setFormData(prevData => ({
+        ...prevData,
+        title: prefilledData.title || prefilledData.name || '',
+        platform: prefilledData.platform || 'PC',
+        genre: prefilledData.genre || '',
+        developer: prefilledData.developer || prefilledData.publisher || '',
+        year: prefilledData.year || prefilledData.release_date || '',
+        status: 'Not Started', // Varsayılan olarak başlanmamış
+        progress: 0,
+        notes: prefilledData.description || '',
+        type: 'normal'
+      }));
+    }
+  }, [location.state]);
 
   // Txt dosyası okuma fonksiyonu
   const handleFileImport = (event) => {
