@@ -6,40 +6,16 @@
   min-height: 100vh;
   background: transparent;
   color: #f8fafc;
-  overflow-x: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: visible;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   position: relative;
 }
 
-/* Simple Close Button */
-.closeButton {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.5rem;
-  color: #f8fafc;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-}
 
-.closeButton:hover {
-  background: rgba(239, 68, 68, 0.3);
-  border-color: rgba(239, 68, 68, 0.5);
-  color: #ef4444;
-  transform: scale(1.05);
-}
 
 /* Ana İçerik */
 .gameSelectionContent {
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 1rem 2rem 2rem 2rem;
   display: flex;
@@ -49,7 +25,34 @@
   z-index: 1;
 }
 
-/* Arama Bölümü */
+/* Arama Bölümü - Bağımsızlaştırıldı */
+.searchSectionFullwidth {
+  /* ✅ ZORUNLU - Tam genişlik */
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  width: 100vw !important;
+  
+  /* ✅ ZORUNLU - Konumlandırma */
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  margin-bottom: 2rem;
+  
+  /* ✅ ZORUNLU - Z-index ve overflow */
+  z-index: 10 !important;
+  overflow-x: hidden !important;
+  
+  /* ✅ ZORUNLU - Padding */
+  padding: 2rem !important;
+  
+  /* ✅ ZORUNLU - Background - Sadece arama çubuğu etrafında */
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* Eski CSS - Referans için korundu */
 .searchSection {
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid rgba(71, 85, 105, 0.3);
@@ -61,29 +64,104 @@
 .searchContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  padding: 2rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 🎮 Oyun Temalı Dekoratif Elementler */
+.searchContainer::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.searchContainer::after {
+  content: '';
+  position: absolute;
+  bottom: -25px;
+  right: -40px;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 50%;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+/* Ek dekoratif elementler */
+.searchContainer .gameDecor1 {
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0.2;
+  color: #667eea;
+  z-index: -1;
+}
+
+.searchContainer .gameDecor2 {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0.2;
+  color: #764ba2;
+  z-index: -1;
 }
 
 .searchInputWrapper {
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(71, 85, 105, 0.4);
-  border-radius: 16px;
-  padding: 0 1rem;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  border-radius: 20px;
+  padding: 0 1.5rem;
   transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .searchInputWrapper:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #667eea;
+  box-shadow: 
+    0 0 0 4px rgba(102, 126, 234, 0.2),
+    0 12px 40px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 .searchIcon {
-  color: #64748b;
-  margin-right: 0.75rem;
+  color: #667eea;
+  margin-right: 1rem;
   flex-shrink: 0;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.searchInputWrapper:focus-within .searchIcon {
+  color: #8b5cf6;
+  transform: scale(1.1);
 }
 
 .searchInput {
@@ -91,37 +169,65 @@
   border: none;
   outline: none;
   color: #f8fafc;
-  font-size: 1rem;
-  padding: 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 1.2rem 0;
   flex: 1;
   font-family: inherit;
+  letter-spacing: 0.5px;
+}
+
+/* Tarayıcının kendi X butonunu gizle */
+.searchInput::-webkit-search-cancel-button,
+.searchInput::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.searchInput::-ms-clear {
+  display: none;
 }
 
 .searchInput::placeholder {
-  color: #64748b;
+  color: #94a3b8;
+  font-weight: 400;
 }
 
-.clearSearch {
-  background: none;
-  border: none;
-  color: #64748b;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.clearSearch:hover {
+/* Close search button - oyun seçimini kapat */
+.closeSearchButton {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+
+
+.closeSearchButton:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.closeSearchButton:active {
+  transform: translateY(0);
 }
 
 .filterButtons {
   display: flex;
   gap: 1rem;
+  width: 100%;
 }
 
 .filterSelect {
@@ -175,15 +281,59 @@
   border-radius: 2px;
 }
 
-/* Son Oynanan Oyunlar */
+/* ✅ GÜNCELLEME: Önerilen oyunlar başlığı - kartlara göre ortalanmış */
+.recommendedGamesSectionFullwidth .sectionTitle {
+  max-width: 1400px;
+  margin: 0 auto 1.5rem auto;
+  justify-content: center;
+}
+
+/* ✅ GÜNCELLEME: Son oynanan oyunlar başlığı - kartlara göre ortalanmış */
+.recentGamesSectionFullwidth .sectionTitle {
+  max-width: 1200px;
+  margin: 0 auto 1.5rem auto;
+  justify-content: center;
+}
+
+/* Son Oynanan Oyunlar - Bağımsızlaştırıldı */
+.recentGamesSectionFullwidth {
+  /* ✅ ZORUNLU - Tam genişlik */
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  width: 100vw !important;
+  
+  /* ✅ ZORUNLU - Konumlandırma */
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  margin-bottom: 2rem;
+  
+  /* ✅ ZORUNLU - Z-index ve overflow */
+  z-index: 10 !important;
+  overflow-x: hidden !important;
+  
+  /* ✅ ZORUNLU - Padding */
+  padding: 2rem !important;
+  
+  /* ✅ ZORUNLU - Background */
+  background: var(--dark-bg-primary);
+  box-sizing: border-box;
+}
+
+/* Eski CSS - Referans için korundu */
 .recentGamesSection {
   margin-bottom: 2rem;
 }
 
 .recentGamesGrid {
   display: grid;
+  /* ✅ DÜZELTME: 4 normal boyut kart için container ayarı */
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .recentGameCard {
@@ -194,12 +344,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  /* ✅ DÜZELTME: Kartları normal boyuta getir */
 }
 
 .recentGameCard:hover {
   transform: translateY(-4px);
   border-color: #3b82f6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
 }
 
 .gameImageContainer {
@@ -285,16 +436,52 @@
   margin-top: 0.5rem;
 }
 
-/* Önerilen Oyunlar */
+/* Önerilen Oyunlar - Bağımsızlaştırıldı */
+.recommendedGamesSectionFullwidth {
+  /* ✅ ZORUNLU - Tam genişlik */
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  width: 100vw !important;
+  
+  /* ✅ ZORUNLU - Konumlandırma */
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  margin-bottom: 2rem;
+  
+  /* ✅ ZORUNLU - Z-index ve overflow */
+  z-index: 10 !important;
+  overflow-x: hidden !important;
+  
+  /* ✅ ZORUNLU - Padding */
+  padding: 2rem !important;
+  
+  /* ✅ ZORUNLU - Background */
+  background: var(--dark-bg-primary);
+  box-sizing: border-box;
+}
+
+/* Eski CSS - Referans için korundu */
 .recommendedGamesSection {
   margin-bottom: 2rem;
+  /* Önerilen oyunlar için daha geniş alan */
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .recommendedGamesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
-  max-width: 100%;
+  /* ✅ GÜNCELLEME: 7 kartlık yer aç ve küçült */
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+  max-width: 1400px; /* Container genişliği */
+  margin: 0 auto; /* Ortalama */
+  /* Tek satırda kalması için */
+  grid-auto-rows: minmax(auto, auto);
 }
 
 .recommendedGameCard {
@@ -305,12 +492,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  /* ✅ GÜNCELLEME: Kütüphane kartları kadar büyük - scale kaldırıldı */
 }
 
 .recommendedGameCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.05);
   border-color: #8b5cf6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
 }
 
 .recommendedGameCard .gameImageContainer {
@@ -337,6 +525,17 @@
 /* Kütüphane Bölümü */
 .librarySection {
   margin-bottom: 2rem;
+  /* Kütüphane için TAM GENİŞLİK */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  /* ✅ GÜNCELLEME: Sağ ve sol 20px padding */
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 .libraryGamesGrid {

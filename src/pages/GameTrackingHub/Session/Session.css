@@ -18,9 +18,10 @@
 }
 
 .session-container {
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 2rem;
   min-height: 100vh;
   color: white;
 }
@@ -324,11 +325,10 @@
 .session-main {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  padding: 2rem;
+  gap: 2rem;
+  padding: 1rem 0;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* Hero Game Banner */
@@ -2755,6 +2755,14 @@
 }
 
 /* ===== SESSION HISTORY VIEW STYLES ===== */
+
+/* History View Main Container */
+.history-view {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
 
 /* History Section Container */
 .session-history-section {

@@ -8,8 +8,18 @@ import ProfileDropdown from '../../../../components/ProfileDropdown';
 function SessionHeader({ 
   currentView, 
   setCurrentView, 
-  navigate
+  navigate,
+  currentGame,
+  isSessionActive
 }) {
+
+  // Dinamik başlık belirleme
+  const getSessionButtonText = () => {
+    if (!currentGame) {
+      return '🎮 Oyun Seç';
+    }
+    return '🎯 Aktif Session';
+  };
 
   return (
     <header className="page-header">
@@ -27,7 +37,7 @@ function SessionHeader({
                 className={`view-btn ${currentView === 'session' ? 'active' : ''}`}
                 onClick={() => setCurrentView('session')}
               >
-                🎯 Aktif Session
+                {getSessionButtonText()}
               </button>
               <button 
                 className={`view-btn ${currentView === 'history' ? 'active' : ''}`}

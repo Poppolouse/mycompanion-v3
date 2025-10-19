@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { readExcelFile, parseGameList } from '../../utils/excelUtils';
 import { organizeCurrentData } from '../../utils/organizeCurrentData';
@@ -8,6 +8,8 @@ import AdvancedFilters from '../AdvancedFilters';
 import GameListItem from '../GameListItem';
 import EditGameModal from '../EditGameModal';
 import GameSearchModal from '../GameSearchModal';
+import LibraryCycleItem from '../LibraryCycleItem';
+import GameList from './GameList';
 import styles from './GameTracker.module.css';
 import { useNotifications } from '../NotificationSystem';
 import ProfileDropdown from '../ProfileDropdown';
@@ -63,6 +65,9 @@ function GameTracker() {
   const [selectedCycles, setSelectedCycles] = useState(new Set());
   const [isBulkSelectMode, setIsBulkSelectMode] = useState(false);
   
+  // Expandable Cycles State
+  const [expandedCycles, setExpandedCycles] = useState(new Set());
+  
   // Cycle Floating Panel State
   const [showCycleKeyboardHelp, setShowCycleKeyboardHelp] = useState(false);
 
@@ -71,7 +76,7 @@ function GameTracker() {
 
   // Component mount olduğunda localStorage'dan veri yükle
   useEffect(() => {
-    const savedGames = localStorage.getItem('gameTrackerGames');
+    const savedGames = localStorage.getItem('gameTracker_games');
     if (savedGames) {
       try {
         const parsedGames = JSON.parse(savedGames);
@@ -165,28 +170,33 @@ function GameTracker() {
     return 'not-started';
   };
 
-  // Son oynanan oyunları getir
-  const getRecentlyPlayedGames = () => {
+  // Son oynanan oyunları getir - useMemo ile optimize edildi
+  const recentlyPlayedGames = useMemo(() => {
     return games
       .filter(game => game.lastPlayed)
       .sort((a, b) => new Date(b.lastPlayed) - new Date(a.lastPlayed))
       .slice(0, 10);
-  };
+  }, [games]);
 
-  // Benzersiz değerleri getir (filtreler için)
-  const getUniqueValues = (field) => {
-    const values = games.map(game => {
-      switch(field) {
-        case 'platform': return game.platform || game.sistem;
-        case 'genre': return game.genre || game.tur;
-        default: return game[field];
-      }
-    }).filter(Boolean);
-    return [...new Set(values)].sort();
-  };
+  const getRecentlyPlayedGames = useCallback(() => recentlyPlayedGames, [recentlyPlayedGames]);
 
-  // Akıllı filtreleme fonksiyonu
-  const getSmartFilteredGames = () => {
+  // Benzersiz değerleri getir (filtreler için) - useMemo ile optimize edildi
+  const uniqueValues = useMemo(() => {
+    const platforms = [...new Set(games.map(game => game.platform || game.sistem).filter(Boolean))].sort();
+    const genres = [...new Set(games.map(game => game.genre || game.tur).filter(Boolean))].sort();
+    
+    return {
+      platform: platforms,
+      genre: genres
+    };
+  }, [games]);
+
+  const getUniqueValues = useCallback((field) => {
+    return uniqueValues[field] || [];
+  }, [uniqueValues]);
+
+  // Akıllı filtreleme fonksiyonu - useMemo ile optimize edildi
+  const filteredGames = useMemo(() => {
     return games.filter(game => {
       // Arama terimi kontrolü
       if (searchTerm) {
@@ -224,18 +234,21 @@ function GameTracker() {
       
       return true;
     });
-  };
+  }, [games, searchTerm, statusFilter, platformFilter, genreFilter]);
 
-  // Filtreleri temizle
-  const clearAllFilters = () => {
+  // Geriye uyumluluk için wrapper fonksiyon
+  const getSmartFilteredGames = useCallback(() => filteredGames, [filteredGames]);
+
+  // Filtreleri temizle - useCallback ile optimize edildi
+  const clearAllFilters = useCallback(() => {
     setSearchTerm('');
     setStatusFilter('all');
     setPlatformFilter('all');
     setGenreFilter('all');
-  };
+  }, []);
 
-  // Smart Search handler
-  const handleSmartSearch = (searchValue) => {
+  // Smart Search handler - useCallback ile optimize edildi
+  const handleSmartSearch = useCallback((searchValue) => {
     // Özel arama komutlarını parse et
     if (searchValue.includes(':')) {
       const [command, value] = searchValue.split(':');
@@ -263,7 +276,7 @@ function GameTracker() {
     } else {
       setSearchTerm(searchValue);
     }
-  };
+  }, []);
 
   // Toplu işlemler
   const handleBulkDelete = () => {
@@ -272,7 +285,7 @@ function GameTracker() {
       const gamesToDelete = Array.from(selectedGames).map(index => filteredGames[index]);
       const updatedGames = games.filter(game => !gamesToDelete.includes(game));
       setGames(updatedGames);
-      localStorage.setItem('gameTrackerGames', JSON.stringify(updatedGames));
+      localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       setSelectedGames(new Set());
       
       // Toplu silme bildirimi
@@ -298,7 +311,7 @@ function GameTracker() {
     });
     
     setGames(updatedGames);
-    localStorage.setItem('gameTrackerGames', JSON.stringify(updatedGames));
+    localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
     setSelectedGames(new Set());
     
     // Toplu durum değişikliği bildirimi
@@ -353,7 +366,7 @@ function GameTracker() {
       }
 
       setGames(gameList);
-      localStorage.setItem('gameTrackerGames', JSON.stringify(gameList));
+      localStorage.setItem('gameTracker_games', JSON.stringify(gameList));
       
       // Başarı bildirimi
       showSuccess(`${gameList.length} oyun başarıyla yüklendi!`, {
@@ -403,7 +416,7 @@ function GameTracker() {
       };
       
       setGames(updatedGames);
-      localStorage.setItem('gameTrackerGames', JSON.stringify(updatedGames));
+      localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       
       showSuccess(`"${updatedGameData.title}" başarıyla güncellendi!`);
     }
@@ -489,6 +502,17 @@ function GameTracker() {
     setSelectedCycles(new Set());
   };
 
+  // Cycle expansion fonksiyonları
+  const toggleCycleExpansion = (cycleNumber) => {
+    const newExpanded = new Set(expandedCycles);
+    if (newExpanded.has(cycleNumber)) {
+      newExpanded.delete(cycleNumber);
+    } else {
+      newExpanded.add(cycleNumber);
+    }
+    setExpandedCycles(newExpanded);
+  };
+
   const handleBulkDeleteCycles = () => {
     if (selectedCycles.size === 0) {
       showError('Silinecek cycle seçilmedi');
@@ -553,7 +577,7 @@ function GameTracker() {
     if (window.confirm(`"${gameName}" oyununu silmek istediğinizden emin misiniz?`)) {
       const updatedGames = games.filter((_, index) => index !== gameIndex);
       setGames(updatedGames);
-      localStorage.setItem('gameTrackerGames', JSON.stringify(updatedGames));
+      localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       
       // Seçili oyunları güncelle
       const newSelected = new Set();
@@ -626,7 +650,7 @@ function GameTracker() {
       }
       
       setGames(gameList);
-      localStorage.setItem('gameTrackerGames', JSON.stringify(gameList));
+      localStorage.setItem('gameTracker_games', JSON.stringify(gameList));
       
       // Başarı bildirimi
       showSuccess(`${gameList.length} örnek oyun başarıyla yüklendi!`, {
@@ -649,7 +673,7 @@ function GameTracker() {
     const debugData = {
       games: games.length,
       localStorage: {
-        gameTrackerGames: localStorage.getItem('gameTrackerGames') ? 'Var' : 'Yok',
+        gameTracker_games: localStorage.getItem('gameTracker_games') ? 'Var' : 'Yok',
         routeState: localStorage.getItem('routeState') ? 'Var' : 'Yok'
       },
       routeState: routeState
@@ -694,14 +718,14 @@ function GameTracker() {
             {/* Navigation Buttons */}
             <div className={styles.navigationButtons}>
               <button 
-                className={`${styles.navBtn} ${styles.home-btn}`}
+                className={`${styles.navBtn} ${styles.homeBtn}`}
                 onClick={() => navigate('/')}
                 title="Ana Sayfaya Dön"
               >
                 🏠 Ana Sayfa
               </button>
               <button 
-                className={`${styles.navBtn} ${styles.hub-btn}`}
+                className={`${styles.navBtn} ${styles.hubBtn}`}
                 onClick={() => navigate('/game-tracking-hub')}
                 title="Oyun Hub'ına Dön"
               >
@@ -709,27 +733,7 @@ function GameTracker() {
               </button>
             </div>
 
-            {/* Color Legend Toggle - Sadece kütüphane görünümünde göster */}
-            {currentView === 'library' && games.length > 0 && (
-              <button 
-                className={styles.legendToggleBtn}
-                onClick={() => setShowColorLegend(!showColorLegend)}
-                title="Renk açıklamasını göster/gizle"
-              >
-                🎨 Renkler
-              </button>
-            )}
 
-            {/* Keyboard Help Toggle - Sadece kütüphane görünümünde göster */}
-            {currentView === 'library' && games.length > 0 && (
-              <button 
-                className={styles.legendToggleBtn}
-                onClick={() => setShowKeyboardHelp(!showKeyboardHelp)}
-                title="Klavye kısayollarını göster/gizle"
-              >
-                ⌨️ Kısayollar
-              </button>
-            )}
 
             <ProfileDropdown />
           </div>
@@ -797,40 +801,173 @@ function GameTracker() {
             )}
           </div>
 
-          {/* Akıllı Filtreler */}
+          {/* Orta Kompaktlık Modern Filtreler */}
           {currentView === 'library' && games.length > 0 && (
-            <div className={styles.smartFiltersSection}>
-              {/* Smart Search */}
-              <SmartSearch
-                games={games}
-                onSearch={handleSmartSearch}
-                placeholder="🔍 Oyun adı, tür, platform veya geliştirici ara..."
-                showSuggestions={true}
-                showFilters={true}
-              />
+            <div className={styles.balancedFiltersContainer}>
+              {/* Üst Bölüm: Arama + İstatistikler */}
+              <div className={styles.topSection}>
+                <div className={styles.searchBarSection}>
+                  <div className={styles.searchInputWrapper}>
+                    <div className={styles.searchIcon}>🔍</div>
+                    <input
+                      type="text"
+                      placeholder="Oyun ara..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className={styles.balancedSearchInput}
+                    />
+                    {searchTerm && (
+                      <button 
+                        onClick={() => setSearchTerm('')}
+                        className={styles.clearSearchBtn}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                </div>
+                
+                <div className={styles.statsSection}>
+                  <div className={styles.statItem}>
+                    <span className={styles.statIcon}>📊</span>
+                    <span className={styles.statLabel}>Toplam</span>
+                    <span className={styles.statValue}>{filteredGames.length}</span>
+                  </div>
+                </div>
+              </div>
 
-              {/* Gelişmiş Filtreler */}
-              <AdvancedFilters
-                games={games}
-                filters={{
-                  searchTerm,
-                  statusFilter,
-                  platformFilter,
-                  genreFilter
-                }}
-                onFiltersChange={({
-                  searchTerm: newSearchTerm,
-                  statusFilter: newStatusFilter,
-                  platformFilter: newPlatformFilter,
-                  genreFilter: newGenreFilter
-                }) => {
-                  if (newSearchTerm !== undefined) setSearchTerm(newSearchTerm);
-                  if (newStatusFilter !== undefined) setStatusFilter(newStatusFilter);
-                  if (newPlatformFilter !== undefined) setPlatformFilter(newPlatformFilter);
-                  if (newGenreFilter !== undefined) setGenreFilter(newGenreFilter);
-                }}
-                onClearAll={clearAllFilters}
-              />
+              {/* Filtre Kategorileri Bölümü */}
+              <div className={styles.filterCategoriesSection}>
+                {/* Durum Kategorisi */}
+                <div className={styles.filterCategoryBlock}>
+                  <div className={styles.categoryHeader}>
+                    <span className={styles.categoryIcon}>🎯</span>
+                    <span className={styles.categoryTitle}>Durum</span>
+                  </div>
+                  <div className={styles.categoryFilters}>
+                    {[
+                      { value: '', label: 'Tümü', icon: '📋' },
+                      { value: 'completed', label: 'Tamamlandı', icon: '✅' },
+                      { value: 'playing', label: 'Oynuyor', icon: '🎯' },
+                      { value: 'paused', label: 'Beklemede', icon: '⏸️' },
+                      { value: 'not-started', label: 'Başlanmadı', icon: '🆕' }
+                    ].map(status => (
+                      <button
+                        key={status.value}
+                        onClick={() => setStatusFilter(status.value)}
+                        className={`${styles.balancedFilterChip} ${statusFilter === status.value ? styles.active : ''}`}
+                      >
+                        <span className={styles.chipIcon}>{status.icon}</span>
+                        <span className={styles.chipLabel}>{status.label}</span>
+                        <span className={styles.chipCount}>
+                          {status.value ? games.filter(g => g.status === status.value).length : games.length}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Platform Kategorisi */}
+                <div className={styles.filterCategoryBlock}>
+                  <div className={styles.categoryHeader}>
+                    <span className={styles.categoryIcon}>🎮</span>
+                    <span className={styles.categoryTitle}>Platform</span>
+                  </div>
+                  <div className={styles.categoryFilters}>
+                    {[
+                      { value: '', label: 'Tümü', icon: '🌐' },
+                      ...Array.from(new Set(games.map(g => g.platform).filter(Boolean))).slice(0, 4).map(platform => ({
+                        value: platform,
+                        label: platform,
+                        icon: platform.toLowerCase().includes('pc') ? '🖥️' : 
+                              platform.toLowerCase().includes('steam') ? '🎮' :
+                              platform.toLowerCase().includes('epic') ? '🎯' : '📱'
+                      }))
+                    ].map(platform => (
+                      <button
+                        key={platform.value}
+                        onClick={() => setPlatformFilter(platform.value)}
+                        className={`${styles.balancedFilterChip} ${platformFilter === platform.value ? styles.active : ''}`}
+                      >
+                        <span className={styles.chipIcon}>{platform.icon}</span>
+                        <span className={styles.chipLabel}>{platform.label}</span>
+                        <span className={styles.chipCount}>
+                          {platform.value ? games.filter(g => g.platform === platform.value).length : games.length}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tür Kategorisi */}
+                <div className={styles.filterCategoryBlock}>
+                  <div className={styles.categoryHeader}>
+                    <span className={styles.categoryIcon}>🎨</span>
+                    <span className={styles.categoryTitle}>Tür</span>
+                  </div>
+                  <div className={styles.categoryFilters}>
+                    {[
+                      { value: '', label: 'Tümü', icon: '🎲' },
+                      ...Array.from(new Set(games.map(g => g.genre).filter(Boolean))).slice(0, 4).map(genre => ({
+                        value: genre,
+                        label: genre,
+                        icon: genre.toLowerCase().includes('action') ? '⚔️' :
+                              genre.toLowerCase().includes('rpg') ? '🗡️' :
+                              genre.toLowerCase().includes('strategy') ? '🧠' : '🎮'
+                      }))
+                    ].map(genre => (
+                      <button
+                        key={genre.value}
+                        onClick={() => setGenreFilter(genre.value)}
+                        className={`${styles.balancedFilterChip} ${genreFilter === genre.value ? styles.active : ''}`}
+                      >
+                        <span className={styles.chipIcon}>{genre.icon}</span>
+                        <span className={styles.chipLabel}>{genre.label}</span>
+                        <span className={styles.chipCount}>
+                          {genre.value ? games.filter(g => g.genre === genre.value).length : games.length}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Hızlı Eylemler Bölümü */}
+              <div className={styles.quickActionsSection}>
+                <button 
+                  onClick={clearAllFilters}
+                  className={styles.balancedActionBtn}
+                >
+                  <span className={styles.actionIcon}>🗑️</span>
+                  <span className={styles.actionLabel}>Filtreleri Temizle</span>
+                </button>
+                
+                <button 
+                  onClick={() => {
+                    setStatusFilter('playing');
+                    setSearchTerm('');
+                    setPlatformFilter('');
+                    setGenreFilter('');
+                  }}
+                  className={styles.balancedActionBtn}
+                >
+                  <span className={styles.actionIcon}>🎯</span>
+                  <span className={styles.actionLabel}>Şu An Oynuyor</span>
+                </button>
+                
+                <button 
+                  onClick={() => {
+                    setStatusFilter('not-started');
+                    setSearchTerm('');
+                    setPlatformFilter('');
+                    setGenreFilter('');
+                  }}
+                  className={styles.balancedActionBtn}
+                >
+                  <span className={styles.actionIcon}>📚</span>
+                  <span className={styles.actionLabel}>Backlog</span>
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -927,181 +1064,87 @@ function GameTracker() {
               </div>
             )}
 
-            {games.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">📚</div>
-                <h3>Henüz oyun yüklenmedi</h3>
-                <p>Excel dosyası yükleyerek oyun kütüphanenizi oluşturun veya örnek veri ile başlayın</p>
-              </div>
-            ) : (
-              <>
-                <div className="games-header">
-                  <h2>📋 Oyun Listesi</h2>
-                  <div className="games-count">
-                    {getSmartFilteredGames().length} / {games.length} oyun
-                  </div>
-                </div>
-
-                {/* Toplu İşlemler */}
-                {selectedGames.size > 0 && (
-                  <div className="bulk-operations">
-                    <div className="bulk-info">
-                      <span className="selected-count">{selectedGames.size} oyun seçildi</span>
-                    </div>
-                    <div className="bulk-actions">
-                      <button 
-                        className="bulk-btn status-btn"
-                        onClick={() => handleBulkStatusChange('playing')}
-                        title="Seçili oyunları 'Oynuyor' yap"
-                      >
-                        🎮 Oynuyor Yap
-                      </button>
-                      <button 
-                        className="bulk-btn status-btn"
-                        onClick={() => handleBulkStatusChange('completed')}
-                        title="Seçili oyunları 'Tamamlandı' yap"
-                      >
-                        ✅ Tamamlandı Yap
-                      </button>
-                      <button 
-                        className="bulk-btn delete-btn"
-                        onClick={handleBulkDelete}
-                        title="Seçili oyunları sil"
-                      >
-                        🗑️ Sil ({selectedGames.size})
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Oyun Listesi - List View */}
-                <div className="games-list-view ultra-compact-list">
-                  <div className="list-header">
-                    <div className="list-header-item checkbox-col">
-                      <input 
-                        type="checkbox" 
-                        checked={selectedGames.size === getSmartFilteredGames().length && getSmartFilteredGames().length > 0}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedGames(new Set(getSmartFilteredGames().map((_, index) => index)));
-                          } else {
-                            setSelectedGames(new Set());
-                          }
-                        }}
-                      />
-                    </div>
-                    <div className="list-header-item">📷</div>
-                    <div className="list-header-item name-col">Oyun Adı</div>
-                    <div className="list-header-item">Platform</div>
-                    <div className="list-header-item">Tür</div>
-                    <div className="list-header-item">Durum</div>
-                    <div className="list-header-item">İlerleme</div>
-                    <div className="list-header-item">Son Oynanma</div>
-                    <div className="list-header-item">⚙️</div>
-                  </div>
+            <GameList
+              games={games}
+              filteredGames={getSmartFilteredGames()}
+              selectedGames={selectedGames}
+              setSelectedGames={setSelectedGames}
+              onEditGame={handleEditGame}
+              onDeleteGame={handleDeleteGame}
+              onStatusChange={(game, index, newStatus) => {
+                const updatedGames = [...games];
+                const gameIndex = games.findIndex(g => 
+                  (g.title || g.name) === (game.title || game.name)
+                );
+                
+                if (gameIndex !== -1) {
+                  const oldStatus = updatedGames[gameIndex].status;
+                  updatedGames[gameIndex].status = newStatus;
                   
-                  {getSmartFilteredGames().map((game, index) => (
-                    <GameListItem 
-                      key={index}
-                      game={game}
-                      index={index}
-                      isSelected={selectedGames.has(index)}
-                      onSelect={(selected) => {
-                        const newSelected = new Set(selectedGames);
-                        if (selected) {
-                          newSelected.add(index);
-                        } else {
-                          newSelected.delete(index);
-                        }
-                        setSelectedGames(newSelected);
-                      }}
-                      onEdit={() => handleEditGame(game)}
-                      onDelete={() => handleDeleteGame(index)}
-                      onStatusChange={(newStatus) => {
-                        const updatedGames = [...games];
-                        const gameIndex = games.findIndex(g => 
-                          (g.title || g.name) === (game.title || game.name)
-                        );
-                        
-                        if (gameIndex !== -1) {
-                          const oldStatus = updatedGames[gameIndex].status;
-                          updatedGames[gameIndex].status = newStatus;
-                          
-                          // Progress güncelleme
-                          if (newStatus === 'completed') {
-                            updatedGames[gameIndex].progress = 100;
-                          } else if (newStatus === 'not-started') {
-                            updatedGames[gameIndex].progress = 0;
-                          }
-                          
-                          // Son oynanma tarihi güncelleme
-                          if (newStatus === 'playing') {
-                            updatedGames[gameIndex].lastPlayed = new Date().toISOString().split('T')[0];
-                          }
-                          
-                          // State ve localStorage güncelleme
-                          game.status = newStatus;
-                          setGames(updatedGames);
-                          localStorage.setItem('gameTrackerGames', JSON.stringify(updatedGames));
-                          
-                          // Oyun güncelleme bildirimi
-                          const gameName = game.title || game.name || 'Oyun';
-                          showGameUpdate(gameName, 'updated', {
-                            message: `Durum: ${oldStatus || 'Belirsiz'} → ${newStatus}`
-                          });
-                          
-                          // Özel durumlar için ek bildirimler
-                          if (newStatus === 'completed' && oldStatus !== 'completed') {
-                            showAchievement('Oyun Tamamlandı!', `${gameName} oyununu bitirdin! 🎉`);
-                          }
-                        }
-                      }}
-                      showExpandedInfo={true}
-                    />
-                  ))}
-                </div>
+                  // Progress güncelleme
+                  if (newStatus === 'completed') {
+                    updatedGames[gameIndex].progress = 100;
+                  } else if (newStatus === 'not-started') {
+                    updatedGames[gameIndex].progress = 0;
+                  }
+                  
+                  // Son oynanma tarihi güncelleme
+                  if (newStatus === 'playing') {
+                    updatedGames[gameIndex].lastPlayed = new Date().toISOString().split('T')[0];
+                  }
+                  
+                  // State ve localStorage güncelleme
+                  game.status = newStatus;
+                  setGames(updatedGames);
+                  localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
+                  
+                  // Oyun güncelleme bildirimi
+                  const gameName = game.title || game.name || 'Oyun';
+                  showGameUpdate(gameName, 'updated', {
+                    message: `Durum: ${oldStatus || 'Belirsiz'} → ${newStatus}`
+                  });
+                  
+                  // Özel durumlar için ek bildirimler
+                  if (newStatus === 'completed' && oldStatus !== 'completed') {
+                    showAchievement('Oyun Tamamlandı!', `${gameName} oyununu bitirdin! 🎉`);
+                  }
+                }
+              }}
+              onBulkStatusChange={handleBulkStatusChange}
+              onBulkDelete={handleBulkDelete}
+              showGameUpdate={showGameUpdate}
+              showAchievement={showAchievement}
+            />
 
-                {getSmartFilteredGames().length === 0 && (
-                  <div className="no-results">
-                    <div className="no-results-icon">🔍</div>
-                    <h3>Arama sonucu bulunamadı</h3>
-                    <p>Farklı filtreler deneyebilirsiniz</p>
-                  </div>
-                )}
-              </>
-            )}
           </div>
         ) : (
-          /* Cycle Viewer */
-          <div className="cycles-section" style={{
-            background: 'rgba(20, 25, 40, 0.3)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div className="cycles-header">
-              <div className="cycles-title-section">
-                <h2>🔄 Cycle Görüntüleyici</h2>
-                <p>Oyunlarınızın cycle'lara nasıl dağıtıldığını görün</p>
+          /* Cycle Viewer - Yeni Expandable List View */
+          <div className={styles.cyclesSection}>
+            <div className={styles.cyclesHeader}>
+              <div className={styles.cyclesTitleSection}>
+                <h2>🔄 Cycle Kütüphanesi</h2>
+                <p>Oyun döngülerinizi yönetin ve detaylarını görüntüleyin</p>
               </div>
-              <div className="cycles-header-actions">
+              <div className={styles.cyclesHeaderActions}>
                 {/* Toplu seçme butonları */}
                 {isBulkSelectMode && (
-                  <div className="bulk-select-controls">
+                  <div className={styles.bulkSelectControls}>
                     <button 
-                      className="bulk-control-btn select-all"
+                      className={`${styles.bulkControlBtn} ${styles.selectAll}`}
                       onClick={selectAllCycles}
                       title="Tümünü Seç"
                     >
                       ☑️ Tümünü Seç
                     </button>
                     <button 
-                      className="bulk-control-btn deselect-all"
+                      className={`${styles.bulkControlBtn} ${styles.deselectAll}`}
                       onClick={deselectAllCycles}
                       title="Seçimi Temizle"
                     >
                       ⬜ Temizle
                     </button>
                     <button 
-                      className="bulk-control-btn bulk-delete"
+                      className={`${styles.bulkControlBtn} ${styles.bulkDelete}`}
                       onClick={handleBulkDeleteCycles}
                       disabled={selectedCycles.size === 0}
                       title={`${selectedCycles.size} Cycle'ı Sil`}
@@ -1112,7 +1155,7 @@ function GameTracker() {
                 )}
                 
                 <button 
-                  className={`bulk-select-toggle ${isBulkSelectMode ? 'active' : ''}`}
+                  className={`${styles.bulkSelectToggle} ${isBulkSelectMode ? styles.active : ''}`}
                   onClick={toggleBulkSelectMode}
                   title={isBulkSelectMode ? 'Toplu Seçimi Kapat' : 'Toplu Seçimi Aç'}
                 >
@@ -1120,135 +1163,48 @@ function GameTracker() {
                 </button>
                 
                 <button 
-                  className="create-cycle-btn"
+                  className={styles.createCycleBtn}
                   onClick={handleCreateCycle}
                   title="Yeni Cycle Oluştur"
                 >
-                  <span className="icon">➕</span>
+                  <span className={styles.icon}>➕</span>
                   Yeni Cycle
                 </button>
               </div>
             </div>
 
             {!routeState?.cycles || routeState.cycles.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-icon">🔄</div>
+              <div className={styles.emptyState}>
+                <div className={styles.emptyIcon}>🔄</div>
                 <h3>Henüz cycle oluşturulmamış</h3>
                 <p>Önce oyun listesi yükleyin ve "Cycle'lara Böl" butonuna tıklayın</p>
               </div>
             ) : (
-              <div className="cycles-grid">
+              <div className={styles.cyclesList}>
                 {routeState.cycles.map((cycle, cycleIndex) => (
-                  <div key={cycle.cycleNumber || cycleIndex} className={`cycle-card ${isBulkSelectMode ? 'bulk-select-mode' : ''} ${selectedCycles.has(cycle.cycleNumber) ? 'selected' : ''}`}>
-                    {/* Toplu seçim checkbox */}
-                    {isBulkSelectMode && (
-                      <div className="cycle-checkbox">
-                        <input 
-                          type="checkbox"
-                          checked={selectedCycles.has(cycle.cycleNumber)}
-                          onChange={() => toggleCycleSelection(cycle.cycleNumber)}
-                        />
-                      </div>
-                    )}
-                    
-                    <div className="cycle-header">
-                      <div className="cycle-title-section">
-                        <h3>🔥 Cycle {cycle.cycleNumber}</h3>
-                        <div className={`cycle-status ${cycle.status}`}>
-                          {cycle.status === 'active' && '🟢 Aktif'}
-                          {cycle.status === 'pending' && '🟡 Beklemede'}
-                          {cycle.status === 'locked' && '🔒 Kilitli'}
-                          {cycle.status === 'completed' && '✅ Tamamlandı'}
-                        </div>
-                      </div>
-                      <div className="cycle-actions">
-                        {isEditingCycle && editingCycleNumber === cycle.cycleNumber ? (
-                          <button 
-                            className="cycle-action-btn stop-edit-btn"
-                            onClick={handleStopEditingCycle}
-                            title="Düzenlemeyi Bitir"
-                          >
-                            ✅ Bitir
-                          </button>
-                        ) : (
-                          <button 
-                            className="cycle-action-btn edit-btn"
-                            onClick={() => handleEditCycle(cycle.cycleNumber)}
-                            title="Cycle'ı Düzenle"
-                          >
-                            ⚙️ Düzenle
-                          </button>
-                        )}
-                        {/* Silme butonu - tüm cycle'lar için */}
-                        <button 
-                          className="cycle-action-btn delete-btn"
-                          onClick={() => handleDeleteCycle(cycle.cycleNumber)}
-                          title="Cycle'ı Sil"
-                        >
-                          🗑️ Sil
-                        </button>
-                      </div>
-                    </div>
-                    
-                    <div className="cycle-games">
-                      {cycle.games?.map((game, gameIndex) => (
-                        <div key={game.position || gameIndex} className={`cycle-game ${isEditingCycle && editingCycleNumber === cycle.cycleNumber ? 'editing' : ''}`}>
-                          <div className="game-info">
-                            <div className="game-type-badge">
-                              {game.type === 'RPG' && '⚔️ RPG'}
-                              {game.type === 'Story/Indie' && '📖 Story/Indie'}
-                              {game.type === 'Strategy/Sim' && '🧠 Strategy/Sim'}
-                            </div>
-                            <div className="game-name">
-                              {game.name || 'Oyun Seçilmemiş'}
-                            </div>
-                            <div className="game-hours">
-                              ⏱️ {game.estimatedHours}h
-                            </div>
-                            <div className={`game-status ${game.status}`}>
-                              {game.status === 'empty' && '⚪ Boş'}
-                              {game.status === 'selected' && '🟡 Seçildi'}
-                              {game.status === 'active' && '🟢 Aktif'}
-                              {game.status === 'completed' && '✅ Tamamlandı'}
-                            </div>
-                          </div>
-                          
-                          {/* Düzenleme Butonları */}
-                          {isEditingCycle && editingCycleNumber === cycle.cycleNumber && (
-                            <div className="game-edit-actions">
-                              <button 
-                                className="game-edit-btn add-btn"
-                                onClick={() => handleSelectGameForSlot(cycle.cycleNumber, gameIndex, game.type)}
-                                title="Oyun Seç/Değiştir"
-                              >
-                                {game.name ? '🔄 Değiştir' : '➕ Ekle'}
-                              </button>
-                              {game.name && (
-                                <button 
-                                  className="game-edit-btn remove-btn"
-                                  onClick={() => handleRemoveGameFromSlot(cycle.cycleNumber, gameIndex)}
-                                  title="Oyunu Kaldır"
-                                >
-                                  🗑️ Kaldır
-                                </button>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="cycle-stats">
-                      <div className="stat">
-                        <span>📊 Toplam Süre:</span>
-                        <span>{cycle.estimatedHours || 0}h</span>
-                      </div>
-                      <div className="stat">
-                        <span>🎮 Oyun Sayısı:</span>
-                        <span>{cycle.games?.length || 0}</span>
-                      </div>
-                    </div>
-                  </div>
+                  <LibraryCycleItem
+                    key={cycle.cycleNumber || cycleIndex}
+                    cycle={cycle}
+                    isExpanded={expandedCycles.has(cycle.cycleNumber)}
+                    onToggleExpand={() => toggleCycleExpansion(cycle.cycleNumber)}
+                    isSelected={selectedCycles.has(cycle.cycleNumber)}
+                    onSelect={() => toggleCycleSelection(cycle.cycleNumber)}
+                    isBulkSelectMode={isBulkSelectMode}
+                    onEditCycle={() => handleEditCycle(cycle.cycleNumber)}
+                    onDeleteCycle={() => handleDeleteCycle(cycle.cycleNumber)}
+                    onEditGame={(game) => {
+                      // Oyun düzenleme fonksiyonu
+                      console.log('Oyun düzenleme:', game);
+                    }}
+                    onDeleteGame={(game) => {
+                      // Oyun silme fonksiyonu
+                      console.log('Oyun silme:', game);
+                    }}
+                    onAddGame={() => {
+                      // Yeni oyun ekleme fonksiyonu
+                      console.log('Yeni oyun ekleme:', cycle.cycleNumber);
+                    }}
+                  />
                 ))}
               </div>
             )}
@@ -1436,7 +1392,7 @@ function GameTracker() {
             
             <div className="modal-footer">
               <button 
-                className="btn-secondary"
+                className={styles.btnSecondary}
                 onClick={() => setShowGameSelectionModal(false)}
               >
                 İptal

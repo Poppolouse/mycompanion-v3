@@ -154,6 +154,8 @@ function Session() {
           currentView={currentView}
           setCurrentView={setCurrentView}
           navigate={navigate}
+          currentGame={currentGame}
+          isSessionActive={sessionTimer.isActive}
         />
 
         {/* Ana İçerik */}

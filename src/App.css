@@ -7,7 +7,7 @@
 
 html {
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: visible;
   scroll-behavior: smooth;
   margin: 0 !important;
   padding: 0 !important;
@@ -22,7 +22,7 @@ body {
   background: var(--gradient-background);
   color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: visible;
   overflow-y: auto;
   margin: 0 !important;
   padding: 0 !important;

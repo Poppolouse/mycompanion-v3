@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useRoute } from '../../../contexts/RouteContext';
 import './AddGame.css';
 
 function AddGame() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { refreshFromLibrary } = useRoute();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -279,6 +281,9 @@ function AddGame() {
       // localStorage'a kaydet
       localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       
+      // RouteContext'i yenile - yeni oyunu kütüphaneye ekle
+      refreshFromLibrary();
+      
       console.log('✅ Yeni oyun eklendi:', newGame.title);
       setSuccess(true);
       
@@ -308,7 +313,7 @@ function AddGame() {
 
       // 2 saniye sonra GameTracker'a yönlendir
       setTimeout(() => {
-        navigate('/game-tracker');
+        navigate('/game-tracking-hub/game-tracker');
       }, 2000);
 
     } catch (err) {
@@ -321,7 +326,7 @@ function AddGame() {
 
   // Geri dön
   const handleGoBack = () => {
-    navigate('/game-tracker');
+    navigate('/game-tracking-hub/game-tracker');
   };
 
   return (

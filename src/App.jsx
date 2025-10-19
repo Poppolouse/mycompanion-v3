@@ -17,6 +17,7 @@ import EditGame from './pages/GameTrackingHub/EditGame';
 import AdminPanel from './pages/AdminPanel';
 import LoginModal from './components/LoginModal';
 import { ProfileSettings } from './components/UserProfile';
+
 import { RouteProvider } from './contexts/RouteContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotificationProvider } from './components/NotificationSystem';
@@ -70,6 +71,9 @@ function AppContent() {
         {/* Admin Panel */}
         <Route path="/admin" element={<AdminPanel />} />
         
+        {/* Test Sayfaları */}
+        
+        
         {/* Game Tracking Hub - Ana sayfa ve alt sayfaları */}
         <Route path="/game-tracking-hub" element={<GameTrackingHub />} />
         <Route path="/game-tracking-hub/session" element={<Session />} />
@@ -85,8 +89,16 @@ function AppContent() {
             <RoutePlanner />
           </RouteProvider>
         } />
-        <Route path="/game-tracking-hub/add-game" element={<AddGame />} />
-        <Route path="/game-tracking-hub/edit-game/:gameId" element={<EditGame />} />
+        <Route path="/game-tracking-hub/add-game" element={
+          <RouteProvider>
+            <AddGame />
+          </RouteProvider>
+        } />
+        <Route path="/game-tracking-hub/edit-game/:gameId" element={
+          <RouteProvider>
+            <EditGame />
+          </RouteProvider>
+        } />
         
         {/* Diğer sayfalar - Sidebar ile birlikte */}
         <Route path="/*" element={

@@ -1,0 +1,393 @@
+/* 📚 LibraryCycleItem - Kütüphane Sayfası Özel Tasarım */
+
+.library-cycle-item {
+  /* Ana Container - Modern Gradient */
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.15) 0%, 
+    rgba(118, 75, 162, 0.15) 50%, 
+    rgba(64, 93, 230, 0.15) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.library-cycle-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.25) 0%, 
+    rgba(118, 75, 162, 0.25) 50%, 
+    rgba(64, 93, 230, 0.25) 100%);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+}
+
+.library-cycle-item.selected {
+  border-color: rgba(102, 126, 234, 0.8);
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.3) 0%, 
+    rgba(118, 75, 162, 0.3) 50%, 
+    rgba(64, 93, 230, 0.3) 100%);
+}
+
+/* Header - Modern Layout */
+.library-cycle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.library-cycle-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Sol Taraf - Expand + Title */
+.library-cycle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.library-cycle-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.library-cycle-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+.library-cycle-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.library-cycle-expand:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.expand-icon {
+  font-size: 14px;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.library-cycle-item.expanded .expand-icon {
+  transform: rotate(0deg);
+}
+
+.library-cycle-title h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cycle-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 2px;
+  display: block;
+}
+
+/* Orta - Progress Circle */
+.library-cycle-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+.progress-circle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.progress-circle svg {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-percentage {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Sağ Taraf - Actions */
+.library-cycle-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.last-played {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.library-action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  backdrop-filter: blur(5px);
+}
+
+.library-action-btn:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.library-action-btn.edit-btn:hover {
+  background: rgba(102, 126, 234, 0.6);
+}
+
+.library-action-btn.delete-btn:hover {
+  background: rgba(244, 67, 54, 0.6);
+}
+
+/* Genişletilmiş İçerik */
+.library-cycle-content {
+  padding: 0 20px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.games-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 12px 0;
+}
+
+.games-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.add-game-btn {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-game-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Oyun Grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.library-game-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.library-game-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateY(-1px);
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.game-info h5 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 500;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.game-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.game-stats span {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Oyun Progress Bar */
+.game-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.game-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Oyun Actions */
+.game-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.game-action-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.game-action-btn:hover {
+  transform: scale(1.1);
+}
+
+.game-action-btn.edit:hover {
+  background: rgba(102, 126, 234, 0.6);
+}
+
+.game-action-btn.delete:hover {
+  background: rgba(244, 67, 54, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .library-cycle-header {
+    padding: 12px 16px;
+  }
+  
+  .library-cycle-left {
+    gap: 8px;
+  }
+  
+  .library-cycle-title h3 {
+    font-size: 1rem;
+  }
+  
+  .library-cycle-progress {
+    margin: 0 12px;
+  }
+  
+  .progress-circle {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .progress-circle svg {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animasyonlar */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.library-cycle-content {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Hover Efektleri */
+.library-cycle-item:hover .progress-circle svg circle:last-child {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.library-cycle-item:hover .library-cycle-title h3 {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}

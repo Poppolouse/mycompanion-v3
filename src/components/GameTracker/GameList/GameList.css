@@ -1,0 +1,448 @@
+/* GameList.css */
+.game-list-container {
+  width: 100%;
+  padding: 1rem;
+}
+
+.games-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.games-header h2 {
+  margin: 0;
+  color: var(--text-primary, #1f2937);
+  font-size: 1.5rem;
+}
+
+.games-count {
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Toplu İşlemler */
+.bulk-operations {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-secondary, #f9fafb);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.bulk-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selected-count {
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bulk-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bulk-btn.status-btn {
+  background: var(--color-primary, #3b82f6);
+  color: white;
+}
+
+.bulk-btn.status-btn:hover {
+  background: var(--color-primary-dark, #2563eb);
+}
+
+.bulk-btn.delete-btn {
+  background: var(--color-danger, #ef4444);
+  color: white;
+}
+
+.bulk-btn.delete-btn:hover {
+  background: var(--color-danger-dark, #dc2626);
+}
+
+/* Toplu Seçim */
+.bulk-select {
+  margin-bottom: 1rem;
+}
+
+.bulk-select-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.bulk-select-label input[type="checkbox"] {
+  margin: 0;
+}
+
+/* Oyun Grid'i */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Oyun Kartı */
+.game-card {
+  background: white;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.game-card.selected {
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Seçim Checkbox'ı */
+.game-card-select {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+}
+
+.game-card-select input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Oyun Görseli */
+.game-card-image {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-secondary, #f9fafb);
+}
+
+.game-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--text-secondary, #6b7280);
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+/* Oyun Bilgileri */
+.game-card-info {
+  padding: 1rem;
+}
+
+.game-card-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Oyun Detayları */
+.game-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.game-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.detail-label {
+  color: var(--text-secondary, #6b7280);
+  font-weight: 500;
+}
+
+.detail-value {
+  color: var(--text-primary, #1f2937);
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* İlerleme Çubuğu */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-secondary, #f3f4f6);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary, #3b82f6);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Durum Değiştirme Butonları */
+.game-card-status-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.status-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.status-btn:hover {
+  background: var(--bg-secondary, #f9fafb);
+  border-color: var(--color-primary, #3b82f6);
+}
+
+.status-btn.active {
+  background: var(--color-primary, #3b82f6);
+  border-color: var(--color-primary, #3b82f6);
+  color: white;
+}
+
+/* Aksiyon Butonları */
+.game-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.action-btn.edit-btn:hover {
+  background: var(--color-warning, #f59e0b);
+  border-color: var(--color-warning, #f59e0b);
+  color: white;
+}
+
+.action-btn.delete-btn:hover {
+  background: var(--color-danger, #ef4444);
+  border-color: var(--color-danger, #ef4444);
+  color: white;
+}
+
+/* Sayfalama */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--color-primary, #3b82f6);
+  border-color: var(--color-primary, #3b82f6);
+  color: white;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pagination-info span:first-child {
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+}
+
+.pagination-details {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* Boş Durum */
+.game-list-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.game-list-empty h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary, #1f2937);
+}
+
+.game-list-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Arama Sonucu Bulunamadı */
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.no-results-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.no-results h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary, #1f2937);
+}
+
+.no-results p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-list-container {
+    padding: 0.5rem;
+  }
+  
+  .games-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .bulk-operations {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .bulk-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .game-card-image {
+    height: 150px;
+  }
+  
+  .game-card-status-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .games-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    max-width: calc(4 * 350px + 3 * 1.5rem); /* Maksimum 4 sütun */
+  }
+}

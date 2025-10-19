@@ -992,8 +992,42 @@ Bağımsızlaştırma işlemi için:
 - [ ] `100vw` genişlik ayarları yapıldı mı?
 - [ ] `position: relative` eklendi mi?
 - [ ] `margin-left/right: -50vw` ayarlandı mı?
+- [ ] **ZORUNLU:** `.gameSection` padding'i kaldırıldı mı? (bağımsız bölümler kendi padding'ini yönetir)
 - [ ] JSX syntax hataları kontrol edildi mi?
 - [ ] Fragment (`<>`) gerekiyorsa eklendi mi?
+
+#### 4.1. 🎯 GameSection Padding Kaldırma
+
+**"Bağımsızlaştır" komutu kullanıldığında MUTLAKA yapılacak:**
+
+```css
+/* ❌ ÖNCE - Ortak padding */
+.gameSection {
+  padding: 2rem;  /* Bu kaldırılacak */
+}
+
+/* ✅ SONRA - Bağımsız padding */
+.gameSection {
+  /* padding kaldırıldı - her bölüm kendi padding'ini yönetir */
+}
+
+.recentGamesSection {
+  padding: 2rem;  /* Kendi padding'i */
+}
+
+.recommendedGamesSection {
+  padding: 2rem;  /* Kendi padding'i */
+}
+
+.librarySection {
+  padding: 2rem;  /* Kendi padding'i */
+}
+```
+
+**Neden gerekli:**
+- Bağımsız bölümler kendi genişlik ve padding'ini kontrol etmeli
+- Ortak `.gameSection` padding'i bağımsızlığı bozar
+- Her bölüm farklı genişlik stratejisi kullanabilir
 
 #### 5. 🚨 Yaygın Hatalar
 
@@ -1010,6 +1044,63 @@ Bağımsızlaştırma işlemi için:
 - Viewport genişliği (`100vw`) kullanmak
 - Proper JSX structure
 - Z-index ile katman yönetimi
+
+#### 5.1. 🔧 Overflow ve Container Sınırı Çözümleri
+
+**Bağımsızlaştırma sırasında overflow sorunları çıkarsa:**
+
+**1. Global Overflow Kontrolleri:**
+```css
+/* ✅ ZORUNLU - Global CSS düzeltmeleri */
+/* index.css */
+body {
+  overflow-x: visible !important;  /* hidden yerine visible */
+}
+
+/* App.css */
+html, body {
+  overflow-x: visible;  /* hidden yerine visible */
+}
+```
+
+**2. Component Overflow Düzeltmeleri:**
+```css
+/* ✅ ZORUNLU - Component CSS düzeltmeleri */
+.gameSelectionScreen {
+  overflow-x: visible;  /* hidden yerine visible */
+}
+```
+
+**3. Parent Container Sınırları:**
+```css
+/* ❌ SORUNLU - Container sınırları */
+.session-main {
+  max-width: 1400px;  /* Bu kaldırılacak */
+  margin: 0 auto;     /* Bu kaldırılacak */
+}
+
+/* ✅ ÇÖZÜM - Sınırsız container */
+.session-main {
+  width: 100%;
+  margin: 0;  /* auto kaldırıldı */
+  /* max-width kaldırıldı */
+}
+```
+
+**4. Overflow Sorun Tespiti Checklist:**
+- [ ] Global CSS'lerde `overflow-x: hidden` var mı?
+- [ ] Parent container'larda `max-width` sınırı var mı?
+- [ ] Parent container'larda `margin: 0 auto` var mı?
+- [ ] Component CSS'inde `overflow-x: hidden` var mı?
+- [ ] Z-index çakışması var mı?
+
+**5. Hızlı Overflow Fix Komutu:**
+```bash
+# Tüm overflow-x: hidden'ları bul
+grep -r "overflow-x: hidden" src/
+# Tüm max-width sınırlarını bul  
+grep -r "max-width:" src/
+```
 
 #### 6. 📝 Örnek Uygulama
 

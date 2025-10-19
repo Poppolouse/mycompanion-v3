@@ -87,7 +87,7 @@ body {
   width: 100vw;
   background: var(--gradient-background) !important;
   color: var(--text-primary);
-  overflow-x: hidden !important;
+  overflow-x: visible !important;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 

@@ -185,7 +185,7 @@ function EditGame() {
 
       setSuccess(true);
       setTimeout(() => {
-        navigate('/game-tracker');
+        navigate('/game-tracking-hub/game-tracker');
       }, 1500);
 
     } catch (err) {
@@ -201,7 +201,7 @@ function EditGame() {
       <div className="edit-game-header">
         <button 
           className="back-btn"
-          onClick={() => navigate('/game-tracker')}
+          onClick={() => navigate('/game-tracking-hub/game-tracker')}
         >
           ← Geri
         </button>
@@ -501,7 +501,7 @@ function EditGame() {
         <div className="form-actions">
           <button
             type="button"
-            onClick={() => navigate('/game-tracker')}
+            onClick={() => navigate('/game-tracking-hub/game-tracker')}
             className="cancel-btn"
             disabled={loading}
           >

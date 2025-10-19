@@ -132,10 +132,10 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
     .sort((a, b) => new Date(b.lastPlayed) - new Date(a.lastPlayed))
     .slice(0, 4);
 
-  // Önerilen oyunlar (7 adet)
+  // Önerilen oyunlar (8 adet)
   const recommendedGames = mockGames
     .filter(game => game.isRecommended)
-    .slice(0, 7);
+    .slice(0, 8);
 
   // Sayfalama için oyunlar
   const gamesPerPage = 16; // 4x4 grid
@@ -166,21 +166,14 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
 
   return (
     <div className={styles.gameSelectionScreen}>
-      {/* Simple Close Button */}
-      <button 
-        className={styles.closeButton}
-        onClick={onClose}
-        aria-label="Oyun seçimini kapat"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-      </button>
-
       <main className={styles.gameSelectionContent}>
-        {/* Search & Filters Section */}
-        <section className={styles.searchSection}>
+        {/* Search & Filters Section - Bağımsızlaştırıldı */}
+        <section className={styles.searchSectionFullwidth}>
           <div className={styles.searchContainer}>
+            {/* Dekoratif oyun elementleri */}
+            <div className={styles.gameDecor1}>🎮</div>
+            <div className={styles.gameDecor2}>🕹️</div>
+            
             <div className={styles.searchInputWrapper}>
               <svg className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
@@ -193,18 +186,16 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={styles.searchInput}
               />
-              {searchTerm && (
-                <button
-                  className={styles.clearSearch}
-                  onClick={handleClearSearch}
-                  aria-label="Aramayı temizle"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                </button>
-              )}
             </div>
+            
+            {/* Oyun seçimini kapat butonu */}
+            <button 
+              className={styles.closeSearchButton}
+              onClick={onClose}
+              aria-label="Oyun seçimini kapat"
+            >
+              Vazgeç
+            </button>
             
             {/* Filter Buttons */}
             <div className={styles.filterButtons}>
@@ -235,9 +226,9 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
           </div>
         </section>
 
-        {/* Recent Games Section */}
+        {/* Recent Games Section - Bağımsızlaştırıldı */}
         {!searchTerm && recentGames.length > 0 && (
-          <section className={`${styles.recentGamesSection} ${styles.gameSection}`}>
+          <section className={styles.recentGamesSectionFullwidth}>
             <h2 className={styles.sectionTitle}>Son Oynanan Oyunlar</h2>
             <div className={styles.recentGamesGrid}>
               {recentGames.map(game => (
@@ -267,9 +258,9 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
           </section>
         )}
 
-        {/* Recommended Games Section */}
+        {/* Recommended Games Section - Bağımsızlaştırıldı */}
         {!searchTerm && recommendedGames.length > 0 && (
-          <section className={`${styles.recommendedGamesSection} ${styles.gameSection}`}>
+          <section className={styles.recommendedGamesSectionFullwidth}>
             <h2 className={styles.sectionTitle}>Önerilen Oyunlar</h2>
             <div className={styles.recommendedGamesGrid}>
               {recommendedGames.map(game => (
