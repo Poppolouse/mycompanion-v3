@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './GameList.css';
 
 /**
- * Oyun listesi bileşeni - Kütüphanedeki oyunları grid formatında listeler
+ * Oyun listesi bileşeni - Banner tabanlı 9:16 oranında kartlar
  */
 function GameList({
   games,
@@ -19,7 +19,7 @@ function GameList({
 }) {
   const displayGames = filteredGames || games;
   const [currentPage, setCurrentPage] = useState(1);
-  const gamesPerPage = 4; // Maksimum 4 oyun per sayfa
+  const gamesPerPage = 8; // 8 oyun per sayfa (2x4 grid)
   
   // Sayfalama hesaplamaları
   const totalPages = Math.ceil(displayGames.length / gamesPerPage);
@@ -61,38 +61,10 @@ function GameList({
     onGameSelect(newSelected);
   };
 
-  // Durum değiştirme
-  const handleStatusChange = (game, newStatus, gameIndex) => {
-    const actualIndex = startIndex + gameIndex;
-    onGameStatusChange(game, newStatus, actualIndex);
-  };
-
   // Oyun silme
   const handleGameDelete = (gameIndex) => {
     const actualIndex = startIndex + gameIndex;
     onGameDelete(actualIndex);
-  };
-
-  // Durum renkleri
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'completed': return '#4ade80';
-      case 'playing': return '#3b82f6';
-      case 'paused': return '#f59e0b';
-      case 'not-started': return '#6b7280';
-      default: return '#6b7280';
-    }
-  };
-
-  // Durum metni
-  const getStatusText = (status) => {
-    switch (status) {
-      case 'completed': return 'Tamamlandı';
-      case 'playing': return 'Oynuyor';
-      case 'paused': return 'Duraklatıldı';
-      case 'not-started': return 'Başlanmadı';
-      default: return 'Belirsiz';
-    }
   };
 
   if (displayGames.length === 0) {
@@ -123,20 +95,6 @@ function GameList({
           </div>
           <div className="bulk-actions">
             <button 
-              className="bulk-btn status-btn"
-              onClick={() => onBulkStatusChange('playing')}
-              title="Seçili oyunları 'Oynuyor' yap"
-            >
-              🎮 Oynuyor Yap
-            </button>
-            <button 
-              className="bulk-btn status-btn"
-              onClick={() => onBulkStatusChange('completed')}
-              title="Seçili oyunları 'Tamamlandı' yap"
-            >
-              ✅ Tamamlandı Yap
-            </button>
-            <button 
               className="bulk-btn delete-btn"
               onClick={onBulkDelete}
               title="Seçili oyunları sil"
@@ -159,15 +117,15 @@ function GameList({
         </label>
       </div>
 
-      {/* Oyun Grid'i */}
-      <div className="games-grid">
+      {/* Oyun Grid'i - Banner Kartlar */}
+      <div className="games-banner-grid">
         {currentGames.map((game, index) => (
           <div 
             key={startIndex + index} 
-            className={`game-card ${selectedGames.has(startIndex + index) ? 'selected' : ''}`}
+            className={`game-banner-card ${selectedGames.has(startIndex + index) ? 'selected' : ''}`}
           >
             {/* Seçim Checkbox'ı */}
-            <div className="game-card-select">
+            <div className="game-banner-select">
               <input 
                 type="checkbox"
                 checked={selectedGames.has(startIndex + index)}
@@ -175,114 +133,47 @@ function GameList({
               />
             </div>
 
-            {/* Oyun Görseli */}
-            <div className="game-card-image">
-              {game.image ? (
-                <img src={game.image} alt={game.title || game.name} />
-              ) : (
-                <div className="game-card-placeholder">
+            {/* Banner Arka Plan */}
+            <div 
+              className="game-banner-background"
+              style={{
+                backgroundImage: game.image ? `url(${game.image})` : 'none',
+                backgroundColor: game.image ? 'transparent' : '#1a1a2e'
+              }}
+            >
+              {/* Gradient Overlay */}
+              <div className="game-banner-overlay"></div>
+              
+              {/* Banner İçerik */}
+              <div className="game-banner-content">
+                {/* Oyun Adı */}
+                <h3 className="game-banner-title">{game.title || game.name}</h3>
+                
+                {/* Aksiyon Butonları */}
+                <div className="game-banner-actions">
+                  <button 
+                    className="banner-action-btn edit-btn"
+                    onClick={() => onGameEdit(game)}
+                    title="Düzenle"
+                  >
+                    ✏️
+                  </button>
+                  <button 
+                    className="banner-action-btn delete-btn"
+                    onClick={() => handleGameDelete(index)}
+                    title="Sil"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+
+              {/* Placeholder Icon (eğer resim yoksa) */}
+              {!game.image && (
+                <div className="game-banner-placeholder">
                   🎮
                 </div>
               )}
-            </div>
-
-            {/* Oyun Bilgileri */}
-            <div className="game-card-info">
-              <h3 className="game-card-title">{game.title || game.name}</h3>
-              
-              <div className="game-card-details">
-                <div className="game-detail">
-                  <span className="detail-label">Platform:</span>
-                  <span className="detail-value">{game.platform || 'Belirsiz'}</span>
-                </div>
-                
-                <div className="game-detail">
-                  <span className="detail-label">Tür:</span>
-                  <span className="detail-value">{game.genre || 'Belirsiz'}</span>
-                </div>
-                
-                <div className="game-detail">
-                  <span className="detail-label">Durum:</span>
-                  <span 
-                    className="detail-value status-badge"
-                    style={{ backgroundColor: getStatusColor(game.status) }}
-                  >
-                    {getStatusText(game.status)}
-                  </span>
-                </div>
-
-                {game.progress !== undefined && (
-                  <div className="game-detail">
-                    <span className="detail-label">İlerleme:</span>
-                    <div className="progress-container">
-                      <div className="progress-bar">
-                        <div 
-                          className="progress-fill"
-                          style={{ width: `${game.progress || 0}%` }}
-                        ></div>
-                      </div>
-                      <span className="progress-text">{game.progress || 0}%</span>
-                    </div>
-                  </div>
-                )}
-
-                {game.lastPlayed && (
-                  <div className="game-detail">
-                    <span className="detail-label">Son Oynanma:</span>
-                    <span className="detail-value">{game.lastPlayed}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Durum Değiştirme Butonları */}
-              <div className="game-card-status-buttons">
-                <button 
-                  className={`status-btn ${game.status === 'not-started' ? 'active' : ''}`}
-                  onClick={() => handleStatusChange(game, 'not-started', index)}
-                  title="Başlanmadı"
-                >
-                  ⏸️
-                </button>
-                <button 
-                  className={`status-btn ${game.status === 'playing' ? 'active' : ''}`}
-                  onClick={() => handleStatusChange(game, 'playing', index)}
-                  title="Oynuyor"
-                >
-                  🎮
-                </button>
-                <button 
-                  className={`status-btn ${game.status === 'paused' ? 'active' : ''}`}
-                  onClick={() => handleStatusChange(game, 'paused', index)}
-                  title="Duraklatıldı"
-                >
-                  ⏯️
-                </button>
-                <button 
-                  className={`status-btn ${game.status === 'completed' ? 'active' : ''}`}
-                  onClick={() => handleStatusChange(game, 'completed', index)}
-                  title="Tamamlandı"
-                >
-                  ✅
-                </button>
-              </div>
-
-              {/* Aksiyon Butonları */}
-              <div className="game-card-actions">
-                <button 
-                  className="action-btn edit-btn"
-                  onClick={() => onGameEdit(game)}
-                  title="Düzenle"
-                >
-                  ✏️
-                </button>
-                <button 
-                  className="action-btn delete-btn"
-                  onClick={() => handleGameDelete(index)}
-                  title="Sil"
-                >
-                  🗑️
-                </button>
-              </div>
             </div>
           </div>
         ))}
