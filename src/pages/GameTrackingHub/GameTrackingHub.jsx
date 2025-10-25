@@ -37,7 +37,7 @@ function GameTrackingHub() {
       <header className="tracker-header">
         <div className="header-content">
           <div className="header-left">
-            <h1>🎯 Oyun Takibi Merkezi</h1>
+            <h1>🎯 Oyun Merkezi</h1>
             <p>Oyun deneyiminizi yönetmek için araçları seçin</p>
           </div>
           <div className="header-controls">
@@ -58,70 +58,7 @@ function GameTrackingHub() {
       {/* Ana İçerik */}
       <main className="hub-main">
         <div className="hub-grid">
-          {/* Statistics Card */}
-          <div className="hub-card statistics-card">
-            <div className="card-icon">📊</div>
-            <div className="card-content">
-              <h2>İstatistikler</h2>
-              <p>Oyun oynama alışkanlıklarınızı analiz edin, zaman takibi yapın ve ilerlemenizi görselleştirin.</p>
-              <ul className="feature-list">
-                <li>📈 Detaylı oyun istatistikleri</li>
-                <li>⏱️ Zaman takibi ve analizi</li>
-                <li>📅 Günlük/haftalık/aylık raporlar</li>
-                <li>🎯 Hedef takibi</li>
-              </ul>
-            </div>
-            <button 
-              className="hub-button statistics-button"
-              onClick={navigateToStatistics}
-            >
-              📊 İstatistiklere Git
-            </button>
-          </div>
-
-          {/* Route Planner Card */}
-          <div className="hub-card route-planner-card">
-            <div className="card-icon">🗺️</div>
-            <div className="card-content">
-              <h2>Route Planner</h2>
-              <p>117 oyun için optimize edilmiş rota planlama sistemi. Oyun sıralamanızı ve stratejinizi belirleyin.</p>
-              <ul className="feature-list">
-                <li>🎮 117 oyun rotası</li>
-                <li>📋 Akıllı sıralama sistemi</li>
-                <li>⚡ Hızlı erişim butonları</li>
-                <li>🔄 Döngü yönetimi</li>
-              </ul>
-            </div>
-            <button 
-              className="hub-button route-planner-button"
-              onClick={navigateToRoutePlanner}
-            >
-              🗺️ Route Planner'a Git
-            </button>
-          </div>
-
-          {/* Session Card */}
-          <div className="hub-card session-card">
-            <div className="card-icon">🎯</div>
-            <div className="card-content">
-              <h2>Session</h2>
-              <p>Aktif oyun session'ınızı yönetin ve takip edin. O anlık oynadığınız oyun hakkında işlemler yapın.</p>
-              <ul className="feature-list">
-                <li>🎮 Aktif oyun takibi</li>
-                <li>⏱️ Session süre takibi</li>
-                <li>📊 Anlık istatistikler</li>
-                <li>🎯 Session hedefleri</li>
-              </ul>
-            </div>
-            <button 
-              className="hub-button session-button"
-              onClick={navigateToSession}
-            >
-              🎯 Session'a Git
-            </button>
-          </div>
-
-          {/* Library Card */}
+          {/* Library Card - Üst sıra */}
           <div className="hub-card library-card">
             <div className="card-icon">📚</div>
             <div className="card-content">
@@ -141,33 +78,126 @@ function GameTrackingHub() {
               📚 Kütüphaneye Git
             </button>
           </div>
+
+          {/* Aktif Oyun Card - Üst sıra */}
+          <div className="hub-card session-card">
+            <div className="card-icon">🎯</div>
+            <div className="card-content">
+              <h2>Aktif Oyun</h2>
+              <p>Şu anda oynadığınız oyunu yönetin ve takip edin. Anlık oyun deneyiminizi kaydedin ve analiz edin.</p>
+              <ul className="feature-list">
+                <li>⏱️ Oyun süresi takibi</li>
+                <li>🎯 Hedef belirleme</li>
+                <li>📊 İstatistik toplama</li>
+                <li>💾 İlerleme kaydetme</li>
+              </ul>
+            </div>
+            <button 
+              className="hub-button session-button"
+              onClick={navigateToSession}
+            >
+              🎯 Aktif Oyun'a Git
+            </button>
+          </div>
+
+          {/* Rota Merkezi Card - Çok Yakında */}
+          <div className="hub-card coming-soon-card">
+            <div className="coming-soon-overlay">
+              <div className="coming-soon-glow"></div>
+              <div className="coming-soon-text">Çok Yakında</div>
+            </div>
+            <div className="card-icon">🗺️</div>
+            <div className="card-content">
+              <h2>Rota Merkezi</h2>
+              <p>Oyun kütüphaneniz için kişisel rota planlama sistemi. Hangi oyunu ne zaman oynayacağınızı planlayın.</p>
+              <div className="progress-section">
+                <div className="progress-label">Yapım Aşaması</div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{width: '78%'}}></div>
+                </div>
+                <div className="progress-text">78%</div>
+              </div>
+              <ul className="feature-list">
+                <li>🎯 Oyun sırası planlama</li>
+                <li>📋 Hedef belirleme</li>
+                <li>📈 İlerleme takibi</li>
+                <li>🧠 Strateji geliştirme</li>
+              </ul>
+            </div>
+            <button 
+              className="hub-button disabled"
+              disabled
+            >
+              🗺️ Yakında Gelecek
+            </button>
+          </div>
+
+          {/* Statistics Card - Çok Yakında */}
+          <div className="hub-card coming-soon-card statistics-card">
+            <div className="coming-soon-overlay">
+              <div className="coming-soon-glow"></div>
+              <div className="coming-soon-text">Çok Yakında</div>
+            </div>
+            <div className="card-icon">📊</div>
+            <div className="card-content">
+              <h2>İstatistikler</h2>
+              <p>Oyun oynama alışkanlıklarınızı analiz edin, zaman takibi yapın ve ilerlemenizi görselleştirin.</p>
+              <div className="progress-section">
+                <div className="progress-label">Planlama Aşaması</div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{width: '20%'}}></div>
+                </div>
+                <div className="progress-text">20%</div>
+              </div>
+              <ul className="feature-list">
+                <li>📈 Detaylı oyun istatistikleri</li>
+                <li>⏱️ Zaman takibi ve analizi</li>
+                <li>📅 Günlük/haftalık/aylık raporlar</li>
+                <li>🎯 Hedef takibi</li>
+              </ul>
+            </div>
+            <button 
+              className="hub-button statistics-button disabled"
+              disabled
+            >
+              📊 Çok Yakında
+            </button>
+          </div>
+
+          {/* Gallery Card - Çok Yakında */}
+          <div className="hub-card coming-soon-card gallery-card">
+            <div className="coming-soon-overlay">
+              <div className="coming-soon-glow"></div>
+              <div className="coming-soon-text">Çok Yakında</div>
+            </div>
+            <div className="card-icon">🖼️</div>
+            <div className="card-content">
+              <h2>Galeri</h2>
+              <p>Tüm oyunlarınızdan kaydettiğiniz ekran görüntüleri, videolar ve anıları tek yerde görüntüleyin.</p>
+              <div className="progress-section">
+                <div className="progress-label">Henüz Başlanmadı</div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{width: '0%'}}></div>
+                </div>
+                <div className="progress-text">0%</div>
+              </div>
+              <ul className="feature-list">
+                <li>📸 Ekran görüntüleri koleksiyonu</li>
+                <li>🎥 Video kayıtları</li>
+                <li>🏆 Başarım anları</li>
+                <li>📅 Tarih bazlı organizasyon</li>
+              </ul>
+            </div>
+            <button 
+              className="hub-button gallery-button disabled"
+              disabled
+            >
+              🖼️ Çok Yakında
+            </button>
+          </div>
         </div>
 
-        {/* Alt Bilgi */}
-        <div className="hub-footer">
-          <div className="info-section">
-            <h3>💡 İpucu</h3>
-            <p>
-              Her araç farklı ihtiyaçlar için tasarlanmıştır. İstatistikler için analiz, 
-              Route Planner için planlama, Kütüphane için koleksiyon yönetimi kullanın.
-            </p>
-          </div>
-          
-          <div className="quick-stats">
-            <div className="stat-item">
-              <span className="stat-icon">🎮</span>
-              <span className="stat-label">4 Araç</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-icon">⚡</span>
-              <span className="stat-label">Hızlı Erişim</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-icon">📊</span>
-              <span className="stat-label">Detaylı Analiz</span>
-            </div>
-          </div>
-        </div>
+
       </main>
     </div>
   );

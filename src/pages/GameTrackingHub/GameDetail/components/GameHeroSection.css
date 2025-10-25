@@ -1,0 +1,874 @@
+/* 🎮 GameHeroSection - Wireframe'e Göre Tasarım */
+
+.hero-section {
+  position: relative;
+  min-height: 600px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-section.hero-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+ * 🖼️ ARKA PLAN VE OVERLAY
+ * ======================================== */
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(8px) brightness(0.3);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--slate-900-rgb), 0.85) 0%,
+    rgba(var(--slate-700-rgb), 0.7) 50%,
+    rgba(var(--slate-900-rgb), 0.9) 100%
+  );
+}
+
+/* ========================================
+ * 📱 ANA İÇERİK LAYOUT
+ * ======================================== */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 4rem;
+  padding: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 600px;
+  align-items: start;
+}
+
+/* ========================================
+ * 🖼️ SOL TARAF - KAPAK VE GALERİ
+ * ======================================== */
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Kapak container */
+.cover-container {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.3);
+}
+
+.cover-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px rgba(var(--color-black-rgb), 0.4);
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cover-container:hover .cover-image {
+  transform: scale(1.05);
+}
+
+/* Zoom overlay */
+.cover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--color-black-rgb), 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cover-container:hover .cover-overlay {
+  opacity: 1;
+}
+
+.zoom-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+
+
+/* ========================================
+ * 📝 SAĞ TARAF - OYUN BİLGİLERİ
+ * ======================================== */
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+
+/* Header - Geri buton ve favori */
+.hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  background: rgba(var(--color-white-rgb), 0.1);
+  border: 1px solid rgba(var(--color-white-rgb), 0.2);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+  background: rgba(var(--color-white-rgb), 0.2);
+  transform: translateX(-2px);
+}
+
+.favorite-button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorite-button:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.favorite-button.favorited {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+/* Oyun başlığı */
+.game-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-title.title-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6));
+  }
+}
+
+/* Meta bilgiler */
+.game-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.game-meta.meta-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.game-meta span {
+  transition: color 0.3s ease;
+}
+
+.game-meta span:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.developer {
+  font-weight: 600;
+  color: var(--color-primary-300);
+}
+
+/* Metacritic puanı */
+.metacritic-score {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  opacity: 0;
+  transform: scale(0.8) translateY(10px);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
+}
+
+.metacritic-score.score-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.score-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.score-badge-animated {
+  animation: scorePulse 3s ease-in-out infinite;
+}
+
+.score-badge:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes scorePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.score-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* Oyun Konusu Alanı */
+.game-description-section {
+  margin: 0;
+  max-width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+}
+
+.game-description-section.description-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-description {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.game-description:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.description-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  text-align: justify;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+
+
+.description-text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.description-text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.description-text::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.description-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loading-spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.description-not-found {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-style: italic;
+}
+
+.no-description-icon {
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.description-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  color: #fca5a5;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.error-message {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.retry-button {
+  align-self: flex-start;
+  padding: 0.4rem 0.8rem;
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  border-radius: 6px;
+  color: #fca5a5;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.retry-button:hover {
+  background: rgba(220, 38, 38, 0.3);
+  border-color: rgba(220, 38, 38, 0.5);
+  transform: translateY(-1px);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+}
+
+/* Tagline */
+.game-tagline {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ========================================
+ * 🎮 AKSİYON BUTONLARI
+ * ======================================== */
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 0;
+}
+
+/* Ana oyun başlat butonu */
+.primary-action-btn {
+  width: 100%;
+  height: 64px;
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
+  border: none;
+  border-radius: 16px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.primary-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+}
+
+.primary-action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.primary-action-btn:hover::before {
+  left: 100%;
+}
+
+/* İkincil aksiyon butonları */
+.secondary-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.secondary-btn {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========================================
+ * 🖼️ FULLSCREEN GALERİ
+ * ======================================== */
+
+.fullscreen-gallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.gallery-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.close-gallery {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.close-gallery:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* ========================================
+ * 🎬 ANİMASYONLAR
+ * ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Component animasyonları */
+.hero-left {
+  animation: scaleIn 0.8s ease-out;
+}
+
+.hero-right {
+  animation: slideInRight 0.8s ease-out 0.2s both;
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .hero-content {
+    grid-template-columns: 360px 1fr;
+    gap: 4rem;
+  }
+  
+  .cover-container {
+    width: 360px;
+    height: 540px;
+  }
+  
+  .game-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* Standard Desktop (1024px - 1439px) */
+@media (max-width: 1439px) {
+  .hero-content {
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+  }
+  
+  .cover-container {
+    width: 280px;
+    height: 420px;
+  }
+  
+  .game-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .hero-left {
+    align-items: center;
+  }
+  
+  .cover-container {
+    width: 280px;
+    height: 420px;
+  }
+  
+  .game-title {
+    font-size: 2.2rem;
+  }
+  
+  .secondary-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (767px ve altı) */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: auto;
+    border-radius: 0;
+  }
+  
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .hero-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .back-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .favorite-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .cover-container {
+    width: 240px;
+    height: 360px;
+  }
+  
+  .game-title {
+    font-size: 1.8rem;
+  }
+  
+  .game-meta {
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .primary-action-btn {
+    height: 56px;
+    font-size: 1.1rem;
+  }
+  
+  .secondary-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .secondary-btn {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+
+  
+  /* Oyun konusu alanı - Mobile */
+  .game-description-section {
+    margin: 0;
+  }
+  
+  .game-description {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .description-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-height: 100px;
+    text-align: left;
+  }
+  
+  .description-loading,
+  .description-not-found,
+  .description-error {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .error-content {
+    gap: 0.4rem;
+  }
+  
+  .retry-button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Dark mode uyumluluğu */
+@media (prefers-color-scheme: dark) {
+  .game-description {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .description-text {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .description-loading {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .description-not-found {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .description-error {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: rgba(220, 38, 38, 0.4);
+    color: #fca5a5;
+  }
+  
+  .retry-button {
+    background: rgba(220, 38, 38, 0.25);
+    border-color: rgba(220, 38, 38, 0.5);
+    color: #fca5a5;
+  }
+  
+  .retry-button:hover {
+    background: rgba(220, 38, 38, 0.35);
+    border-color: rgba(220, 38, 38, 0.6);
+  }
+}

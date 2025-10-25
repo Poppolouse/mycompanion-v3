@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { searchGames, getGameDetails } from '../api/gameApi';
 
 /**
  * Excel dosyasını okur ve JSON formatına çevirir
@@ -33,7 +34,7 @@ export const readExcelFile = (file) => {
 };
 
 /**
- * Excel verisini oyun listesi formatına çevirir
+ * Excel verisini oyun listesi formatına çevirir (Temel versiyon - RAWG entegrasyonu olmadan)
  * @param {Array} rawData - Ham Excel verisi
  * @returns {Array} - Formatlanmış oyun listesi
  */
@@ -53,9 +54,12 @@ export const parseGameList = (rawData) => {
     
     const game = {
       id: index + 1,
-      title: normalizedRow.title || normalizedRow.name || normalizedRow.oyun || 'Bilinmeyen Oyun',
+      title: normalizedRow.title || normalizedRow.name || normalizedRow.oyun || normalizedRow.başlık || 'Bilinmeyen Oyun',
       platform: normalizedRow.platform || normalizedRow.sistem || 'PC',
-      genre: normalizedRow.genre || normalizedRow.tur || 'Bilinmeyen',
+      genre: normalizedRow.genre || normalizedRow.tur || normalizedRow.tür || 'Bilinmeyen',
+      developer: normalizedRow.developer || normalizedRow.gelistirici || normalizedRow.geliştirici || normalizedRow.yapimci || normalizedRow.yapımcı || null,
+      releaseDate: normalizedRow.releasedate || normalizedRow['release date'] || normalizedRow.yil || normalizedRow.yıl || normalizedRow.tarih || null,
+      year: normalizedRow.year || normalizedRow.yil || normalizedRow.yıl || null,
       status: normalizedRow.status || normalizedRow.durum || 'Not Started',
       progress: parseInt(normalizedRow.progress || normalizedRow.ilerleme || 0),
       type: determineGameType(normalizedRow),
@@ -66,6 +70,114 @@ export const parseGameList = (rawData) => {
     
     return game;
   });
+};
+
+/**
+ * Excel verisini RAWG API ile zenginleştirerek oyun listesi formatına çevirir
+ * @param {Array} rawData - Ham Excel verisi
+ * @param {Function} onProgress - Progress callback (current, total, gameName)
+ * @returns {Promise<Array>} - RAWG verisi ile zenginleştirilmiş oyun listesi
+ */
+export const parseGameListWithRAWG = async (rawData, onProgress = null) => {
+  console.log('🎮 RAWG entegrasyonu ile Excel parse başlıyor, toplam satır:', rawData.length);
+  
+  const enrichedGames = [];
+  
+  for (let index = 0; index < rawData.length; index++) {
+    const row = rawData[index];
+    
+    // Excel'deki sütun isimlerini normalize et
+    const normalizedRow = {};
+    Object.keys(row).forEach(key => {
+      const normalizedKey = key.toLowerCase().trim();
+      normalizedRow[normalizedKey] = row[key];
+    });
+    
+    // Temel oyun verisi
+    const baseGame = {
+      id: index + 1,
+      title: normalizedRow.title || normalizedRow.name || normalizedRow.oyun || normalizedRow.başlık || 'Bilinmeyen Oyun',
+      platform: normalizedRow.platform || normalizedRow.sistem || 'PC',
+      genre: normalizedRow.genre || normalizedRow.tur || normalizedRow.tür || 'Bilinmeyen',
+      developer: normalizedRow.developer || normalizedRow.gelistirici || normalizedRow.geliştirici || normalizedRow.yapimci || normalizedRow.yapımcı || null,
+      releaseDate: normalizedRow.releasedate || normalizedRow['release date'] || normalizedRow.yil || normalizedRow.yıl || normalizedRow.tarih || null,
+      year: normalizedRow.year || normalizedRow.yil || normalizedRow.yıl || null,
+      status: normalizedRow.status || normalizedRow.durum || 'Not Started',
+      progress: parseInt(normalizedRow.progress || normalizedRow.ilerleme || 0),
+      type: determineGameType(normalizedRow),
+      factions: parseFactions(normalizedRow),
+      notes: normalizedRow.notes || normalizedRow.notlar || '',
+      addedDate: new Date().toISOString()
+    };
+    
+    // Progress callback çağır
+    if (onProgress) {
+      onProgress(index + 1, rawData.length, baseGame.title);
+    }
+    
+    try {
+      // RAWG'den oyun ara
+      console.log(`🔍 RAWG'de arıyor: ${baseGame.title}`);
+      const searchResults = await searchGames(baseGame.title, 1);
+      
+      if (searchResults && searchResults.length > 0) {
+        const rawgGame = searchResults[0];
+        console.log(`✅ RAWG'de bulundu: ${rawgGame.title}`);
+        
+        // RAWG verisi ile zenginleştir
+        const enrichedGame = {
+          ...baseGame,
+          // RAWG'den gelen veriler (Excel verisi varsa Excel'i tercih et)
+          developer: baseGame.developer || rawgGame.developer || 'Bilinmeyen Geliştirici',
+          publisher: rawgGame.publisher || 'Bilinmeyen Yayıncı',
+          genre: baseGame.genre !== 'Bilinmeyen' ? baseGame.genre : (rawgGame.genre || 'Bilinmeyen'),
+          platform: baseGame.platform || rawgGame.platform || 'PC',
+          year: baseGame.year || rawgGame.year || null,
+          releaseDate: baseGame.releaseDate || rawgGame.release_date || null,
+          rating: rawgGame.rating || 0,
+          metacritic: rawgGame.metacritic || null,
+          description: rawgGame.description || '',
+          image: rawgGame.image || '',
+          tags: rawgGame.tags || [],
+          esrb_rating: rawgGame.esrb_rating || '',
+          playtime: rawgGame.playtime || 0,
+          // RAWG metadata
+          rawg_id: rawgGame.rawg_id || rawgGame.id,
+          rawg_slug: rawgGame.rawg_slug,
+          rawg_url: rawgGame.rawg_url,
+          // Veri kaynağı bilgisi
+          dataSource: 'excel+rawg',
+          rawgEnriched: true
+        };
+        
+        enrichedGames.push(enrichedGame);
+      } else {
+        console.log(`❌ RAWG'de bulunamadı: ${baseGame.title}`);
+        // RAWG'de bulunamadı, sadece Excel verisi ile ekle
+        enrichedGames.push({
+          ...baseGame,
+          dataSource: 'excel',
+          rawgEnriched: false
+        });
+      }
+    } catch (error) {
+      console.error(`🚨 RAWG API hatası (${baseGame.title}):`, error);
+      // Hata durumunda sadece Excel verisi ile ekle
+      enrichedGames.push({
+        ...baseGame,
+        dataSource: 'excel',
+        rawgEnriched: false,
+        rawgError: error.message
+      });
+    }
+    
+    // API rate limiting için kısa bekleme
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  
+  console.log(`🎯 RAWG zenginleştirme tamamlandı: ${enrichedGames.filter(g => g.rawgEnriched).length}/${enrichedGames.length} oyun zenginleştirildi`);
+  
+  return enrichedGames;
 };
 
 /**

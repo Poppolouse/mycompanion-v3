@@ -1,0 +1,279 @@
+/* 📊 StatsCommunity - Wireframe'e Göre Tasarım */
+
+.stats-community-section {
+  margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  padding: 2rem;
+}
+
+.stats-community-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ========================================
+ * 📊 OYUNCU İSTATİSTİKLERİ
+ * ======================================== */
+
+.player-stats h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 24px rgba(var(--color-black-rgb), 0.1);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  border-radius: 8px;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+ * 🌟 TOPLULUK AKTİVİTESİ
+ * ======================================== */
+
+.community-activity h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.activity-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.activity-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 24px rgba(var(--color-black-rgb), 0.1);
+}
+
+.activity-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary-400);
+  margin-bottom: 0.5rem;
+}
+
+.activity-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+ * ⭐ DEĞERLENDİRMELER
+ * ======================================== */
+
+.reviews-summary h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.review-overview {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.review-section {
+  margin-bottom: 1.5rem;
+}
+
+.review-section:last-child {
+  margin-bottom: 0;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.review-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.review-status {
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.review-status.positive {
+  background: rgba(var(--color-success-500-rgb), 0.1);
+  color: var(--color-success-400);
+}
+
+.review-status.mixed {
+  background: rgba(var(--color-warning-500-rgb), 0.1);
+  color: var(--color-warning-400);
+}
+
+.review-status.negative {
+  background: rgba(var(--color-error-500-rgb), 0.1);
+  color: var(--color-error-400);
+}
+
+.review-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.review-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.review-fill.positive {
+  background: var(--color-success-400);
+}
+
+.review-fill.mixed {
+  background: var(--color-warning-400);
+}
+
+.review-fill.negative {
+  background: var(--color-error-400);
+}
+
+.review-percentage {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.total-reviews {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  padding: 1rem;
+  background: var(--surface-1);
+  border-radius: 8px;
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 767px) {
+  .stats-community-section {
+    padding: 1rem;
+    margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  }
+  
+  .stats-community-container {
+    gap: 2rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 1.1rem;
+  }
+  
+  .activity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .activity-card {
+    padding: 1rem;
+  }
+  
+  .activity-count {
+    font-size: 1.2rem;
+  }
+  
+  .review-overview {
+    padding: 1rem;
+  }
+  
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Enhanced GameDetail Designs - 7 Tasarım</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            /* Ana Renkler */
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-primary-700: #1d4ed8;
+            --color-secondary-500: #a855f7;
+            --color-secondary-600: #9333ea;
+            --color-success-500: #22c55e;
+            --color-warning-500: #f59e0b;
+            --color-error-500: #ef4444;
+            
+            /* Arka Plan Gradientleri */
+            --bg-gradient-1: #050508;
+            --bg-gradient-2: #0f0f1a;
+            --bg-gradient-3: #0a1020;
+            --bg-gradient-4: #061a2f;
+            
+            /* Surface Colors */
+            --surface-1: rgba(255, 255, 255, 0.05);
+            --surface-2: rgba(255, 255, 255, 0.08);
+            --surface-3: rgba(255, 255, 255, 0.12);
+            --surface-4: rgba(255, 255, 255, 0.15);
+            
+            /* Metin Renkleri */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.95);
+            --text-tertiary: rgba(255, 255, 255, 0.85);
+            --text-muted: rgba(255, 255, 255, 0.7);
+            
+            /* Oyun Durumu Renkleri */
+            --game-status-playing: #2ed573;
+            --game-status-completed: #11998e;
+            --game-status-paused: #ff4757;
+            --game-status-wishlist: #a0b0ff;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 75%, var(--bg-gradient-4) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--surface-4);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--surface-3);
+            padding: var(--spacing-md);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            color: var(--text-secondary);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--surface-3);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: var(--color-primary-500);
+            color: white;
+            border-color: var(--color-primary-600);
+        }
+
+        /* Design Container */
+        .design-container {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .design-container.active {
+            display: block;
+        }
+
+        /* Game Banner Section */
+        .game-banner {
+            position: relative;
+            height: 400px;
+            margin-bottom: var(--spacing-2xl);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-gradient-3), var(--bg-gradient-4));
+        }
+
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:0.3"/><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:0.1"/></linearGradient></defs><rect width="1200" height="400" fill="url(%23bg)"/></svg>') center/cover;
+            opacity: 0.6;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .game-poster {
+            width: 200px;
+            height: 300px;
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 2px solid var(--surface-4);
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--text-primary), var(--color-primary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: var(--surface-2);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .banner-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            align-items: flex-end;
+        }
+
+        .action-btn {
+            background: var(--color-primary-500);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .action-btn:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: var(--surface-3);
+            color: var(--text-primary);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--surface-4);
+        }
+
+        .favorite-btn {
+            background: var(--color-error-500);
+        }
+
+        .favorite-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Media Section */
+        .media-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .media-container {
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--surface-3);
+        }
+
+        .media-viewer {
+            aspect-ratio: 16/9;
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-thumbnails {
+            display: flex;
+            gap: var(--spacing-sm);
+            overflow-x: auto;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .thumbnail {
+            min-width: 120px;
+            height: 80px;
+            background: var(--surface-3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--color-primary-500);
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border-color: var(--color-primary-500);
+            background: var(--surface-4);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        /* Panel Styles */
+        .panel {
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--surface-3);
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            background: var(--surface-3);
+            transform: translateY(-2px);
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .stat-card {
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border: 1px solid var(--surface-3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: var(--surface-3);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Color Classes */
+        .text-success { color: var(--color-success-500); }
+        .text-warning { color: var(--color-warning-500); }
+        .text-error { color: var(--color-error-500); }
+        .text-info { color: var(--color-primary-500); }
+        .text-secondary { color: var(--color-secondary-500); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .banner-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .game-poster {
+                width: 150px;
+                height: 225px;
+                margin: 0 auto;
+            }
+            
+            .banner-actions {
+                align-items: center;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Layout Specific Styles */
+        
+        /* Layout 1: Classic Information */
+        .layout-classic .content-grid {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        /* Layout 2: Card-Based */
+        .layout-cards .content-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Layout 3: Sidebar Focus */
+        .layout-sidebar .content-grid {
+            grid-template-columns: 1fr 300px;
+        }
+
+        /* Layout 4: Full Width */
+        .layout-fullwidth .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        /* Layout 5: Three Column */
+        .layout-three-col .content-grid {
+            grid-template-columns: 1fr 2fr 1fr;
+        }
+
+        /* Layout 6: Magazine Style */
+        .layout-magazine .content-grid {
+            grid-template-columns: repeat(12, 1fr);
+        }
+
+        .layout-magazine .panel:nth-child(1) { grid-column: 1 / 8; }
+        .layout-magazine .panel:nth-child(2) { grid-column: 8 / 13; }
+        .layout-magazine .panel:nth-child(3) { grid-column: 1 / 5; }
+        .layout-magazine .panel:nth-child(4) { grid-column: 5 / 9; }
+        .layout-magazine .panel:nth-child(5) { grid-column: 9 / 13; }
+
+        /* Layout 7: Masonry Style */
+        .layout-masonry .content-grid {
+            display: block;
+            columns: 3;
+            column-gap: var(--spacing-xl);
+        }
+
+        .layout-masonry .panel {
+            break-inside: avoid;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Special Components */
+        .metacritic-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .score-item {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .howlongtobeat-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .time-item {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: var(--surface-3);
+            border-radius: var(--radius-md);
+        }
+
+        .price-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            background: var(--surface-3);
+            border-radius: var(--radius-md);
+        }
+
+        .system-requirements {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        /* Three Column Layout Specific */
+        .layout-three-col .left-sidebar,
+        .layout-three-col .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .layout-three-col .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Magazine Layout Specific */
+        .layout-magazine .magazine-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .layout-magazine .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .layout-magazine .stat-highlight {
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .layout-magazine .stat-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .layout-magazine .article-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .layout-magazine .content-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .layout-magazine .time-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .layout-magazine .time-card {
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .layout-magazine .time-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-500);
+        }
+
+        .layout-magazine .time-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .layout-magazine .player-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .layout-magazine .player-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .layout-magazine .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .layout-magazine .stat-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .layout-magazine .price-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .layout-magazine .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-md);
+        }
+
+        .layout-magazine .store-name {
+            font-weight: 600;
+        }
+
+        .layout-magazine .price-value {
+            font-weight: 700;
+            color: var(--color-success-500);
+        }
+
+        .layout-magazine .magazine-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .layout-magazine .sidebar-section h4 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .layout-magazine .req-compact,
+        .layout-magazine .awards-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .layout-magazine .req-compact div,
+        .layout-magazine .awards-compact div {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .layout-magazine .related-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Compact Grid Layout Specific */
+        .layout-compact .compact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .layout-compact .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .layout-compact .stat-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .layout-compact .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .layout-compact .stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .layout-compact .stat-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layout-compact .content-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .layout-compact .grid-item {
+            background: var(--surface-2);
+            border: 1px solid var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .layout-compact .grid-item h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .layout-compact .compact-times,
+        .layout-compact .price-list,
+        .layout-compact .system-compact,
+        .layout-compact .awards-list,
+        .layout-compact .quick-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .layout-compact .time-row,
+        .layout-compact .price-item-compact,
+        .layout-compact .req-row,
+        .layout-compact .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+        }
+
+        .layout-compact .player-numbers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .layout-compact .number-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .layout-compact .number {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .layout-compact .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .layout-compact .award-compact {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .layout-compact .related-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .layout-three-col .content-grid {
+                grid-template-columns: 1fr 2fr;
+            }
+            
+            .layout-magazine .magazine-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .layout-compact .content-grid-compact {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout-three-col .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .layout-magazine .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .layout-compact .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .layout-compact .content-grid-compact {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .layout-magazine .hero-stats,
+            .layout-compact .stats-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .req-section {
+            background: var(--surface-3);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--surface-3);
+            border-radius: var(--radius-md);
+        }
+
+        .related-games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .game-card {
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            background: var(--surface-4);
+            transform: translateY(-4px);
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 120px;
+            background: var(--surface-4);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="nav-grid">
+            <button class="nav-btn active" onclick="showDesign('classic')">1️⃣ Klasik Bilgi</button>
+            <button class="nav-btn" onclick="showDesign('cards')">2️⃣ Kart Tabanlı</button>
+            <button class="nav-btn" onclick="showDesign('sidebar')">3️⃣ Sidebar Odaklı</button>
+            <button class="nav-btn" onclick="showDesign('fullwidth')">4️⃣ Tam Genişlik</button>
+            <button class="nav-btn" onclick="showDesign('threecol')">5️⃣ Üç Sütun</button>
+            <button class="nav-btn" onclick="showDesign('magazine')">6️⃣ Dergi Stili</button>
+            <button class="nav-btn" onclick="showDesign('masonry')">7️⃣ Masonry</button>
+        </div>
+    </div>
+
+    <!-- Design 5: Three Column Layout -->
+    <div id="threecol" class="design-container layout-three-col">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid - Three Column -->
+            <div class="content-grid">
+                <!-- Left Sidebar -->
+                <div class="left-sidebar">
+                    <!-- Quick Stats -->
+                    <div class="panel">
+                        <div class="panel-title">📊 Hızlı Bilgiler</div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="stat-card">
+                                <div class="stat-value text-warning">86</div>
+                                <div class="stat-label">Metacritic</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-info">7.2</div>
+                                <div class="stat-label">User Score</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-success">22h</div>
+                                <div class="stat-label">Ana Hikaye</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-warning">85%</div>
+                                <div class="stat-label">Steam</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player Stats -->
+                    <div class="panel">
+                        <div class="panel-title">👥 Oyuncu Sayıları</div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="stat-card">
+                                <div class="stat-value text-success">24,847</div>
+                                <div class="stat-label">Aktif Oyuncu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-info">89,234</div>
+                                <div class="stat-label">Maksimum</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- HowLongToBeat Detailed -->
+                    <div class="panel">
+                        <div class="panel-title">⏱️ Oyun Süreleri (HowLongToBeat)</div>
+                        <div class="howlongtobeat-times">
+                            <div class="time-item">
+                                <div class="score-value text-success">22h</div>
+                                <div class="stat-label">Ana Hikaye</div>
+                            </div>
+                            <div class="time-item">
+                                <div class="score-value text-info">60h</div>
+                                <div class="stat-label">Ana + Ekstra</div>
+                            </div>
+                            <div class="time-item">
+                                <div class="score-value text-warning">103h</div>
+                                <div class="stat-label">Completionist</div>
+                            </div>
+                            <div class="time-item">
+                                <div class="score-value text-secondary">45h</div>
+                                <div class="stat-label">Ortalama</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="panel">
+                        <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                        <div class="system-requirements">
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-warning-500);">Minimum</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i5-3570K</div>
+                                    <div><strong>RAM:</strong> 8 GB</div>
+                                    <div><strong>GPU:</strong> GTX 780 / RX 470</div>
+                                    <div><strong>Storage:</strong> 70 GB</div>
+                                </div>
+                            </div>
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-success-500);">Önerilen</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i7-4790</div>
+                                    <div><strong>RAM:</strong> 12 GB</div>
+                                    <div><strong>GPU:</strong> GTX 1060 6GB</div>
+                                    <div><strong>Storage:</strong> 70 GB SSD</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="right-sidebar">
+                    <!-- Price Comparison -->
+                    <div class="panel">
+                        <div class="panel-title">💰 Fiyatlar</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div class="price-item">
+                                <span>Steam</span>
+                                <span><strong>₺299</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>Epic</span>
+                                <span><strong>₺249</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>GOG</span>
+                                <span><strong>₺299</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>MS Store</span>
+                                <span><strong>₺279</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="panel">
+                        <div class="panel-title">🏆 Ödüller</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">🏆</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">Game Awards</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Best RPG</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">🥇</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">Golden Joystick</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Most Wanted</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">⭐</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">IGN</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Editor's Choice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Same Developer Games -->
+            <div class="panel">
+                <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🗡️</div>
+                        <h4>The Witcher 3</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">⚔️</div>
+                        <h4>The Witcher 2</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🃏</div>
+                        <h4>Gwent</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Games -->
+            <div class="panel">
+                <div class="panel-title">🎮 Benzer Oyunlar</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🤖</div>
+                        <h4>Deus Ex: Mankind Divided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">👁️</div>
+                        <h4>Watch Dogs: Legion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🌃</div>
+                        <h4>Shadowrun: Hong Kong</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Design switching functionality
+        function showDesign(designId) {
+            // Hide all designs
+            const designs = document.querySelectorAll('.design-container');
+            designs.forEach(design => design.style.display = 'none');
+            
+            // Show selected design
+            const selectedDesign = document.getElementById(designId);
+            if (selectedDesign) {
+                selectedDesign.style.display = 'block';
+            }
+            
+            // Update navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Find and activate the correct button
+            const activeButton = Array.from(navButtons).find(btn => 
+                btn.getAttribute('onclick').includes(designId)
+            );
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Animate statistics
+            animateStats();
+        }
+
+        // Animate statistics on page load and design switch
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number, .time-value, .number, .metacritic-score, .steam-rating');
+            
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                const numericValue = parseFloat(finalValue);
+                
+                if (!isNaN(numericValue)) {
+                    let currentValue = 0;
+                    const increment = numericValue / 30;
+                    
+                    const timer = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= numericValue) {
+                            currentValue = numericValue;
+                            clearInterval(timer);
+                        }
+                        
+                        if (finalValue.includes('%')) {
+                            stat.textContent = Math.round(currentValue) + '%';
+                        } else if (finalValue.includes('₺')) {
+                            stat.textContent = Math.round(currentValue) + '₺';
+                        } else if (finalValue.includes('€')) {
+                            stat.textContent = Math.round(currentValue) + '€';
+                        } else if (finalValue.includes('h')) {
+                            stat.textContent = Math.round(currentValue) + 'h';
+                        } else {
+                            stat.textContent = Math.round(currentValue);
+                        }
+                    }, 50);
+                }
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '1' && e.key <= '7') {
+                const designs = ['classic', 'cards', 'sidebar', 'fullwidth', 'threecol', 'magazine', 'masonry'];
+                const index = parseInt(e.key) - 1;
+                if (designs[index]) {
+                    showDesign(designs[index]);
+                }
+            }
+        });
+
+        // Hover effects for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to game cards
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = 'var(--shadow-lg)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'var(--shadow-md)';
+                });
+            });
+
+            // Add click effects to thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                });
+            });
+
+            // Progress bar animations
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width || bar.getAttribute('data-width') || '0%';
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+
+            // Initialize with first design
+            showDesign('classic');
+        });
+
+        // Media viewer functionality
+        function switchMedia(type, index) {
+            const viewer = document.querySelector('.media-viewer');
+            if (type === 'video') {
+                viewer.innerHTML = `🎬 Video ${index}`;
+            } else {
+                viewer.innerHTML = `📸 Fotoğraf ${index}`;
+            }
+        }
+
+        // Action button handlers
+        function startGameSession() {
+            alert('🚀 Oyun session\'u başlatılıyor...');
+        }
+
+        function toggleGameStatus() {
+            const button = event.target;
+            const statuses = ['🎮 Oynanıyor', '⏸️ Duraklatıldı', '✅ Tamamlandı', '❌ Bırakıldı'];
+            const currentIndex = statuses.findIndex(status => button.textContent.includes(status.split(' ')[1]));
+            const nextIndex = (currentIndex + 1) % statuses.length;
+            button.textContent = statuses[nextIndex];
+        }
+
+        function toggleFavorite() {
+            const button = event.target;
+            if (button.textContent.includes('❤️')) {
+                button.textContent = '🤍 Favorilerden Çıkar';
+                button.style.background = 'var(--color-error-500)';
+            } else {
+                button.textContent = '❤️ Favoriye Ekle';
+                button.style.background = 'var(--color-primary-500)';
+            }
+        }
+
+        // Price comparison toggle
+        function togglePriceComparison() {
+            const priceRows = document.querySelectorAll('.price-row, .price-item-compact');
+            priceRows.forEach(row => {
+                const tlPrice = row.querySelector('.price-value');
+                if (tlPrice) {
+                    const currentText = tlPrice.textContent;
+                    if (currentText.includes('₺')) {
+                        // Convert to EUR (example rate: 1 EUR = 30 TL)
+                        const tlAmount = parseFloat(currentText.replace('₺', ''));
+                        const eurAmount = (tlAmount / 30).toFixed(2);
+                        tlPrice.textContent = `€${eurAmount}`;
+                    } else {
+                        // Convert back to TL
+                        const eurAmount = parseFloat(currentText.replace('€', ''));
+                        const tlAmount = Math.round(eurAmount * 30);
+                        tlPrice.textContent = `${tlAmount}₺`;
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+    <!-- Design 6: Magazine Style Layout -->
+    <div id="magazine" class="design-container layout-magazine">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magazine Style Content -->
+            <div class="magazine-layout">
+                <!-- Hero Stats Section -->
+                <div class="hero-stats">
+                    <div class="stat-highlight">
+                        <div class="stat-value text-warning">86</div>
+                        <div class="stat-label">Metacritic Score</div>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="stat-value text-info">7.2</div>
+                        <div class="stat-label">User Score</div>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="stat-value text-success">85%</div>
+                        <div class="stat-label">Steam Rating</div>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="stat-value text-warning">22h</div>
+                        <div class="stat-label">Ana Hikaye</div>
+                    </div>
+                </div>
+
+                <!-- Article Style Content -->
+                <div class="article-content">
+                    <div class="content-section">
+                        <h3>⏱️ Oyun Süreleri</h3>
+                        <div class="time-grid">
+                            <div class="time-card">
+                                <div class="time-value">22h</div>
+                                <div class="time-label">Ana Hikaye</div>
+                            </div>
+                            <div class="time-card">
+                                <div class="time-value">60h</div>
+                                <div class="time-label">Ana + Ekstra</div>
+                            </div>
+                            <div class="time-card">
+                                <div class="time-value">103h</div>
+                                <div class="time-label">Completionist</div>
+                            </div>
+                            <div class="time-card">
+                                <div class="time-value">45h</div>
+                                <div class="time-label">Ortalama</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>👥 Oyuncu İstatistikleri</h3>
+                        <div class="player-stats-grid">
+                            <div class="player-stat">
+                                <span class="stat-number text-success">24,847</span>
+                                <span class="stat-desc">Aktif Oyuncu</span>
+                            </div>
+                            <div class="player-stat">
+                                <span class="stat-number text-info">89,234</span>
+                                <span class="stat-desc">Maksimum Oyuncu</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>💰 Fiyat Karşılaştırması</h3>
+                        <div class="price-comparison">
+                            <div class="price-row">
+                                <span class="store-name">Steam</span>
+                                <span class="price-value">₺299 <small>(€9.99)</small></span>
+                            </div>
+                            <div class="price-row">
+                                <span class="store-name">Epic Games</span>
+                                <span class="price-value">₺249 <small>(€8.33)</small></span>
+                            </div>
+                            <div class="price-row">
+                                <span class="store-name">GOG</span>
+                                <span class="price-value">₺299 <small>(€9.99)</small></span>
+                            </div>
+                            <div class="price-row">
+                                <span class="store-name">Microsoft Store</span>
+                                <span class="price-value">₺279 <small>(€9.33)</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Info -->
+                <div class="magazine-sidebar">
+                    <div class="sidebar-section">
+                        <h4>💻 Sistem Gereksinimleri</h4>
+                        <div class="req-compact">
+                            <div><strong>Min:</strong> GTX 780, 8GB RAM</div>
+                            <div><strong>Önerilen:</strong> GTX 1060, 12GB RAM</div>
+                            <div><strong>Storage:</strong> 70 GB</div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h4>🏆 Ödüller</h4>
+                        <div class="awards-compact">
+                            <div>🏆 Game Awards - Best RPG</div>
+                            <div>🥇 Golden Joystick - Most Wanted</div>
+                            <div>⭐ IGN - Editor's Choice</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Games Section -->
+            <div class="related-section">
+                <div class="panel">
+                    <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                    <div class="related-games">
+                        <div class="game-card">
+                            <div class="game-card-image">🗡️</div>
+                            <h4>The Witcher 3</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">⚔️</div>
+                            <h4>The Witcher 2</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">🃏</div>
+                            <h4>Gwent</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">🎮 Benzer Oyunlar</div>
+                    <div class="related-games">
+                        <div class="game-card">
+                            <div class="game-card-image">🤖</div>
+                            <h4>Deus Ex: Mankind Divided</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">👁️</div>
+                            <h4>Watch Dogs: Legion</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">🌃</div>
+                            <h4>Shadowrun: Hong Kong</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design 7: Compact Grid Layout -->
+    <div id="compact" class="design-container layout-compact">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Grid Layout -->
+            <div class="compact-grid">
+                <!-- Quick Stats Row -->
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <div class="stat-value text-warning">86</div>
+                            <div class="stat-label">Metacritic</div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-value text-info">7.2</div>
+                            <div class="stat-label">User Score</div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value text-success">85%</div>
+                            <div class="stat-label">Steam</div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-content">
+                            <div class="stat-value text-warning">22h</div>
+                            <div class="stat-label">Ana Hikaye</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid-compact">
+                    <!-- Game Times -->
+                    <div class="grid-item">
+                        <h3>⏱️ Oyun Süreleri</h3>
+                        <div class="compact-times">
+                            <div class="time-row">
+                                <span>Ana Hikaye</span>
+                                <span class="text-success">22h</span>
+                            </div>
+                            <div class="time-row">
+                                <span>Ana + Ekstra</span>
+                                <span class="text-info">60h</span>
+                            </div>
+                            <div class="time-row">
+                                <span>Completionist</span>
+                                <span class="text-warning">103h</span>
+                            </div>
+                            <div class="time-row">
+                                <span>Ortalama</span>
+                                <span class="text-secondary">45h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player Stats -->
+                    <div class="grid-item">
+                        <h3>👥 Oyuncu Sayıları</h3>
+                        <div class="player-numbers">
+                            <div class="number-item">
+                                <span class="number text-success">24,847</span>
+                                <span class="label">Aktif</span>
+                            </div>
+                            <div class="number-item">
+                                <span class="number text-info">89,234</span>
+                                <span class="label">Maksimum</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prices -->
+                    <div class="grid-item">
+                        <h3>💰 Fiyatlar</h3>
+                        <div class="price-list">
+                            <div class="price-item-compact">
+                                <span>Steam</span>
+                                <span>₺299</span>
+                            </div>
+                            <div class="price-item-compact">
+                                <span>Epic</span>
+                                <span>₺249</span>
+                            </div>
+                            <div class="price-item-compact">
+                                <span>GOG</span>
+                                <span>₺299</span>
+                            </div>
+                            <div class="price-item-compact">
+                                <span>MS Store</span>
+                                <span>₺279</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="grid-item">
+                        <h3>💻 Sistem Gereksinimleri</h3>
+                        <div class="system-compact">
+                            <div class="req-row">
+                                <strong>Minimum:</strong>
+                                <span>GTX 780, 8GB RAM</span>
+                            </div>
+                            <div class="req-row">
+                                <strong>Önerilen:</strong>
+                                <span>GTX 1060, 12GB RAM</span>
+                            </div>
+                            <div class="req-row">
+                                <strong>Storage:</strong>
+                                <span>70 GB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="grid-item">
+                        <h3>🏆 Ödüller</h3>
+                        <div class="awards-list">
+                            <div class="award-compact">🏆 Game Awards</div>
+                            <div class="award-compact">🥇 Golden Joystick</div>
+                            <div class="award-compact">⭐ IGN Editor's Choice</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Info -->
+                    <div class="grid-item">
+                        <h3>ℹ️ Hızlı Bilgiler</h3>
+                        <div class="quick-info">
+                            <div class="info-row">
+                                <span>Çıkış:</span>
+                                <span>10 Aralık 2020</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Platform:</span>
+                                <span>PC, PS4, Xbox One</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Dil:</span>
+                                <span>Türkçe Altyazı</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Games Section -->
+            <div class="related-section">
+                <div class="panel">
+                    <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                    <div class="related-games">
+                        <div class="game-card">
+                            <div class="game-card-image">🗡️</div>
+                            <h4>The Witcher 3</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">⚔️</div>
+                            <h4>The Witcher 2</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">🃏</div>
+                            <h4>Gwent</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">🎮 Benzer Oyunlar</div>
+                    <div class="related-games">
+                        <div class="game-card">
+                            <div class="game-card-image">🤖</div>
+                            <h4>Deus Ex: Mankind Divided</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">👁️</div>
+                            <h4>Watch Dogs: Legion</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-card-image">🌃</div>
+                            <h4>Shadowrun: Hong Kong</h4>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                            <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design 1: Classic Information Layout -->
+    <div id="classic" class="design-container active layout-classic">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Metacritic Scores -->
+                    <div class="panel">
+                        <div class="panel-title">⭐ Metacritic Puanları</div>
+                        <div class="metacritic-scores">
+                            <div class="score-item">
+                                <div class="score-value text-warning">86</div>
+                                <div class="stat-label">Critic Score</div>
+                            </div>
+                            <div class="score-item">
+                                <div class="score-value text-info">7.2</div>
+                                <div class="stat-label">User Score</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HowLongToBeat -->
+                    <div class="panel">
+                        <div class="panel-title">⏱️ Oyun Süreleri (HowLongToBeat)</div>
+                        <div class="howlongtobeat-times">
+                            <div class="time-item">
+                                <div class="score-value text-success">22h</div>
+                                <div class="stat-label">Ana Hikaye</div>
+                            </div>
+                            <div class="time-item">
+                                <div class="score-value text-info">60h</div>
+                                <div class="stat-label">Ana + Ekstra</div>
+                            </div>
+                            <div class="time-item">
+                                <div class="score-value text-warning">103h</div>
+                                <div class="stat-label">Completionist</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Comparison -->
+                    <div class="panel">
+                        <div class="panel-title">💰 Fiyat Karşılaştırması (Türkiye)</div>
+                        <div class="price-comparison">
+                            <div class="price-item">
+                                <span>Steam</span>
+                                <span><strong>₺299.00</strong> (€16.99)</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Epic Games</span>
+                                <span><strong>₺249.00</strong> (€14.15)</span>
+                            </div>
+                            <div class="price-item">
+                                <span>GOG</span>
+                                <span><strong>₺299.00</strong> (€16.99)</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Microsoft Store</span>
+                                <span><strong>₺279.00</strong> (€15.85)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="panel">
+                        <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                        <div class="system-requirements">
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-warning-500);">Minimum</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i5-3570K / AMD FX-8310</div>
+                                    <div><strong>RAM:</strong> 8 GB</div>
+                                    <div><strong>GPU:</strong> GTX 780 / RX 470</div>
+                                    <div><strong>Storage:</strong> 70 GB</div>
+                                </div>
+                            </div>
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-success-500);">Önerilen</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i7-4790 / AMD Ryzen 3 3200G</div>
+                                    <div><strong>RAM:</strong> 12 GB</div>
+                                    <div><strong>GPU:</strong> GTX 1060 6GB / RX 580</div>
+                                    <div><strong>Storage:</strong> 70 GB SSD</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar-content">
+                    <!-- Player Stats -->
+                    <div class="panel">
+                        <div class="panel-title">📊 Oyuncu İstatistikleri</div>
+                        <div class="stats-grid" style="grid-template-columns: 1fr;">
+                            <div class="stat-card">
+                                <div class="stat-value text-success">24,847</div>
+                                <div class="stat-label">Aktif Oyuncu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-info">89,234</div>
+                                <div class="stat-label">Maksimum Oyuncu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-warning">85%</div>
+                                <div class="stat-label">Steam Rating</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="panel">
+                        <div class="panel-title">🏆 Ödüller</div>
+                        <div class="awards-grid" style="grid-template-columns: 1fr;">
+                            <div class="award-item">
+                                <span style="font-size: 1.5rem;">🏆</span>
+                                <div>
+                                    <div style="font-weight: 600;">Game Awards 2020</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">Best RPG</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.5rem;">🥇</span>
+                                <div>
+                                    <div style="font-weight: 600;">Golden Joystick</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">Most Wanted</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.5rem;">⭐</span>
+                                <div>
+                                    <div style="font-weight: 600;">IGN</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">Editor's Choice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Same Developer Games -->
+            <div class="panel">
+                <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🗡️</div>
+                        <h4>The Witcher 3</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">⚔️</div>
+                        <h4>The Witcher 2</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🃏</div>
+                        <h4>Gwent</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Games -->
+            <div class="panel">
+                <div class="panel-title">🎮 Benzer Oyunlar</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🤖</div>
+                        <h4>Deus Ex: Mankind Divided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">👁️</div>
+                        <h4>Watch Dogs: Legion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🌃</div>
+                        <h4>Shadowrun: Hong Kong</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🚗</div>
+                        <h4>GTA V</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2013</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.7/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design 2: Card-Based Layout -->
+    <div id="cards" class="design-container layout-cards">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid - Card Based -->
+            <div class="content-grid">
+                <!-- Metacritic Card -->
+                <div class="panel">
+                    <div class="panel-title">⭐ Metacritic</div>
+                    <div class="metacritic-scores">
+                        <div class="score-item">
+                            <div class="score-value text-warning">86</div>
+                            <div class="stat-label">Critic Score</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value text-info">7.2</div>
+                            <div class="stat-label">User Score</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HowLongToBeat Card -->
+                <div class="panel">
+                    <div class="panel-title">⏱️ Oyun Süreleri</div>
+                    <div class="howlongtobeat-times">
+                        <div class="time-item">
+                            <div class="score-value text-success">22h</div>
+                            <div class="stat-label">Ana Hikaye</div>
+                        </div>
+                        <div class="time-item">
+                            <div class="score-value text-info">60h</div>
+                            <div class="stat-label">Ana + Ekstra</div>
+                        </div>
+                        <div class="time-item">
+                            <div class="score-value text-warning">103h</div>
+                            <div class="stat-label">Completionist</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player Stats Card -->
+                <div class="panel">
+                    <div class="panel-title">📊 Oyuncu İstatistikleri</div>
+                    <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="stat-card">
+                            <div class="stat-value text-success">24,847</div>
+                            <div class="stat-label">Aktif Oyuncu</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value text-info">89,234</div>
+                            <div class="stat-label">Max Oyuncu</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value text-warning">85%</div>
+                            <div class="stat-label">Steam Rating</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value text-error">13.7M</div>
+                            <div class="stat-label">Toplam Satış</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Card -->
+                <div class="panel">
+                    <div class="panel-title">💰 Fiyat Karşılaştırması</div>
+                    <div class="price-comparison">
+                        <div class="price-item">
+                            <span>Steam</span>
+                            <span><strong>₺299.00</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span>Epic Games</span>
+                            <span><strong>₺249.00</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span>GOG</span>
+                            <span><strong>₺299.00</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Requirements Card -->
+                <div class="panel">
+                    <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="background: var(--surface-3); padding: 1rem; border-radius: var(--radius-md);">
+                            <h4 style="color: var(--color-warning-500); margin-bottom: 0.5rem;">Minimum</h4>
+                            <div style="font-size: 0.875rem;">GTX 780 • 8GB RAM • i5-3570K</div>
+                        </div>
+                        <div style="background: var(--surface-3); padding: 1rem; border-radius: var(--radius-md);">
+                            <h4 style="color: var(--color-success-500); margin-bottom: 0.5rem;">Önerilen</h4>
+                            <div style="font-size: 0.875rem;">GTX 1060 • 12GB RAM • i7-4790</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Awards Card -->
+                <div class="panel">
+                    <div class="panel-title">🏆 Ödüller</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div class="award-item">
+                            <span style="font-size: 1.5rem;">🏆</span>
+                            <div>
+                                <div style="font-weight: 600;">Game Awards 2020</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Best RPG</div>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <span style="font-size: 1.5rem;">🥇</span>
+                            <div>
+                                <div style="font-weight: 600;">Golden Joystick</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Most Wanted</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Same Developer Games -->
+            <div class="panel">
+                <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🗡️</div>
+                        <h4>The Witcher 3</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">⚔️</div>
+                        <h4>The Witcher 2</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🃏</div>
+                        <h4>Gwent</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Games -->
+            <div class="panel">
+                <div class="panel-title">🎮 Benzer Oyunlar</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🤖</div>
+                        <h4>Deus Ex: Mankind Divided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">👁️</div>
+                        <h4>Watch Dogs: Legion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🌃</div>
+                        <h4>Shadowrun: Hong Kong</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design 3: Sidebar Focus Layout -->
+    <div id="sidebar" class="design-container layout-sidebar">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid - Sidebar Focus -->
+            <div class="content-grid">
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Metacritic & HowLongToBeat Combined -->
+                    <div class="panel">
+                        <div class="panel-title">📊 Puanlar ve Süreler</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                            <div>
+                                <h4 style="margin-bottom: 1rem; color: var(--color-primary-500);">⭐ Metacritic</h4>
+                                <div class="metacritic-scores">
+                                    <div class="score-item">
+                                        <div class="score-value text-warning">86</div>
+                                        <div class="stat-label">Critic</div>
+                                    </div>
+                                    <div class="score-item">
+                                        <div class="score-value text-info">7.2</div>
+                                        <div class="stat-label">User</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 1rem; color: var(--color-secondary-500);">⏱️ HowLongToBeat</h4>
+                                <div class="howlongtobeat-times">
+                                    <div class="time-item">
+                                        <div class="score-value text-success">22h</div>
+                                        <div class="stat-label">Ana</div>
+                                    </div>
+                                    <div class="time-item">
+                                        <div class="score-value text-info">60h</div>
+                                        <div class="stat-label">+Ekstra</div>
+                                    </div>
+                                    <div class="time-item">
+                                        <div class="score-value text-warning">103h</div>
+                                        <div class="stat-label">%100</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="panel">
+                        <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                        <div class="system-requirements">
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-warning-500);">Minimum</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i5-3570K</div>
+                                    <div><strong>RAM:</strong> 8 GB</div>
+                                    <div><strong>GPU:</strong> GTX 780 / RX 470</div>
+                                    <div><strong>Storage:</strong> 70 GB</div>
+                                </div>
+                            </div>
+                            <div class="req-section">
+                                <h4 style="margin-bottom: 1rem; color: var(--color-success-500);">Önerilen</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                    <div><strong>CPU:</strong> Intel Core i7-4790</div>
+                                    <div><strong>RAM:</strong> 12 GB</div>
+                                    <div><strong>GPU:</strong> GTX 1060 6GB</div>
+                                    <div><strong>Storage:</strong> 70 GB SSD</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar-content" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Quick Stats -->
+                    <div class="panel">
+                        <div class="panel-title">📊 Hızlı İstatistikler</div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="stat-card">
+                                <div class="stat-value text-success">24,847</div>
+                                <div class="stat-label">Aktif Oyuncu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-info">89,234</div>
+                                <div class="stat-label">Max Oyuncu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value text-warning">85%</div>
+                                <div class="stat-label">Steam Rating</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Comparison -->
+                    <div class="panel">
+                        <div class="panel-title">💰 Fiyatlar</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div class="price-item">
+                                <span>Steam</span>
+                                <span><strong>₺299</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>Epic</span>
+                                <span><strong>₺249</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>GOG</span>
+                                <span><strong>₺299</strong></span>
+                            </div>
+                            <div class="price-item">
+                                <span>MS Store</span>
+                                <span><strong>₺279</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="panel">
+                        <div class="panel-title">🏆 Ödüller</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">🏆</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">Game Awards</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Best RPG 2020</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">🥇</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">Golden Joystick</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Most Wanted</div>
+                                </div>
+                            </div>
+                            <div class="award-item">
+                                <span style="font-size: 1.2rem;">⭐</span>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 0.875rem;">IGN</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Editor's Choice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Same Developer Games -->
+            <div class="panel">
+                <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🗡️</div>
+                        <h4>The Witcher 3</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">⚔️</div>
+                        <h4>The Witcher 2</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🃏</div>
+                        <h4>Gwent</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Games -->
+            <div class="panel">
+                <div class="panel-title">🎮 Benzer Oyunlar</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🤖</div>
+                        <h4>Deus Ex: Mankind Divided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">👁️</div>
+                        <h4>Watch Dogs: Legion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🌃</div>
+                        <h4>Shadowrun: Hong Kong</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design 4: Full Width Layout -->
+    <div id="fullwidth" class="design-container layout-fullwidth">
+        <div class="container">
+            <!-- Game Banner -->
+            <div class="game-banner">
+                <div class="banner-background"></div>
+                <div class="banner-content">
+                    <div class="game-poster">🎮</div>
+                    <div class="game-info">
+                        <h1 class="game-title">Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <div class="meta-item">📅 2020</div>
+                            <div class="meta-item">🎭 RPG, Aksiyon</div>
+                            <div class="meta-item">👨‍💻 CD Projekt RED</div>
+                            <div class="meta-item">🏢 CD Projekt</div>
+                            <div class="meta-item">⏱️ 127 saat oynadın</div>
+                        </div>
+                    </div>
+                    <div class="banner-actions">
+                        <button class="action-btn favorite-btn">❤️ Favoriye Ekle</button>
+                        <button class="action-btn secondary">🎮 Oynanıyor</button>
+                        <button class="action-btn">🚀 Session Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-container">
+                    <div class="media-viewer">
+                        🎬 Ana Video/Fotoğraf
+                    </div>
+                    <div class="media-thumbnails">
+                        <div class="thumbnail active">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">🎬</div>
+                        <div class="thumbnail">📸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid - Full Width -->
+            <div class="content-grid">
+                <!-- All Stats in One Row -->
+                <div class="panel">
+                    <div class="panel-title">📊 Tüm İstatistikler</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <!-- Metacritic -->
+                        <div style="text-align: center; background: var(--surface-3); padding: 1.5rem; border-radius: var(--radius-lg);">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-primary-500);">⭐ Metacritic</h4>
+                            <div style="display: flex; gap: 1rem; justify-content: center;">
+                                <div>
+                                    <div class="score-value text-warning">86</div>
+                                    <div class="stat-label">Critic</div>
+                                </div>
+                                <div>
+                                    <div class="score-value text-info">7.2</div>
+                                    <div class="stat-label">User</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- HowLongToBeat -->
+                        <div style="text-align: center; background: var(--surface-3); padding: 1.5rem; border-radius: var(--radius-lg);">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-secondary-500);">⏱️ Oyun Süreleri</h4>
+                            <div style="display: flex; gap: 1rem; justify-content: center;">
+                                <div>
+                                    <div class="score-value text-success">22h</div>
+                                    <div class="stat-label">Ana</div>
+                                </div>
+                                <div>
+                                    <div class="score-value text-info">60h</div>
+                                    <div class="stat-label">+Ekstra</div>
+                                </div>
+                                <div>
+                                    <div class="score-value text-warning">103h</div>
+                                    <div class="stat-label">%100</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Player Stats -->
+                        <div style="text-align: center; background: var(--surface-3); padding: 1.5rem; border-radius: var(--radius-lg);">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-success-500);">👥 Oyuncu Sayıları</h4>
+                            <div style="display: flex; gap: 1rem; justify-content: center;">
+                                <div>
+                                    <div class="score-value text-success">24,847</div>
+                                    <div class="stat-label">Aktif</div>
+                                </div>
+                                <div>
+                                    <div class="score-value text-info">89,234</div>
+                                    <div class="stat-label">Max</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Steam Rating -->
+                        <div style="text-align: center; background: var(--surface-3); padding: 1.5rem; border-radius: var(--radius-lg);">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-warning-500);">🎮 Steam</h4>
+                            <div>
+                                <div class="score-value text-warning">85%</div>
+                                <div class="stat-label">Pozitif</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Comparison - Full Width -->
+                <div class="panel">
+                    <div class="panel-title">💰 Fiyat Karşılaştırması (Türkiye)</div>
+                    <div class="price-comparison">
+                        <div class="price-item">
+                            <span><strong>Steam</strong></span>
+                            <span><strong>₺299.00</strong> (€16.99)</span>
+                        </div>
+                        <div class="price-item">
+                            <span><strong>Epic Games</strong></span>
+                            <span><strong>₺249.00</strong> (€14.15)</span>
+                        </div>
+                        <div class="price-item">
+                            <span><strong>GOG</strong></span>
+                            <span><strong>₺299.00</strong> (€16.99)</span>
+                        </div>
+                        <div class="price-item">
+                            <span><strong>Microsoft Store</strong></span>
+                            <span><strong>₺279.00</strong> (€15.85)</span>
+                        </div>
+                        <div class="price-item">
+                            <span><strong>PlayStation Store</strong></span>
+                            <span><strong>₺329.00</strong> (€18.70)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Requirements - Full Width -->
+                <div class="panel">
+                    <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                    <div class="system-requirements">
+                        <div class="req-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-warning-500);">Minimum</h4>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                <div><strong>CPU:</strong> Intel Core i5-3570K / AMD FX-8310</div>
+                                <div><strong>RAM:</strong> 8 GB</div>
+                                <div><strong>GPU:</strong> GTX 780 / RX 470</div>
+                                <div><strong>Storage:</strong> 70 GB</div>
+                            </div>
+                        </div>
+                        <div class="req-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--color-success-500);">Önerilen</h4>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div><strong>OS:</strong> Windows 10 64-bit</div>
+                                <div><strong>CPU:</strong> Intel Core i7-4790 / AMD Ryzen 3 3200G</div>
+                                <div><strong>RAM:</strong> 12 GB</div>
+                                <div><strong>GPU:</strong> GTX 1060 6GB / RX 580</div>
+                                <div><strong>Storage:</strong> 70 GB SSD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Awards - Full Width -->
+                <div class="panel">
+                    <div class="panel-title">🏆 Ödüller</div>
+                    <div class="awards-grid">
+                        <div class="award-item">
+                            <span style="font-size: 2rem;">🏆</span>
+                            <div>
+                                <div style="font-weight: 600;">Game Awards 2020</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Best RPG</div>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <span style="font-size: 2rem;">🥇</span>
+                            <div>
+                                <div style="font-weight: 600;">Golden Joystick Awards</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Most Wanted Game</div>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <span style="font-size: 2rem;">⭐</span>
+                            <div>
+                                <div style="font-weight: 600;">IGN</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Editor's Choice</div>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <span style="font-size: 2rem;">🎖️</span>
+                            <div>
+                                <div style="font-weight: 600;">PC Gamer</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Game of the Year Nominee</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Same Developer Games -->
+            <div class="panel">
+                <div class="panel-title">🏢 CD Projekt RED'in Diğer Oyunları</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🗡️</div>
+                        <h4>The Witcher 3: Wild Hunt</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.3/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">⚔️</div>
+                        <h4>The Witcher 2</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2011</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🃏</div>
+                        <h4>Gwent: The Witcher Card Game</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Card Game • 2017</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.5/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🏰</div>
+                        <h4>The Witcher</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2007</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.1/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Games -->
+            <div class="panel">
+                <div class="panel-title">🎮 Benzer Oyunlar</div>
+                <div class="related-games">
+                    <div class="game-card">
+                        <div class="game-card-image">🤖</div>
+                        <h4>Deus Ex: Mankind Divided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.2/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">👁️</div>
+                        <h4>Watch Dogs: Legion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2020</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.8/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🌃</div>
+                        <h4>Shadowrun: Hong Kong</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">RPG • 2015</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">8.5/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🚗</div>
+                        <h4>Grand Theft Auto V</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2013</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-success-500); font-weight: 600;">9.7/10</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-image">🏙️</div>
+                        <h4>Mirror's Edge Catalyst</h4>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Action • 2016</p>
+                        <div style="margin-top: 0.5rem; color: var(--color-warning-500); font-weight: 600;">7.1/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

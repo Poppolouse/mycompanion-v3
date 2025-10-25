@@ -137,6 +137,9 @@ function AdvancedFilters({
     if (game.progress >= 100 || game.status === 'completed') return 'completed';
     if (game.status === 'playing' || game.progress > 0) return 'playing';
     if (game.status === 'paused') return 'paused';
+    if (game.status === 'dropped') return 'dropped';
+    if (game.status === 'planning') return 'planning';
+    if (game.status === 'wishlist') return 'wishlist';
     return 'not-started';
   };
 
@@ -145,7 +148,10 @@ function AdvancedFilters({
     const labels = {
       'playing': '▶️ Oynuyor',
       'completed': '✅ Tamamlandı',
-      'paused': '⏸️ Durduruldu',
+      'paused': '⏸️ Duraklatıldı',
+      'dropped': '❌ Bırakıldı',
+      'planning': '📋 Planlanıyor',
+      'wishlist': '⭐ İstek Listesi',
       'not-started': '⭕ Başlanmadı'
     };
     return labels[status] || status;

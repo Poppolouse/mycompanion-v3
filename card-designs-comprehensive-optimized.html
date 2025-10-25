@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 ÇALKALA! 14 Kart İçi Layout Tasarımı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #050508 0%, #0f0f1a 25%, #0a1020 50%, #061a2f 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .design-set {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: rgba(20, 25, 40, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .set-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .cards-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        /* Base Card Styles */
+        .card {
+            width: 280px;
+            height: 364px; /* 1.3x uzunlamasına */
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 1. Classic Top-Down */
+        .set-1 .card {
+            background: linear-gradient(145deg, rgba(30, 35, 50, 0.9), rgba(20, 25, 40, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .set-1 .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+
+        .set-1 .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .set-1 .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .set-1 .card-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 2. Side Icon */
+        .set-2 .card {
+            background: linear-gradient(135deg, rgba(40, 45, 60, 0.9), rgba(25, 30, 45, 0.9));
+            border-left: 4px solid;
+            display: flex;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .set-2 .card-icon {
+            font-size: 4rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .set-2 .card-content {
+            flex: 1;
+        }
+
+        .set-2 .card-title {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .set-2 .card-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .set-2 .card-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* 3. Corner Badge */
+        .set-3 .card {
+            background: linear-gradient(225deg, rgba(35, 40, 55, 0.9), rgba(20, 25, 40, 0.9));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .set-3 .card-badge {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 0 14px 0 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .set-3 .card-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .set-3 .card-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .set-3 .card-title {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* 4. Split Diagonal */
+        .set-4 .card {
+            background: linear-gradient(45deg, rgba(30, 35, 50, 0.9) 50%, rgba(45, 50, 65, 0.9) 50%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-4 .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.1) 49%, rgba(255, 255, 255, 0.1) 51%, transparent 52%);
+        }
+
+        .set-4 .card-top {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 60px;
+        }
+
+        .set-4 .card-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 60px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .set-4 .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .set-4 .card-title {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* 5. Circular Progress */
+        .set-5 .card {
+            background: radial-gradient(circle at center, rgba(40, 45, 60, 0.9), rgba(20, 25, 40, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .set-5 .progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #4ecdc4 0deg, #4ecdc4 252deg, rgba(255, 255, 255, 0.1) 252deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .set-5 .progress-circle::before {
+            content: '';
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(20, 25, 40, 0.9);
+            position: absolute;
+        }
+
+        .set-5 .card-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            z-index: 1;
+            position: relative;
+        }
+
+        .set-5 .card-title {
+            font-size: 1rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* 6. Horizontal Bar */
+        .set-6 .card {
+            background: linear-gradient(180deg, rgba(35, 40, 55, 0.9), rgba(25, 30, 45, 0.9));
+            border-bottom: 3px solid;
+            padding: 25px 20px;
+        }
+
+        .set-6 .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .set-6 .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .set-6 .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .set-6 .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .set-6 .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+            width: 70%;
+            border-radius: 4px;
+        }
+
+        .set-6 .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 7. Stacked Info */
+        .set-7 .card {
+            background: linear-gradient(135deg, rgba(25, 30, 45, 0.9), rgba(35, 40, 55, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .set-7 .card-layer {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid;
+        }
+
+        .set-7 .card-layer:last-child {
+            margin-bottom: 0;
+        }
+
+        .set-7 .layer-title {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .set-7 .layer-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* 8. Icon Background */
+        .set-8 .card {
+            background: linear-gradient(135deg, rgba(30, 35, 50, 0.9), rgba(40, 45, 60, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-8 .bg-icon {
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .set-8 .card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .set-8 .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .set-8 .card-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .set-8 .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .set-8 .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 9. Card Flip Style */
+        .set-9 .card {
+            background: linear-gradient(145deg, rgba(35, 40, 55, 0.9), rgba(25, 30, 45, 0.9));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .set-9 .card:hover {
+            transform: rotateY(10deg) translateY(-5px);
+        }
+
+        .set-9 .card-front {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .set-9 .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .set-9 .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .set-9 .card-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        /* 10. Minimal Center */
+        .set-10 .card {
+            background: rgba(20, 25, 40, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .set-10 .card-value {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .set-10 .card-title {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 11. Rich Details */
+        .set-11 .card {
+            background: linear-gradient(135deg, rgba(40, 45, 60, 0.9), rgba(30, 35, 50, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+        }
+
+        .set-11 .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .set-11 .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .set-11 .card-icon {
+            font-size: 1.2rem;
+        }
+
+        .set-11 .card-main {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .set-11 .card-value {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .set-11 .card-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .set-11 .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.75rem;
+        }
+
+        .set-11 .detail-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* 12. Gradient Overlay */
+        .set-12 .card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-12 .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+        }
+
+        .set-12 .card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .set-12 .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .set-12 .card-value {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .set-12 .card-title {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 13. Neon Glow */
+        .set-13 .card {
+            background: rgba(10, 15, 30, 0.9);
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-13 .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 16px;
+            opacity: 0.7;
+            filter: blur(10px);
+        }
+
+        .set-13 .card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .set-13 .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .set-13 .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .set-13 .card-title {
+            font-size: 1rem;
+            opacity: 0.8;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        /* 14. Glassmorphism */
+        .set-14 .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .set-14 .card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .set-14 .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .set-14 .card-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .set-14 .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .set-14 .card-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .set-14 .card-value {
+            font-size: 2.8rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, #cccccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .set-14 .card-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Color Variations for Card Types */
+        .critics { color: #ff6b6b; border-color: #ff6b6b; }
+        .users { color: #4ecdc4; border-color: #4ecdc4; }
+        .hltb { color: #45b7d1; border-color: #45b7d1; }
+        .esrb { color: #96ceb4; border-color: #96ceb4; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .cards-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 ÇALKALA! 14 Kart İçi Layout Tasarımı</h1>
+
+        <!-- Set 1: Classic Top-Down -->
+        <div class="design-set set-1">
+            <h2 class="set-title">1. Classic Top-Down Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-icon">⭐</div>
+                    <div class="card-title">Critics Score</div>
+                    <div class="card-value">85</div>
+                    <div class="card-subtitle">Metacritic Professional</div>
+                </div>
+                <div class="card users">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">User Score</div>
+                    <div class="card-value">7.8</div>
+                    <div class="card-subtitle">Metacritic Users</div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-icon">⏱️</div>
+                    <div class="card-title">Main Story</div>
+                    <div class="card-value">12h</div>
+                    <div class="card-subtitle">HowLongToBeat</div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-icon">🛡️</div>
+                    <div class="card-title">ESRB Rating</div>
+                    <div class="card-value">T</div>
+                    <div class="card-subtitle">Teen 13+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 2: Side Icon -->
+        <div class="design-set set-2">
+            <h2 class="set-title">2. Side Icon Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-icon">⭐</div>
+                    <div class="card-content">
+                        <div class="card-title">Critics</div>
+                        <div class="card-value">85</div>
+                        <div class="card-subtitle">Professional Reviews</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <div class="card-title">Users</div>
+                        <div class="card-value">7.8</div>
+                        <div class="card-subtitle">Community Score</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-icon">⏱️</div>
+                    <div class="card-content">
+                        <div class="card-title">Playtime</div>
+                        <div class="card-value">12h</div>
+                        <div class="card-subtitle">Average Duration</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-icon">🛡️</div>
+                    <div class="card-content">
+                        <div class="card-title">Rating</div>
+                        <div class="card-value">T</div>
+                        <div class="card-subtitle">Teen Content</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 3: Corner Badge -->
+        <div class="design-set set-3">
+            <h2 class="set-title">3. Corner Badge Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-badge">CRITICS</div>
+                    <div class="card-main">
+                        <div class="card-value">85</div>
+                        <div class="card-title">Metacritic Score</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-badge">USERS</div>
+                    <div class="card-main">
+                        <div class="card-value">7.8</div>
+                        <div class="card-title">Community Rating</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-badge">TIME</div>
+                    <div class="card-main">
+                        <div class="card-value">12h</div>
+                        <div class="card-title">Main Story</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-badge">ESRB</div>
+                    <div class="card-main">
+                        <div class="card-value">T</div>
+                        <div class="card-title">Teen Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 4: Split Diagonal -->
+        <div class="design-set set-4">
+            <h2 class="set-title">4. Split Diagonal Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-top">
+                        <div class="card-value">85</div>
+                        <div class="card-title">Critics</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div style="font-size: 2rem;">⭐</div>
+                        <div style="font-size: 0.8rem; opacity: 0.6;">Metacritic</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-top">
+                        <div class="card-value">7.8</div>
+                        <div class="card-title">Users</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div style="font-size: 2rem;">👥</div>
+                        <div style="font-size: 0.8rem; opacity: 0.6;">Community</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-top">
+                        <div class="card-value">12h</div>
+                        <div class="card-title">Duration</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div style="font-size: 2rem;">⏱️</div>
+                        <div style="font-size: 0.8rem; opacity: 0.6;">HLTB</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-top">
+                        <div class="card-value">T</div>
+                        <div class="card-title">Rating</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div style="font-size: 2rem;">🛡️</div>
+                        <div style="font-size: 0.8rem; opacity: 0.6;">ESRB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 5: Circular Progress -->
+        <div class="design-set set-5">
+            <h2 class="set-title">5. Circular Progress Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="progress-circle">
+                        <div class="card-value">85</div>
+                    </div>
+                    <div class="card-title">Critics Score</div>
+                </div>
+                <div class="card users">
+                    <div class="progress-circle">
+                        <div class="card-value">7.8</div>
+                    </div>
+                    <div class="card-title">User Score</div>
+                </div>
+                <div class="card hltb">
+                    <div class="progress-circle">
+                        <div class="card-value">12h</div>
+                    </div>
+                    <div class="card-title">Playtime</div>
+                </div>
+                <div class="card esrb">
+                    <div class="progress-circle">
+                        <div class="card-value">T</div>
+                    </div>
+                    <div class="card-title">ESRB Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 6: Horizontal Bar -->
+        <div class="design-set set-6">
+            <h2 class="set-title">6. Horizontal Bar Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-header">
+                        <div class="card-title">Critics Score</div>
+                        <div class="card-icon">⭐</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="card-value">85</div>
+                </div>
+                <div class="card users">
+                    <div class="card-header">
+                        <div class="card-title">User Score</div>
+                        <div class="card-icon">👥</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <div class="card-value">7.8</div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-header">
+                        <div class="card-title">Main Story</div>
+                        <div class="card-icon">⏱️</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                    <div class="card-value">12h</div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-header">
+                        <div class="card-title">ESRB Rating</div>
+                        <div class="card-icon">🛡️</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%;"></div>
+                    </div>
+                    <div class="card-value">T</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 7: Stacked Info -->
+        <div class="design-set set-7">
+            <h2 class="set-title">7. Stacked Info Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-layer critics">
+                        <div class="layer-title">Source</div>
+                        <div class="layer-value">Metacritic</div>
+                    </div>
+                    <div class="card-layer critics">
+                        <div class="layer-title">Critics Score</div>
+                        <div class="layer-value">85/100</div>
+                    </div>
+                    <div class="card-layer critics">
+                        <div class="layer-title">Status</div>
+                        <div class="layer-value">Universal Acclaim</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-layer users">
+                        <div class="layer-title">Platform</div>
+                        <div class="layer-value">Community</div>
+                    </div>
+                    <div class="card-layer users">
+                        <div class="layer-title">User Score</div>
+                        <div class="layer-value">7.8/10</div>
+                    </div>
+                    <div class="card-layer users">
+                        <div class="layer-title">Reviews</div>
+                        <div class="layer-value">2,847 ratings</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-layer hltb">
+                        <div class="layer-title">Type</div>
+                        <div class="layer-value">Main Story</div>
+                    </div>
+                    <div class="card-layer hltb">
+                        <div class="layer-title">Duration</div>
+                        <div class="layer-value">12 Hours</div>
+                    </div>
+                    <div class="card-layer hltb">
+                        <div class="layer-title">Completionist</div>
+                        <div class="layer-value">35+ Hours</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-layer esrb">
+                        <div class="layer-title">Rating</div>
+                        <div class="layer-value">Teen (T)</div>
+                    </div>
+                    <div class="card-layer esrb">
+                        <div class="layer-title">Age</div>
+                        <div class="layer-value">13+ Years</div>
+                    </div>
+                    <div class="card-layer esrb">
+                        <div class="layer-title">Content</div>
+                        <div class="layer-value">Mild Violence</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 8: Icon Background -->
+        <div class="design-set set-8">
+            <h2 class="set-title">8. Icon Background Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="bg-icon">⭐</div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">⭐</div>
+                            <div class="card-title">Critics</div>
+                        </div>
+                        <div class="card-value">85</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="bg-icon">👥</div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">👥</div>
+                            <div class="card-title">Users</div>
+                        </div>
+                        <div class="card-value">7.8</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="bg-icon">⏱️</div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">⏱️</div>
+                            <div class="card-title">Duration</div>
+                        </div>
+                        <div class="card-value">12h</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="bg-icon">🛡️</div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">🛡️</div>
+                            <div class="card-title">Rating</div>
+                        </div>
+                        <div class="card-value">T</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 9: Card Flip Style -->
+        <div class="design-set set-9">
+            <h2 class="set-title">9. Card Flip Style Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-front">
+                        <div class="card-icon">⭐</div>
+                        <div class="card-title">Critics Score</div>
+                        <div class="card-value">85</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-front">
+                        <div class="card-icon">👥</div>
+                        <div class="card-title">User Score</div>
+                        <div class="card-value">7.8</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-front">
+                        <div class="card-icon">⏱️</div>
+                        <div class="card-title">Playtime</div>
+                        <div class="card-value">12h</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-front">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-title">ESRB Rating</div>
+                        <div class="card-value">T</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 10: Minimal Center -->
+        <div class="design-set set-10">
+            <h2 class="set-title">10. Minimal Center Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-value">85</div>
+                    <div class="card-title">CRITICS</div>
+                </div>
+                <div class="card users">
+                    <div class="card-value">7.8</div>
+                    <div class="card-title">USERS</div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-value">12h</div>
+                    <div class="card-title">DURATION</div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-value">T</div>
+                    <div class="card-title">RATING</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 11: Rich Details -->
+        <div class="design-set set-11">
+            <h2 class="set-title">11. Rich Details Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-header">
+                        <div class="card-title">Critics Score</div>
+                        <div class="card-icon">⭐</div>
+                    </div>
+                    <div class="card-main">
+                        <div class="card-value">85</div>
+                        <div class="card-subtitle">Universal Acclaim</div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">Source: Metacritic</div>
+                        <div class="detail-item">Reviews: 47</div>
+                        <div class="detail-item">Positive: 89%</div>
+                        <div class="detail-item">Mixed: 11%</div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-header">
+                        <div class="card-title">User Score</div>
+                        <div class="card-icon">👥</div>
+                    </div>
+                    <div class="card-main">
+                        <div class="card-value">7.8</div>
+                        <div class="card-subtitle">Generally Favorable</div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">Platform: All</div>
+                        <div class="detail-item">Ratings: 2,847</div>
+                        <div class="detail-item">Positive: 76%</div>
+                        <div class="detail-item">Negative: 8%</div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-header">
+                        <div class="card-title">Playtime</div>
+                        <div class="card-icon">⏱️</div>
+                    </div>
+                    <div class="card-main">
+                        <div class="card-value">12h</div>
+                        <div class="card-subtitle">Main Story</div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">Main: 12h</div>
+                        <div class="detail-item">Extras: 18h</div>
+                        <div class="detail-item">Complete: 35h</div>
+                        <div class="detail-item">All Styles: 20h</div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-header">
+                        <div class="card-title">ESRB Rating</div>
+                        <div class="card-icon">🛡️</div>
+                    </div>
+                    <div class="card-main">
+                        <div class="card-value">T</div>
+                        <div class="card-subtitle">Teen 13+</div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">Violence: Mild</div>
+                        <div class="detail-item">Language: Mild</div>
+                        <div class="detail-item">Themes: Fantasy</div>
+                        <div class="detail-item">Online: Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 12: Gradient Overlay -->
+        <div class="design-set set-12">
+            <h2 class="set-title">12. Gradient Overlay Layout</h2>
+            <div class="cards-row">
+                <div class="card critics" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
+                    <div class="card-content">
+                        <div class="card-icon">⭐</div>
+                        <div class="card-value">85</div>
+                        <div class="card-title">Critics Score</div>
+                    </div>
+                </div>
+                <div class="card users" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">
+                    <div class="card-content">
+                        <div class="card-icon">👥</div>
+                        <div class="card-value">7.8</div>
+                        <div class="card-title">User Score</div>
+                    </div>
+                </div>
+                <div class="card hltb" style="background: linear-gradient(135deg, #45b7d1, #3498db);">
+                    <div class="card-content">
+                        <div class="card-icon">⏱️</div>
+                        <div class="card-value">12h</div>
+                        <div class="card-title">Playtime</div>
+                    </div>
+                </div>
+                <div class="card esrb" style="background: linear-gradient(135deg, #96ceb4, #85c1a3);">
+                    <div class="card-content">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-value">T</div>
+                        <div class="card-title">ESRB Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 13: Neon Glow -->
+        <div class="design-set set-13">
+            <h2 class="set-title">13. Neon Glow Layout</h2>
+            <div class="cards-row">
+                <div class="card critics" style="border-color: #ff6b6b; color: #ff6b6b;">
+                    <div class="card-content">
+                        <div class="card-icon">⭐</div>
+                        <div class="card-value">85</div>
+                        <div class="card-title">CRITICS</div>
+                    </div>
+                </div>
+                <div class="card users" style="border-color: #4ecdc4; color: #4ecdc4;">
+                    <div class="card-content">
+                        <div class="card-icon">👥</div>
+                        <div class="card-value">7.8</div>
+                        <div class="card-title">USERS</div>
+                    </div>
+                </div>
+                <div class="card hltb" style="border-color: #45b7d1; color: #45b7d1;">
+                    <div class="card-content">
+                        <div class="card-icon">⏱️</div>
+                        <div class="card-value">12h</div>
+                        <div class="card-title">DURATION</div>
+                    </div>
+                </div>
+                <div class="card esrb" style="border-color: #96ceb4; color: #96ceb4;">
+                    <div class="card-content">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-value">T</div>
+                        <div class="card-title">RATING</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Set 14: Glassmorphism -->
+        <div class="design-set set-14">
+            <h2 class="set-title">14. Glassmorphism Layout</h2>
+            <div class="cards-row">
+                <div class="card critics">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon critics">⭐</div>
+                            <div class="card-title">Critics Score</div>
+                        </div>
+                        <div class="card-main">
+                            <div class="card-value">85</div>
+                            <div class="card-subtitle">Metacritic Professional</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card users">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon users">👥</div>
+                            <div class="card-title">User Score</div>
+                        </div>
+                        <div class="card-main">
+                            <div class="card-value">7.8</div>
+                            <div class="card-subtitle">Community Rating</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card hltb">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon hltb">⏱️</div>
+                            <div class="card-title">Playtime</div>
+                        </div>
+                        <div class="card-main">
+                            <div class="card-value">12h</div>
+                            <div class="card-subtitle">Main Story Duration</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card esrb">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon esrb">🛡️</div>
+                            <div class="card-title">ESRB Rating</div>
+                        </div>
+                        <div class="card-main">
+                            <div class="card-value">T</div>
+                            <div class="card-subtitle">Teen 13+ Years</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

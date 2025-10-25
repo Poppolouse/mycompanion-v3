@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRoute } from '../../../contexts/RouteContext';
+import { useUserGameLibrary } from '../../../contexts/UserGameLibraryContext';
+import { searchGames, getGameDetails } from '../../../api/gameApi';
+import { addGameToLibrary, cacheGameImages, checkGameExists } from '../../../api/gameLibraryApi';
+import { saveGameScreenshots } from '../../../utils/imageUtils';
+import GameReportModal from '../../../components/GameReportModal';
 import './AddGame.css';
 
 function AddGame() {
@@ -11,6 +16,12 @@ function AddGame() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  
+  // Yeni state'ler
+  const [existingGame, setExistingGame] = useState(null); // Global kütüphanede bulunan oyun
+  const [isReadOnlyMode, setIsReadOnlyMode] = useState(false); // Read-only mod
+  const [showReportModal, setShowReportModal] = useState(false); // Rapor modal'ı
+  const [searchResults, setSearchResults] = useState([]); // Arama sonuçları
 
   // Form state
   const [formData, setFormData] = useState({
@@ -53,8 +64,93 @@ function AddGame() {
         notes: prefilledData.description || '',
         type: 'normal'
       }));
+      
+      // Prefilled data geldiğinde oyunun global kütüphanede olup olmadığını kontrol et
+      checkIfGameExists(prefilledData);
     }
   }, [location.state]);
+
+  // Oyunun global kütüphanede olup olmadığını kontrol et
+  const checkIfGameExists = async (gameData) => {
+    if (!gameData.title) return;
+    
+    try {
+      setLoading(true);
+      const existingGameData = await checkGameExists({
+        title: gameData.title,
+        developer: gameData.developer || gameData.publisher,
+        steam_id: gameData.steam_id,
+        epic_id: gameData.epic_id
+      });
+      
+      if (existingGameData) {
+        console.log('🔍 Oyun global kütüphanede bulundu:', existingGameData.title);
+        setExistingGame(existingGameData);
+        setIsReadOnlyMode(true);
+        
+        // Form'u existing game data ile doldur
+        setFormData(prev => ({
+          ...prev,
+          title: existingGameData.title,
+          platform: existingGameData.platform || prev.platform,
+          genre: existingGameData.genre || prev.genre,
+          developer: existingGameData.developer || prev.developer,
+          year: existingGameData.year || prev.year
+        }));
+      } else {
+        console.log('🆕 Oyun global kütüphanede bulunamadı, yeni oyun olarak eklenebilir');
+        setExistingGame(null);
+        setIsReadOnlyMode(false);
+      }
+    } catch (error) {
+      console.error('Oyun kontrol hatası:', error);
+      // Hata durumunda normal mod'da devam et
+      setIsReadOnlyMode(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Manuel oyun arama
+  const searchForGame = async (query) => {
+    if (!query.trim()) return;
+    
+    try {
+      setLoading(true);
+      const results = await searchGlobalGames(query);
+      setSearchResults(results);
+      
+      if (results.length > 0) {
+        console.log(`🔍 ${results.length} oyun bulundu:`, results.map(g => g.title));
+      } else {
+        console.log('🔍 Hiç oyun bulunamadı');
+      }
+    } catch (error) {
+      console.error('Arama hatası:', error);
+      setError('Arama sırasında hata oluştu');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Arama sonucundan oyun seç
+  const selectGameFromSearch = (selectedGame) => {
+    setExistingGame(selectedGame);
+    setIsReadOnlyMode(true);
+    setSearchResults([]);
+    
+    // Form'u seçilen oyun ile doldur
+    setFormData(prev => ({
+      ...prev,
+      title: selectedGame.title,
+      platform: selectedGame.platform || prev.platform,
+      genre: selectedGame.genre || prev.genre,
+      developer: selectedGame.developer || prev.developer,
+      year: selectedGame.year || prev.year
+    }));
+    
+    console.log('✅ Oyun seçildi:', selectedGame.title);
+  };
 
   // Txt dosyası okuma fonksiyonu
   const handleFileImport = (event) => {
@@ -256,9 +352,8 @@ function AddGame() {
         createdDate: new Date().toISOString()
       }];
 
-      // Yeni oyun objesi oluştur
-      const newGame = {
-        id: Date.now(), // Basit ID oluşturma
+      // Temel oyun verisi hazırla
+      let gameData = {
         title: formData.title.trim(),
         platform: formData.platform,
         genre: formData.genre.trim() || 'Bilinmeyen',
@@ -268,23 +363,115 @@ function AddGame() {
         progress: parseInt(formData.progress) || 0,
         type: formData.type,
         notes: formData.notes.trim(),
-        addedDate: new Date().toISOString(),
         campaigns: finalCampaigns
       };
 
-      // Mevcut oyunları al
+      // 🎮 RAWG API'den oyun verilerini çek ve zenginleştir
+      console.log('🌐 RAWG API\'den oyun verileri çekiliyor:', gameData.title);
+      
+      try {
+        // RAWG'den oyun ara
+        const searchResults = await searchGames(gameData.title);
+        
+        if (searchResults && searchResults.length > 0) {
+          const rawgGame = searchResults[0]; // En iyi eşleşme
+          console.log('✅ RAWG\'den oyun bulundu:', rawgGame.title);
+          
+          // RAWG verilerini mevcut oyun verisiyle birleştir (mevcut veriler öncelikli)
+          gameData = {
+            ...gameData,
+            // RAWG'den gelen veriler (sadece eksik olanlar doldurulur)
+            description: gameData.notes || rawgGame.description || '',
+            genres: rawgGame.genre ? rawgGame.genre.split(', ') : [gameData.genre],
+            platforms: rawgGame.platform ? rawgGame.platform.split(', ') : [gameData.platform],
+            developer: gameData.developer !== 'Bilinmeyen' ? gameData.developer : rawgGame.developer || 'Bilinmeyen',
+            publisher: rawgGame.publisher || '',
+            releaseDate: rawgGame.release_date || '',
+            metacritic: rawgGame.metacritic || null,
+            esrbRating: rawgGame.esrb_rating || '',
+            playtime: rawgGame.playtime || null,
+            rating: rawgGame.rating || 0,
+            image: rawgGame.image || '',
+            screenshots: rawgGame.screenshots || [],
+            tags: rawgGame.tags || [],
+            website: rawgGame.website || '',
+            redditUrl: rawgGame.reddit_url || '',
+            // RAWG metadata
+            rawgId: rawgGame.id || rawgGame.rawg_id,
+            rawgSlug: rawgGame.rawg_slug,
+            rawgUrl: rawgGame.rawg_url,
+            // Veri kaynağı bilgisi
+            dataSource: 'form+rawg',
+            rawgEnriched: true,
+            enrichedAt: new Date().toISOString()
+          };
+          
+          console.log('🎯 Oyun RAWG verileri ile zenginleştirildi');
+           
+           // 📸 Screenshot'ları kaydet (eğer varsa)
+           if (rawgGame.screenshots && rawgGame.screenshots.length > 0) {
+             try {
+               const gameId = gameData.rawgId || Date.now().toString();
+               await saveGameScreenshots(gameId, rawgGame.screenshots);
+               console.log(`📸 ${rawgGame.screenshots.length} screenshot kaydedildi`);
+             } catch (screenshotError) {
+               console.warn('⚠️ Screenshot kaydetme hatası:', screenshotError);
+               // Screenshot hatası oyun eklemeyi engellemez
+             }
+           }
+           
+         } else {
+           console.log('❌ RAWG\'de oyun bulunamadı, sadece form verileri kullanılacak');
+           gameData.dataSource = 'form';
+           gameData.rawgEnriched = false;
+         }
+       } catch (rawgError) {
+         console.warn('⚠️ RAWG API hatası:', rawgError);
+         // RAWG hatası oyun eklemeyi engellemez
+         gameData.dataSource = 'form';
+         gameData.rawgEnriched = false;
+         gameData.rawgError = rawgError.message;
+       }
+
+      // Prefilled data'dan gelen resim verilerini cache'e kaydet
+      if (location.state?.prefilledData) {
+        const prefilledData = location.state.prefilledData;
+        const imageData = {
+          banner: prefilledData.image || prefilledData.background_image,
+          background: prefilledData.background_image || prefilledData.image,
+          cover: prefilledData.image,
+          screenshots: prefilledData.screenshots || []
+        };
+        
+        // Resim verilerini cache'e kaydet
+        if (imageData.banner || imageData.background || imageData.cover) {
+          try {
+            await cacheGameImages(gameData.title, imageData);
+            console.log('🖼️ Oyun resimleri cache\'e kaydedildi:', gameData.title);
+          } catch (cacheError) {
+            console.warn('⚠️ Resim cache\'leme hatası:', cacheError);
+            // Cache hatası oyun eklemeyi engellemez
+          }
+        }
+      }
+
+      // Yeni UserGameLibrary sistemi ile oyunu ekle
+      await addGameToLibrary(gameData);
+      
+      // Eski localStorage sistemi ile de uyumluluk için
       const existingGames = JSON.parse(localStorage.getItem('gameTracker_games') || '[]');
-      
-      // Yeni oyunu ekle
+      const newGame = {
+        id: Date.now(),
+        ...gameData,
+        addedDate: new Date().toISOString()
+      };
       const updatedGames = [...existingGames, newGame];
-      
-      // localStorage'a kaydet
       localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       
-      // RouteContext'i yenile - yeni oyunu kütüphaneye ekle
+      // RouteContext'i yenile
       refreshFromLibrary();
       
-      console.log('✅ Yeni oyun eklendi:', newGame.title);
+      console.log('✅ Oyun başarıyla kütüphaneye eklendi:', gameData.title);
       setSuccess(true);
       
       // Formu temizle
@@ -434,6 +621,91 @@ CAMPAIGNS:
       )}
 
       <div className="add-game-content">
+        {/* Read-Only Mode Uyarısı */}
+        {isReadOnlyMode && existingGame && (
+          <div className="readonly-warning">
+            <div className="warning-content">
+              <h3>🔒 Bu oyun zaten sistemimizde mevcut</h3>
+              <p>
+                <strong>{existingGame.title}</strong> oyunu global kütüphanemizde bulunuyor. 
+                Oyun bilgileri düzenlenemez, sadece kişisel notlarınızı ve durumunuzu değiştirebilirsiniz.
+              </p>
+              <div className="warning-actions">
+                <button
+                  type="button"
+                  className="report-btn"
+                  onClick={() => setShowReportModal(true)}
+                >
+                  🚨 Hata Bildir
+                </button>
+                <button
+                  type="button"
+                  className="new-game-btn"
+                  onClick={() => {
+                    setIsReadOnlyMode(false);
+                    setExistingGame(null);
+                    setFormData(prev => ({ ...prev, title: '', developer: '', genre: '', year: '' }));
+                  }}
+                >
+                  🆕 Yeni Oyun Olarak Ekle
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Oyun Arama */}
+        {!isReadOnlyMode && (
+          <div className="game-search-section">
+            <h3>🔍 Önce Aramayı Deneyin</h3>
+            <p>Oyununuz zaten sistemimizde olabilir. Aramayı deneyin:</p>
+            <div className="search-input-group">
+              <input
+                type="text"
+                placeholder="Oyun adı ile ara..."
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchForGame(e.target.value);
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  const input = e.target.previousElementSibling;
+                  searchForGame(input.value);
+                }}
+                disabled={loading}
+              >
+                {loading ? '🔄' : '🔍'} Ara
+              </button>
+            </div>
+            
+            {/* Arama Sonuçları */}
+            {searchResults.length > 0 && (
+              <div className="search-results">
+                <h4>📋 Bulunan Oyunlar:</h4>
+                {searchResults.map((game) => (
+                  <div key={game.id} className="search-result-item">
+                    <div className="game-info">
+                      <strong>{game.title}</strong>
+                      <span>{game.developer} • {game.platform}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => selectGameFromSearch(game)}
+                      className="select-game-btn"
+                    >
+                      ✅ Bu Oyunu Seç
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="add-game-form">
           {/* Başlık */}
           <div className="form-group">
@@ -446,7 +718,10 @@ CAMPAIGNS:
               onChange={handleInputChange}
               placeholder="örn: Total War: Warhammer III"
               required
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             />
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Platform */}
@@ -457,6 +732,8 @@ CAMPAIGNS:
               name="platform"
               value={formData.platform}
               onChange={handleInputChange}
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             >
               <option value="PC">PC</option>
               <option value="PlayStation">PlayStation</option>
@@ -465,6 +742,7 @@ CAMPAIGNS:
               <option value="Mobile">Mobile</option>
               <option value="Multi-platform">Multi-platform</option>
             </select>
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Genre */}
@@ -477,7 +755,10 @@ CAMPAIGNS:
               value={formData.genre}
               onChange={handleInputChange}
               placeholder="örn: Strategy, RPG, Action"
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             />
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Developer */}
@@ -490,7 +771,10 @@ CAMPAIGNS:
               value={formData.developer}
               onChange={handleInputChange}
               placeholder="örn: Creative Assembly"
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             />
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Yıl */}
@@ -505,7 +789,10 @@ CAMPAIGNS:
               placeholder="örn: 2022"
               min="1970"
               max="2030"
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             />
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Durum */}
@@ -547,10 +834,13 @@ CAMPAIGNS:
               name="type"
               value={formData.type}
               onChange={handleInputChange}
+              disabled={isReadOnlyMode}
+              className={isReadOnlyMode ? 'readonly-input' : ''}
             >
               <option value="normal">Normal Oyun</option>
               <option value="strategy">Strateji Oyunu</option>
             </select>
+            {isReadOnlyMode && <span className="readonly-label">🔒 Düzenlenemez</span>}
           </div>
 
           {/* Notlar */}
@@ -721,10 +1011,18 @@ CAMPAIGNS:
             className="submit-btn"
             disabled={loading}
           >
-            {loading ? '🔄 Ekleniyor...' : '✅ Oyunu Ekle'}
+            {loading ? '🔄 Ekleniyor...' : isReadOnlyMode ? '📚 Kütüphaneme Ekle' : '✅ Oyunu Ekle'}
           </button>
         </form>
       </div>
+
+      {/* Game Report Modal */}
+      {showReportModal && existingGame && (
+        <GameReportModal
+          game={existingGame}
+          onClose={() => setShowReportModal(false)}
+        />
+      )}
     </div>
   );
 }

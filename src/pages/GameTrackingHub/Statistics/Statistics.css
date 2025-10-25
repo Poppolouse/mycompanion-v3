@@ -330,7 +330,7 @@
 .status-badge.not-started { background: var(--stats-gray); color: white; }
 .status-badge.in-progress { background: var(--stats-primary); color: white; }
 .status-badge.completed { background: var(--stats-success); color: white; }
-.status-badge.on-hold { background: var(--stats-warning); color: #212529; }
+.status-badge.on-hold { background: var(--stats-warning); color: #ffffff !important; }
 .status-badge.dropped { background: var(--stats-danger); color: white; }
 
 .status-count {
@@ -371,7 +371,7 @@
 }
 
 .priority-badge.high { background: var(--stats-danger); color: white; }
-.priority-badge.medium { background: var(--stats-warning); color: #212529; }
+.priority-badge.medium { background: var(--stats-warning); color: #ffffff !important; }
 .priority-badge.low { background: var(--stats-success); color: white; }
 
 .priority-count {

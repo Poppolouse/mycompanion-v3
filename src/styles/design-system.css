@@ -308,6 +308,11 @@ header *,
   --game-paused: var(--info-500);             /* Duraklatılan oyunlar */
   --game-not-started: var(--text-muted);      /* Başlanmamış oyunlar */
   --game-dropped: var(--error-500);           /* Bırakılan oyunlar */
+  
+  /* 🏆 Oyun Skorları */
+  --score-excellent: #6dc849;                 /* Mükemmel skor (75+) - Yeşil */
+  --score-good: #ffcc33;                      /* İyi skor (50-74) - Sarı */
+  --score-poor: #ff6b6b;                      /* Kötü skor (<50) - Kırmızı */
 
   /* ========================================
    * 🎨 5. YARDIMCI RENKLER (UTILITY COLORS)
@@ -333,6 +338,17 @@ header *,
   --color-warning-500-rgb: 245, 158, 11;        /* Warning rengin RGB değeri */
   --color-error-500-rgb: 239, 68, 68;           /* Error rengin RGB değeri */
   --color-info-500-rgb: 59, 130, 246;           /* Info rengin RGB değeri */
+  --color-white-rgb: 255, 255, 255;             /* Beyaz rengin RGB değeri */
+  --color-black-rgb: 0, 0, 0;                   /* Siyah rengin RGB değeri */
+  
+  /* 🎮 Oyun Skorları için RGB değerleri */
+  --score-excellent-rgb: 109, 200, 73;          /* Mükemmel skor (75+) */
+  --score-good-rgb: 255, 204, 51;               /* İyi skor (50-74) */
+  --score-poor-rgb: 255, 107, 107;              /* Kötü skor (<50) */
+  
+  /* 🌈 Ek Renk RGB Değerleri */
+  --slate-900-rgb: 15, 23, 42;                  /* Koyu slate */
+  --slate-700-rgb: 30, 41, 59;                  /* Orta slate */
 
   /* ========================================
    * 🎭 6. GÖLGE VE EFEKTLER (SHADOWS & EFFECTS)
@@ -448,3 +464,79 @@ header *,
  *    - Color-blind friendly renkler seçin
  *    - Dark theme uyumluluğunu koruyun
  */
+
+/* ========================================
+ * 🔥 GLOBAL FONT BRIGHTNESS PROTECTION
+ * ======================================== 
+ * Bu kurallar tüm uygulamada fontların parlak kalmasını sağlar.
+ * Yeni sayfa eklerken bu kurallar otomatik uygulanır.
+ * SORUN: Fontlar sürekli koyu geliyor - ÇÖZÜM: Bu kurallar!
+ */
+
+/* 🛡️ Ana Text Elementleri - AKILLI PARLAKLIK */
+/* Sadece koyu renk kullanılan elementleri hedefle */
+
+/* 🛡️ Özel Sınıflar - SADECE SORUNLU OLANLARI HEDEFLE */
+.detail-label,
+.metacritic-score,
+.rating-description,
+.descriptor-text,
+.score-label {
+  color: var(--text-primary) !important;
+}
+
+/* 🎯 Stat kartlarında sadece koyu olanları düzelt */
+.stat-card .detail-label,
+.stat-card .score-label,
+.quick-stats .detail-label {
+  color: var(--text-primary) !important;
+}
+
+/* 🛡️ Koyu Renk Override Koruması - SADECE ÇOK KOYU RENKLER */
+*[style*="color: #000"],
+*[style*="color: #212529"],
+*[style*="color: #1a1d29"] {
+  color: var(--text-primary) !important;
+}
+
+/* 🎯 Spesifik Sorunlu Sınıflar */
+.status-badge.on-hold,
+.priority-badge.medium {
+  color: #ffffff !important;
+}
+
+/* 🛡️ CSS Class Override Koruması - SADECE SORUNLU OLANLAR */
+.text-dark,
+.text-black {
+  color: var(--text-primary) !important;
+}
+
+/* 🎯 Eski Sayfa Uyumluluğu - Koyu Renkleri Parlak Yap */
+/* Sadece text color için, background'ları dokunma */
+*:not([style*="background"]):not(option):not(select) {
+  /* Çok koyu hex kodları parlak yap */
+}
+
+/* 🔧 Spesifik Hex Override'lar */
+[style*="color: #212529"]:not(option):not(select),
+[style*="color: #1a1d29"]:not(option):not(select),
+[style*="color: #000000"]:not(option):not(select),
+[style*="color: #000"]:not(option):not(select) {
+  color: var(--text-primary) !important;
+}
+
+/* ✅ FONT BRIGHTNESS PROTECTION COMPLETE */
+
+/* 🎯 Emoji Hizalama Düzeltmesi */
+.emoji {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* 🎮 Oyun kartlarında emoji hizalama */
+.game-card .emoji,
+.stat-card .emoji {
+  vertical-align: baseline;
+  margin-right: 0.5rem;
+}

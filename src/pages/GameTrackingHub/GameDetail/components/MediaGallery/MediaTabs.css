@@ -1,0 +1,81 @@
+/* MediaTabs - Kompakt Tasarım */
+
+.media-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.media-tab {
+  background: var(--button-background, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.media-tab:hover {
+  background: var(--button-hover, rgba(255, 255, 255, 0.1));
+  transform: translateY(-2px);
+}
+
+.media-tab.active {
+  background: var(--primary-color, #667eea);
+  border-color: var(--primary-color, #667eea);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.media-tab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.media-tab:disabled:hover {
+  background: var(--button-background, rgba(255, 255, 255, 0.05));
+  transform: none;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+.tab-title {
+  font-weight: 600;
+}
+
+.tab-count {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .media-tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .media-tab {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .media-tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .tab-icon {
+    font-size: 1rem;
+  }
+}

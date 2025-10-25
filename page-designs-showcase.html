@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Sayfa Tasarımları Showcase - MyCompanion v3</title>
+    <style>
+        /* 🎨 DESIGN SYSTEM VARIABLES */
+        :root {
+            /* Temel Renkler */
+            --color-white: #ffffff;
+            --color-black: #000000;
+            --color-white-rgb: 255, 255, 255;
+            --color-black-rgb: 0, 0, 0;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Gradient Backgrounds */
+            --bg-gradient-1: #050508;
+            --bg-gradient-2: #0f0f1a;
+            --bg-gradient-3: #0a1020;
+            --bg-gradient-4: #061a2f;
+            
+            /* Surface Colors */
+            --surface-1: rgba(255, 255, 255, 0.05);
+            --surface-2: rgba(255, 255, 255, 0.08);
+            --surface-3: rgba(255, 255, 255, 0.12);
+            --surface-4: rgba(255, 255, 255, 0.15);
+            
+            /* Primary Colors */
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-secondary-500: #a855f7;
+            --color-success-500: #22c55e;
+            --color-warning-500: #f59e0b;
+            --color-error-500: #ef4444;
+        }
+
+        /* 🌐 GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%);
+            color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 🎯 SHOWCASE NAVIGATION */
+        .showcase-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .showcase-nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .showcase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .design-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .design-tab {
+            padding: 0.5rem 1rem;
+            background: var(--surface-2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .design-tab:hover,
+        .design-tab.active {
+            background: var(--color-primary-500);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 📱 PAGE CONTAINER */
+        .page-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+        }
+
+        /* 🏠 HERO SECTION - ORTAK */
+        .hero-section {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Büyük Saat */
+        .clock-section {
+            margin-bottom: 2rem;
+        }
+
+        .big-clock {
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--color-white);
+            margin-bottom: 0.5rem;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+        }
+
+        .date-info {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        /* Arama Çubuğu */
+        .search-section {
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 3rem;
+            background: var(--surface-3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-2xl);
+            color: var(--color-white);
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Öneriler */
+        .suggestions-section {
+            margin-bottom: 3rem;
+        }
+
+        .suggestions-title {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-card {
+            background: var(--surface-2);
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 200px;
+            text-align: left;
+        }
+
+        .suggestion-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .suggestion-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .suggestion-card p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 🎨 LAYOUT 1: GRID-BASED */
+        .grid-layout {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .grid-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .grid-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-card {
+            background: var(--surface-2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .grid-card:hover::before {
+            left: 100%;
+        }
+
+        .grid-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary-500);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-white);
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-button {
+            background: var(--color-primary-500);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .card-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-2px);
+        }
+
+        /* 🃏 LAYOUT 2: CARD-BASED */
+        .card-layout {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-card {
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            border-radius: var(--radius-2xl);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mini-card:hover {
+            transform: scale(1.05);
+            background: var(--surface-4);
+        }
+
+        /* 📅 LAYOUT 3: TIMELINE */
+        .timeline-layout {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-primary-500), var(--color-secondary-500));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-left: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 2rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--color-primary-500);
+            border-radius: 50%;
+            border: 3px solid var(--bg-gradient-1);
+        }
+
+        .timeline-date {
+            color: var(--color-primary-500);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 📊 LAYOUT 4: DASHBOARD */
+        .dashboard-layout {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 2rem;
+            grid-template-areas: 
+                "stat1 stat2 stat3"
+                "chart chart activity"
+                "recent recent activity";
+        }
+
+        .stat-card {
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card.stat1 { grid-area: stat1; }
+        .stat-card.stat2 { grid-area: stat2; }
+        .stat-card.stat3 { grid-area: stat3; }
+
+        .chart-area {
+            grid-area: chart;
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-feed {
+            grid-area: activity;
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .recent-items {
+            grid-area: recent;
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* 📰 LAYOUT 5: MAGAZINE */
+        .magazine-layout {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .magazine-hero {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-article {
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-article::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+        }
+
+        .sidebar-articles {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sidebar-article {
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-article:hover {
+            background: var(--surface-4);
+            transform: translateX(5px);
+        }
+
+        .article-category {
+            color: var(--color-primary-500);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 📱 RESPONSIVE */
+        @media (max-width: 768px) {
+            .showcase-nav {
+                padding: 1rem;
+            }
+
+            .design-tabs {
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+
+            .design-tab {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .big-clock {
+                font-size: 2.5rem;
+            }
+
+            .grid-container,
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "stat1"
+                    "stat2"
+                    "stat3"
+                    "chart"
+                    "activity"
+                    "recent";
+            }
+
+            .magazine-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-container {
+                padding-left: 1rem;
+            }
+
+            .timeline-item {
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 🧭 SHOWCASE NAVIGATION -->
+    <nav class="showcase-nav">
+        <div class="showcase-nav-content">
+            <div class="showcase-title">🎨 Sayfa Tasarımları Showcase</div>
+            <div class="design-tabs">
+                <button class="design-tab active" onclick="showDesign(1)">📊 Grid Layout</button>
+                <button class="design-tab" onclick="showDesign(2)">🃏 Card Layout</button>
+                <button class="design-tab" onclick="showDesign(3)">📅 Timeline</button>
+                <button class="design-tab" onclick="showDesign(4)">📈 Dashboard</button>
+                <button class="design-tab" onclick="showDesign(5)">📰 Magazine</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 📊 DESIGN 1: GRID-BASED LAYOUT -->
+    <div class="page-container active" id="design1">
+        <!-- Hero Section - Ortak -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <!-- Büyük Saat -->
+                <div class="clock-section">
+                    <div class="big-clock" id="clock1">14:25</div>
+                    <div class="date-info" id="date1">Pazartesi, 23 Aralık 2024</div>
+                </div>
+
+                <!-- Arama Çubuğu -->
+                <div class="search-section">
+                    <div class="search-container">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Ne yapmak istiyorsun? Uygulama ara, komut yaz...">
+                    </div>
+                </div>
+
+                <!-- Öneriler -->
+                <div class="suggestions-section">
+                    <div class="suggestions-title">
+                        <span>📊 Son aktivitelere göre öneriler</span>
+                    </div>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">🎮</div>
+                            <h4>Oyun Tracker</h4>
+                            <p>Son oynadığın: Cyberpunk 2077</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">📝</div>
+                            <h4>Todo App</h4>
+                            <p>3 tamamlanmamış görev var</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Layout Content -->
+        <section class="grid-layout">
+            <div class="grid-header">
+                <h2>🚀 Tüm Uygulamalar</h2>
+                <p>Modern grid sistemi ile düzenlenmiş uygulama koleksiyonu</p>
+            </div>
+            <div class="grid-container">
+                <div class="grid-card">
+                    <span class="card-icon">🎮</span>
+                    <h3 class="card-title">Game Tracking Hub</h3>
+                    <p class="card-description">Oyun koleksiyonunu yönet, ilerleme takibi yap ve istatistikleri görüntüle.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+                <div class="grid-card">
+                    <span class="card-icon">📝</span>
+                    <h3 class="card-title">Todo Manager</h3>
+                    <p class="card-description">Görevlerini organize et, öncelik belirle ve verimliliğini artır.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+                <div class="grid-card">
+                    <span class="card-icon">🧮</span>
+                    <h3 class="card-title">Hesap Makinesi</h3>
+                    <p class="card-description">Gelişmiş matematik işlemleri ve bilimsel hesaplamalar.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+                <div class="grid-card">
+                    <span class="card-icon">🌤️</span>
+                    <h3 class="card-title">Hava Durumu</h3>
+                    <p class="card-description">Güncel hava durumu bilgileri ve 7 günlük tahmin.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+                <div class="grid-card">
+                    <span class="card-icon">📚</span>
+                    <h3 class="card-title">Not Defteri</h3>
+                    <p class="card-description">Notlarını kaydet, düzenle ve kategorilere ayır.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+                <div class="grid-card">
+                    <span class="card-icon">🎵</span>
+                    <h3 class="card-title">Müzik Çalar</h3>
+                    <p class="card-description">Favori müziklerini çal ve çalma listeleri oluştur.</p>
+                    <button class="card-button">Çok Yakında</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 🃏 DESIGN 2: CARD-BASED LAYOUT -->
+    <div class="page-container" id="design2">
+        <!-- Hero Section - Ortak -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="clock-section">
+                    <div class="big-clock" id="clock2">14:25</div>
+                    <div class="date-info" id="date2">Pazartesi, 23 Aralık 2024</div>
+                </div>
+                <div class="search-section">
+                    <div class="search-container">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Ne yapmak istiyorsun? Uygulama ara, komut yaz...">
+                    </div>
+                </div>
+                <div class="suggestions-section">
+                    <div class="suggestions-title">
+                        <span>📊 Son aktivitelere göre öneriler</span>
+                    </div>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">🎮</div>
+                            <h4>Oyun Tracker</h4>
+                            <p>Son oynadığın: Cyberpunk 2077</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">📝</div>
+                            <h4>Todo App</h4>
+                            <p>3 tamamlanmamış görev var</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Card Layout Content -->
+        <section class="card-layout">
+            <div class="featured-card">
+                <div class="featured-content">
+                    <h2>🌟 Öne Çıkan Uygulama</h2>
+                    <h3>Game Tracking Hub</h3>
+                    <p>Oyun koleksiyonunu profesyonel şekilde yönet. İstatistikler, ilerleme takibi ve daha fazlası!</p>
+                    <button class="card-button" style="background: white; color: var(--color-primary-500); margin-top: 1rem;">Hemen Başla</button>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <span class="card-icon">📝</span>
+                    <h4>Todo Manager</h4>
+                    <p>Görev yönetimi</p>
+                </div>
+                <div class="mini-card">
+                    <span class="card-icon">🧮</span>
+                    <h4>Hesap Makinesi</h4>
+                    <p>Matematik işlemleri</p>
+                </div>
+                <div class="mini-card">
+                    <span class="card-icon">🌤️</span>
+                    <h4>Hava Durumu</h4>
+                    <p>Güncel tahminler</p>
+                </div>
+                <div class="mini-card">
+                    <span class="card-icon">📚</span>
+                    <h4>Not Defteri</h4>
+                    <p>Hızlı notlar</p>
+                </div>
+                <div class="mini-card">
+                    <span class="card-icon">🎵</span>
+                    <h4>Müzik Çalar</h4>
+                    <p>Çok yakında</p>
+                </div>
+                <div class="mini-card">
+                    <span class="card-icon">📊</span>
+                    <h4>Analytics</h4>
+                    <p>Çok yakında</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 📅 DESIGN 3: TIMELINE LAYOUT -->
+    <div class="page-container" id="design3">
+        <!-- Hero Section - Ortak -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="clock-section">
+                    <div class="big-clock" id="clock3">14:25</div>
+                    <div class="date-info" id="date3">Pazartesi, 23 Aralık 2024</div>
+                </div>
+                <div class="search-section">
+                    <div class="search-container">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Ne yapmak istiyorsun? Uygulama ara, komut yaz...">
+                    </div>
+                </div>
+                <div class="suggestions-section">
+                    <div class="suggestions-title">
+                        <span>📊 Son aktivitelere göre öneriler</span>
+                    </div>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">🎮</div>
+                            <h4>Oyun Tracker</h4>
+                            <p>Son oynadığın: Cyberpunk 2077</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">📝</div>
+                            <h4>Todo App</h4>
+                            <p>3 tamamlanmamış görev var</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Layout Content -->
+        <section class="timeline-layout">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">📅 Uygulama Geliştirme Zaman Çizelgesi</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Aralık 2024</div>
+                    <h3>🎮 Game Tracking Hub</h3>
+                    <p>Oyun koleksiyonu yönetimi için kapsamlı platform. Kullanıcılar oyunlarını kategorize edebilir, ilerleme takibi yapabilir ve detaylı istatistikler görüntüleyebilir.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Kasım 2024</div>
+                    <h3>📝 Todo Manager</h3>
+                    <p>Gelişmiş görev yönetimi sistemi. Öncelik belirleme, kategori oluşturma ve ilerleme takibi özellikleri ile verimliliği artırır.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Ekim 2024</div>
+                    <h3>🧮 Hesap Makinesi</h3>
+                    <p>Bilimsel hesap makinesi özellikleri ile temel ve gelişmiş matematik işlemlerini destekler. Geçmiş hesaplama kayıtları tutulur.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Eylül 2024</div>
+                    <h3>🌤️ Hava Durumu</h3>
+                    <p>Güncel hava durumu bilgileri ve 7 günlük detaylı tahmin. Şehir bazlı arama ve favori lokasyonlar özelliği.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Ağustos 2024</div>
+                    <h3>📚 Not Defteri</h3>
+                    <p>Markdown destekli not alma uygulaması. Kategorilere ayırma, arama ve etiketleme özellikleri ile notlarınızı organize edin.</p>
+                    <button class="card-button">Uygulamayı Aç</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 📈 DESIGN 4: DASHBOARD LAYOUT -->
+    <div class="page-container" id="design4">
+        <!-- Hero Section - Ortak -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="clock-section">
+                    <div class="big-clock" id="clock4">14:25</div>
+                    <div class="date-info" id="date4">Pazartesi, 23 Aralık 2024</div>
+                </div>
+                <div class="search-section">
+                    <div class="search-container">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Ne yapmak istiyorsun? Uygulama ara, komut yaz...">
+                    </div>
+                </div>
+                <div class="suggestions-section">
+                    <div class="suggestions-title">
+                        <span>📊 Son aktivitelere göre öneriler</span>
+                    </div>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">🎮</div>
+                            <h4>Oyun Tracker</h4>
+                            <p>Son oynadığın: Cyberpunk 2077</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">📝</div>
+                            <h4>Todo App</h4>
+                            <p>3 tamamlanmamış görev var</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Layout Content -->
+        <section class="dashboard-layout">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">📈 Uygulama Dashboard'u</h2>
+            <div class="dashboard-grid">
+                <div class="stat-card stat1">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Aktif Uygulama</div>
+                </div>
+                <div class="stat-card stat2">
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Toplam Kullanım (saat)</div>
+                </div>
+                <div class="stat-card stat3">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">Verimlilik Skoru</div>
+                </div>
+
+                <div class="chart-area">
+                    <h3>📊 Haftalık Kullanım Grafiği</h3>
+                    <div style="height: 200px; background: var(--surface-3); border-radius: var(--radius-lg); margin-top: 1rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.6);">
+                        📈 Grafik Alanı (Chart.js ile entegre edilecek)
+                    </div>
+                </div>
+
+                <div class="activity-feed">
+                    <h3>🔔 Son Aktiviteler</h3>
+                    <div style="margin-top: 1rem;">
+                        <div style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="font-size: 0.9rem;">🎮 Cyberpunk 2077 oynadın</div>
+                            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">2 saat önce</div>
+                        </div>
+                        <div style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="font-size: 0.9rem;">📝 3 görev tamamladın</div>
+                            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">4 saat önce</div>
+                        </div>
+                        <div style="padding: 0.75rem 0;">
+                            <div style="font-size: 0.9rem;">📚 Yeni not oluşturdun</div>
+                            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">6 saat önce</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-items">
+                    <h3>⭐ Sık Kullanılan Uygulamalar</h3>
+                    <div style="margin-top: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <span style="font-size: 1.5rem;">🎮</span>
+                            <div>
+                                <div style="font-weight: 500;">Game Tracking Hub</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">45 saat kullanım</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <span style="font-size: 1.5rem;">📝</span>
+                            <div>
+                                <div style="font-weight: 500;">Todo Manager</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">32 saat kullanım</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0;">
+                            <span style="font-size: 1.5rem;">📚</span>
+                            <div>
+                                <div style="font-weight: 500;">Not Defteri</div>
+                                <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">28 saat kullanım</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 📰 DESIGN 5: MAGAZINE LAYOUT -->
+    <div class="page-container" id="design5">
+        <!-- Hero Section - Ortak -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="clock-section">
+                    <div class="big-clock" id="clock5">14:25</div>
+                    <div class="date-info" id="date5">Pazartesi, 23 Aralık 2024</div>
+                </div>
+                <div class="search-section">
+                    <div class="search-container">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Ne yapmak istiyorsun? Uygulama ara, komut yaz...">
+                    </div>
+                </div>
+                <div class="suggestions-section">
+                    <div class="suggestions-title">
+                        <span>📊 Son aktivitelere göre öneriler</span>
+                    </div>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">🎮</div>
+                            <h4>Oyun Tracker</h4>
+                            <p>Son oynadığın: Cyberpunk 2077</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <div class="suggestion-icon">📝</div>
+                            <h4>Todo App</h4>
+                            <p>3 tamamlanmamış görev var</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Magazine Layout Content -->
+        <section class="magazine-layout">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">📰 MyCompanion Magazin</h2>
+            
+            <div class="magazine-hero">
+                <div class="main-article">
+                    <div class="article-category">ÖNE ÇIKAN</div>
+                    <h2 class="article-title">Game Tracking Hub: Oyun Koleksiyonunu Profesyonel Şekilde Yönet</h2>
+                    <p class="article-excerpt">
+                        Oyun severlerin beklediği kapsamlı platform nihayet burada! Game Tracking Hub ile oyun koleksiyonunuzu organize edin, 
+                        ilerleme takibi yapın ve detaylı istatistiklerle oyun deneyiminizi analiz edin. Steam, Epic Games ve diğer platformlardan 
+                        otomatik veri çekme özelliği ile manuel girişe son!
+                    </p>
+                    <div class="article-meta">
+                        <span>👤 MyCompanion Ekibi</span>
+                        <span>📅 23 Aralık 2024</span>
+                        <span>⏱️ 5 dk okuma</span>
+                    </div>
+                    <button class="card-button" style="margin-top: 1.5rem;">Uygulamayı Keşfet</button>
+                </div>
+
+                <div class="sidebar-articles">
+                    <div class="sidebar-article">
+                        <div class="article-category">VERİMLİLİK</div>
+                        <h4>Todo Manager ile Görevlerinizi Organize Edin</h4>
+                        <p>Gelişmiş görev yönetimi özellikleri ile verimliliğinizi artırın.</p>
+                        <div class="article-meta">
+                            <span>📅 22 Aralık</span>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-article">
+                        <div class="article-category">ARAÇLAR</div>
+                        <h4>Bilimsel Hesap Makinesi Özellikleri</h4>
+                        <p>Matematik işlemlerinizi kolaylaştıran gelişmiş özellikler.</p>
+                        <div class="article-meta">
+                            <span>📅 21 Aralık</span>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-article">
+                        <div class="article-category">HAVA DURUMU</div>
+                        <h4>7 Günlük Detaylı Hava Tahminleri</h4>
+                        <p>Güncel meteoroloji verileri ile doğru tahminler.</p>
+                        <div class="article-meta">
+                            <span>📅 20 Aralık</span>
+        </div>
+                    </div>
+
+                    <div class="sidebar-article">
+                        <div class="article-category">NOTLAR</div>
+                        <h4>Markdown Destekli Not Alma</h4>
+                        <p>Profesyonel not alma deneyimi için gelişmiş özellikler.</p>
+                        <div class="article-meta">
+                            <span>📅 19 Aralık</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Makale Bölümü -->
+            <div style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 2rem; text-align: center;">📚 Diğer Makaleler</h3>
+                <div class="card-grid">
+                    <div class="mini-card">
+                        <div class="article-category">GELİŞTİRME</div>
+                        <h4>React ile Modern UI Tasarımı</h4>
+                        <p>Component tabanlı geliştirme yaklaşımları</p>
+                    </div>
+                    <div class="mini-card">
+                        <div class="article-category">TASARIM</div>
+                        <h4>Glassmorphism Trend Analizi</h4>
+                        <p>2024'ün en popüler tasarım trendi</p>
+                    </div>
+                    <div class="mini-card">
+                        <div class="article-category">PERFORMANS</div>
+                        <h4>Web Uygulaması Optimizasyonu</h4>
+                        <p>Hız ve kullanıcı deneyimi iyileştirmeleri</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 🕐 REAL-TIME CLOCK UPDATE
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('tr-TR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const dateString = now.toLocaleDateString('tr-TR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            // Tüm saatleri güncelle
+            for (let i = 1; i <= 5; i++) {
+                const clockElement = document.getElementById(`clock${i}`);
+                const dateElement = document.getElementById(`date${i}`);
+                if (clockElement) clockElement.textContent = timeString;
+                if (dateElement) dateElement.textContent = dateString;
+            }
+        }
+
+        // 🎨 DESIGN SWITCHER
+        function showDesign(designNumber) {
+            // Tüm sayfa container'larını gizle
+            const containers = document.querySelectorAll('.page-container');
+            containers.forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Seçilen tasarımı göster
+            const selectedContainer = document.getElementById(`design${designNumber}`);
+            if (selectedContainer) {
+                selectedContainer.classList.add('active');
+            }
+
+            // Tab'ları güncelle
+            const tabs = document.querySelectorAll('.design-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            tabs[designNumber - 1].classList.add('active');
+
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 🚀 INITIALIZATION
+        document.addEventListener('DOMContentLoaded', function() {
+            // Saati başlat
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key >= '1' && e.key <= '5') {
+                    showDesign(parseInt(e.key));
+                }
+            });
+
+            // Smooth scrolling for all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Card hover effects
+            const cards = document.querySelectorAll('.grid-card, .mini-card, .sidebar-article');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            console.log('🎨 Sayfa Tasarımları Showcase yüklendi!');
+            console.log('💡 Klavye kısayolları: 1-5 tuşları ile tasarımlar arası geçiş yapabilirsiniz');
+        });
+
+        // 🎯 PERFORMANCE MONITORING
+        window.addEventListener('load', function() {
+            const loadTime = performance.now();
+            console.log(`⚡ Sayfa yükleme süresi: ${Math.round(loadTime)}ms`);
+        });
+    </script>
+</body>
+</html>

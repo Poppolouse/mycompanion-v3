@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Dashboard GameDetail Tasarımları - 9 Farklı Layout</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            /* Colors */
+            --color-primary: #667eea;
+            --color-primary-dark: #5a67d8;
+            --color-secondary: #764ba2;
+            --color-success: #48bb78;
+            --color-warning: #ed8936;
+            --color-error: #f56565;
+            --color-info: #4299e1;
+            
+            /* Backgrounds */
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            --bg-card: rgba(45, 55, 72, 0.8);
+            --bg-glass: rgba(255, 255, 255, 0.1);
+            
+            /* Text */
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border */
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(26, 32, 44, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--spacing-md);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn.active {
+            background: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: var(--spacing-xl);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Design Container */
+        .design-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .design-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Base Layout */
+        .dashboard-layout {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        /* Header Section */
+        .dashboard-header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--spacing-lg);
+            align-items: center;
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .game-cover {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .game-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-normal);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .main-panel {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .sidebar-panel {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        .panel {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Design Specific Styles */
+        
+        /* 1. Analytics Dashboard */
+        .analytics-chart {
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: var(--spacing-md) 0;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        /* 2. Gaming Dashboard */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .achievement-badge {
+            aspect-ratio: 1;
+            background: var(--color-warning);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 3. Media Dashboard */
+        .video-player {
+            aspect-ratio: 16/9;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .media-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .thumbnail {
+            aspect-ratio: 16/9;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 4. Social Dashboard */
+        .comment-item {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .rating-fill {
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        /* 5. Performance Dashboard */
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .benchmark-score {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: var(--color-success);
+            color: white;
+            border-radius: var(--border-radius);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 6. Review Dashboard */
+        .review-score {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .score-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--color-success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* 7. Progress Dashboard */
+        .progress-bar {
+            background: var(--bg-tertiary);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: var(--spacing-sm) 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            transition: width var(--transition-slow);
+        }
+
+        /* 8. Comparison Dashboard */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--spacing-sm);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+        }
+
+        /* 9. Executive Dashboard */
+        .executive-summary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Animations */
+        .animate-counter {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-success { color: var(--color-success); }
+        .text-warning { color: var(--color-warning); }
+        .text-error { color: var(--color-error); }
+        .text-info { color: var(--color-info); }
+        
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        
+        .p-sm { padding: var(--spacing-sm); }
+        .p-md { padding: var(--spacing-md); }
+        .p-lg { padding: var(--spacing-lg); }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="nav-grid">
+            <button class="nav-btn active" onclick="showDesign('analytics')" data-key="1">
+                📈 Analytics
+            </button>
+            <button class="nav-btn" onclick="showDesign('gaming')" data-key="2">
+                🎮 Gaming
+            </button>
+            <button class="nav-btn" onclick="showDesign('media')" data-key="3">
+                🎬 Media
+            </button>
+            <button class="nav-btn" onclick="showDesign('social')" data-key="4">
+                👥 Social
+            </button>
+            <button class="nav-btn" onclick="showDesign('performance')" data-key="5">
+                ⚡ Performance
+            </button>
+            <button class="nav-btn" onclick="showDesign('review')" data-key="6">
+                ⭐ Review
+            </button>
+            <button class="nav-btn" onclick="showDesign('progress')" data-key="7">
+                📊 Progress
+            </button>
+            <button class="nav-btn" onclick="showDesign('comparison')" data-key="8">
+                🔄 Comparison
+            </button>
+            <button class="nav-btn" onclick="showDesign('executive')" data-key="9">
+                🎯 Executive
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- 1. Analytics Dashboard -->
+        <div id="analytics" class="design-container active">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>📅 2020</span>
+                            <span>🏷️ RPG, Action</span>
+                            <span>⭐ 8.5/10</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">🎮 Oyna</button>
+                        <button class="btn btn-secondary">❤️ Favorile</button>
+                    </div>
+                </div>
+
+                <!-- KPI Stats -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="stat-value text-success">2.5M</div>
+                        <div class="stat-label">Aktif Oyuncu</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="stat-value text-info">85%</div>
+                        <div class="stat-label">Pozitif Rating</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="stat-value text-warning">156h</div>
+                        <div class="stat-label">Ortalama Süre</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="stat-value text-error">$59.99</div>
+                        <div class="stat-label">Fiyat</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Analytics Chart -->
+                        <div class="panel">
+                            <div class="panel-title">📈 Popülerlik Trendi</div>
+                            <div class="analytics-chart">
+                                📊 Interaktif Grafik Alanı
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">+15%</div>
+                                    <div class="stat-label">Bu Ay</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-info">+42%</div>
+                                    <div class="stat-label">Bu Yıl</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics -->
+                        <div class="panel">
+                            <div class="panel-title">📊 Performans Metrikleri</div>
+                            <div class="metric-row">
+                                <div class="metric-card">
+                                    <div class="stat-value">94%</div>
+                                    <div class="stat-label">Completion Rate</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="stat-value">4.2/5</div>
+                                    <div class="stat-label">User Rating</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="stat-value">78/100</div>
+                                    <div class="stat-label">Metacritic</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Quick Stats -->
+                        <div class="panel">
+                            <div class="panel-title">⚡ Hızlı İstatistikler</div>
+                            <div class="spec-item">
+                                <span>Toplam Satış</span>
+                                <span class="text-success">13.7M</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Steam Rating</span>
+                                <span class="text-info">Very Positive</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Ortalama FPS</span>
+                                <span class="text-warning">60 FPS</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Dosya Boyutu</span>
+                                <span>70 GB</span>
+                            </div>
+                        </div>
+
+                        <!-- Trend Analysis -->
+                        <div class="panel">
+                            <div class="panel-title">📈 Trend Analizi</div>
+                            <div class="comment-item">
+                                <strong>Yükseliş Trendi</strong>
+                                <p>Son güncellemelerle birlikte oyuncu sayısında %25 artış gözlemlendi.</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Platform Dağılımı</strong>
+                                <p>PC: 65%, PlayStation: 25%, Xbox: 10%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Gaming Dashboard -->
+        <div id="gaming" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>🏆 42/50 Başarım</span>
+                            <span>⏱️ 127 saat</span>
+                            <span>🎯 %84 Tamamlandı</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">🎮 Devam Et</button>
+                        <button class="btn btn-secondary">📊 İstatistikler</button>
+                    </div>
+                </div>
+
+                <!-- Gaming Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">127h</div>
+                        <div class="stat-label">Toplam Süre</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">42/50</div>
+                        <div class="stat-label">Başarımlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">84%</div>
+                        <div class="stat-label">Tamamlanma</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">#156</div>
+                        <div class="stat-label">Sıralama</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Achievements -->
+                        <div class="panel">
+                            <div class="panel-title">🏆 Başarımlar</div>
+                            <div class="achievement-grid">
+                                <div class="achievement-badge">🥇</div>
+                                <div class="achievement-badge">🥈</div>
+                                <div class="achievement-badge">🥉</div>
+                                <div class="achievement-badge">🏆</div>
+                                <div class="achievement-badge">⭐</div>
+                                <div class="achievement-badge">💎</div>
+                                <div class="achievement-badge">🎯</div>
+                                <div class="achievement-badge">🔥</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 84%"></div>
+                            </div>
+                            <p class="text-center mb-md">42/50 Başarım Tamamlandı</p>
+                        </div>
+
+                        <!-- Leaderboard -->
+                        <div class="panel">
+                            <div class="panel-title">🏅 Liderlik Tablosu</div>
+                            <div class="leaderboard-item">
+                                <span>🥇 ProGamer2023</span>
+                                <span class="text-success">156h</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>🥈 CyberNinja</span>
+                                <span class="text-info">142h</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>🥉 NightRunner</span>
+                                <span class="text-warning">138h</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>4. Sen</span>
+                                <span>127h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Player Profile -->
+                        <div class="panel">
+                            <div class="panel-title">👤 Oyuncu Profili</div>
+                            <div class="text-center mb-md">
+                                <div class="score-circle">LV.45</div>
+                            </div>
+                            <div class="spec-item">
+                                <span>Oyuncu Seviyesi</span>
+                                <span class="text-success">45</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>XP</span>
+                                <span>15,420 / 18,000</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Arkadaş</span>
+                                <span class="text-info">23 aktif</span>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="panel">
+                            <div class="panel-title">📱 Son Aktiviteler</div>
+                            <div class="comment-item">
+                                <strong>Yeni Başarım!</strong>
+                                <p>"Night City Legend" başarımını kazandın</p>
+                                <small class="text-secondary">2 saat önce</small>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Seviye Atladın!</strong>
+                                <p>Seviye 45'e ulaştın</p>
+                                <small class="text-secondary">1 gün önce</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Media Dashboard -->
+        <div id="media" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>🎬 45 Video</span>
+                            <span>📸 128 Ekran Görüntüsü</span>
+                            <span>🎵 Soundtrack</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">▶️ Trailer İzle</button>
+                        <button class="btn btn-secondary">📸 Galeri</button>
+                    </div>
+                </div>
+
+                <!-- Media Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">45</div>
+                        <div class="stat-label">Video</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">128</div>
+                        <div class="stat-label">Ekran Görüntüsü</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">23</div>
+                        <div class="stat-label">Soundtrack</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">4K</div>
+                        <div class="stat-label">Kalite</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Video Player -->
+                        <div class="panel">
+                            <div class="panel-title">🎬 Ana Trailer</div>
+                            <div class="video-player">
+                                ▶️
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value">2:45</div>
+                                    <div class="stat-label">Süre</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">4K</div>
+                                    <div class="stat-label">Kalite</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">5.2M</div>
+                                    <div class="stat-label">İzlenme</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Media Gallery -->
+                        <div class="panel">
+                            <div class="panel-title">📸 Medya Galerisi</div>
+                            <div class="media-thumbnails">
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                                <div class="thumbnail"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Video List -->
+                        <div class="panel">
+                            <div class="panel-title">🎥 Video Listesi</div>
+                            <div class="leaderboard-item">
+                                <span>🎬 Ana Trailer</span>
+                                <span class="text-success">2:45</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>🎮 Gameplay</span>
+                                <span class="text-info">15:30</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>🎵 Soundtrack</span>
+                                <span class="text-warning">3:22</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>📰 İnceleme</span>
+                                <span>8:15</span>
+                            </div>
+                        </div>
+
+                        <!-- Media Info -->
+                        <div class="panel">
+                            <div class="panel-title">ℹ️ Medya Bilgileri</div>
+                            <div class="spec-item">
+                                <span>Toplam Video</span>
+                                <span class="text-success">45</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Toplam Süre</span>
+                                <span>2h 34m</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>En Yüksek Kalite</span>
+                                <span class="text-info">4K HDR</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Dil Seçenekleri</span>
+                                <span>12 dil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Social Dashboard -->
+        <div id="social" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>👥 2.5M Oyuncu</span>
+                            <span>💬 45K Yorum</span>
+                            <span>⭐ 4.2/5 Rating</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">💬 Yorum Yap</button>
+                        <button class="btn btn-secondary">⭐ Puanla</button>
+                    </div>
+                </div>
+
+                <!-- Social Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">2.5M</div>
+                        <div class="stat-label">Topluluk</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">45K</div>
+                        <div class="stat-label">Yorumlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">4.2/5</div>
+                        <div class="stat-label">Ortalama Puan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">85%</div>
+                        <div class="stat-label">Pozitif</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Comments Feed -->
+                        <div class="panel">
+                            <div class="panel-title">💬 Son Yorumlar</div>
+                            <div class="comment-item">
+                                <strong>⭐⭐⭐⭐⭐ ProGamer2023</strong>
+                                <p>Muhteşem bir oyun! Grafikleri ve hikayesi harika. Kesinlikle tavsiye ederim.</p>
+                                <small class="text-secondary">2 saat önce</small>
+                            </div>
+                            <div class="comment-item">
+                                <strong>⭐⭐⭐⭐ CyberFan</strong>
+                                <p>Başlangıçta buglar vardı ama şimdi çok daha iyi. Açık dünya harika!</p>
+                                <small class="text-secondary">5 saat önce</small>
+                            </div>
+                            <div class="comment-item">
+                                <strong>⭐⭐⭐ NightRunner</strong>
+                                <p>Hikaye güzel ama optimizasyon sorunları var. Patch bekliyor.</p>
+                                <small class="text-secondary">1 gün önce</small>
+                            </div>
+                        </div>
+
+                        <!-- Rating Distribution -->
+                        <div class="panel">
+                            <div class="panel-title">📊 Puan Dağılımı</div>
+                            <div class="rating-bar">
+                                <span>⭐⭐⭐⭐⭐</span>
+                                <div class="rating-fill" style="width: 45%"></div>
+                                <span>45%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>⭐⭐⭐⭐</span>
+                                <div class="rating-fill" style="width: 30%"></div>
+                                <span>30%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>⭐⭐⭐</span>
+                                <div class="rating-fill" style="width: 15%"></div>
+                                <span>15%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>⭐⭐</span>
+                                <div class="rating-fill" style="width: 7%"></div>
+                                <span>7%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>⭐</span>
+                                <div class="rating-fill" style="width: 3%"></div>
+                                <span>3%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Community Stats -->
+                        <div class="panel">
+                            <div class="panel-title">👥 Topluluk İstatistikleri</div>
+                            <div class="spec-item">
+                                <span>Aktif Oyuncu</span>
+                                <span class="text-success">156K</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Günlük Yorum</span>
+                                <span class="text-info">1.2K</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Forum Konusu</span>
+                                <span class="text-warning">8.5K</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Discord Üyesi</span>
+                                <span>45K</span>
+                            </div>
+                        </div>
+
+                        <!-- Trending Topics -->
+                        <div class="panel">
+                            <div class="panel-title">🔥 Trend Konular</div>
+                            <div class="comment-item">
+                                <strong>#Update2.1</strong>
+                                <p>Yeni güncelleme hakkında tartışmalar</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>#Mods</strong>
+                                <p>En iyi modifikasyonlar</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>#Tips</strong>
+                                <p>Oyun ipuçları ve taktikleri</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Performance Dashboard -->
+        <div id="performance" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>⚡ RTX 3080 Önerilen</span>
+                            <span>💾 70 GB Depolama</span>
+                            <span>🖥️ 4K Destekli</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">🔧 Sistem Testi</button>
+                        <button class="btn btn-secondary">⚙️ Ayarlar</button>
+                    </div>
+                </div>
+
+                <!-- Performance Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">60 FPS</div>
+                        <div class="stat-label">Ortalama FPS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">8GB</div>
+                        <div class="stat-label">RAM Kullanımı</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">75°C</div>
+                        <div class="stat-label">GPU Sıcaklığı</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">85%</div>
+                        <div class="stat-label">GPU Kullanımı</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- System Requirements -->
+                        <div class="panel">
+                            <div class="panel-title">💻 Sistem Gereksinimleri</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">Minimum</div>
+                                    <div class="stat-label">GTX 780 / RX 470</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">Önerilen</div>
+                                    <div class="stat-label">RTX 2060 / RX 6600</div>
+                                </div>
+                            </div>
+                            <div class="spec-item">
+                                <span>İşlemci</span>
+                                <span>Intel i5-3570K / AMD FX-8310</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>RAM</span>
+                                <span>8 GB (16 GB önerilen)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Depolama</span>
+                                <span>70 GB (SSD önerilen)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>DirectX</span>
+                                <span>Version 12</span>
+                            </div>
+                        </div>
+
+                        <!-- Benchmark Results -->
+                        <div class="panel">
+                            <div class="panel-title">📊 Benchmark Sonuçları</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="benchmark-score">95</div>
+                                    <div class="stat-label">Genel Skor</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">60 FPS</div>
+                                    <div class="stat-label">1080p Ultra</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-info">45 FPS</div>
+                                    <div class="stat-label">1440p High</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">30 FPS</div>
+                                    <div class="stat-label">4K Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Optimization Tips -->
+                        <div class="panel">
+                            <div class="panel-title">⚡ Optimizasyon Önerileri</div>
+                            <div class="comment-item">
+                                <strong>Ray Tracing</strong>
+                                <p>RTX kartlarda DLSS açın, performans %40 artar</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Crowd Density</strong>
+                                <p>Kalabalık yoğunluğunu Medium yapın</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Shadow Quality</strong>
+                                <p>Gölge kalitesini High'dan Medium'a düşürün</p>
+                            </div>
+                        </div>
+
+                        <!-- Platform Support -->
+                        <div class="panel">
+                            <div class="panel-title">🎮 Platform Desteği</div>
+                            <div class="spec-item">
+                                <span>PC (Steam)</span>
+                                <span class="text-success">✅ Destekleniyor</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>PlayStation 5</span>
+                                <span class="text-success">✅ Destekleniyor</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Xbox Series X</span>
+                                <span class="text-success">✅ Destekleniyor</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Nintendo Switch</span>
+                                <span class="text-error">❌ Desteklenmiyor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Review Dashboard -->
+        <div id="review" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>⭐ 8.5/10 Metacritic</span>
+                            <span>👍 85% Steam</span>
+                            <span>📰 156 İnceleme</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">📝 İnceleme Yaz</button>
+                        <button class="btn btn-secondary">📊 Detaylar</button>
+                    </div>
+                </div>
+
+                <!-- Review Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">8.5/10</div>
+                        <div class="stat-label">Metacritic</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">85%</div>
+                        <div class="stat-label">Steam Pozitif</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">7.8/10</div>
+                        <div class="stat-label">IGN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">4.2/5</div>
+                        <div class="stat-label">Kullanıcı</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Professional Reviews -->
+                        <div class="panel">
+                            <div class="panel-title">📰 Profesyonel İncelemeler</div>
+                            <div class="comment-item">
+                                <div class="review-score">
+                                    <div class="score-circle">85</div>
+                                    <div>
+                                        <strong>Metacritic</strong>
+                                        <p>"Teknik sorunlara rağmen etkileyici bir RPG deneyimi"</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="review-score">
+                                    <div class="score-circle">78</div>
+                                    <div>
+                                        <strong>IGN</strong>
+                                        <p>"Görsel açıdan çarpıcı ama vaatleri tam karşılamıyor"</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="review-score">
+                                    <div class="score-circle">90</div>
+                                    <div>
+                                        <strong>GameSpot</strong>
+                                        <p>"Hikayesi ve karakterleri ile unutulmaz bir deneyim"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review Summary -->
+                        <div class="panel">
+                            <div class="panel-title">📋 İnceleme Özeti</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">9/10</div>
+                                    <div class="stat-label">Hikaye</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">9/10</div>
+                                    <div class="stat-label">Grafikler</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">7/10</div>
+                                    <div class="stat-label">Performans</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-info">8/10</div>
+                                    <div class="stat-label">Gameplay</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Review Breakdown -->
+                        <div class="panel">
+                            <div class="panel-title">📊 Puan Dağılımı</div>
+                            <div class="spec-item">
+                                <span>Mükemmel (9-10)</span>
+                                <span class="text-success">45%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>İyi (7-8)</span>
+                                <span class="text-info">35%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Orta (5-6)</span>
+                                <span class="text-warning">15%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Kötü (1-4)</span>
+                                <span class="text-error">5%</span>
+                            </div>
+                        </div>
+
+                        <!-- Awards -->
+                        <div class="panel">
+                            <div class="panel-title">🏆 Ödüller</div>
+                            <div class="comment-item">
+                                <strong>🥇 Best RPG 2020</strong>
+                                <p>The Game Awards</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>🎨 Best Art Direction</strong>
+                                <p>DICE Awards</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>🎵 Best Soundtrack</strong>
+                                <p>Golden Joystick Awards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Progress Dashboard -->
+        <div id="progress" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>📊 84% Tamamlandı</span>
+                            <span>⏱️ 127/150 saat</span>
+                            <span>🎯 42/50 Başarım</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">🎮 Devam Et</button>
+                        <button class="btn btn-secondary">🎯 Hedefler</button>
+                    </div>
+                </div>
+
+                <!-- Progress Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">84%</div>
+                        <div class="stat-label">Ana Hikaye</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">67%</div>
+                        <div class="stat-label">Yan Görevler</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">42/50</div>
+                        <div class="stat-label">Başarımlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">127h</div>
+                        <div class="stat-label">Toplam Süre</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Story Progress -->
+                        <div class="panel">
+                            <div class="panel-title">📖 Hikaye İlerlemesi</div>
+                            <div class="mb-md">
+                                <strong>Ana Hikaye</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 84%"></div>
+                                </div>
+                                <p>21/25 Bölüm Tamamlandı</p>
+                            </div>
+                            <div class="mb-md">
+                                <strong>Yan Görevler</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 67%"></div>
+                                </div>
+                                <p>34/51 Görev Tamamlandı</p>
+                            </div>
+                            <div class="mb-md">
+                                <strong>Gig'ler</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%"></div>
+                                </div>
+                                <p>23/51 Gig Tamamlandı</p>
+                            </div>
+                        </div>
+
+                        <!-- Achievement Progress -->
+                        <div class="panel">
+                            <div class="panel-title">🏆 Başarım İlerlemesi</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">15</div>
+                                    <div class="stat-label">Hikaye</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-info">12</div>
+                                    <div class="stat-label">Keşif</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">8</div>
+                                    <div class="stat-label">Savaş</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-error">7</div>
+                                    <div class="stat-label">Koleksiyon</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Goals -->
+                        <div class="panel">
+                            <div class="panel-title">🎯 Hedeflerim</div>
+                            <div class="comment-item">
+                                <strong>Ana Hikayeyi Bitir</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 84%"></div>
+                                </div>
+                                <small>4 bölüm kaldı</small>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Tüm Başarımları Al</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 84%"></div>
+                                </div>
+                                <small>8 başarım kaldı</small>
+                            </div>
+                            <div class="comment-item">
+                                <strong>150 Saat Oyna</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%"></div>
+                                </div>
+                                <small>23 saat kaldı</small>
+                            </div>
+                        </div>
+
+                        <!-- Time Tracking -->
+                        <div class="panel">
+                            <div class="panel-title">⏱️ Zaman Takibi</div>
+                            <div class="spec-item">
+                                <span>Bu Hafta</span>
+                                <span class="text-success">12h</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Bu Ay</span>
+                                <span class="text-info">45h</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Toplam</span>
+                                <span class="text-warning">127h</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Ortalama/Gün</span>
+                                <span>1.8h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Comparison Dashboard -->
+        <div id="comparison" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="game-cover">🎮</div>
+                    <div class="game-info">
+                        <h1>Cyberpunk 2077</h1>
+                        <div class="game-meta">
+                            <span>🔄 3 Oyun Karşılaştırması</span>
+                            <span>📊 15 Özellik</span>
+                            <span>💰 Fiyat Analizi</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">➕ Oyun Ekle</button>
+                        <button class="btn btn-secondary">📊 Rapor</button>
+                    </div>
+                </div>
+
+                <!-- Comparison Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value text-success">3</div>
+                        <div class="stat-label">Karşılaştırılan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-info">15</div>
+                        <div class="stat-label">Özellik</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-warning">$59.99</div>
+                        <div class="stat-label">En İyi Fiyat</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-error">8.5/10</div>
+                        <div class="stat-label">En Yüksek Puan</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Comparison Table -->
+                        <div class="panel">
+                            <div class="panel-title">🔄 Oyun Karşılaştırması</div>
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>Özellik</th>
+                                        <th>Cyberpunk 2077</th>
+                                        <th>The Witcher 3</th>
+                                        <th>GTA V</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>📅 Çıkış Yılı</td>
+                                        <td>2020</td>
+                                        <td>2015</td>
+                                        <td>2013</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⭐ Metacritic</td>
+                                        <td class="text-warning">85</td>
+                                        <td class="text-success">93</td>
+                                        <td class="text-success">97</td>
+                                    </tr>
+                                    <tr>
+                                        <td>💰 Fiyat</td>
+                                        <td>$59.99</td>
+                                        <td>$39.99</td>
+                                        <td>$29.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⏱️ Oyun Süresi</td>
+                                        <td>60-100h</td>
+                                        <td>100-200h</td>
+                                        <td>50-80h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>🎮 Multiplayer</td>
+                                        <td class="text-error">❌</td>
+                                        <td class="text-error">❌</td>
+                                        <td class="text-success">✅</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Price Comparison -->
+                        <div class="panel">
+                            <div class="panel-title">💰 Platform Fiyat Karşılaştırması</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value">$59.99</div>
+                                    <div class="stat-label">Steam</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">$49.99</div>
+                                    <div class="stat-label">Epic Games</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">$59.99</div>
+                                    <div class="stat-label">GOG</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">$54.99</div>
+                                    <div class="stat-label">Microsoft Store</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Recommendation -->
+                        <div class="panel">
+                            <div class="panel-title">🎯 Öneri Sistemi</div>
+                            <div class="comment-item">
+                                <strong class="text-success">En İyi Değer</strong>
+                                <p>The Witcher 3 - Fiyat/performans açısından en iyi seçenek</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong class="text-info">En Yeni</strong>
+                                <p>Cyberpunk 2077 - En güncel grafikler ve teknoloji</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong class="text-warning">Multiplayer</strong>
+                                <p>GTA V - Online oyun deneyimi için ideal</p>
+                            </div>
+                        </div>
+
+                        <!-- Similar Games -->
+                        <div class="panel">
+                            <div class="panel-title">🎮 Benzer Oyunlar</div>
+                            <div class="leaderboard-item">
+                                <span>Deus Ex: Mankind Divided</span>
+                                <span class="text-success">8.2/10</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>Watch Dogs: Legion</span>
+                                <span class="text-info">7.8/10</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <span>Shadowrun: Hong Kong</span>
+                                <span class="text-warning">8.5/10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Executive Dashboard -->
+        <div id="executive" class="design-container">
+            <div class="dashboard-layout">
+                <!-- Executive Summary -->
+                <div class="executive-summary">
+                    <h2>🎯 Cyberpunk 2077 - Executive Summary</h2>
+                    <p>Yüksek bütçeli RPG oyunu, güçlü hikaye ve görsellerle dikkat çekiyor. Teknik sorunlar çözüldükten sonra oyuncu memnuniyeti arttı.</p>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metric-row">
+                    <div class="metric-card">
+                        <div class="stat-value text-success">8.5/10</div>
+                        <div class="stat-label">Genel Puan</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="stat-value text-info">13.7M</div>
+                        <div class="stat-label">Satış</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="stat-value text-warning">85%</div>
+                        <div class="stat-label">Pozitif Rating</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="stat-value text-error">$59.99</div>
+                        <div class="stat-label">Fiyat</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <div class="main-panel">
+                        <!-- Key Insights -->
+                        <div class="panel">
+                            <div class="panel-title">💡 Temel Bulgular</div>
+                            <div class="comment-item">
+                                <strong class="text-success">✅ Güçlü Yanlar</strong>
+                                <p>• Etkileyici hikaye ve karakter gelişimi<br>
+                                • Çarpıcı görsel tasarım ve sanat yönetimi<br>
+                                • Zengin açık dünya ve keşif imkanları</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong class="text-warning">⚠️ Dikkat Edilmesi Gerekenler</strong>
+                                <p>• Sistem gereksinimleri yüksek<br>
+                                • Bazı platformlarda performans sorunları<br>
+                                • Multiplayer özelliği bulunmuyor</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong class="text-info">📊 Pazar Durumu</strong>
+                                <p>• RPG kategorisinde üst sıralarda<br>
+                                • Güncelleme desteği devam ediyor<br>
+                                • DLC planları mevcut</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Items -->
+                        <div class="panel">
+                            <div class="panel-title">🎯 Aksiyon Önerileri</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value text-success">SATIN AL</div>
+                                    <div class="stat-label">RPG Seviyorsan</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-warning">BEKLE</div>
+                                    <div class="stat-label">İndirim İçin</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-info">DEMO</div>
+                                    <div class="stat-label">Önce Dene</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value text-error">UPGRADE</div>
+                                    <div class="stat-label">Sistem Gerekli</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-panel">
+                        <!-- Quick Facts -->
+                        <div class="panel">
+                            <div class="panel-title">⚡ Hızlı Bilgiler</div>
+                            <div class="spec-item">
+                                <span>Geliştirici</span>
+                                <span>CD Projekt RED</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Yayıncı</span>
+                                <span>CD Projekt</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Motor</span>
+                                <span>REDengine 4</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Dil Desteği</span>
+                                <span>12 dil</span>
+                            </div>
+                        </div>
+
+                        <!-- Investment Summary -->
+                        <div class="panel">
+                            <div class="panel-title">💰 Yatırım Özeti</div>
+                            <div class="comment-item">
+                                <strong>ROI Analizi</strong>
+                                <p>60 saatlik içerik için $1/saat maliyet</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Alternatif Maliyet</strong>
+                                <p>2 sinema bileti fiyatına 100+ saat eğlence</p>
+                            </div>
+                            <div class="comment-item">
+                                <strong>Uzun Vadeli Değer</strong>
+                                <p>DLC'ler ve modlar ile değer artacak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Design switching functionality
+        function showDesign(designId) {
+            // Hide all designs
+            const designs = document.querySelectorAll('.design-container');
+            designs.forEach(design => {
+                design.classList.remove('active');
+            });
+            
+            // Show selected design
+            document.getElementById(designId).classList.add('active');
+            
+            // Update navigation
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Animate stats
+            animateStats();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            const designs = ['analytics', 'gaming', 'media', 'social', 'performance', 'review', 'progress', 'comparison', 'executive'];
+            const key = parseInt(e.key);
+            
+            if (key >= 1 && key <= 9) {
+                showDesign(designs[key - 1]);
+                
+                // Update nav button
+                const navBtns = document.querySelectorAll('.nav-btn');
+                navBtns.forEach(btn => btn.classList.remove('active'));
+                navBtns[key - 1].classList.add('active');
+            }
+        });
+
+        // Animate statistics
+        function animateStats() {
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(stat => {
+                stat.classList.add('animate-counter');
+                setTimeout(() => {
+                    stat.classList.remove('animate-counter');
+                }, 2000);
+            });
+        }
+
+        // Hover effects for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.stat-card, .panel, .metric-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Initialize with first design
+            animateStats();
+        });
+
+        // Progress bar animations
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        }
+
+        // Call progress animation when progress design is shown
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.target.classList.contains('active') && 
+                        mutation.target.id === 'progress') {
+                        setTimeout(animateProgressBars, 300);
+                    }
+                });
+            });
+
+            const progressDesign = document.getElementById('progress');
+            if (progressDesign) {
+                observer.observe(progressDesign, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            }
+        });
+    </script>
+</body>
+</html>

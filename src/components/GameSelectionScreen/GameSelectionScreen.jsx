@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './GameSelectionScreen.module.css';
+import { useUserGameLibrary } from '../../contexts/UserGameLibraryContext';
+import { useGame } from '../../contexts/GameContext';
+import { getGameImage } from '../../utils/imageUtils';
+import { cleanImageCache, getCacheStats } from '../../api/gameLibraryApi';
+
 
 /**
  * GameSelectionScreen - Modern ve şık oyun seçim ekranı
@@ -17,125 +22,76 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState('all');
   const [selectedPlatform, setSelectedPlatform] = useState('all');
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+  const [isRefreshingImages, setIsRefreshingImages] = useState(false);
 
-  // Mock oyun verisi - gerçek uygulamada API'den gelecek
-  const mockGames = [
-    {
-      id: 1,
-      name: 'The Witcher 3: Wild Hunt',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1wyy.webp',
-      genre: 'RPG',
-      platform: 'PC',
-      lastPlayed: '2024-01-15',
-      isRecommended: true
-    },
-    {
-      id: 2,
-      name: 'Cyberpunk 2077',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2n13.webp',
-      genre: 'RPG',
-      platform: 'PC',
-      lastPlayed: '2024-01-14',
-      isRecommended: true
-    },
-    {
-      id: 3,
-      name: 'Red Dead Redemption 2',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1q1f.webp',
-      genre: 'Action',
-      platform: 'PC',
-      lastPlayed: '2024-01-13',
-      isRecommended: false
-    },
-    {
-      id: 4,
-      name: 'God of War',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1tmu.webp',
-      genre: 'Action',
-      platform: 'PC',
-      lastPlayed: '2024-01-12',
-      isRecommended: true
-    },
-    {
-      id: 5,
-      name: 'Horizon Zero Dawn',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1u8k.webp',
-      genre: 'Action RPG',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: true
-    },
-    {
-      id: 6,
-      name: 'Death Stranding',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1sxd.webp',
-      genre: 'Action',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: true
-    },
-    {
-      id: 7,
-      name: 'Elden Ring',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp',
-      genre: 'Action RPG',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: true
-    },
-    {
-      id: 8,
-      name: 'Spider-Man Remastered',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co5w2z.webp',
-      genre: 'Action',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: false
-    },
-    {
-      id: 9,
-      name: 'Assassins Creed Valhalla',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2a64.webp',
-      genre: 'Action RPG',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: false
-    },
-    {
-      id: 10,
-      name: 'Control',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vg3.webp',
-      genre: 'Action',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: false
-    },
-    {
-      id: 11,
-      name: 'Hades',
-      image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2dqb.webp',
-      genre: 'Roguelike',
-      platform: 'PC',
-      lastPlayed: null,
-      isRecommended: false
-    }
-  ];
+  // Context'lerden veri al
+  const { userGames, loadUserLibrary } = useUserGameLibrary();
+  const { updateAllGameImages } = useGame();
+
+  // Gerçek API kullanılıyor - mock data kaldırıldı
+
+  // 🎮 Gerçek kütüphane verilerini kullan
+  const libraryGames = userGames.map(userGame => {
+    const game = userGame.game || userGame;
+    const gameImage = getGameImage(game, 'cover');
+    
+
+    
+    return {
+      id: game.id || userGame.game_id,
+      name: game.title || game.name,
+      image: gameImage,
+      genre: game.genre || game.genres?.[0] || 'Bilinmiyor',
+      platform: game.platform || 'PC',
+      lastPlayed: userGame.last_played,
+      isRecommended: userGame.rating >= 8 || userGame.is_favorite,
+      status: userGame.status,
+      progress: userGame.progress_percentage || 0,
+      playtime: userGame.playtime_hours || 0
+    };
+  });
+  
+
 
   // Filtrelenmiş oyunlar
-  const filteredGames = mockGames.filter(game =>
-    game.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredGames = libraryGames.filter(game =>
+    game.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedGenre === 'all' || game.genre === selectedGenre) &&
+    (selectedPlatform === 'all' || game.platform === selectedPlatform)
   );
 
   // Son oynanan oyunlar (4 adet)
-  const recentGames = mockGames
+  const recentGames = libraryGames
     .filter(game => game.lastPlayed)
     .sort((a, b) => new Date(b.lastPlayed) - new Date(a.lastPlayed))
     .slice(0, 4);
 
-  // Önerilen oyunlar (8 adet)
-  const recommendedGames = mockGames
+  // Önerilen oyunlar (8 adet) - Favoriler ve yüksek puanlılar
+  const recommendedGames = libraryGames
     .filter(game => game.isRecommended)
     .slice(0, 8);
+
+  // 🧹 Cache temizleme fonksiyonları
+  const handleRefreshImages = async () => {
+    setIsRefreshingImages(true);
+    try {
+      cleanImageCache();
+      await updateAllGameImages();
+      await loadUserLibrary();
+    } catch (error) {
+      console.error('Resim yenileme hatası:', error);
+    } finally {
+      setIsRefreshingImages(false);
+    }
+  };
+
+  const handleClearCache = () => {
+    if (window.confirm('Tüm resim cache\'i temizlensin mi? Bu işlem geri alınamaz.')) {
+      cleanImageCache();
+      window.location.reload();
+    }
+  };
 
   // Sayfalama için oyunlar
   const gamesPerPage = 16; // 4x4 grid
@@ -143,14 +99,36 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
   const startIndex = (currentPage - 1) * gamesPerPage;
   const paginatedGames = filteredGames.slice(startIndex, startIndex + gamesPerPage);
 
+  // 🎮 Kütüphane verilerini yükle
   useEffect(() => {
-    // Simüle edilmiş loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    const loadLibraryData = async () => {
+      try {
+        await loadUserLibrary();
+      } catch (error) {
+        console.error('Kütüphane yükleme hatası:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
+    loadLibraryData();
+  }, [loadUserLibrary]);
+
+
+
+  // Dropdown dışına tıklandığında kapat
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isFilterDropdownOpen && !event.target.closest('.searchInputWrapper')) {
+        setIsFilterDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isFilterDropdownOpen]);
 
   const handleGameSelect = (game) => {
     onGameSelect(game);
@@ -186,6 +164,90 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={styles.searchInput}
               />
+              
+              {/* Cache Temizleme Butonları */}
+              <button 
+                className={styles.refreshButton}
+                onClick={handleRefreshImages}
+                disabled={isRefreshingImages}
+                title="Kapak resimlerini yenile"
+                aria-label="Kapak resimlerini yenile"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className={isRefreshingImages ? styles.spinning : ''}>
+                  <path d="M1 4v6h6M23 20v-6h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <button 
+                className={styles.clearCacheButton}
+                onClick={handleClearCache}
+                title="Cache'i temizle"
+                aria-label="Cache'i temizle"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
+
+              {/* Filtre Butonu */}
+              <button 
+                className={styles.filterButton}
+                onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+                aria-label="Filtreleri aç/kapat"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
+              
+              {/* Filtre Dropdown */}
+              {isFilterDropdownOpen && (
+                <div className={styles.filterDropdown}>
+                  <div className={styles.filterGroup}>
+                    <label className={styles.filterLabel}>Tür:</label>
+                    <select 
+                      className={styles.filterSelect}
+                      value={selectedGenre}
+                      onChange={(e) => setSelectedGenre(e.target.value)}
+                    >
+                      <option value="all">Tüm Türler</option>
+                      <option value="RPG">RPG</option>
+                      <option value="Action">Aksiyon</option>
+                      <option value="Strategy">Strateji</option>
+                      <option value="Adventure">Macera</option>
+                    </select>
+                  </div>
+                  
+                  <div className={styles.filterGroup}>
+                    <label className={styles.filterLabel}>Platform:</label>
+                    <select 
+                      className={styles.filterSelect}
+                      value={selectedPlatform}
+                      onChange={(e) => setSelectedPlatform(e.target.value)}
+                    >
+                      <option value="all">Tüm Platformlar</option>
+                      <option value="PC">PC</option>
+                      <option value="PlayStation">PlayStation</option>
+                      <option value="Xbox">Xbox</option>
+                      <option value="Nintendo">Nintendo</option>
+                    </select>
+                  </div>
+                  
+                  {/* Filtreleri Temizle */}
+                  <button 
+                    className={styles.clearFiltersButton}
+                    onClick={() => {
+                      setSelectedGenre('all');
+                      setSelectedPlatform('all');
+                    }}
+                  >
+                    Filtreleri Temizle
+                  </button>
+                </div>
+              )}
             </div>
             
             {/* Oyun seçimini kapat butonu */}
@@ -196,33 +258,6 @@ function GameSelectionScreen({ onGameSelect, onClose }) {
             >
               Vazgeç
             </button>
-            
-            {/* Filter Buttons */}
-            <div className={styles.filterButtons}>
-              <select 
-                className={styles.filterSelect}
-                value={selectedGenre}
-                onChange={(e) => setSelectedGenre(e.target.value)}
-              >
-                <option value="all">Tüm Türler</option>
-                <option value="RPG">RPG</option>
-                <option value="Action">Aksiyon</option>
-                <option value="Strategy">Strateji</option>
-                <option value="Adventure">Macera</option>
-              </select>
-              
-              <select 
-                className={styles.filterSelect}
-                value={selectedPlatform}
-                onChange={(e) => setSelectedPlatform(e.target.value)}
-              >
-                <option value="all">Tüm Platformlar</option>
-                <option value="PC">PC</option>
-                <option value="PlayStation">PlayStation</option>
-                <option value="Xbox">Xbox</option>
-                <option value="Nintendo">Nintendo</option>
-              </select>
-            </div>
           </div>
         </section>
 

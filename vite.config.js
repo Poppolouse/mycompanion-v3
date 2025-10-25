@@ -41,7 +41,69 @@ export default defineConfig({
   base: '/',
   server: {
     port: 5173,
-    host: true
+    host: '0.0.0.0',
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    },
+    proxy: {
+      '/api/rawg': {
+        target: 'https://api.rawg.io/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/rawg/, ''),
+        secure: true,
+        headers: {
+          'User-Agent': 'VaultTracker/3.6.0'
+        }
+      },
+      '/api/igdb': {
+        target: 'https://api.igdb.com/v4',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/igdb/, ''),
+        secure: true,
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            // IGDB API için gerekli header'ları koru
+            if (req.headers['client-id']) {
+              proxyReq.setHeader('Client-ID', req.headers['client-id']);
+            }
+            if (req.headers['authorization']) {
+              proxyReq.setHeader('Authorization', req.headers['authorization']);
+            }
+            proxyReq.setHeader('User-Agent', 'VaultTracker/3.6.0');
+          });
+        }
+      },
+      '/api/giantbomb': {
+        target: 'https://www.giantbomb.com/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/giantbomb/, ''),
+        secure: true,
+        headers: {
+          'User-Agent': 'VaultTracker/3.6.0'
+        }
+      },
+      '/api/steam': {
+        target: 'https://api.steampowered.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/steam/, ''),
+        secure: true,
+        headers: {
+          'User-Agent': 'VaultTracker/3.6.0'
+        }
+      },
+      '/api/steamstore': {
+        target: 'https://store.steampowered.com/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/steamstore/, ''),
+        secure: true,
+        headers: {
+          'User-Agent': 'VaultTracker/3.6.0'
+        }
+      }
+    }
   },
   preview: {
     port: 4173,

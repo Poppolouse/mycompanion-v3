@@ -1,0 +1,239 @@
+/* ⚙️ PlatformTech - Wireframe'e Göre Tasarım */
+
+.platform-tech-section {
+  margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  padding: 2rem;
+}
+
+.platform-tech-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ========================================
+ * 🎮 PLATFORMLAR
+ * ======================================== */
+
+.platforms-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.platform-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.platform-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 24px rgba(var(--color-black-rgb), 0.1);
+}
+
+.platform-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  border-radius: 8px;
+}
+
+.platform-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ========================================
+ * ⚙️ SİSTEM GEREKSİNİMLERİ
+ * ======================================== */
+
+.system-requirements h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.requirements-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.requirement-section {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.requirement-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.requirement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.requirement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.req-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.req-value {
+  color: var(--text-primary);
+  text-align: right;
+  flex: 1;
+}
+
+/* ========================================
+ * ✨ ÖZELLİKLER
+ * ======================================== */
+
+.game-features h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.feature-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 24px rgba(var(--color-black-rgb), 0.1);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  border-radius: 8px;
+}
+
+.feature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.feature-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.feature-value {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 1023px) {
+  .requirements-tabs {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .platform-tech-section {
+    padding: 1rem;
+    margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  }
+  
+  .platform-tech-container {
+    gap: 2rem;
+  }
+  
+  .platforms-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .platform-card {
+    padding: 1rem;
+  }
+  
+  .requirement-section {
+    padding: 1rem;
+  }
+  
+  .requirement-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .req-label {
+    min-width: auto;
+  }
+  
+  .req-value {
+    text-align: left;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-card {
+    padding: 1rem;
+  }
+}

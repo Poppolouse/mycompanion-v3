@@ -47,6 +47,139 @@ src/
 
 ## 🎨 CSS STANDARDIZASYON KURALLARI
 
+### 🛡️ CSS OVERRIDE ÖNLEME SİSTEMİ - ZORUNLU!
+
+**SORUN:** Farklı CSS dosyalarındaki aynı class isimleri birbirini override ediyor!
+
+**ÇÖZÜM KATMANLARI:**
+
+#### 1️⃣ CSS Specificity Katmanı
+```css
+/* ❌ YANLIŞ - Düşük specificity */
+.stat-card { background: blue; }
+
+/* ✅ DOĞRU - Yüksek specificity */
+.quick-stats-section .stats-container .stat-card.completion-card { 
+  background: blue !important; 
+}
+```
+
+#### 2️⃣ !important Koruma Katmanı
+```css
+/* Kritik stiller için MUTLAKA !important kullan */
+.completion-card {
+  background: linear-gradient(...) !important;
+  border: 1px solid rgba(...) !important;
+  border-radius: 16px !important;
+  /* Tüm önemli özellikler !important ile korunmalı */
+}
+```
+
+#### 3️⃣ Unique Class Naming Katmanı
+```css
+/* ❌ YANLIŞ - Generic isimler */
+.card, .button, .header
+
+/* ✅ DOĞRU - Spesifik isimler */
+.game-detail-completion-card
+.quick-stats-metacritic-card
+.session-history-stat-card
+```
+
+#### 4️⃣ CSS Dosya İzolasyon Katmanı
+```
+❌ YANLIŞ:
+- Session.css içinde genel .stat-card kuralları
+- Global CSS dosyalarında component-specific kurallar
+
+✅ DOĞRU:
+- Her component kendi CSS dosyasında
+- Global CSS sadece gerçek global stiller için
+- Component CSS'leri spesifik selector'larla
+```
+
+#### 🚨 OVERRIDE TESPİT PROTOKOLÜ
+
+**Değişiklik gözükmüyorsa:**
+
+1. **Hemen kontrol et:**
+   ```bash
+   # CSS override kaynaklarını bul
+   grep -r "stat-card" src/ --include="*.css"
+   grep -r "completion-card" src/ --include="*.css"
+   ```
+
+2. **Browser DevTools ile doğrula:**
+   - F12 → Elements → Inspect element
+   - Computed styles'da hangi CSS'in kazandığını gör
+   - Overridden styles'ı tespit et
+
+3. **Güçlü çözüm uygula:**
+   ```css
+   /* Üçlü koruma sistemi */
+   .parent-class .container-class .specific-class.unique-modifier {
+     property: value !important;
+   }
+   ```
+
+#### 📋 CSS OVERRIDE CHECKLIST
+
+**Her yeni CSS kuralı için:**
+- [ ] Specificity yeterli mi? (en az 3 seviye)
+- [ ] !important gerekli mi? (kritik stiller için evet)
+- [ ] Class ismi unique mi? (component-specific)
+- [ ] Başka dosyalarda aynı class var mı? (grep ile kontrol)
+- [ ] Browser'da test edildi mi? (DevTools ile doğrula)
+
+### 🔄 CSS IMPORT SIRASI KURALLARI - KRİTİK!
+
+**SORUN:** CSS dosyalarının yanlış sırada import edilmesi font brightness protection ve diğer kuralları eziyor!
+
+**✅ ZORUNLU SIRA - index.css:**
+
+```css
+/* 🎮 Game Tracker - CSS Import Sırası - ASLA DEĞİŞTİRME! */
+
+/* 1. Variables (En temel değişkenler - önce yükle) */
+@import './styles/variables.css';
+
+/* 2. Page Text Colors (Sayfa özel renkler - design-system'den ÖNCE!) */
+@import './styles/page-text-colors.css';
+
+/* 3. Design System (Font brightness protection - SON SIRA!) */
+@import './styles/design-system.css';
+
+/* 4. Utilities (Design system'e bağımlı) */
+@import './styles/utilities.css';
+
+/* 5. Animations (Utilities'e bağımlı) */
+@import './styles/animations.css';
+
+/* 6. Component Styles (Tüm base'lere bağımlı) */
+@import './styles/global-buttons.css';
+@import './styles/filter-buttons.css';
+```
+
+**🚨 NEDEN BU SIRA ÖNEMLİ:**
+
+1. **Variables önce:** Diğer dosyalar CSS variable'larını kullanabilsin
+2. **Page-text-colors ortada:** Sayfa özel renkleri tanımla
+3. **Design-system son:** Font brightness protection kuralları en son uygulanıp override etsin
+4. **Utilities sonra:** Design system variable'larını kullanabilsin
+
+**❌ YANLIŞ SIRA - ASLA YAPMA:**
+```css
+❌ @import './styles/design-system.css';     /* Font protection */
+❌ @import './styles/page-text-colors.css';  /* Bu design-system'i override eder! */
+```
+
+**🛡️ KORUMA KURALLARI:**
+
+- **ASLA** design-system.css'i page-text-colors.css'ten önce yükleme
+- **ASLA** import sırasını değiştirme (font brightness bozulur)
+- **HER ZAMAN** yeni CSS dosyası eklerken bu sırayı koru
+- **MUTLAKA** değişiklik sonrası li elementlerinin parlak olduğunu kontrol et
+
 ### 📋 CSS Modules Zorunluluğu
 
 **✅ ZORUNLU:** Tüm component CSS'leri `.module.css` olmalı

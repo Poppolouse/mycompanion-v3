@@ -1,628 +1,302 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGame } from '../../../contexts/GameContext';
+import { useUserStats } from '../../../contexts/UserStatsContext';
+import ProfileDropdown from '../../../components/ProfileDropdown';
+import { getGameDetails } from '../../../api/gameApi';
+
+// Hero section component'i koruyoruz
+import GameHeroSection from './components/GameHeroSection';
+
 import './GameDetail.css';
 
 /**
- * 🎮 Game Detail - Phase 3: Oyun Detay Sayfası
- * Seçilen oyunun detaylı bilgilerini gösterir
+ * GameDetail - Oyun detay sayfası
+ * Hero section ve basit oyun bilgileri içerir:
+ * 1. Hero Section (Kapak, başlık, temel bilgiler)
+ * 2. Ana İçerik (Açıklama ve detaylar)
  */
 function GameDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { games } = useGame();
+  const { getGameStats, toggleFavorite } = useUserStats();
   
-  // State yönetimi
+  // State'ler
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState('Başlanmadı');
-  
-  // Campaign sistemi state'leri
-  const [campaigns, setCampaigns] = useState([]);
-  const [showAddCampaign, setShowAddCampaign] = useState(false);
-  const [newCampaign, setNewCampaign] = useState({
-    name: '',
-    description: '',
-    progress: 0,
-    status: 'Başlanmadı',
-    startDate: '',
-    endDate: '',
-    notes: ''
-  });
+  const [gameStats, setGameStats] = useState(null);
+  const [dataSource, setDataSource] = useState(null); // 'local' veya 'rawg'
 
-  // Oyun verilerini yükle
+  // Oyun verilerini yükle - Önce yerel veri, yoksa RAWG'den çek
   useEffect(() => {
-    loadGameData();
-  }, [id]);
-
-  // LocalStorage'dan oyun verilerini yükle
-  const loadGameData = () => {
-    try {
-      setLoading(true);
+    const loadGameData = async () => {
+      console.log('🔍 GameDetail - Oyun yükleniyor, ID:', id);
       
-      // Oyun listesini localStorage'dan al
-      let savedGames = localStorage.getItem('gameTracker_games');
-      
-      // Eğer hiç oyun yoksa, test verileri ekle
-      if (!savedGames) {
-        const testGames = [
-          {
-            id: '1',
-            title: 'The Witcher 3: Wild Hunt',
-            platform: 'PC',
-            genre: 'RPG',
-            progress: 75,
-            status: 'Oynuyor',
-            phase: 'Ana Hikaye',
-            factions: ['Temeria', 'Nilfgaard', 'Skellige'],
-            addedDate: new Date().toISOString(),
-            campaigns: [
-              {
-                id: 'campaign_1',
-                name: 'Ana Hikaye',
-                description: 'Ciri\'yi bulma yolculuğu',
-                progress: 75,
-                status: 'Oynuyor',
-                startDate: '2024-01-15',
-                endDate: '',
-                notes: 'Novigrad\'da Triss ile buluştum'
-              },
-              {
-                id: 'campaign_2',
-                name: 'Blood and Wine',
-                description: 'Toussaint\'ta vampir avı',
-                progress: 0,
-                status: 'Başlanmadı',
-                startDate: '',
-                endDate: '',
-                notes: ''
-              }
-            ]
-          },
-          {
-            id: '2',
-            title: 'Distant Worlds 2',
-            platform: 'PC',
-            genre: 'Strategy',
-            progress: 60,
-            status: 'Oynuyor',
-            phase: 'Galactic Empire',
-            factions: ['Humans', 'Zenox', 'Ackdarians'],
-            addedDate: new Date().toISOString(),
-            campaigns: [
-              {
-                id: 'campaign_1',
-                name: 'Humans - Rise of the Empire',
-                description: 'İnsanlığın galaktik imparatorluk kurma hikayesi',
-                progress: 85,
-                status: 'Tamamlandı',
-                startDate: '2024-01-10',
-                endDate: '2024-01-25',
-                notes: 'Tüm sektörleri ele geçirdim, ekonomi güçlü'
-              },
-              {
-                id: 'campaign_2',
-                name: 'Zenox - Ancient Guardians',
-                description: 'Eski koruyucuların geri dönüşü',
-                progress: 45,
-                status: 'Oynuyor',
-                startDate: '2024-01-26',
-                endDate: '',
-                notes: 'Teknoloji ağacında ilerledim, askeri güç yetersiz'
-              },
-              {
-                id: 'campaign_3',
-                name: 'Ackdarians - Merchants of Space',
-                description: 'Galaktik ticaret imparatorluğu',
-                progress: 0,
-                status: 'Başlanmadı',
-                startDate: '',
-                endDate: '',
-                notes: ''
-              }
-            ]
-          },
-          {
-            id: '3',
-            title: 'Red Dead Redemption 2',
-            platform: 'PC',
-            genre: 'Action Adventure',
-            progress: 100,
-            status: 'Tamamlandı',
-            phase: 'Epilogue',
-            factions: ['Van der Linde Gang'],
-            addedDate: new Date().toISOString(),
-            campaigns: [
-              {
-                id: 'campaign_1',
-                name: 'Arthur\'s Story',
-                description: 'Arthur Morgan\'ın hikayesi',
-                progress: 100,
-                status: 'Tamamlandı',
-                startDate: '2023-12-01',
-                endDate: '2024-01-05',
-                notes: 'Muhteşem bir hikaye, çok etkileyiciydi'
-              },
-              {
-                id: 'campaign_2',
-                name: 'John\'s Epilogue',
-                description: 'John Marston\'ın yeni hayatı',
-                progress: 100,
-                status: 'Tamamlandı',
-                startDate: '2024-01-05',
-                endDate: '2024-01-08',
-                notes: 'Güzel bir son, hikayeyi tamamladı'
-              }
-            ]
-          }
-        ];
+      try {
+        setLoading(true);
+        setError(null);
         
-        localStorage.setItem('gameTracker_games', JSON.stringify(testGames));
-        savedGames = JSON.stringify(testGames);
+        // 1. Önce yerel verilerden ara (localStorage)
+        if (games && games.length > 0) {
+          const foundGame = games.find(game => 
+            game.id == id || 
+            game.id === parseInt(id) ||
+            game.rawg_id == id ||
+            game.rawgId == id
+          );
+          
+          if (foundGame) {
+            console.log('✅ Yerel veri bulundu:', foundGame.title || foundGame.name);
+            setGame(foundGame);
+            setDataSource('local');
+            
+            // Oyun istatistiklerini yükle
+            const stats = getGameStats(foundGame.id);
+            setGameStats(stats);
+            
+            setLoading(false);
+            return;
+          }
+        }
+        
+        // 2. Yerel veri yoksa RAWG'den çek
+        console.log('🌐 Yerel veri bulunamadı, RAWG\'den çekiliyor...');
+        
+        // ID'nin RAWG ID olup olmadığını kontrol et
+        const rawgId = parseInt(id);
+        if (isNaN(rawgId)) {
+          throw new Error('Geçersiz oyun ID\'si');
+        }
+        
+        const rawgGame = await getGameDetails(rawgId);
+        
+        if (rawgGame) {
+          console.log('✅ RAWG\'den veri alındı:', rawgGame.title);
+          
+          // RAWG verisini normalize et
+          const normalizedGame = {
+            id: rawgGame.id,
+            title: rawgGame.title || rawgGame.name,
+            name: rawgGame.name,
+            developer: rawgGame.developer,
+            publisher: rawgGame.publisher,
+            genre: rawgGame.genre,
+            platform: rawgGame.platform,
+            year: rawgGame.year,
+            releaseDate: rawgGame.release_date,
+            rating: rawgGame.rating,
+            metacritic: rawgGame.metacritic,
+            description: rawgGame.description,
+            image: rawgGame.image,
+            screenshots: rawgGame.screenshots || [],
+            tags: rawgGame.tags || [],
+            esrbRating: rawgGame.esrb_rating,
+            playtime: rawgGame.playtime,
+            website: rawgGame.website,
+            redditUrl: rawgGame.reddit_url,
+            rawgId: rawgGame.rawg_id || rawgGame.id,
+            rawgSlug: rawgGame.rawg_slug,
+            rawgUrl: rawgGame.rawg_url,
+            dataSource: 'rawg'
+          };
+          
+          setGame(normalizedGame);
+          setDataSource('rawg');
+          setLoading(false);
+        } else {
+          throw new Error('RAWG\'de oyun bulunamadı');
+        }
+        
+      } catch (err) {
+        console.error('❌ Oyun yükleme hatası:', err);
+        setError(err.message || 'Oyun bilgileri yüklenemedi');
+        setLoading(false);
       }
-
-      const games = JSON.parse(savedGames);
-      // ID'yi hem string hem number olarak kontrol et
-      const foundGame = games.find(g => g.id === id || g.id === parseInt(id) || g.id.toString() === id);
-      
-      if (!foundGame) {
-        console.log('🔍 Aranan ID:', id, 'Type:', typeof id);
-        console.log('📋 Mevcut oyunlar:', games.map(g => ({ id: g.id, title: g.title, idType: typeof g.id })));
-        setError(`Oyun bulunamadı (ID: ${id}). Mevcut oyunlar: ${games.map(g => `${g.title} (ID: ${g.id})`).join(', ')}`);
-        return;
-      }
-
-      setGame(foundGame);
-      setProgress(foundGame.progress || 0);
-      setStatus(foundGame.status || 'Başlanmadı');
-      
-      // Campaign verilerini yükle
-      setCampaigns(foundGame.campaigns || []);
-      
-      // Oyuna özel notları yükle
-      const savedNotes = localStorage.getItem(`gameTracker_notes_${id}`);
-      if (savedNotes) {
-        setNotes(JSON.parse(savedNotes));
-      }
-      
-    } catch (err) {
-      console.error('❌ Oyun verisi yükleme hatası:', err);
-      setError('Oyun verisi yüklenirken hata oluştu.');
-    } finally {
-      setLoading(false);
+    };
+    
+    if (id) {
+      loadGameData();
     }
+  }, [id, games, getGameStats]);
+
+  // Navigation fonksiyonları
+  const handleGoHome = () => {
+    navigate('/');
   };
 
-  // Geri dönüş
+  const handleGoToHub = () => {
+    navigate('/game-tracking-hub');
+  };
+
+  // Geri dönüş fonksiyonu
   const handleGoBack = () => {
     navigate('/game-tracking-hub');
   };
 
-  // İlerleme güncelleme
-  const handleProgressChange = (newProgress) => {
-    setProgress(newProgress);
-    updateGameData({ progress: newProgress });
-  };
-
-  // Durum güncelleme
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-    updateGameData({ status: newStatus });
-  };
-
-  // Oyun verilerini güncelle
-  const updateGameData = (updates) => {
-    try {
-      const savedGames = localStorage.getItem('gameTracker_games');
-      if (!savedGames) return;
-
-      const games = JSON.parse(savedGames);
-      const gameIndex = games.findIndex(g => g.id === id);
-      
-      if (gameIndex !== -1) {
-        games[gameIndex] = { ...games[gameIndex], ...updates };
-        localStorage.setItem('gameTracker_games', JSON.stringify(games));
-        setGame(games[gameIndex]);
-      }
-    } catch (err) {
-      console.error('❌ Oyun güncelleme hatası:', err);
+  // Favori toggle fonksiyonu
+  const handleToggleFavorite = () => {
+    if (game) {
+      toggleFavorite(game.id);
     }
-  };
-
-  // Campaign ekleme
-  const handleAddCampaign = () => {
-    if (!newCampaign.name.trim()) return;
-
-    const campaign = {
-      id: `campaign_${Date.now()}`,
-      name: newCampaign.name.trim(),
-      description: newCampaign.description.trim(),
-      progress: parseInt(newCampaign.progress) || 0,
-      status: newCampaign.status,
-      startDate: newCampaign.startDate,
-      endDate: newCampaign.endDate,
-      notes: newCampaign.notes.trim()
-    };
-
-    const updatedCampaigns = [...campaigns, campaign];
-    setCampaigns(updatedCampaigns);
-    
-    // Oyun verisini güncelle
-    updateGameData({ campaigns: updatedCampaigns });
-    
-    // Form'u temizle
-    setNewCampaign({
-      name: '',
-      description: '',
-      progress: 0,
-      status: 'Başlanmadı',
-      startDate: '',
-      endDate: '',
-      notes: ''
-    });
-    setShowAddCampaign(false);
-  };
-
-  // Campaign güncelleme
-  const handleUpdateCampaign = (campaignId, updates) => {
-    const updatedCampaigns = campaigns.map(campaign =>
-      campaign.id === campaignId ? { ...campaign, ...updates } : campaign
-    );
-    setCampaigns(updatedCampaigns);
-    updateGameData({ campaigns: updatedCampaigns });
-  };
-
-  // Campaign silme
-  const handleDeleteCampaign = (campaignId) => {
-    if (!confirm('Bu campaign\'i silmek istediğinizden emin misiniz?')) return;
-    
-    const updatedCampaigns = campaigns.filter(campaign => campaign.id !== campaignId);
-    setCampaigns(updatedCampaigns);
-    updateGameData({ campaigns: updatedCampaigns });
-  };
-
-  // Not ekleme
-  const handleAddNote = () => {
-    if (!newNote.trim()) return;
-
-    const note = {
-      id: Date.now(),
-      text: newNote.trim(),
-      date: new Date().toLocaleDateString('tr-TR'),
-      time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
-    };
-
-    const updatedNotes = [note, ...notes];
-    setNotes(updatedNotes);
-    setNewNote('');
-    
-    // LocalStorage'a kaydet
-    localStorage.setItem(`gameTracker_notes_${id}`, JSON.stringify(updatedNotes));
-  };
-
-  // Not silme
-  const handleDeleteNote = (noteId) => {
-    const updatedNotes = notes.filter(note => note.id !== noteId);
-    setNotes(updatedNotes);
-    localStorage.setItem(`gameTracker_notes_${id}`, JSON.stringify(updatedNotes));
   };
 
   // Loading durumu
   if (loading) {
     return (
       <div className="game-detail-page">
-        <div className="loading-state">
-          <div className="loading-spinner">⏳</div>
-          <h2>Oyun yükleniyor...</h2>
+        <div className="game-detail-loading">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Oyun bilgileri yükleniyor...</p>
         </div>
       </div>
     );
   }
 
-  // Error durumu
-  if (error) {
+  // Hata durumu
+  if (error || !game) {
     return (
       <div className="game-detail-page">
-        <button className="back-button" onClick={handleGoBack}>
-          ← Oyun Takibi Hub'a Dön
-        </button>
-        <div className="error-state">
+        <div className="game-detail-error">
           <div className="error-icon">❌</div>
-          <h2>Hata Oluştu</h2>
-          <p>{error}</p>
+          <h2 className="error-title">Hata</h2>
+          <p className="error-message">{error || 'Oyun bulunamadı'}</p>
+          <button onClick={handleGoBack} className="retry-button">
+            ← Geri Dön
+          </button>
         </div>
       </div>
     );
   }
 
-  // Ana render
   return (
     <div className="game-detail-page">
-      {/* Header */}
-      <div className="detail-header">
-        <button className="back-button" onClick={handleGoBack}>
-          ← Oyun Takibi Hub
-        </button>
-        <h1>{game.title || 'İsimsiz Oyun'}</h1>
-      </div>
-
-      {/* Ana İçerik */}
-      <div className="detail-content">
-        {/* Sol Panel - Oyun Bilgileri */}
-        <div className="game-info-panel">
-          {/* Kapak Görseli Alanı */}
-          <div className="game-cover">
-            <div className="cover-placeholder">
-              🎮
-            </div>
+      {/* Standart Header */}
+      <header className="tracker-header">
+        <div className="header-content">
+          <div className="header-left">
+            <h1>🎮 {game?.title || 'Oyun Detayı'}</h1>
+            <p>
+              Oyun bilgileri, istatistikler ve topluluk yorumları
+              {dataSource && (
+                <span className={`data-source-badge ${dataSource}`}>
+                  {dataSource === 'local' ? '💾 Yerel Veri' : '🌐 RAWG API'}
+                </span>
+              )}
+            </p>
           </div>
-
-          {/* Temel Bilgiler */}
-          <div className="basic-info">
-            <div className="info-item">
-              <span className="label">Platform:</span>
-              <span className="value">{game.platform || 'Belirtilmemiş'}</span>
-            </div>
-            
-            <div className="info-item">
-              <span className="label">Tür:</span>
-              <span className="value">{game.type || 'Bilinmiyor'}</span>
-            </div>
-            
-            <div className="info-item">
-              <span className="label">Durum:</span>
-              <select 
-                className="status-select"
-                value={status}
-                onChange={(e) => handleStatusChange(e.target.value)}
-              >
-                <option value="Başlanmadı">Başlanmadı</option>
-                <option value="Oynuyor">Oynuyor</option>
-                <option value="Tamamlandı">Tamamlandı</option>
-                <option value="Bırakıldı">Bırakıldı</option>
-                <option value="Beklemede">Beklemede</option>
-              </select>
-            </div>
-            
-            <div className="info-item">
-              <span className="label">İlerleme:</span>
-              <div className="progress-container">
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={(e) => handleProgressChange(parseInt(e.target.value))}
-                  className="progress-slider"
-                />
-                <span className="progress-value">{progress}%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Fraksiyonlar */}
-          {game.factions && game.factions.length > 0 && (
-            <div className="factions-section">
-              <h3>Fraksiyonlar</h3>
-              <div className="factions-grid">
-                {game.factions.map((faction, index) => (
-                  <div key={index} className="faction-card">
-                    <span className="faction-name">{faction.name}</span>
-                    <span className="faction-progress">{faction.progress || 0}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Campaign'ler */}
-          <div className="campaigns-section">
-            <div className="campaigns-header">
-              <h3>🎯 Campaign'ler</h3>
+          <div className="header-controls">
+            <div className="navigation-buttons">
               <button 
-                className="add-campaign-button"
-                onClick={() => setShowAddCampaign(!showAddCampaign)}
+                className="nav-btn"
+                onClick={handleGoBack}
+                title="Geri Dön"
               >
-                {showAddCampaign ? '❌ İptal' : '➕ Campaign Ekle'}
+                ← Geri
+              </button>
+              <button 
+                className="nav-btn hub-btn"
+                onClick={handleGoToHub}
+                title="Oyun Hub'ına Dön"
+              >
+                🎯 Oyun Hub
+              </button>
+              <button 
+                className="nav-btn home-btn"
+                onClick={handleGoHome}
+                title="Ana Sayfaya Dön"
+              >
+                🏠 Ana Sayfa
               </button>
             </div>
+            <ProfileDropdown />
+          </div>
+        </div>
+      </header>
 
-            {/* Campaign Ekleme Formu */}
-            {showAddCampaign && (
-              <div className="add-campaign-form">
-                <div className="form-row">
-                  <input
-                    type="text"
-                    placeholder="Campaign adı"
-                    value={newCampaign.name}
-                    onChange={(e) => setNewCampaign({...newCampaign, name: e.target.value})}
-                    className="campaign-input"
-                  />
-                </div>
-                
-                <div className="form-row">
-                  <textarea
-                    placeholder="Açıklama"
-                    value={newCampaign.description}
-                    onChange={(e) => setNewCampaign({...newCampaign, description: e.target.value})}
-                    className="campaign-textarea"
-                    rows="2"
-                  />
-                </div>
+      {/* Hero Section - Kapak, başlık, temel bilgiler */}
+      <GameHeroSection 
+        game={game}
+        gameStats={gameStats}
+        onGoBack={handleGoBack}
+        onToggleFavorite={handleToggleFavorite}
+      />
 
-                <div className="form-row">
-                  <select
-                    value={newCampaign.status}
-                    onChange={(e) => setNewCampaign({...newCampaign, status: e.target.value})}
-                    className="campaign-select"
-                  >
-                    <option value="Başlanmadı">Başlanmadı</option>
-                    <option value="Oynuyor">Oynuyor</option>
-                    <option value="Tamamlandı">Tamamlandı</option>
-                    <option value="Bırakıldı">Bırakıldı</option>
-                  </select>
-                  
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    placeholder="İlerleme %"
-                    value={newCampaign.progress}
-                    onChange={(e) => setNewCampaign({...newCampaign, progress: e.target.value})}
-                    className="campaign-progress-input"
-                  />
-                </div>
+      {/* Ana içerik container - Çok Yakında */}
+      <div className="game-detail-main">
+        <div className="coming-soon-container">
+          {/* Çok Yakında Ana Başlık */}
+          <div className="coming-soon-header">
+            <div className="coming-soon-icon">
+              <span className="icon-sparkle">✨</span>
+              <span className="icon-rocket">🚀</span>
+              <span className="icon-star">⭐</span>
+            </div>
+            <h2 className="coming-soon-title">Çok Yakında</h2>
+            <p className="coming-soon-subtitle">
+              Bu sayfa için harika özellikler geliştiriyoruz!
+            </p>
+          </div>
 
-                <div className="form-row">
-                  <input
-                    type="date"
-                    placeholder="Başlangıç tarihi"
-                    value={newCampaign.startDate}
-                    onChange={(e) => setNewCampaign({...newCampaign, startDate: e.target.value})}
-                    className="campaign-date"
-                  />
-                  
-                  <input
-                    type="date"
-                    placeholder="Bitiş tarihi"
-                    value={newCampaign.endDate}
-                    onChange={(e) => setNewCampaign({...newCampaign, endDate: e.target.value})}
-                    className="campaign-date"
-                  />
-                </div>
+          {/* Gelecek Özellikler Grid */}
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">💰</div>
+              <h3>Fiyat Karşılaştırması</h3>
+              <p>Farklı platformlardaki fiyatları karşılaştırın ve en uygun fırsatları bulun</p>
+              <div className="feature-status status-soon">Yakında</div>
+            </div>
 
-                <div className="form-actions">
-                  <button 
-                    onClick={handleAddCampaign}
-                    className="save-campaign-button"
-                    disabled={!newCampaign.name.trim()}
-                  >
-                    💾 Kaydet
-                  </button>
-                </div>
-              </div>
-            )}
+            <div className="feature-card">
+              <div className="feature-icon">🎮</div>
+              <h3>Oyun Galerisi</h3>
+              <p>Ekran görüntüleri, videolar ve medya içerikleri</p>
+              <div className="feature-status status-soon">Yakında</div>
+            </div>
 
-            {/* Campaign Listesi */}
-            <div className="campaigns-list">
-              {campaigns.length === 0 ? (
-                <div className="no-campaigns">
-                  <p>Henüz campaign eklenmemiş</p>
-                  <small>Bu oyun için farklı campaign'ler ekleyebilirsiniz</small>
-                </div>
-              ) : (
-                campaigns.map(campaign => (
-                  <div key={campaign.id} className="campaign-card">
-                    <div className="campaign-header">
-                      <h4 className="campaign-name">{campaign.name}</h4>
-                      <div className="campaign-actions">
-                        <button 
-                          onClick={() => handleDeleteCampaign(campaign.id)}
-                          className="delete-campaign-button"
-                          title="Campaign'i sil"
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    </div>
-                    
-                    {campaign.description && (
-                      <p className="campaign-description">{campaign.description}</p>
-                    )}
-                    
-                    <div className="campaign-info">
-                      <div className="campaign-status">
-                        <span className={`status-badge ${campaign.status.toLowerCase().replace(' ', '-')}`}>
-                          {campaign.status}
-                        </span>
-                        <span className="campaign-progress">{campaign.progress}%</span>
-                      </div>
-                      
-                      <div className="campaign-progress-bar">
-                        <div 
-                          className="progress-fill"
-                          style={{ width: `${campaign.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
+            <div className="feature-card">
+              <div className="feature-icon">💬</div>
+              <h3>Topluluk Yorumları</h3>
+              <p>Kullanıcı değerlendirmeleri ve yorumları</p>
+              <div className="feature-status status-soon">Yakında</div>
+            </div>
 
-                    {(campaign.startDate || campaign.endDate) && (
-                      <div className="campaign-dates">
-                        {campaign.startDate && (
-                          <span className="start-date">📅 {campaign.startDate}</span>
-                        )}
-                        {campaign.endDate && (
-                          <span className="end-date">🏁 {campaign.endDate}</span>
-                        )}
-                      </div>
-                    )}
+            <div className="feature-card">
+              <div className="feature-icon">📰</div>
+              <h3>Oyun Haberleri</h3>
+              <p>Oyunla ilgili güncel haberler, güncellemeler ve duyurular</p>
+              <div className="feature-status status-soon">Yakında</div>
+            </div>
 
-                    {campaign.notes && (
-                      <div className="campaign-notes">
-                        <small>📝 {campaign.notes}</small>
-                      </div>
-                    )}
-                  </div>
-                ))
-              )}
+            <div className="feature-card">
+              <div className="feature-icon">📋</div>
+              <h3>Genel Bilgiler</h3>
+              <p>Oyun hakkında detaylı bilgiler, sistem gereksinimleri ve özellikler</p>
+              <div className="feature-status status-soon">Yakında</div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">🎯</div>
+              <h3>Kişisel Öneriler</h3>
+              <p>AI destekli oyun önerileri</p>
+              <div className="feature-status status-soon">Yakında</div>
             </div>
           </div>
-        </div>
 
-        {/* Sağ Panel - Notlar */}
-        <div className="notes-panel">
-          <h3>Notlarım</h3>
-          
-          {/* Not Ekleme */}
-          <div className="add-note">
-            <textarea
-              value={newNote}
-              onChange={(e) => setNewNote(e.target.value)}
-              placeholder="Oyun hakkında notlarınızı yazın..."
-              className="note-input"
-              rows="3"
-            />
-            <button 
-              onClick={handleAddNote}
-              className="add-note-button"
-              disabled={!newNote.trim()}
-            >
-              📝 Not Ekle
-            </button>
-          </div>
-
-          {/* Notlar Listesi */}
-          <div className="notes-list">
-            {notes.length === 0 ? (
-              <div className="no-notes">
-                <p>Henüz not eklenmemiş</p>
+          {/* Alt Bilgi */}
+          <div className="coming-soon-footer">
+            <div className="progress-indicator">
+              <div className="progress-bar">
+                <div className="progress-fill" style={{width: '0%'}}></div>
               </div>
-            ) : (
-              notes.map(note => (
-                <div key={note.id} className="note-item">
-                  <div className="note-header">
-                    <span className="note-date">{note.date} - {note.time}</span>
-                    <button 
-                      onClick={() => handleDeleteNote(note.id)}
-                      className="delete-note"
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                  <p className="note-text">{note.text}</p>
-                </div>
-              ))
-            )}
+              <span className="progress-text">Geliştirme İlerlemesi: %0</span>
+            </div>
+            <p className="footer-note">
+              🔔 Yeni özellikler eklendiğinde bildirim alacaksınız!
+            </p>
           </div>
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="detail-footer">
-        <span className="phase-badge">Phase 3: Oyun Detayları</span>
-        <span className="status-badge">✨ Yeni</span>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 2- Design system içerisinde aynı rengi kullanan ögelerin yeri ve açıklaması ile birlikte beraber gruplanmalı.
 3- Design system içerisinde kullanılan renklerin rgb değerleri de aynı dosyada tutulmalı.
 4- Her tasarımda minimum 3 farklı arka plan katmanı kullan (sayfa arka planı en koyu, kartlar biraz koyu, vurgulu elementler hafif açık) ve yan yana elementler asla aynı tonda olmasın. Tüm butonlar gradient ve gölge efekti içermeli, her buton kategorisi farklı renkte olmalı (primary mavi, success yeşil, warning sarı, danger kırmızı) ve hover durumunda gölge 2 kat artmalı. Aktif veya seçili elementler pasif durumdan minimum %50 daha parlak olmalı, gradient kullanmalı ve renkli kalın border ile vurgulanmalı. Tüm kartlar ve paneller glassmorphism efekti (hafif şeffaf arka plan + blur + ince border) kullanmalı ve interactive elementlerde hover'da parlayan hafif glow efekti olmalı. Progress bar, status indicator ve önemli metrikler parlayan glow shadow efekti ile vurgulanmalı. Kontrast oranı her zaman minimum 4.5:1 olmalı, aynı renk tonu maksimum 2 komşu elementte kullanılabilir. Box-shadow tüm elevated elementlerde zorunlu, hover durumunda artmalı ve active durumunda azalmalı (basılı efekt için).
-5- Proje boyunca bütün arkaplanlar aynı renk olmalı tüm sayfalarda.
+5- Proje boyunca bütün arkaplanlar aynı renk olmalı tüm sayfalarda. Ayrıca arkaplanı koyu olan yerlerde asla koyu renk font kullanma. Açık renkli olsun.
 ### 6 HARDCODED RENK YASAĞI
 - ❌ ASLA direkt hex/rgb kod yazma (`#3b82f6`, `rgb(59,130,246)`)
 - ✅ SADECE `design-system.css`'deki değişkenleri kullan (`var(--color-primary-500)`)
@@ -555,4 +555,25 @@ color: #ffffff !important;
 4. **Responsive Test:** Mobil uyumluluğunu kontrol et
 5. **Kontrast Kontrolü:** Koyu arka plan + açık font kuralını uygula
 
-15-
+### 15 ÇALKALA KOMUT SİSTEMİ
+
+#### 🔄 "çalkala" Komutu
+- Kullanıcı "çalkala" dediğinde verilen ögelerin tasarımlarını 14 farklı şekilde tasarla
+- Her sette **öge içi layout'lar** ve **içerikler** farklı olacak
+- Hem düzen, hem de içindeki şeyler değişecek
+- Sonucu HTML dosyasına koyup kullanıcıya sun
+
+#### 🚀 "çok çalkala" Komutu  
+- "çok çalkala" dediğinde grup layout'unu da değiştir
+- Hangi sıra ile gözüktüğü, nasıl durdukları, hizaları tamamen serbest
+- Öge pozisyonları, grid düzeni, spacing her şey değişebilir
+- Daha radikal tasarım değişiklikleri yap
+
+#### 📋 Çalkala Kuralları
+- Her set tamamen farklı olmalı (sadece renk değil, yapı da)
+- İçerik çeşitliliği: farklı bilgi düzenleri, icon pozisyonları, text hiyerarşileri
+- Layout çeşitliliği: grid, flex, absolute positioning, transform'lar
+- Responsive tasarım her sette korunmalı
+- Dark theme uyumluluğu zorunlu
+
+proje boyunca mock data yasak!!!!!!!!!!!!!!!!!!!!

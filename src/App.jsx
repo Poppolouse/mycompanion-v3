@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import AnaSayfa from './pages/AnaSayfa';
 import TodoApp from './pages/TodoApp';
@@ -20,8 +20,15 @@ import { ProfileSettings } from './components/UserProfile';
 
 import { RouteProvider } from './contexts/RouteContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { GameProvider } from './contexts/GameContext';
+import { UserStatsProvider } from './contexts/UserStatsContext';
+import { UserGameLibraryProvider } from './contexts/UserGameLibraryContext';
 import { NotificationProvider } from './components/NotificationSystem';
+import DebugTool from './components/DebugTool';
+
 import './App.css';
+
+
 
 /**
  * Ana uygulama komponenti - Routing sistemi
@@ -58,8 +65,13 @@ function AppContent() {
   }
 
   return (
-    <NotificationProvider>
-      <Router>
+    <GameProvider>
+      <UserStatsProvider>
+        <UserGameLibraryProvider>
+          <NotificationProvider>
+        {/* Debug Tool - Sadece development modunda */}
+        {process.env.NODE_ENV === 'development' && <DebugTool />}
+        <Router>
         <Routes>
         {/* Sidebar'sız bağımsız sayfalar */}
         {/* Ana sayfa - Kullanıcı sorusu ve uygulama listesi */}
@@ -121,8 +133,11 @@ function AppContent() {
           </div>
         } />
         </Routes>
-      </Router>
-    </NotificationProvider>
+        </Router>
+          </NotificationProvider>
+        </UserGameLibraryProvider>
+      </UserStatsProvider>
+    </GameProvider>
   );
 }
 

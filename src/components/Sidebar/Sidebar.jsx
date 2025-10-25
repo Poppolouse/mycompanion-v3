@@ -52,7 +52,7 @@ function Sidebar({ isOpen = true, onToggle }) {
     },
     {
       id: 'game-tracking-hub',
-      baslik: 'Oyun Takibi',
+      baslik: 'Oyun Merkezi',
       ikon: '🎮',
       yol: '/game-tracking-hub',
       aciklama: 'Oyun yönetim merkezi'

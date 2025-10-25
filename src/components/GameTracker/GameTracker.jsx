@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { readExcelFile, parseGameList } from '../../utils/excelUtils';
+import { readExcelFile, parseGameList, parseGameListWithRAWG } from '../../utils/excelUtils';
+import { searchGames, getGameDetails } from '../../api/gameApi';
 import { organizeCurrentData } from '../../utils/organizeCurrentData';
 import { useRoute } from '../../contexts/RouteContext';
-import SmartSearch from '../SmartSearch';
-import AdvancedFilters from '../AdvancedFilters';
-import GameListItem from '../GameListItem';
+import { useGame } from '../../contexts/GameContext';
 import EditGameModal from '../EditGameModal';
 import GameSearchModal from '../GameSearchModal';
 import LibraryCycleItem from '../LibraryCycleItem';
@@ -26,25 +25,45 @@ function GameTracker() {
   // Notifications
   const { showSuccess, showError, showWarning, showGameUpdate, showAchievement } = useNotifications();
 
-  // Ana state'ler
-  const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  // 🎮 Game Context - Bağımsız state management
+  const {
+    games,
+    setGames,
+    loading,
+    setLoading,
+    error,
+    setError,
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    platformFilter,
+    setPlatformFilter,
+    genreFilter,
+    setGenreFilter,
+    selectedGames,
+    setSelectedGames,
+    filteredGames,
+    uniqueValues,
+    stats,
+    getGameStatus,
+    clearAllFilters,
+    updateGame,
+    deleteGame,
+    toggleGameSelection,
+    selectAllGames,
+    clearSelection,
+    updateAllGameImages
+  } = useGame();
+
+  // 📱 UI state'leri (sadece GameTracker'a özel)
   const [currentView, setCurrentView] = useState('library'); // 'library' veya 'cycles'
-  
-  // Görünüm modları
   const [viewMode, setViewMode] = useState('list'); // 'list' veya 'grid'
   const [showColorLegend, setShowColorLegend] = useState(false);
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
-  
-  // Akıllı filtreler
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [platformFilter, setPlatformFilter] = useState('all');
-  const [genreFilter, setGenreFilter] = useState('all');
-  
-  // Toplu işlemler (List View için)
-  const [selectedGames, setSelectedGames] = useState(new Set());
+  const [showSmartSearch, setShowSmartSearch] = useState(false);
+  const [sortBy, setSortBy] = useState('name'); // 'name', 'date', 'progress', 'status', 'platform'
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' veya 'desc'
 
   // Edit Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -71,8 +90,12 @@ function GameTracker() {
   // Cycle Floating Panel State
   const [showCycleKeyboardHelp, setShowCycleKeyboardHelp] = useState(false);
 
+  // RAWG Import State
+  const [isRAWGImporting, setIsRAWGImporting] = useState(false);
+  const [rawgProgress, setRawgProgress] = useState({ current: 0, total: 0 });
+
   // Refs
-  const fileInputRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   // Component mount olduğunda localStorage'dan veri yükle
   useEffect(() => {
@@ -86,6 +109,25 @@ function GameTracker() {
       }
     }
   }, []);
+
+  // 🖼️ Sayfa açıldığında otomatik resim güncelleme (sadece bir kez)
+  useEffect(() => {
+    const autoUpdateImages = async () => {
+      // Sadece oyunlar yüklendiyse ve loading durumunda değilse çalıştır
+      if (games.length > 0 && !loading) {
+        try {
+          await updateAllGameImages();
+        } catch (error) {
+          console.error('❌ Otomatik resim güncelleme hatası:', error);
+        }
+      }
+    };
+
+    // 5 saniye delay ile başlat (sayfa tamamen yüklendikten sonra)
+    const timer = setTimeout(autoUpdateImages, 5000);
+    
+    return () => clearTimeout(timer);
+  }, []); // Sadece component mount olduğunda çalışsın
 
   // Klavye kısayolları
   useEffect(() => {
@@ -162,14 +204,6 @@ function GameTracker() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [selectedGames, selectedCycles, searchTerm, navigate, currentView, isBulkSelectMode]);
 
-  // Oyun durumu belirleme fonksiyonu
-  const getGameStatus = (game) => {
-    if (game.progress >= 100 || game.status === 'completed') return 'completed';
-    if (game.status === 'playing' || game.progress > 0) return 'playing';
-    if (game.status === 'paused') return 'paused';
-    return 'not-started';
-  };
-
   // Son oynanan oyunları getir - useMemo ile optimize edildi
   const recentlyPlayedGames = useMemo(() => {
     return games
@@ -180,71 +214,85 @@ function GameTracker() {
 
   const getRecentlyPlayedGames = useCallback(() => recentlyPlayedGames, [recentlyPlayedGames]);
 
-  // Benzersiz değerleri getir (filtreler için) - useMemo ile optimize edildi
-  const uniqueValues = useMemo(() => {
-    const platforms = [...new Set(games.map(game => game.platform || game.sistem).filter(Boolean))].sort();
-    const genres = [...new Set(games.map(game => game.genre || game.tur).filter(Boolean))].sort();
-    
-    return {
-      platform: platforms,
-      genre: genres
-    };
-  }, [games]);
-
-  const getUniqueValues = useCallback((field) => {
-    return uniqueValues[field] || [];
-  }, [uniqueValues]);
-
-  // Akıllı filtreleme fonksiyonu - useMemo ile optimize edildi
-  const filteredGames = useMemo(() => {
-    return games.filter(game => {
-      // Arama terimi kontrolü
-      if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase();
-        const title = (game.title || game.name || '').toLowerCase();
-        const platform = (game.platform || game.sistem || '').toLowerCase();
-        const genre = (game.genre || game.tur || '').toLowerCase();
-        const developer = (game.developer || game.gelistirici || '').toLowerCase();
-        
-        if (!title.includes(searchLower) && 
-            !platform.includes(searchLower) && 
-            !genre.includes(searchLower) && 
-            !developer.includes(searchLower)) {
-          return false;
-        }
-      }
-      
-      // Durum filtresi
-      if (statusFilter !== 'all') {
-        const gameStatus = getGameStatus(game);
-        if (gameStatus !== statusFilter) return false;
-      }
-      
-      // Platform filtresi
-      if (platformFilter !== 'all') {
-        const gamePlatform = game.platform || game.sistem;
-        if (gamePlatform !== platformFilter) return false;
-      }
-      
-      // Tür filtresi
-      if (genreFilter !== 'all') {
-        const gameGenre = game.genre || game.tur;
-        if (gameGenre !== genreFilter) return false;
-      }
-      
-      return true;
-    });
-  }, [games, searchTerm, statusFilter, platformFilter, genreFilter]);
+  // Route state güncelleme fonksiyonu
+  const updateRouteState = (newState) => {
+    // RouteContext'ten gelen fonksiyon kullanılacak
+    // Bu fonksiyon RouteContext'te tanımlanmalı
+  };
 
   // Geriye uyumluluk için wrapper fonksiyon
   const getSmartFilteredGames = useCallback(() => filteredGames, [filteredGames]);
 
-  // Filtreleri temizle - useCallback ile optimize edildi
-  const clearAllFilters = useCallback(() => {
-    setSearchTerm('');
-    setStatusFilter('all');
-    setPlatformFilter('all');
-    setGenreFilter('all');
+  // Benzersiz değerleri getir (geriye uyumluluk için)
+  const getUniqueValues = useCallback((field) => {
+    return uniqueValues[field] || [];
+  }, [uniqueValues]);
+
+  // Platform ve genre için özel fonksiyonlar
+  const getUniquePlatforms = useCallback(() => {
+    return getUniqueValues('platform');
+  }, [getUniqueValues]);
+
+  const getUniqueGenres = useCallback(() => {
+    return getUniqueValues('genre');
+  }, [getUniqueValues]);
+
+  // Platform icon fonksiyonu
+  const getPlatformIcon = useCallback((platform) => {
+    const platformIcons = {
+      'PC': '💻',
+      'PlayStation': '🎮',
+      'PlayStation 2': '🎮',
+      'PlayStation 3': '🎮',
+      'PlayStation 4': '🎮',
+      'PlayStation 5': '🎮',
+      'Xbox': '🎮',
+      'Xbox 360': '🎮',
+      'Xbox One': '🎮',
+      'Xbox Series X/S': '🎮',
+      'Nintendo Switch': '🎮',
+      'Nintendo 3DS': '🎮',
+      'Nintendo DS': '🎮',
+      'Nintendo Wii': '🎮',
+      'Nintendo Wii U': '🎮',
+      'Steam': '💻',
+      'Epic Games': '💻',
+      'Origin': '💻',
+      'Uplay': '💻',
+      'GOG': '💻',
+      'Mobile': '📱',
+      'Android': '📱',
+      'iOS': '📱',
+      'Web': '🌐'
+    };
+    return platformIcons[platform] || '🎮';
+  }, []);
+
+  // Genre icon fonksiyonu
+  const getGenreIcon = useCallback((genre) => {
+    const genreIcons = {
+      'Action': '⚔️',
+      'Adventure': '🗺️',
+      'RPG': '🧙‍♂️',
+      'Strategy': '🧠',
+      'Simulation': '🏗️',
+      'Sports': '⚽',
+      'Racing': '🏎️',
+      'Puzzle': '🧩',
+      'Platformer': '🏃‍♂️',
+      'Fighting': '👊',
+      'Shooter': '🔫',
+      'Horror': '👻',
+      'Survival': '🏕️',
+      'Sandbox': '🏗️',
+      'MMORPG': '🌍',
+      'Indie': '🎨',
+      'Casual': '😊',
+      'Educational': '📚',
+      'Music': '🎵',
+      'Party': '🎉'
+    };
+    return genreIcons[genre] || '🎮';
   }, []);
 
   // Smart Search handler - useCallback ile optimize edildi
@@ -277,6 +325,43 @@ function GameTracker() {
       setSearchTerm(searchValue);
     }
   }, []);
+
+  // Sıralama fonksiyonu
+  const getSortedGames = useCallback((gamesToSort) => {
+    if (!gamesToSort || gamesToSort.length === 0) return [];
+    
+    const sorted = [...gamesToSort].sort((a, b) => {
+      let aValue, bValue;
+      
+      switch (sortBy) {
+        case 'name':
+          aValue = a.title?.toLowerCase() || '';
+          bValue = b.title?.toLowerCase() || '';
+          break;
+        case 'date':
+          aValue = new Date(a.lastPlayed || a.dateAdded || 0);
+          bValue = new Date(b.lastPlayed || b.dateAdded || 0);
+          break;
+        case 'status':
+          const statusOrder = { 'playing': 1, 'completed': 2, 'paused': 3, 'dropped': 4, 'planning': 5, 'wishlist': 6 };
+          aValue = statusOrder[a.status] || 6;
+          bValue = statusOrder[b.status] || 6;
+          break;
+        case 'platform':
+          aValue = a.platform?.toLowerCase() || '';
+          bValue = b.platform?.toLowerCase() || '';
+          break;
+        default:
+          return 0;
+      }
+      
+      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+    
+    return sorted;
+  }, [sortBy, sortOrder]);
 
   // Toplu işlemler
   const handleBulkDelete = () => {
@@ -318,9 +403,9 @@ function GameTracker() {
     const statusLabels = {
       'playing': 'Oynuyor',
       'completed': 'Tamamlandı',
-      'paused': 'Duraklatıldı',
       'dropped': 'Bırakıldı',
-      'planning': 'Planlanıyor'
+      'planning': 'Planlanıyor',
+      'wishlist': 'İstek Listesi'
     };
     
     showSuccess(`${selectedGames.size} oyunun durumu "${statusLabels[newStatus] || newStatus}" olarak güncellendi`, {
@@ -349,17 +434,26 @@ function GameTracker() {
     URL.revokeObjectURL(url);
   };
 
-  // Excel dosyası yükleme
+  // Excel dosyası yükleme (RAWG entegrasyonlu)
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
     setLoading(true);
+    setIsRAWGImporting(true);
     setError('');
+    setRawgProgress({ current: 0, total: 0 });
 
     try {
       const data = await readExcelFile(file);
-      const gameList = parseGameList(data);
+      
+      // Progress callback for RAWG enrichment
+      const progressCallback = (current, total) => {
+        setRawgProgress({ current, total });
+      };
+
+      // RAWG ile zenginleştirilmiş oyun listesi
+      const gameList = await parseGameListWithRAWG(data, progressCallback);
       
       if (gameList.length === 0) {
         throw new Error('Excel dosyasında geçerli oyun verisi bulunamadı');
@@ -369,8 +463,8 @@ function GameTracker() {
       localStorage.setItem('gameTracker_games', JSON.stringify(gameList));
       
       // Başarı bildirimi
-      showSuccess(`${gameList.length} oyun başarıyla yüklendi!`, {
-        title: '📁 Dosya Yüklendi'
+      showSuccess(`${gameList.length} oyun RAWG verileri ile zenginleştirilerek yüklendi!`, {
+        title: '🎮 Dosya Yüklendi'
       });
       
     } catch (err) {
@@ -381,9 +475,8 @@ function GameTracker() {
       });
     } finally {
       setLoading(false);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      setIsRAWGImporting(false);
+      setRawgProgress({ current: 0, total: 0 });
     }
   };
 
@@ -419,6 +512,91 @@ function GameTracker() {
       localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
       
       showSuccess(`"${updatedGameData.title}" başarıyla güncellendi!`);
+    }
+  };
+
+  // Mevcut oyunları RAWG ile zenginleştir
+  const handleEnrichExistingGames = async () => {
+    if (games.length === 0) {
+      showWarning('Zenginleştirilecek oyun bulunamadı!', {
+        title: '⚠️ Uyarı'
+      });
+      return;
+    }
+
+    setLoading(true);
+    setIsRAWGImporting(true);
+    setError('');
+    setRawgProgress({ current: 0, total: games.length });
+
+    try {
+      const enrichedGames = [];
+      
+      for (let i = 0; i < games.length; i++) {
+        const game = games[i];
+        setRawgProgress({ current: i + 1, total: games.length });
+        
+        try {
+          // RAWG'den oyun ara
+          const searchResults = await searchGames(game.title || game.name);
+          
+          if (searchResults && searchResults.length > 0) {
+            const rawgGame = searchResults[0]; // En iyi eşleşme
+            
+            // RAWG verilerini mevcut oyun verisiyle birleştir
+            const enrichedGame = {
+              ...game, // Mevcut veriler korunur
+              // RAWG'den gelen veriler (sadece eksik olanlar doldurulur)
+              description: game.description || rawgGame.description || '',
+              genres: game.genres || rawgGame.genres || ['Action'],
+              platforms: game.platforms || rawgGame.platforms || [game.platform || 'PC'],
+              developer: game.developer || rawgGame.developer || '',
+              publisher: game.publisher || rawgGame.publisher || '',
+              releaseDate: game.releaseDate || rawgGame.releaseDate || '',
+              metacritic: game.metacritic || rawgGame.metacritic || null,
+              esrbRating: game.esrbRating || rawgGame.esrbRating || '',
+              playtime: game.playtime || rawgGame.playtime || null,
+              backgroundImage: game.backgroundImage || rawgGame.backgroundImage || '',
+              // RAWG ID'sini ekle (gelecekte kullanım için)
+              rawgId: rawgGame.id || null,
+              // Zenginleştirme tarihi
+              enrichedAt: new Date().toISOString()
+            };
+            
+            enrichedGames.push(enrichedGame);
+          } else {
+            // RAWG'de bulunamadı, mevcut veriyi koru
+            enrichedGames.push(game);
+          }
+          
+          // API rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+        } catch (gameError) {
+          console.warn(`${game.title} için RAWG verisi alınamadı:`, gameError);
+          // Hata durumunda mevcut veriyi koru
+          enrichedGames.push(game);
+        }
+      }
+      
+      // Zenginleştirilmiş oyunları kaydet
+      setGames(enrichedGames);
+      localStorage.setItem('gameTracker_games', JSON.stringify(enrichedGames));
+      
+      showSuccess(`${enrichedGames.length} oyun RAWG verileri ile zenginleştirildi!`, {
+        title: '🎮 Zenginleştirme Tamamlandı'
+      });
+      
+    } catch (err) {
+      const errorMessage = err.message || 'Oyunlar zenginleştirilirken bir hata oluştu';
+      setError(errorMessage);
+      showError(errorMessage, {
+        title: '🎮 Zenginleştirme Hatası'
+      });
+    } finally {
+      setLoading(false);
+      setIsRAWGImporting(false);
+      setRawgProgress({ current: 0, total: 0 });
     }
   };
 
@@ -541,14 +719,13 @@ function GameTracker() {
     }
   };
 
-  const handleSelectGameForSlot = (cycleNumber, gameIndex, gameType) => {
-    setSelectedGameSlot({ cycleNumber, gameIndex, gameType });
+  const handleGameSlotSelect = (cycleNumber, gamePosition, gameType) => {
+    setSelectedGameSlot({ cycleNumber, gamePosition, gameType });
     setModalSearchTerm(''); // Arama kutusunu temizle
     setShowGameSelectionModal(true);
   };
 
-  const handleRemoveGameFromSlot = (cycleNumber, gamePosition) => {
-    console.log(`Removing game from cycle ${cycleNumber}, position ${gamePosition}`);
+  const handleGameRemove = (cycleNumber, gamePosition) => {
     const success = removeCycleGame(cycleNumber, gamePosition);
     if (success) {
       showSuccess('Oyun cycle\'dan kaldırıldı');
@@ -558,7 +735,6 @@ function GameTracker() {
   };
 
   const handleGameSelection = (gameId) => {
-    console.log(`Selected game ${gameId} for cycle ${editingCycleNumber}, position ${selectedGameSlot.position}`);
     const success = updateCycleGame(editingCycleNumber, selectedGameSlot.position, gameId);
     if (success) {
       setShowGameSelectionModal(false);
@@ -679,8 +855,7 @@ function GameTracker() {
       routeState: routeState
     };
     
-    console.log('🔍 Debug Bilgileri:', debugData);
-    alert(`Debug Bilgileri:\n\nOyun Sayısı: ${debugData.games}\nLocalStorage: ${JSON.stringify(debugData.localStorage, null, 2)}\n\nDetaylar console'da`);
+    alert(`Debug Bilgileri:\n\nOyun Sayısı: ${debugData.games}\nLocalStorage: ${JSON.stringify(debugData.localStorage, null, 2)}`);
   };
 
   return (
@@ -740,381 +915,626 @@ function GameTracker() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className={styles.trackerMain} style={{
-        background: 'transparent',
-        backdropFilter: 'none'
-      }}>
-        {/* Controls */}
-        <div className={styles.trackerControls}>
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            accept=".xlsx,.xls"
-            style={{ display: 'none' }}
-          />
-          
-          <div className={styles.controlButtons}>
-            <button 
-              className={styles.uploadBtn}
-              onClick={() => fileInputRef.current?.click()}
-              disabled={loading}
-            >
-              {loading ? '📤 Yükleniyor...' : '📁 Excel Dosyası Yükle'}
-            </button>
-            
-            <button 
-              className={styles.addGameBtn}
-              onClick={() => setIsGameSearchModalOpen(true)}
-              title="Yeni Oyun Ekle"
-            >
-              ➕ Oyun Ekle
-            </button>
-            
-            <button 
-              className={styles.sampleDataBtn}
-              onClick={handleLoadSampleData}
-              disabled={loading}
-              title="Örnek oyun verilerini yükle"
-            >
-              {loading ? '🎮 Yükleniyor...' : '🎮 Örnek Veri Yükle'}
-            </button>
-            
-            {games.length > 0 && (
-              <>
-                <button 
-                  className={styles.distributeBtn}
-                  onClick={handleDistributeGamesToCycles}
-                  disabled={loading}
-                >
-                  {loading ? '🔄 Dağıtılıyor...' : '🎯 Cycle\'lara Böl'}
-                </button>
-                <button 
-                  className={styles.debugBtn}
-                  onClick={handleDebugTotalWar}
-                  title="localStorage verilerini kontrol et"
-                >
-                  🔍 Debug
-                </button>
-              </>
-            )}
-          </div>
+      {/* Main Content Container */}
+      <div className={styles.gameTrackerContainer}>
+        {/* Games Section */}
 
-          {/* Orta Kompaktlık Modern Filtreler */}
-          {currentView === 'library' && games.length > 0 && (
-            <div className={styles.balancedFiltersContainer}>
-              {/* Üst Bölüm: Arama + İstatistikler */}
-              <div className={styles.topSection}>
-                <div className={styles.searchBarSection}>
-                  <div className={styles.searchInputWrapper}>
-                    <div className={styles.searchIcon}>🔍</div>
+        {/* Content based on current view */}
+        {currentView === 'library' ? (
+          /* Oyun Kütüphanesi - Ana Sayfa Tasarım Dili */
+          <div className={styles.librarySection}>
+            
+            {/* Modern Quick Stats Section - Session History Tarzı */}
+            <section className={styles.modernQuickStatsSection}>
+              <div className={styles.statsHeader}>
+                <h2 className={styles.sectionTitle}>
+                  <span className={styles.titleIcon}>📊</span>
+                  Kütüphane İstatistikleri
+                </h2>
+                <div className={styles.statsSubtitle}>
+                  Oyun koleksiyonunuzun genel durumu
+                </div>
+              </div>
+              
+              <div className={styles.modernStatsGrid}>
+                {/* Toplam Oyun Kartı */}
+                <div className={`${styles.modernStatCard} ${styles.totalGamesCard}`}>
+                  <div className={styles.statCardHeader}>
+                    <div className={styles.statCardIcon}>🎮</div>
+                    <div className={styles.statCardBadge}>Toplam</div>
+                  </div>
+                  <div className={styles.statCardContent}>
+                    <div className={styles.statMainValue}>{games.length}</div>
+                    <div className={styles.statMainLabel}>Oyun</div>
+                  </div>
+
+                </div>
+
+                {/* Tamamlanan Oyunlar Kartı */}
+                <div className={`${styles.modernStatCard} ${styles.completedGamesCard}`}>
+                  <div className={styles.statCardHeader}>
+                    <div className={styles.statCardIcon}>✅</div>
+                    <div className={styles.statCardBadge}>Başarı</div>
+                  </div>
+                  <div className={styles.statCardContent}>
+                    <div className={styles.statMainValue}>
+                      {games.filter(g => g.status === 'completed').length}
+                    </div>
+                    <div className={styles.statMainLabel}>Tamamlandı</div>
+                  </div>
+                  <div className={styles.statCardFooter}>
+                    <div className={styles.statProgress}>
+                      <div className={styles.statProgressBar}>
+                        <div 
+                          className={styles.statProgressFill}
+                          style={{ 
+                            width: `${games.length > 0 ? (games.filter(g => g.status === 'completed').length / games.length) * 100 : 0}%` 
+                          }}
+                        />
+                      </div>
+                      <span className={styles.statProgressText}>
+                        {games.length > 0 ? Math.round((games.filter(g => g.status === 'completed').length / games.length) * 100) : 0}% Tamamlanma
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Devam Eden Oyunlar Kartı */}
+                <div className={`${styles.modernStatCard} ${styles.playingGamesCard}`}>
+                  <div className={styles.statCardHeader}>
+                    <div className={styles.statCardIcon}>🎯</div>
+                    <div className={styles.statCardBadge}>Aktif</div>
+                  </div>
+                  <div className={styles.statCardContent}>
+                    <div className={styles.statMainValue}>
+                      {games.filter(g => g.status === 'playing').length}
+                    </div>
+                    <div className={styles.statMainLabel}>Devam Eden</div>
+                  </div>
+
+                </div>
+
+
+
+                {/* Bekleyen Oyunlar Kartı */}
+                <div className={`${styles.modernStatCard} ${styles.backlogGamesCard}`}>
+                  <div className={styles.statCardHeader}>
+                    <div className={styles.statCardIcon}>📚</div>
+                    <div className={styles.statCardBadge}>Backlog</div>
+                  </div>
+                  <div className={styles.statCardContent}>
+                    <div className={styles.statMainValue}>
+                      {games.filter(g => g.status === 'backlog' || g.status === 'not_started').length}
+                    </div>
+                    <div className={styles.statMainLabel}>Bekleyen</div>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </section>
+
+
+
+            {/* Modern Search Section */}
+            <section className={styles.modernSearchSection}>
+              <div className={styles.searchHeader}>
+                <div className={styles.sectionTitle}>
+                  <span className={styles.titleIcon}>🔍</span>
+                  Gelişmiş Arama
+                </div>
+                <div className={styles.searchSubtitle}>
+                  Oyun koleksiyonunuzda hızlı ve akıllı arama yapın
+                </div>
+              </div>
+
+              <div className={styles.modernSearchCard}>
+                <div className={styles.searchCardHeader}>
+                  <div className={styles.searchCardIcon}>🎯</div>
+                  <div className={styles.searchCardTitle}>Arama Merkezi</div>
+                  {searchTerm && (
+                    <div className={styles.searchActiveBadge}>
+                      {filteredGames.length} sonuç
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.searchCardContent}>
+                  <div className={styles.modernSearchInputWrapper}>
+                    <div className={styles.searchInputIcon}>🔍</div>
                     <input
                       type="text"
-                      placeholder="Oyun ara..."
+                      placeholder="Oyun adı, platform, tür veya akıllı komut girin..."
+                      className={styles.modernSearchInput}
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className={styles.balancedSearchInput}
+                      ref={searchInputRef}
                     />
                     {searchTerm && (
                       <button 
+                        className={styles.modernClearSearchBtn}
                         onClick={() => setSearchTerm('')}
-                        className={styles.clearSearchBtn}
+                        title="Aramayı temizle"
                       >
                         ✕
                       </button>
                     )}
+                    <div className={styles.searchShortcut}>Ctrl+F</div>
+                  </div>
+
+                  {/* Gelişmiş Filtreler */}
+                  <div className={styles.advancedFiltersSection}>
+                    <div className={styles.filtersRow}>
+                      <div className={styles.filterGroup}>
+                        <label className={styles.filterLabel}>
+                          <span className={styles.filterIcon}>📊</span>
+                          Durum
+                        </label>
+                        <select 
+                          className={styles.modernFilterSelect}
+                          value={statusFilter}
+                          onChange={(e) => setStatusFilter(e.target.value)}
+                        >
+                          <option value="">Tüm Durumlar</option>
+                          <option value="Devam Ediyor">🎯 Devam Ediyor</option>
+                          <option value="Tamamlandı">✅ Tamamlandı</option>
+                          <option value="Bırakıldı">❌ Bırakıldı</option>
+                          <option value="Planlandı">📅 Planlandı</option>
+                          <option value="Duraklatıldı">⏸️ Duraklatıldı</option>
+                        </select>
+                      </div>
+
+                      <div className={styles.filterGroup}>
+                        <label className={styles.filterLabel}>
+                          <span className={styles.filterIcon}>🎮</span>
+                          Platform
+                        </label>
+                        <select 
+                          className={styles.modernFilterSelect}
+                          value={platformFilter}
+                          onChange={(e) => setPlatformFilter(e.target.value)}
+                        >
+                          <option value="">Tüm Platformlar</option>
+                          {getUniquePlatforms().map(platform => (
+                            <option key={platform} value={platform}>
+                              {getPlatformIcon(platform)} {platform}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className={styles.filterGroup}>
+                        <label className={styles.filterLabel}>
+                          <span className={styles.filterIcon}>🎭</span>
+                          Tür
+                        </label>
+                        <select 
+                          className={styles.modernFilterSelect}
+                          value={genreFilter}
+                          onChange={(e) => setGenreFilter(e.target.value)}
+                        >
+                          <option value="">Tüm Türler</option>
+                          {getUniqueGenres().map(genre => (
+                            <option key={genre} value={genre}>
+                              {getGenreIcon(genre)} {genre}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Aktif Filtreler */}
+                    {(statusFilter || platformFilter || genreFilter) && (
+                      <div className={styles.activeFilters}>
+                        <div className={styles.activeFiltersHeader}>
+                          <span className={styles.activeFiltersTitle}>Aktif Filtreler:</span>
+                          <button 
+                            className={styles.clearAllFiltersBtn}
+                            onClick={() => {
+                              setStatusFilter('');
+                              setPlatformFilter('');
+                              setGenreFilter('');
+                            }}
+                            title="Tüm filtreleri temizle"
+                          >
+                            Tümünü Temizle
+                          </button>
+                        </div>
+                        <div className={styles.activeFilterTags}>
+                          {statusFilter && (
+                            <div className={styles.activeFilterTag}>
+                              <span>📊 {statusFilter}</span>
+                              <button onClick={() => setStatusFilter('')}>×</button>
+                            </div>
+                          )}
+                          {platformFilter && (
+                            <div className={styles.activeFilterTag}>
+                              <span>🎮 {platformFilter}</span>
+                              <button onClick={() => setPlatformFilter('')}>×</button>
+                            </div>
+                          )}
+                          {genreFilter && (
+                            <div className={styles.activeFilterTag}>
+                              <span>🎭 {genreFilter}</span>
+                              <button onClick={() => setGenreFilter('')}>×</button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={styles.searchActions}>
+                    <button 
+                      className={`${styles.modernSearchActionBtn} ${showSmartSearch ? styles.active : ''}`}
+                      onClick={() => setShowSmartSearch(!showSmartSearch)}
+                      title="Akıllı arama komutlarını göster/gizle"
+                    >
+                      <span className={styles.btnIcon}>🧠</span>
+                      Akıllı Komutlar
+                      {showSmartSearch && <span className={styles.activeIndicator}>●</span>}
+                    </button>
+                    
+                    <button 
+                      className={`${styles.modernSearchActionBtn} ${showColorLegend ? styles.active : ''}`}
+                      onClick={() => setShowColorLegend(!showColorLegend)}
+                      title="Renk açıklamasını göster/gizle"
+                    >
+                      <span className={styles.btnIcon}>🎨</span>
+                      Renk Rehberi
+                      {showColorLegend && <span className={styles.activeIndicator}>●</span>}
+                    </button>
                   </div>
                 </div>
-                
-                <div className={styles.statsSection}>
-                  <div className={styles.statItem}>
-                    <span className={styles.statIcon}>📊</span>
-                    <span className={styles.statLabel}>Toplam</span>
-                    <span className={styles.statValue}>{filteredGames.length}</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Filtre Kategorileri Bölümü */}
-              <div className={styles.filterCategoriesSection}>
-                {/* Durum Kategorisi */}
-                <div className={styles.filterCategoryBlock}>
-                  <div className={styles.categoryHeader}>
-                    <span className={styles.categoryIcon}>🎯</span>
-                    <span className={styles.categoryTitle}>Durum</span>
-                  </div>
-                  <div className={styles.categoryFilters}>
-                    {[
-                      { value: '', label: 'Tümü', icon: '📋' },
-                      { value: 'completed', label: 'Tamamlandı', icon: '✅' },
-                      { value: 'playing', label: 'Oynuyor', icon: '🎯' },
-                      { value: 'paused', label: 'Beklemede', icon: '⏸️' },
-                      { value: 'not-started', label: 'Başlanmadı', icon: '🆕' }
-                    ].map(status => (
-                      <button
-                        key={status.value}
-                        onClick={() => setStatusFilter(status.value)}
-                        className={`${styles.balancedFilterChip} ${statusFilter === status.value ? styles.active : ''}`}
-                      >
-                        <span className={styles.chipIcon}>{status.icon}</span>
-                        <span className={styles.chipLabel}>{status.label}</span>
-                        <span className={styles.chipCount}>
-                          {status.value ? games.filter(g => g.status === status.value).length : games.length}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {/* Smart Search Help */}
+                {showSmartSearch && (
+                  <div className={styles.modernSmartSearchHelp}>
+                    <div className={styles.smartSearchHeader}>
+                      <div className={styles.smartSearchTitle}>
+                        <span className={styles.smartSearchIcon}>🧠</span>
+                        Akıllı Arama Komutları
+                      </div>
+                      <div className={styles.smartSearchSubtitle}>
+                        Gelişmiş filtreleme için bu komutları kullanın
+                      </div>
+                    </div>
+                    
+                    <div className={styles.modernSearchCommands}>
+                      <div className={styles.commandGroup}>
+                        <div className={styles.commandGroupTitle}>Durum Filtreleri</div>
+                        <div className={styles.commandItems}>
+                          <div className={styles.modernCommandItem}>
+                            <code className={styles.commandCode}>status:completed</code>
+                            <span className={styles.commandDesc}>Tamamlanan oyunlar</span>
+                            <div className={styles.commandExample}>✅</div>
+                          </div>
+                          <div className={styles.modernCommandItem}>
+                            <code className={styles.commandCode}>status:playing</code>
+                            <span className={styles.commandDesc}>Devam eden oyunlar</span>
+                            <div className={styles.commandExample}>🎯</div>
+                          </div>
+                        </div>
+                      </div>
 
-                {/* Platform Kategorisi */}
-                <div className={styles.filterCategoryBlock}>
-                  <div className={styles.categoryHeader}>
-                    <span className={styles.categoryIcon}>🎮</span>
-                    <span className={styles.categoryTitle}>Platform</span>
-                  </div>
-                  <div className={styles.categoryFilters}>
-                    {[
-                      { value: '', label: 'Tümü', icon: '🌐' },
-                      ...Array.from(new Set(games.map(g => g.platform).filter(Boolean))).slice(0, 4).map(platform => ({
-                        value: platform,
-                        label: platform,
-                        icon: platform.toLowerCase().includes('pc') ? '🖥️' : 
-                              platform.toLowerCase().includes('steam') ? '🎮' :
-                              platform.toLowerCase().includes('epic') ? '🎯' : '📱'
-                      }))
-                    ].map(platform => (
-                      <button
-                        key={platform.value}
-                        onClick={() => setPlatformFilter(platform.value)}
-                        className={`${styles.balancedFilterChip} ${platformFilter === platform.value ? styles.active : ''}`}
-                      >
-                        <span className={styles.chipIcon}>{platform.icon}</span>
-                        <span className={styles.chipLabel}>{platform.label}</span>
-                        <span className={styles.chipCount}>
-                          {platform.value ? games.filter(g => g.platform === platform.value).length : games.length}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                      <div className={styles.commandGroup}>
+                        <div className={styles.commandGroupTitle}>Platform & Tür</div>
+                        <div className={styles.commandItems}>
+                          <div className={styles.modernCommandItem}>
+                            <code className={styles.commandCode}>platform:PC</code>
+                            <span className={styles.commandDesc}>PC oyunları</span>
+                            <div className={styles.commandExample}>🖥️</div>
+                          </div>
+                          <div className={styles.modernCommandItem}>
+                            <code className={styles.commandCode}>genre:RPG</code>
+                            <span className={styles.commandDesc}>RPG oyunları</span>
+                            <div className={styles.commandExample}>🎮</div>
+                          </div>
+                        </div>
+                      </div>
 
-                {/* Tür Kategorisi */}
-                <div className={styles.filterCategoryBlock}>
-                  <div className={styles.categoryHeader}>
-                    <span className={styles.categoryIcon}>🎨</span>
-                    <span className={styles.categoryTitle}>Tür</span>
-                  </div>
-                  <div className={styles.categoryFilters}>
-                    {[
-                      { value: '', label: 'Tümü', icon: '🎲' },
-                      ...Array.from(new Set(games.map(g => g.genre).filter(Boolean))).slice(0, 4).map(genre => ({
-                        value: genre,
-                        label: genre,
-                        icon: genre.toLowerCase().includes('action') ? '⚔️' :
-                              genre.toLowerCase().includes('rpg') ? '🗡️' :
-                              genre.toLowerCase().includes('strategy') ? '🧠' : '🎮'
-                      }))
-                    ].map(genre => (
-                      <button
-                        key={genre.value}
-                        onClick={() => setGenreFilter(genre.value)}
-                        className={`${styles.balancedFilterChip} ${genreFilter === genre.value ? styles.active : ''}`}
-                      >
-                        <span className={styles.chipIcon}>{genre.icon}</span>
-                        <span className={styles.chipLabel}>{genre.label}</span>
-                        <span className={styles.chipCount}>
-                          {genre.value ? games.filter(g => g.genre === genre.value).length : games.length}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
 
-              {/* Hızlı Eylemler Bölümü */}
-              <div className={styles.quickActionsSection}>
-                <button 
-                  onClick={clearAllFilters}
-                  className={styles.balancedActionBtn}
-                >
-                  <span className={styles.actionIcon}>🗑️</span>
-                  <span className={styles.actionLabel}>Filtreleri Temizle</span>
-                </button>
-                
-                <button 
-                  onClick={() => {
-                    setStatusFilter('playing');
-                    setSearchTerm('');
-                    setPlatformFilter('');
-                    setGenreFilter('');
-                  }}
-                  className={styles.balancedActionBtn}
-                >
-                  <span className={styles.actionIcon}>🎯</span>
-                  <span className={styles.actionLabel}>Şu An Oynuyor</span>
-                </button>
-                
-                <button 
-                  onClick={() => {
-                    setStatusFilter('not-started');
-                    setSearchTerm('');
-                    setPlatformFilter('');
-                    setGenreFilter('');
-                  }}
-                  className={styles.balancedActionBtn}
-                >
-                  <span className={styles.actionIcon}>📚</span>
-                  <span className={styles.actionLabel}>Backlog</span>
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+                    </div>
+                  </div>
+                )}
 
-        {/* Content based on current view */}
-        {currentView === 'library' ? (
-          /* Oyun Kütüphanesi */
-          <div className={styles.gamesSection} style={{
-            background: 'rgba(20, 25, 40, 0.3)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            {/* Color Legend */}
-            {showColorLegend && (
-              <div className={styles.colorLegend}>
-                <h3>🎨 Oyun Durumu Renk Açıklaması</h3>
-                <div className="legend-items">
-                  <div className="legend-item">
-                    <div className="legend-color completed"></div>
-                    <span>🟢 Tamamlandı</span>
-                  </div>
-                  <div className="legend-item">
-                    <div className="legend-color playing"></div>
-                    <span>🟡 Devam Ediyor</span>
-                  </div>
-                  <div className="legend-item">
-                    <div className="legend-color paused"></div>
-                    <span>🔵 Beklemede</span>
-                  </div>
-                  <div className="legend-item">
-                    <div className="legend-color not-started"></div>
-                    <span>🔴 Başlanmadı</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Klavye Kısayolları Yardımı */}
-            {showKeyboardHelp && (
-              <div className="keyboard-help">
-                <h3>⌨️ Klavye Kısayolları</h3>
-                <div className="keyboard-shortcuts">
-                  <div className="shortcut-item">
-                    <kbd>Ctrl</kbd> + <kbd>F</kbd>
-                    <span>Arama çubuğuna odaklan</span>
-                  </div>
-                  <div className="shortcut-item">
-                    <kbd>Ctrl</kbd> + <kbd>A</kbd>
-                    <span>Tüm oyunları seç (List View)</span>
-                  </div>
-                  <div className="shortcut-item">
-                    <kbd>Delete</kbd>
-                    <span>Seçili oyunları sil</span>
-                  </div>
-                  <div className="shortcut-item">
-                    <kbd>Enter</kbd>
-                    <span>İlk arama sonucunu aç</span>
-                  </div>
-                  <div className="shortcut-item">
-                    <kbd>Esc</kbd>
-                    <span>Seçimleri ve filtreleri temizle</span>
+                <div className={styles.searchCardFooter}>
+                  <div className={styles.searchStats}>
+                    <span className={styles.searchStatsItem}>
+                      <span className={styles.statsIcon}>📚</span>
+                      Toplam: {games.length} oyun
+                    </span>
+                    <span className={styles.searchStatsItem}>
+                      <span className={styles.statsIcon}>🔍</span>
+                      Gösterilen: {filteredGames.length} oyun
+                    </span>
+                    {searchTerm && (
+                      <span className={styles.searchStatsItem}>
+                        <span className={styles.statsIcon}>⚡</span>
+                        Arama: "{searchTerm}"
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
-            )}
+            </section>
 
-            {/* Son Oynananlar */}
+            {/* Recent Games Section - Session History Card Tarzı */}
             {games.length > 0 && getRecentlyPlayedGames().length > 0 && (
-              <div className="recent-games-section">
-                <h3>⏰ Son Oynananlar (Son 10)</h3>
-                <div className="recent-games-list">
-                  {getRecentlyPlayedGames().map((game, index) => (
+              <section className={styles.recentGamesSection}>
+                <div className={styles.sectionHeader}>
+                  <h3>⏰ Son Oynananlar</h3>
+                  <span className={styles.sectionCount}>
+                    {getRecentlyPlayedGames().length} oyun
+                  </span>
+                </div>
+                
+                <div className={styles.recentGamesGrid}>
+                  {getRecentlyPlayedGames().slice(0, 6).map((game, index) => (
                     <div 
                       key={`recent-${index}`} 
-                      className="recent-game-item"
+                      className={styles.recentGameCard}
                       onClick={() => navigate(`/game-tracking-hub/game-tracker/game/${game.id || index}`)}
                     >
-                      <div className="recent-game-info">
-                        <span className="recent-game-name">{game.title || game.name}</span>
-                        <span className="recent-game-date">
-                          {new Date(game.lastPlayed).toLocaleDateString('tr-TR')}
-                        </span>
+                      <div className={styles.recentGameImage}>
+                        {game.coverImage ? (
+                          <img src={game.coverImage} alt={game.title || game.name} />
+                        ) : (
+                          <div className={styles.recentGamePlaceholder}>
+                            🎮
+                          </div>
+                        )}
                       </div>
-                      <div className={`recent-game-status ${getGameStatus(game)}`}></div>
+                      
+                      <div className={styles.recentGameInfo}>
+                        <h4>{game.title || game.name}</h4>
+                        <div className={styles.recentGameMeta}>
+                          <span className={styles.recentGameDate}>
+                            {new Date(game.lastPlayed).toLocaleDateString('tr-TR')}
+                          </span>
+                          <div className={`${styles.recentGameStatus} ${styles[getGameStatus(game)]}`}>
+                            {getGameStatus(game) === 'completed' && '✅'}
+                            {getGameStatus(game) === 'playing' && '🎯'}
+                            {getGameStatus(game) === 'paused' && '⏸️'}
+                            {getGameStatus(game) === 'dropped' && '❌'}
+                            {getGameStatus(game) === 'planning' && '📋'}
+                            {getGameStatus(game) === 'wishlist' && '⭐'}
+                            {getGameStatus(game) === 'not-started' && '🔴'}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             )}
 
-            {/* Hata Mesajı */}
+            {/* Error Message - Session History Tarzı */}
             {error && (
-              <div className="error-message">
-                <span>❌ {error}</span>
+              <div className={styles.errorSection}>
+                <div className={styles.errorCard}>
+                  <div className={styles.errorIcon}>❌</div>
+                  <div className={styles.errorContent}>
+                    <h4>Hata Oluştu</h4>
+                    <p>{error}</p>
+                  </div>
+                  <button 
+                    className={styles.errorCloseBtn}
+                    onClick={() => setError('')}
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
             )}
 
-            <GameList
-              games={games}
-              filteredGames={getSmartFilteredGames()}
-              selectedGames={selectedGames}
-              setSelectedGames={setSelectedGames}
-              onEditGame={handleEditGame}
-              onDeleteGame={handleDeleteGame}
-              onStatusChange={(game, index, newStatus) => {
-                const updatedGames = [...games];
-                const gameIndex = games.findIndex(g => 
-                  (g.title || g.name) === (game.title || game.name)
-                );
-                
-                if (gameIndex !== -1) {
-                  const oldStatus = updatedGames[gameIndex].status;
-                  updatedGames[gameIndex].status = newStatus;
-                  
-                  // Progress güncelleme
-                  if (newStatus === 'completed') {
-                    updatedGames[gameIndex].progress = 100;
-                  } else if (newStatus === 'not-started') {
-                    updatedGames[gameIndex].progress = 0;
-                  }
-                  
-                  // Son oynanma tarihi güncelleme
-                  if (newStatus === 'playing') {
-                    updatedGames[gameIndex].lastPlayed = new Date().toISOString().split('T')[0];
-                  }
-                  
-                  // State ve localStorage güncelleme
-                  game.status = newStatus;
-                  setGames(updatedGames);
-                  localStorage.setItem('gameTracker_games', JSON.stringify(updatedGames));
-                  
-                  // Oyun güncelleme bildirimi
-                  const gameName = game.title || game.name || 'Oyun';
-                  showGameUpdate(gameName, 'updated', {
-                    message: `Durum: ${oldStatus || 'Belirsiz'} → ${newStatus}`
-                  });
-                  
-                  // Özel durumlar için ek bildirimler
-                  if (newStatus === 'completed' && oldStatus !== 'completed') {
-                    showAchievement('Oyun Tamamlandı!', `${gameName} oyununu bitirdin! 🎉`);
-                  }
-                }
-              }}
-              onBulkStatusChange={handleBulkStatusChange}
-              onBulkDelete={handleBulkDelete}
-              showGameUpdate={showGameUpdate}
-              showAchievement={showAchievement}
-            />
+            {/* Yeni Oyun Kütüphanesi - Komple Yeniden Tasarlandı */}
+            <section className={styles.modernGameLibrary}>
+              <div className={styles.libraryHeader}>
+                <div className={styles.libraryTitleSection}>
+                  <div className={styles.libraryTitle}>
+                    <span className={styles.libraryIcon}>🎮</span>
+                    <h3>Oyun Kütüphanesi</h3>
+                    <div className={styles.libraryBadge}>
+                      {getSmartFilteredGames().length} / {games.length}
+                    </div>
+                  </div>
+                  <div className={styles.librarySubtitle}>
+                    Koleksiyonunuzu yönetin ve oyunlarınızı keşfedin
+                  </div>
+                </div>
+
+                {/* Oyun Ekle Butonu */}
+                <div className={styles.addGameSection}>
+                  <button 
+                    className={`${styles.modernBtn} ${styles.addGameBtn}`}
+                    onClick={() => setIsGameSearchModalOpen(true)}
+                    title="Yeni oyun ekle"
+                  >
+                    <span className={styles.btnIcon}>➕</span>
+                    <span className={styles.btnText}>Oyun Ekle</span>
+                  </button>
+                </div>
+
+                <div className={styles.libraryControls}>
+                  {/* Görünüm Kontrolleri */}
+                  <div className={styles.viewModeControls}>
+                    <button 
+                      className={`${styles.modernViewBtn} ${viewMode === 'grid' ? styles.active : ''}`}
+                      onClick={() => setViewMode('grid')}
+                      title="Grid Görünümü"
+                    >
+                      <span className={styles.viewIcon}>⊞</span>
+                      Grid
+                    </button>
+                    <button 
+                      className={`${styles.modernViewBtn} ${viewMode === 'list' ? styles.active : ''}`}
+                      onClick={() => setViewMode('list')}
+                      title="Liste Görünümü"
+                    >
+                      <span className={styles.viewIcon}>☰</span>
+                      Liste
+                    </button>
+                  </div>
+
+                  {/* Sıralama Kontrolleri */}
+                  <div className={styles.sortControls}>
+                    <select 
+                      className={styles.modernSortSelect}
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                    >
+                      <option value="name">📝 İsme Göre</option>
+                      <option value="date">📅 Tarihe Göre</option>
+                      <option value="status">🎯 Duruma Göre</option>
+                      <option value="platform">🎮 Platforma Göre</option>
+                    </select>
+                    <button 
+                      className={`${styles.sortOrderBtn} ${sortOrder === 'desc' ? styles.desc : ''}`}
+                      onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                      title={`Sıralama: ${sortOrder === 'asc' ? 'Artan' : 'Azalan'}`}
+                    >
+                      {sortOrder === 'asc' ? '↑' : '↓'}
+                    </button>
+                  </div>
+
+                  {/* Toplu İşlemler */}
+                  <div className={styles.bulkActions}>
+                    <button 
+                      className={`${styles.bulkSelectBtn} ${selectedGames.length > 0 ? styles.active : ''}`}
+                      onClick={() => setSelectedGames([])}
+                      title="Toplu Seçim"
+                    >
+                      <span className={styles.bulkIcon}>☑️</span>
+                      {selectedGames.length > 0 ? `${selectedGames.length} Seçili` : 'Toplu Seç'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Oyun Listesi */}
+              <div className={styles.modernGameGrid}>
+                {getSortedGames(getSmartFilteredGames()).length === 0 ? (
+                  <div className={styles.emptyLibrary}>
+                    <div className={styles.emptyIcon}>📚</div>
+                    <h4>Henüz oyun yok</h4>
+                    <p>Kütüphanenize ilk oyununuzu ekleyin</p>
+                    <button 
+                      className={styles.addFirstGameBtn}
+                      onClick={() => setShowAddGameModal(true)}
+                    >
+                      <span className={styles.btnIcon}>➕</span>
+                      İlk Oyunu Ekle
+                    </button>
+                  </div>
+                ) : (
+                  <div className={`${styles.gameCardsContainer} ${styles[viewMode]}`}>
+                    {getSortedGames(getSmartFilteredGames()).map((game, index) => (
+                      <div 
+                        key={`game-${index}`}
+                        className={`${styles.modernGameCard} ${selectedGames.includes(index) ? styles.selected : ''}`}
+                        onClick={() => navigate(`/game-tracking-hub/game-tracker/game/${game.id || index}`)}
+                      >
+                        {/* Oyun Kapak Görseli */}
+                        <div className={styles.gameCardImage}>
+                          {(game.coverImage || game.banner || game.background) ? (
+                            <img 
+                              src={game.coverImage || game.banner || game.background} 
+                              alt={game.title || game.name}
+                              className={styles.gameCover}
+                            />
+                          ) : (
+                            <div className={styles.gamePlaceholder}>
+                              <span className={styles.placeholderIcon}>🎮</span>
+                            </div>
+                          )}
+                          
+                          {/* Durum Badge */}
+                          <div className={`${styles.statusBadge} ${styles[getGameStatus(game)]}`}>
+                            {getGameStatus(game) === 'completed' && '✅'}
+                            {getGameStatus(game) === 'playing' && '🎯'}
+                            {getGameStatus(game) === 'paused' && '⏸️'}
+                            {getGameStatus(game) === 'dropped' && '❌'}
+                            {getGameStatus(game) === 'planning' && '📋'}
+                            {getGameStatus(game) === 'wishlist' && '⭐'}
+                            {getGameStatus(game) === 'not-started' && '🔴'}
+                          </div>
+
+                          {/* Seçim Checkbox */}
+                          <div 
+                            className={styles.selectionCheckbox}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const newSelected = selectedGames.includes(index)
+                                ? selectedGames.filter(i => i !== index)
+                                : [...selectedGames, index];
+                              setSelectedGames(newSelected);
+                            }}
+                          >
+                            {selectedGames.includes(index) ? '☑️' : '⬜'}
+                          </div>
+                        </div>
+
+                        {/* Oyun Bilgileri */}
+                        <div className={styles.gameCardContent}>
+                          <div className={styles.gameCardHeader}>
+                            <h4 className={styles.gameTitle}>
+                              {game.title || game.name}
+                            </h4>
+                          </div>
+
+                          {/* Oyun Meta Bilgileri - Sadece Tür ve Geliştirici */}
+                          <div className={styles.gameCardMeta}>
+                            {game.genre && (
+                              <div className={styles.gameGenre}>
+                                {getGenreIcon(game.genre)} {game.genre}
+                              </div>
+                            )}
+                            {game.developer && (
+                              <div className={styles.gameDeveloper}>
+                                👨‍💻 {game.developer}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Hızlı Aksiyonlar - Sadece toplu seçim modunda silme butonu */}
+                          {isBulkSelectMode && (
+                            <div className={styles.gameCardActions}>
+                              <button 
+                                className={`${styles.quickActionBtn} ${styles.danger}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteGame(game, index);
+                                }}
+                                title="Sil"
+                              >
+                                🗑️
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Sayfalama */}
+              {getSmartFilteredGames().length > 12 && (
+                <div className={styles.libraryPagination}>
+                  <button className={styles.paginationBtn}>
+                    ← Önceki
+                  </button>
+                  <div className={styles.paginationInfo}>
+                    Sayfa 1 / 1
+                  </div>
+                  <button className={styles.paginationBtn}>
+                    Sonraki →
+                  </button>
+                </div>
+              )}
+            </section>
 
           </div>
         ) : (
@@ -1194,15 +1614,12 @@ function GameTracker() {
                     onDeleteCycle={() => handleDeleteCycle(cycle.cycleNumber)}
                     onEditGame={(game) => {
                       // Oyun düzenleme fonksiyonu
-                      console.log('Oyun düzenleme:', game);
                     }}
                     onDeleteGame={(game) => {
                       // Oyun silme fonksiyonu
-                      console.log('Oyun silme:', game);
                     }}
                     onAddGame={() => {
                       // Yeni oyun ekleme fonksiyonu
-                      console.log('Yeni oyun ekleme:', cycle.cycleNumber);
                     }}
                   />
                 ))}
@@ -1288,7 +1705,7 @@ function GameTracker() {
 
           </>
         )}
-      </main>
+      </div>
 
       {/* Edit Game Modal */}
       <EditGameModal

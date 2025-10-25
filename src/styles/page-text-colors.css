@@ -102,10 +102,16 @@ body:has([style*="linear-gradient"]) {
   color: var(--text-on-gradient) !important;
 }
 
-/* Koyu arka planda tüm metinler beyaz */
-body:has(.game-tracker-page) *,
-body:has([class*="game-tracking-hub"]) * {
+/* Koyu arka planda tüm metinler beyaz - ANCAK li elementleri hariç */
+body:has(.game-tracker-page) *:not(li),
+body:has([class*="game-tracking-hub"]) *:not(li) {
   color: var(--text-on-dark);
+}
+
+/* Li elementleri için özel kural - design-system.css'e bırak */
+body:has(.game-tracker-page) li,
+body:has([class*="game-tracking-hub"]) li {
+  /* color: inherit; - design-system.css'teki kurallar geçerli olsun */
 }
 
 /* Başlıklar için özel stil */

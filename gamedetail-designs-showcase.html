@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 GameDetail Tasarımları Showcase - MyCompanion v3</title>
+    <style>
+        /* 🎨 DESIGN SYSTEM VARIABLES */
+        :root {
+            /* Temel Renkler */
+            --color-white: #ffffff;
+            --color-black: #000000;
+            --color-white-rgb: 255, 255, 255;
+            --color-black-rgb: 0, 0, 0;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Gradient Backgrounds */
+            --bg-gradient-1: #050508;
+            --bg-gradient-2: #0f0f1a;
+            --bg-gradient-3: #0a1020;
+            --bg-gradient-4: #061a2f;
+            
+            /* Surface Colors */
+            --surface-1: rgba(255, 255, 255, 0.05);
+            --surface-2: rgba(255, 255, 255, 0.08);
+            --surface-3: rgba(255, 255, 255, 0.12);
+            --surface-4: rgba(255, 255, 255, 0.15);
+            
+            /* Primary Colors */
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-secondary-500: #a855f7;
+            --color-success-500: #22c55e;
+            --color-warning-500: #f59e0b;
+            --color-error-500: #ef4444;
+            
+            /* Text Colors */
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 🌐 GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 25%, var(--bg-gradient-3) 50%, var(--bg-gradient-4) 100%);
+            color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 🎯 SHOWCASE NAVIGATION */
+        .showcase-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .showcase-nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .showcase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .design-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .design-tab {
+            padding: 0.5rem 1rem;
+            background: var(--surface-2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .design-tab:hover,
+        .design-tab.active {
+            background: var(--color-primary-500);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 📱 PAGE CONTAINER */
+        .page-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+        }
+
+        /* 🎮 MOCK GAME DATA */
+        .mock-game-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .mock-screenshot {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            border-radius: var(--radius-md);
+        }
+
+        /* 🎨 LAYOUT 1: CLASSIC DETAIL LAYOUT */
+        .classic-layout {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .classic-hero {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            background: var(--surface-2);
+            border-radius: var(--radius-2xl);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .classic-cover {
+            aspect-ratio: 3/4;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .classic-info h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .classic-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .meta-item {
+            background: var(--surface-3);
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .meta-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .classic-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .content-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .content-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-card {
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Media Gallery Grid */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .media-item {
+            aspect-ratio: 16/9;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* 🃏 LAYOUT 2: CARD-BASED DETAIL LAYOUT */
+        .card-layout {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card-hero {
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            border-radius: var(--radius-2xl);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .card-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--surface-3);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            background: var(--surface-4);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* 📊 LAYOUT 3: DASHBOARD-STYLE DETAIL LAYOUT */
+        .dashboard-layout {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard-cover {
+            width: 120px;
+            height: 160px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .dashboard-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: var(--color-primary-500);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 2rem;
+            grid-template-areas: 
+                "stats stats media"
+                "description description sidebar"
+                "related related sidebar";
+        }
+
+        .stats-panel {
+            grid-area: stats;
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--surface-3);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .media-panel {
+            grid-area: media;
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .description-panel {
+            grid-area: description;
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-panel {
+            grid-area: sidebar;
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .related-panel {
+            grid-area: related;
+            background: var(--surface-2);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 📰 LAYOUT 4: MAGAZINE-STYLE DETAIL LAYOUT */
+        .magazine-layout {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .magazine-hero {
+            background: var(--surface-2);
+            border-radius: var(--radius-2xl);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .magazine-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+        }
+
+        .magazine-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .magazine-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .magazine-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .magazine-article {
+            background: var(--surface-3);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .article-category {
+            color: var(--color-primary-500);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .sidebar-item {
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: var(--surface-4);
+            transform: translateX(5px);
+        }
+
+        /* 🎯 LAYOUT 5: MODERN MINIMAL DETAIL LAYOUT */
+        .minimal-layout {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .minimal-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 2rem;
+        }
+
+        .minimal-cover {
+            width: 300px;
+            height: 400px;
+            margin: 0 auto 2rem;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .minimal-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .minimal-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .minimal-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .minimal-stat {
+            text-align: center;
+        }
+
+        .minimal-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .minimal-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .minimal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .minimal-section {
+            background: var(--surface-1);
+            border-radius: var(--radius-2xl);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .minimal-section h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .minimal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .minimal-gallery-item {
+            aspect-ratio: 16/9;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .minimal-gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        /* 📱 RESPONSIVE */
+        @media (max-width: 768px) {
+            .showcase-nav {
+                padding: 1rem;
+            }
+
+            .design-tabs {
+                gap: 0.25rem;
+            }
+
+            .design-tab {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .classic-hero,
+            .classic-content,
+            .magazine-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "stats"
+                    "media"
+                    "description"
+                    "sidebar"
+                    "related";
+            }
+
+            .dashboard-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .minimal-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .minimal-title {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 🎨 ANIMATIONS */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-container.active {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* 🎯 UTILITIES */
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+
+        .tag {
+            display: inline-block;
+            background: var(--surface-3);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            margin: 0.25rem;
+        }
+
+        .genre-tag {
+            background: var(--color-primary-500);
+            color: white;
+        }
+
+        .platform-tag {
+            background: var(--color-secondary-500);
+            color: white;
+        }
+
+        .description-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .related-games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .related-game-card {
+            background: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .related-game-card:hover {
+            transform: translateY(-5px);
+            background: var(--surface-4);
+        }
+
+        .related-game-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 🧭 SHOWCASE NAVIGATION -->
+    <nav class="showcase-nav">
+        <div class="showcase-nav-content">
+            <div class="showcase-title">🎮 GameDetail Tasarımları Showcase</div>
+            <div class="design-tabs">
+                <button class="design-tab active" onclick="showDesign(1)">📊 Classic Layout</button>
+                <button class="design-tab" onclick="showDesign(2)">🃏 Card Layout</button>
+                <button class="design-tab" onclick="showDesign(3)">📈 Dashboard</button>
+                <button class="design-tab" onclick="showDesign(4)">📰 Magazine</button>
+                <button class="design-tab" onclick="showDesign(5)">🎯 Minimal</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 📊 DESIGN 1: CLASSIC DETAIL LAYOUT -->
+    <div class="page-container active" id="design1">
+        <div class="classic-layout">
+            <!-- Hero Section -->
+            <div class="classic-hero">
+                <div class="classic-cover">
+                    <div class="mock-game-image">🎮 Cyberpunk 2077</div>
+                </div>
+                <div class="classic-info">
+                    <h1>Cyberpunk 2077</h1>
+                    <p class="description-text">
+                        Cyberpunk 2077, CD Projekt RED tarafından geliştirilen açık dünya aksiyon-RPG oyunudur. 
+                        Night City'de geçen bu distopik gelecek hikayesinde, V adlı karakter olarak şehrin karanlık 
+                        sokaklarında hayatta kalmaya çalışırsınız.
+                    </p>
+                    
+                    <div class="classic-meta">
+                        <div class="meta-item">
+                            <div class="meta-value">85</div>
+                            <div class="meta-label">Metacritic</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-value">60h</div>
+                            <div class="meta-label">Ortalama Süre</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-value">18+</div>
+                            <div class="meta-label">Yaş Sınırı</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-value">4.2/5</div>
+                            <div class="meta-label">Topluluk</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="action-btn">🎮 Oyna</button>
+                        <button class="action-btn">⭐ Favorilere Ekle</button>
+                        <button class="action-btn">📊 İstatistikler</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="classic-content">
+                <div class="content-main">
+                    <!-- Media Gallery -->
+                    <div class="section-card">
+                        <h2 class="section-title">📸 Medya Galerisi</h2>
+                        <div class="media-grid">
+                            <div class="media-item">
+                                <div class="mock-screenshot">Screenshot 1</div>
+                            </div>
+                            <div class="media-item">
+                                <div class="mock-screenshot">Screenshot 2</div>
+                            </div>
+                            <div class="media-item">
+                                <div class="mock-screenshot">Screenshot 3</div>
+                            </div>
+                            <div class="media-item">
+                                <div class="mock-screenshot">Video 1</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="section-card">
+                        <h2 class="section-title">📝 Açıklama</h2>
+                        <p class="description-text">
+                            Cyberpunk 2077, oyuncuları 2077 yılının Night City'sine götürüyor. Bu megalopolis, 
+                            güç, lüks ve vücut modifikasyonu takıntısının hüküm sürdüğü bir yer. Siz de V olarak, 
+                            ölümsüzlüğün anahtarı olan eşsiz bir implantın peşinde koşan kiralık askersiniz.
+                        </p>
+                        <p class="description-text mt-2">
+                            Seçimleriniz hikayeyi ve dünyayı şekillendirir. Karakterinizi ve oyun tarzınızı 
+                            özelleştirin, ilişkiler kurun ve Night City'nin geleceğini belirleyin.
+                        </p>
+                    </div>
+
+                    <!-- Related Games -->
+                    <div class="section-card">
+                        <h2 class="section-title">🎯 Benzer Oyunlar</h2>
+                        <div class="related-games-grid">
+                            <div class="related-game-card">
+                                <div class="related-game-image">The Witcher 3</div>
+                                <h4>The Witcher 3</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">RPG</p>
+                            </div>
+                            <div class="related-game-card">
+                                <div class="related-game-image">Deus Ex</div>
+                                <h4>Deus Ex</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Cyberpunk</p>
+                            </div>
+                            <div class="related-game-card">
+                                <div class="related-game-image">GTA V</div>
+                                <h4>GTA V</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Açık Dünya</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-sidebar">
+                    <!-- Genres & Tags -->
+                    <div class="section-card">
+                        <h2 class="section-title">🏷️ Türler & Etiketler</h2>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag genre-tag">RPG</span>
+                            <span class="tag genre-tag">Açık Dünya</span>
+                            <span class="tag genre-tag">Aksiyon</span>
+                        </div>
+                        <div>
+                            <span class="tag">Cyberpunk</span>
+                            <span class="tag">Gelecek</span>
+                            <span class="tag">Hikaye</span>
+                            <span class="tag">Karakter Gelişimi</span>
+                        </div>
+                    </div>
+
+                    <!-- Platform Info -->
+                    <div class="section-card">
+                        <h2 class="section-title">💻 Platform Bilgileri</h2>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag platform-tag">PC</span>
+                            <span class="tag platform-tag">PlayStation</span>
+                            <span class="tag platform-tag">Xbox</span>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                            <p><strong>Minimum Sistem:</strong></p>
+                            <p>• Intel i5-3570K / AMD FX-8310</p>
+                            <p>• 8 GB RAM</p>
+                            <p>• GTX 780 / RX 470</p>
+                            <p>• 70 GB Depolama</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats & Community -->
+                    <div class="section-card">
+                        <h2 class="section-title">📊 İstatistikler</h2>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Oynadığın Süre:</span>
+                                <span style="color: var(--color-primary-500);">45 saat</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Tamamlama:</span>
+                                <span style="color: var(--color-success-500);">%78</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Başarımlar:</span>
+                                <span style="color: var(--color-warning-500);">23/45</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Son Oynadığın:</span>
+                                <span style="color: var(--text-secondary);">2 gün önce</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="sidebar-item">
+                        <div class="article-category">SİSTEM GEREKSİNİMLERİ</div>
+                        <h4>Minimum Gereksinimler</h4>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                            <p><strong>İşlemci:</strong> Intel i5-3570K / AMD FX-8310</p>
+                            <p><strong>Bellek:</strong> 8 GB RAM</p>
+                            <p><strong>Ekran Kartı:</strong> GTX 780 / RX 470</p>
+                            <p><strong>Depolama:</strong> 70 GB</p>
+                        </div>
+                    </div>
+
+                    <!-- Related Games -->
+                    <div class="sidebar-item">
+                        <div class="article-category">BENZERLERİ</div>
+                        <h4>Beğenebileceğin Oyunlar</h4>
+                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 70px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                                <div>
+                                    <div style="font-weight: 500;">The Witcher 3</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.8rem;">RPG • Açık Dünya</div>
+                                    <div style="color: var(--color-primary-500); font-size: 0.8rem;">%95 Uyumluluk</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 70px; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                                <div>
+                                    <div style="font-weight: 500;">Deus Ex</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.8rem;">Cyberpunk • RPG</div>
+                                    <div style="color: var(--color-primary-500); font-size: 0.8rem;">%88 Uyumluluk</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎯 DESIGN 5: MODERN MINIMAL DETAIL LAYOUT -->
+    <div class="page-container" id="design5">
+        <div class="minimal-layout">
+            <!-- Minimal Hero -->
+            <div class="minimal-hero">
+                <div class="minimal-cover">
+                    <div class="mock-game-image">🎮</div>
+                </div>
+                <h1 class="minimal-title">Cyberpunk 2077</h1>
+                <p class="minimal-subtitle">Night City'nin karanlık sokaklarında geçen epik cyberpunk macerası</p>
+                
+                <div class="minimal-stats">
+                    <div class="minimal-stat">
+                        <div class="minimal-stat-value">85</div>
+                        <div class="minimal-stat-label">Metacritic</div>
+                    </div>
+                    <div class="minimal-stat">
+                        <div class="minimal-stat-value">60h</div>
+                        <div class="minimal-stat-label">Ortalama Süre</div>
+                    </div>
+                    <div class="minimal-stat">
+                        <div class="minimal-stat-value">4.2/5</div>
+                        <div class="minimal-stat-label">Topluluk</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button class="action-btn">🎮 Şimdi Oyna</button>
+                    <button class="action-btn">⭐ Favorilere Ekle</button>
+                </div>
+            </div>
+
+            <!-- Minimal Content -->
+            <div class="minimal-content">
+                <!-- Description Section -->
+                <div class="minimal-section">
+                    <h2>Hikaye</h2>
+                    <p class="description-text text-center">
+                        Cyberpunk 2077, oyuncuları 2077 yılının Night City'sine götürüyor. Bu megalopolis, 
+                        güç, lüks ve vücut modifikasyonu takıntısının hüküm sürdüğü bir yer. Siz de V olarak, 
+                        ölümsüzlüğün anahtarı olan eşsiz bir implantın peşinde koşan kiralık askersiniz.
+                    </p>
+                    <p class="description-text text-center mt-2">
+                        Seçimleriniz hikayeyi ve dünyayı şekillendirir. Karakterinizi ve oyun tarzınızı 
+                        özelleştirin, ilişkiler kurun ve Night City'nin geleceğini belirleyin.
+                    </p>
+                </div>
+
+                <!-- Media Gallery Section -->
+                <div class="minimal-section">
+                    <h2>Galeri</h2>
+                    <div class="minimal-gallery">
+                        <div class="minimal-gallery-item">
+                            <div class="mock-screenshot">Night City Manzarası</div>
+                        </div>
+                        <div class="minimal-gallery-item">
+                            <div class="mock-screenshot">Karakter Özelleştirme</div>
+                        </div>
+                        <div class="minimal-gallery-item">
+                            <div class="mock-screenshot">Aksiyon Sahnesi</div>
+                        </div>
+                        <div class="minimal-gallery-item">
+                            <div class="mock-screenshot">Cyberpunk Dünyası</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details Section -->
+                <div class="minimal-section">
+                    <h2>Detaylar</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--color-primary-500);">Türler</h4>
+                            <div>
+                                <span class="tag genre-tag">RPG</span>
+                                <span class="tag genre-tag">Açık Dünya</span>
+                                <span class="tag genre-tag">Aksiyon</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--color-primary-500);">Platformlar</h4>
+                            <div>
+                                <span class="tag platform-tag">PC</span>
+                                <span class="tag platform-tag">PlayStation</span>
+                                <span class="tag platform-tag">Xbox</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--color-primary-500);">Kişisel</h4>
+                            <div style="color: var(--text-secondary);">
+                                <p>45 saat oynadın</p>
+                                <p>%78 tamamladın</p>
+                                <p>23/45 başarım</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Games Section -->
+                <div class="minimal-section">
+                    <h2>Benzer Oyunlar</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="width: 120px; height: 160px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-xl); margin: 0 auto 1rem;"></div>
+                            <h4>The Witcher 3</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">RPG • Açık Dünya</p>
+                            <div style="color: var(--color-primary-500); font-size: 0.8rem; margin-top: 0.5rem;">%95 Uyumluluk</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 120px; height: 160px; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-xl); margin: 0 auto 1rem;"></div>
+                            <h4>Deus Ex</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Cyberpunk • RPG</p>
+                            <div style="color: var(--color-primary-500); font-size: 0.8rem; margin-top: 0.5rem;">%88 Uyumluluk</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 120px; height: 160px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-xl); margin: 0 auto 1rem;"></div>
+                            <h4>GTA V</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Açık Dünya • Aksiyon</p>
+                            <div style="color: var(--color-primary-500); font-size: 0.8rem; margin-top: 0.5rem;">%82 Uyumluluk</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎮 JAVASCRIPT -->
+    <script>
+        // Design switching functionality
+        function showDesign(designNumber) {
+            // Hide all designs
+            document.querySelectorAll('.page-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.design-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected design
+            document.getElementById(`design${designNumber}`).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '1' && e.key <= '5') {
+                showDesign(parseInt(e.key));
+            }
+        });
+
+        // Add hover effects to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Add intersection observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            // Observe all section cards
+            document.querySelectorAll('.section-card, .info-card, .magazine-article, .sidebar-item, .minimal-section').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Add click effects to media items
+        document.querySelectorAll('.media-item, .minimal-gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Simple lightbox effect
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Add dynamic stats animation
+        function animateStats() {
+            document.querySelectorAll('.stat-number, .meta-value, .minimal-stat-value').forEach(stat => {
+                const finalValue = stat.textContent;
+                const isNumber = !isNaN(parseFloat(finalValue));
+                
+                if (isNumber) {
+                    const target = parseFloat(finalValue);
+                    let current = 0;
+                    const increment = target / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        stat.textContent = Math.floor(current);
+                    }, 30);
+                }
+            });
+        }
+
+        // Trigger stats animation when page loads
+        setTimeout(animateStats, 500);
+
+        console.log('🎮 GameDetail Showcase loaded successfully!');
+        console.log('💡 Tip: Use keyboard shortcuts 1-5 to switch between designs');
+    </script>
+</body>
+</html>
+                                <span style="color: var(--color-success-500);">%78</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Başarımlar:</span>
+                                <span style="color: var(--color-warning-500);">23/45</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Son Oynadığın:</span>
+                                <span style="color: var(--text-secondary);">2 gün önce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🃏 DESIGN 2: CARD-BASED DETAIL LAYOUT -->
+    <div class="page-container" id="design2">
+        <div class="card-layout">
+            <!-- Hero Card -->
+            <div class="card-hero">
+                <div class="card-hero-content">
+                    <h1>🎮 Cyberpunk 2077</h1>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                        Night City'nin karanlık sokaklarında geçen epik cyberpunk macerası
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">85</div>
+                            <div style="opacity: 0.8;">Metacritic</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">60h</div>
+                            <div style="opacity: 0.8;">Ortalama Süre</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700;">4.2/5</div>
+                            <div style="opacity: 0.8;">Topluluk</div>
+                        </div>
+                    </div>
+                    <button style="background: white; color: var(--color-primary-500); border: none; padding: 1rem 2rem; border-radius: var(--radius-lg); font-weight: 600; cursor: pointer;">
+                        🎮 Şimdi Oyna
+                    </button>
+                </div>
+            </div>
+
+            <!-- Info Cards Grid -->
+            <div class="card-grid">
+                <div class="info-card">
+                    <span class="card-icon">📸</span>
+                    <h3>Medya Galerisi</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        Screenshot'lar, videolar ve konsept sanatları
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <span class="card-icon">📝</span>
+                    <h3>Oyun Açıklaması</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Cyberpunk 2077, oyuncuları 2077 yılının Night City'sine götürüyor. 
+                        Bu megalopolis, güç, lüks ve vücut modifikasyonu takıntısının hüküm sürdüğü bir yer.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <span class="card-icon">🏷️</span>
+                    <h3>Türler & Etiketler</h3>
+                    <div style="margin-top: 1rem;">
+                        <span class="tag genre-tag">RPG</span>
+                        <span class="tag genre-tag">Açık Dünya</span>
+                        <span class="tag genre-tag">Aksiyon</span>
+                        <span class="tag">Cyberpunk</span>
+                        <span class="tag">Gelecek</span>
+                        <span class="tag">Hikaye</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <span class="card-icon">💻</span>
+                    <h3>Platform Bilgileri</h3>
+                    <div style="margin: 1rem 0;">
+                        <span class="tag platform-tag">PC</span>
+                        <span class="tag platform-tag">PlayStation</span>
+                        <span class="tag platform-tag">Xbox</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Minimum: Intel i5-3570K, 8GB RAM, GTX 780
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <span class="card-icon">📊</span>
+                    <h3>Kişisel İstatistikler</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Oynadığın Süre:</span>
+                            <span style="color: var(--color-primary-500);">45 saat</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Tamamlama:</span>
+                            <span style="color: var(--color-success-500);">%78</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Başarımlar:</span>
+                            <span style="color: var(--color-warning-500);">23/45</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <span class="card-icon">🎯</span>
+                    <h3>Benzer Oyunlar</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                            <div>
+                                <div style="font-weight: 500;">The Witcher 3</div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">RPG</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                            <div>
+                                <div style="font-weight: 500;">Deus Ex</div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Cyberpunk</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📈 DESIGN 3: DASHBOARD-STYLE DETAIL LAYOUT -->
+    <div class="page-container" id="design3">
+        <div class="dashboard-layout">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="dashboard-cover">
+                    <div class="mock-game-image" style="font-size: 1rem;">🎮</div>
+                </div>
+                <div class="dashboard-title">
+                    <h1>Cyberpunk 2077</h1>
+                    <p style="color: var(--text-secondary);">CD Projekt RED • 2020 • RPG/Açık Dünya</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="action-btn">🎮 Oyna</button>
+                    <button class="action-btn">⭐ Favori</button>
+                    <button class="action-btn">📊 Detay</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Stats Panel -->
+                <div class="stats-panel">
+                    <h2 class="section-title">📊 Oyun İstatistikleri</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">85</div>
+                            <div class="meta-label">Metacritic</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">60h</div>
+                            <div class="meta-label">Ortalama Süre</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">4.2</div>
+                            <div class="meta-label">Topluluk</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">18+</div>
+                            <div class="meta-label">Yaş Sınırı</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Panel -->
+                <div class="media-panel">
+                    <h2 class="section-title">📸 Medya</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-lg);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-lg);"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                        <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                    </div>
+                </div>
+
+                <!-- Description Panel -->
+                <div class="description-panel">
+                    <h2 class="section-title">📝 Açıklama</h2>
+                    <p class="description-text">
+                        Cyberpunk 2077, oyuncuları 2077 yılının Night City'sine götürüyor. Bu megalopolis, 
+                        güç, lüks ve vücut modifikasyonu takıntısının hüküm sürdüğü bir yer. Siz de V olarak, 
+                        ölümsüzlüğün anahtarı olan eşsiz bir implantın peşinde koşan kiralık askersiniz.
+                    </p>
+                    <div style="margin-top: 1.5rem;">
+                        <span class="tag genre-tag">RPG</span>
+                        <span class="tag genre-tag">Açık Dünya</span>
+                        <span class="tag genre-tag">Aksiyon</span>
+                        <span class="tag">Cyberpunk</span>
+                        <span class="tag">Gelecek</span>
+                    </div>
+                </div>
+
+                <!-- Sidebar Panel -->
+                <div class="sidebar-panel">
+                    <h2 class="section-title">💻 Teknik Bilgiler</h2>
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">Platformlar:</h4>
+                        <span class="tag platform-tag">PC</span>
+                        <span class="tag platform-tag">PlayStation</span>
+                        <span class="tag platform-tag">Xbox</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">Kişisel İstatistikler:</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Oynadığın Süre:</span>
+                                <span style="color: var(--color-primary-500);">45 saat</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Tamamlama:</span>
+                                <span style="color: var(--color-success-500);">%78</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Başarımlar:</span>
+                                <span style="color: var(--color-warning-500);">23/45</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 1rem;">Sistem Gereksinimleri:</h4>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                            <p><strong>Minimum:</strong></p>
+                            <p>• Intel i5-3570K</p>
+                            <p>• 8 GB RAM</p>
+                            <p>• GTX 780</p>
+                            <p>• 70 GB Depolama</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Panel -->
+                <div class="related-panel">
+                    <h2 class="section-title">🎯 Benzer Oyunlar</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--surface-3); border-radius: var(--radius-lg);">
+                            <div style="width: 60px; height: 80px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-md);"></div>
+                            <div>
+                                <h4>The Witcher 3</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">RPG • Açık Dünya</p>
+                                <div style="color: var(--color-primary-500); font-size: 0.8rem;">%95 Uyumluluk</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--surface-3); border-radius: var(--radius-lg);">
+                            <div style="width: 60px; height: 80px; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-md);"></div>
+                            <div>
+                                <h4>Deus Ex: Mankind Divided</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Cyberpunk • RPG</p>
+                                <div style="color: var(--color-primary-500); font-size: 0.8rem;">%88 Uyumluluk</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📰 DESIGN 4: MAGAZINE-STYLE DETAIL LAYOUT -->
+    <div class="page-container" id="design4">
+        <div class="magazine-layout">
+            <!-- Magazine Hero -->
+            <div class="magazine-hero">
+                <div style="text-align: center;">
+                    <div class="article-category">ÖNE ÇIKAN OYUN</div>
+                    <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">🎮 Cyberpunk 2077</h1>
+                    <p style="font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                        Night City'nin neon ışıklarında geçen epik cyberpunk macerası
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary-500);">85</div>
+                            <div style="color: var(--text-secondary);">Metacritic Puanı</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary-500);">60h</div>
+                            <div style="color: var(--text-secondary);">Ortalama Süre</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary-500);">4.2/5</div>
+                            <div style="color: var(--text-secondary);">Topluluk Puanı</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magazine Content -->
+            <div class="magazine-content">
+                <div class="magazine-main">
+                    <!-- Main Article -->
+                    <div class="magazine-article">
+                        <div class="article-category">OYUN İNCELEMESİ</div>
+                        <h2 class="article-title">Night City'de Hayatta Kalma Rehberi</h2>
+                        <p class="article-excerpt">
+                            Cyberpunk 2077, oyuncuları 2077 yılının Night City'sine götürüyor. Bu megalopolis, 
+                            güç, lüks ve vücut modifikasyonu takıntısının hüküm sürdüğü bir yer. Siz de V olarak, 
+                            ölümsüzlüğün anahtarı olan eşsiz bir implantın peşinde koşan kiralık askersiniz.
+                        </p>
+                        <p class="article-excerpt">
+                            Seçimleriniz hikayeyi ve dünyayı şekillendirir. Karakterinizi ve oyun tarzınızı 
+                            özelleştirin, ilişkiler kurun ve Night City'nin geleceğini belirleyin. Her köşe başında 
+                            yeni bir macera, her karakter ile yeni bir hikaye sizi bekliyor.
+                        </p>
+                        
+                        <!-- Media Gallery in Article -->
+                        <div style="margin: 2rem 0;">
+                            <h3 style="margin-bottom: 1rem;">📸 Oyun İçi Görüntüler</h3>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
+                                <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-lg);"></div>
+                                <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: var(--radius-lg);"></div>
+                                <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #f093fb, #f5576c); border-radius: var(--radius-lg);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Genres Article -->
+                    <div class="magazine-article">
+                        <div class="article-category">TÜR ANALİZİ</div>
+                        <h2 class="article-title">RPG ve Açık Dünya Mükemmelliği</h2>
+                        <p class="article-excerpt">
+                            Cyberpunk 2077, klasik RPG elementlerini modern açık dünya tasarımı ile birleştiriyor. 
+                            Karakter gelişimi, hikaye anlatımı ve dünya inşası açısından türünün en iddialı örneklerinden biri.
+                        </p>
+                        <div style="margin-top: 1.5rem;">
+                            <span class="tag genre-tag">RPG</span>
+                            <span class="tag genre-tag">Açık Dünya</span>
+                            <span class="tag genre-tag">Aksiyon</span>
+                            <span class="tag">Cyberpunk</span>
+                            <span class="tag">Gelecek</span>
+                            <span class="tag">Hikaye</span>
+                            <span class="tag">Karakter Gelişimi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="magazine-sidebar">
+                    <!-- Quick Stats -->
+                    <div class="sidebar-item">
+                        <div class="article-category">HIZLI BİLGİLER</div>
+                        <h4>Oyun Bilgileri</h4>
+                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Geliştirici:</span>
+                                <span style="color: var(--color-primary-500);">CD Projekt RED</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Çıkış Tarihi:</span>
+                                <span style="color: var(--text-secondary);">10 Aralık 2020</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Yaş Sınırı:</span>
+                                <span style="color: var(--color-warning-500);">18+</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Info -->
+                    <div class="sidebar-item">
+                        <div class="article-category">PLATFORMLAR</div>
+                        <h4>Mevcut Platformlar</h4>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag platform-tag">PC (Steam)</span>
+                            <span class="tag platform-tag">PlayStation 4</span>
+                            <span class="tag platform-tag">PlayStation 5</span>
+                            <span class="tag platform-tag">Xbox One</span>
+                            <span class="tag platform-tag">Xbox Series X/S</span>
+                        </div>
+                    </div>
+
+                    <!-- Personal Stats -->
+                    <div class="sidebar-item">
+                        <div class="article-category">KİŞİSEL</div>
+                        <h4>Senin İstatistiklerin</h4>
+                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Oynadığın Süre:</span>
+                                <span style="color: var(--color-primary-500);">45 saat</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Tamamlama:</span>

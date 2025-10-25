@@ -1,20 +1,22 @@
 /* 🎮 Game Tracker - Optimized CSS Imports */
-/* 1. Base Design System (Ana sistem - önce yüklenir) */
-@import './styles/design-system.css';
-
-/* 2. Legacy Variables (Geriye uyumluluk) */
+/* 1. Legacy Variables (En temel değişkenler) */
 @import './styles/variables.css';
 
-/* 3. Utilities (Design system'e bağımlı) */
+/* 2. Page Text Colors (Sayfa özel renkler - önce yükle) */
+@import './styles/page-text-colors.css';
+
+/* 3. Base Design System (Font brightness protection - SON!) */
+@import './styles/design-system.css';
+
+/* 4. Utilities (Design system'e bağımlı) */
 @import './styles/utilities.css';
 
-/* 4. Animations (Utilities'e bağımlı) */
+/* 5. Animations (Utilities'e bağımlı) */
 @import './styles/animations.css';
 
-/* 5. Component Styles (Tüm base'lere bağımlı) */
+/* 6. Component Styles (Tüm base'lere bağımlı) */
 @import './styles/global-buttons.css';
 @import './styles/filter-buttons.css';
-@import './styles/page-text-colors.css';
 
 /* NOT: design-system-organized.css kaldırıldı (çakışma önlemi) */
 

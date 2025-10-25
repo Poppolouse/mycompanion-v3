@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Kart Tasarım Seçenekleri - 14 Farklı Stil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .design-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .design-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .card-pair {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 150px;
+            height: 200px;
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .card-score {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .card-content {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .card-footer {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            right: 16px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Design 1: Minimal Clean */
+        .design-1 .critics-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .design-1 .users-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Design 2: Glassmorphism */
+        .design-2 .critics-card {
+            background: rgba(102, 126, 234, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .design-2 .users-card {
+            background: rgba(245, 87, 108, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Design 3: Neon Glow */
+        .design-3 .critics-card {
+            background: #1a1a2e;
+            border: 2px solid #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        .design-3 .users-card {
+            background: #1a1a2e;
+            border: 2px solid #f5576c;
+            box-shadow: 0 0 20px rgba(245, 87, 108, 0.5);
+        }
+
+        /* Design 4: Material Design */
+        .design-4 .critics-card {
+            background: #2196F3;
+            box-shadow: 0 8px 24px rgba(33, 150, 243, 0.3);
+        }
+        .design-4 .users-card {
+            background: #FF5722;
+            box-shadow: 0 8px 24px rgba(255, 87, 34, 0.3);
+        }
+
+        /* Design 5: Dark Neumorphism */
+        .design-5 .critics-card {
+            background: #2a2a3e;
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.4),
+                -8px -8px 16px rgba(255, 255, 255, 0.05);
+        }
+        .design-5 .users-card {
+            background: #3e2a2a;
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.4),
+                -8px -8px 16px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Design 6: Gradient Border */
+        .design-6 .card {
+            background: #1a1a2e;
+            position: relative;
+        }
+        .design-6 .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+        .design-6 .users-card::before {
+            background: linear-gradient(45deg, #f093fb, #f5576c, #667eea);
+        }
+
+        /* Design 7: Retro Gaming */
+        .design-7 .critics-card {
+            background: #0f3460;
+            border: 3px solid #00ff41;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+        .design-7 .users-card {
+            background: #460f3a;
+            border: 3px solid #ff0080;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
+        }
+
+        /* Design 8: Minimalist Flat */
+        .design-8 .critics-card {
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+        }
+        .design-8 .users-card {
+            background: #e74c3c;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Design 9: Holographic */
+        .design-9 .critics-card {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #667eea);
+            background-size: 400% 400%;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        .design-9 .users-card {
+            background: linear-gradient(45deg, #f093fb, #f5576c, #667eea, #f093fb);
+            background-size: 400% 400%;
+            animation: holographic 3s ease-in-out infinite;
+        }
+
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Design 10: Paper Card */
+        .design-10 .critics-card {
+            background: #f8f9fa;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e9ecef;
+        }
+        .design-10 .users-card {
+            background: #fff5f5;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #fed7d7;
+        }
+
+        /* Design 11: Cyberpunk */
+        .design-11 .critics-card {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border: 1px solid #00ffff;
+            box-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.3),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+        .design-11 .users-card {
+            background: linear-gradient(135deg, #0a0a0a 0%, #2e1a1a 100%);
+            border: 1px solid #ff00ff;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 255, 0.3),
+                inset 0 0 10px rgba(255, 0, 255, 0.1);
+        }
+
+        /* Design 12: Soft Pastel */
+        .design-12 .critics-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .design-12 .users-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Design 13: Geometric */
+        .design-13 .critics-card {
+            background: #667eea;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+            position: relative;
+        }
+        .design-13 .users-card {
+            background: #f5576c;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            position: relative;
+        }
+
+        /* Design 14: Premium Gold */
+        .design-14 .critics-card {
+            background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+            color: #333;
+            border: 2px solid #ffd700;
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+        }
+        .design-14 .users-card {
+            background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+            color: #333;
+            border: 2px solid #c0c0c0;
+            box-shadow: 0 8px 24px rgba(192, 192, 192, 0.3);
+        }
+
+        .selection-note {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .selection-note h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .design-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-pair {
+                flex-direction: column;
+            }
+            
+            .card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Kart Tasarım Seçenekleri</h1>
+            <p>Critics ve Users kartları için 14 farklı tasarım stili</p>
+            <p><strong>Her tasarım çiftinde sol taraf Critics, sağ taraf Users kartını temsil eder</strong></p>
+        </div>
+
+        <div class="design-grid">
+            <!-- Design 1: Minimal Clean -->
+            <div class="design-section design-1">
+                <div class="design-title">1. Minimal Clean</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 2: Glassmorphism -->
+            <div class="design-section design-2">
+                <div class="design-title">2. Glassmorphism</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 3: Neon Glow -->
+            <div class="design-section design-3">
+                <div class="design-title">3. Neon Glow</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 4: Material Design -->
+            <div class="design-section design-4">
+                <div class="design-title">4. Material Design</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 5: Dark Neumorphism -->
+            <div class="design-section design-5">
+                <div class="design-title">5. Dark Neumorphism</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 6: Gradient Border -->
+            <div class="design-section design-6">
+                <div class="design-title">6. Gradient Border</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 7: Retro Gaming -->
+            <div class="design-section design-7">
+                <div class="design-title">7. Retro Gaming</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">CRITICS</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            > EXCEPTIONAL GAMEPLAY WITH STUNNING VISUALS...
+                        </div>
+                        <div class="card-footer">IGN.EXE • REVIEW.DAT</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">USERS</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            > AMAZING GAME! HIGHLY RECOMMEND...
+                        </div>
+                        <div class="card-footer">GAMER2024.USR • COMM.DAT</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 8: Minimalist Flat -->
+            <div class="design-section design-8">
+                <div class="design-title">8. Minimalist Flat</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 9: Holographic -->
+            <div class="design-section design-9">
+                <div class="design-title">9. Holographic</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 10: Paper Card -->
+            <div class="design-section design-10">
+                <div class="design-title">10. Paper Card</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 11: Cyberpunk -->
+            <div class="design-section design-11">
+                <div class="design-title">11. Cyberpunk</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 12: Soft Pastel -->
+            <div class="design-section design-12">
+                <div class="design-title">12. Soft Pastel</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 13: Geometric -->
+            <div class="design-section design-13">
+                <div class="design-title">13. Geometric</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design 14: Premium Gold -->
+            <div class="design-section design-14">
+                <div class="design-title">14. Premium Gold</div>
+                <div class="card-pair">
+                    <div class="card critics-card">
+                        <div class="card-header">
+                            <div class="card-title">Critics</div>
+                            <div class="card-score">96</div>
+                        </div>
+                        <div class="card-content">
+                            "Exceptional gameplay with stunning visuals and immersive storytelling..."
+                        </div>
+                        <div class="card-footer">IGN • Professional Review</div>
+                    </div>
+                    <div class="card users-card">
+                        <div class="card-header">
+                            <div class="card-title">Users</div>
+                            <div class="card-score">8.9</div>
+                        </div>
+                        <div class="card-content">
+                            "Amazing game! Highly recommend for all players who enjoy..."
+                        </div>
+                        <div class="card-footer">Gamer2024 • Community</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="selection-note">
+            <h3>🎯 Seçim Yapmak İçin</h3>
+            <p>Beğendiğin tasarımın numarasını söyle (örn: "3 numaralı tasarımı istiyorum")</p>
+            <p>Ben de o tasarımı birebir uygulayacağım! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -29,6 +29,17 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('vaulttracker:auth:isLoggedIn');
         localStorage.removeItem('vaulttracker:auth:currentUser');
       }
+    } else {
+      // TEST: Otomatik giriş yap (mock veri testi için)
+      console.log('🔧 TEST: Otomatik giriş yapılıyor...');
+      const result = userService.authenticateUser('poppolouse', 'password123');
+      if (result.success) {
+        setIsAuthenticated(true);
+        setCurrentUser(result.user);
+        localStorage.setItem('vaulttracker:auth:isLoggedIn', 'true');
+        localStorage.setItem('vaulttracker:auth:currentUser', JSON.stringify(result.user));
+        console.log('✅ TEST: Otomatik giriş başarılı:', result.user.displayName);
+      }
     }
     setIsLoading(false);
   }, []);

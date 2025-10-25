@@ -312,8 +312,23 @@ export function RouteProvider({ children }) {
   // Route state'i localStorage'a kaydet
   const saveRouteState = (newState) => {
     setRouteState(newState);
-    localStorage.setItem('vaulttracker:route:state', JSON.stringify(newState));
-    console.log('💾 Route state kaydedildi');
+    try {
+      // Circular reference'ları önlemek için güvenli stringify
+      const seen = new Set();
+      const safeState = JSON.parse(JSON.stringify(newState, (key, value) => {
+        if (typeof value === 'object' && value !== null) {
+          if (seen.has(value)) {
+            return '[Circular]';
+          }
+          seen.add(value);
+        }
+        return value;
+      }));
+      localStorage.setItem('vaulttracker:route:state', JSON.stringify(safeState));
+      console.log('💾 Route state kaydedildi');
+    } catch (error) {
+      console.error('❌ Route state kaydetme hatası:', error);
+    }
   };
 
   // Route'u başlat

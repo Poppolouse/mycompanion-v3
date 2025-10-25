@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 15 Farklı Medya Galerisi Tasarımı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .showcase-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .showcase-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .showcase-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* 1. Klasik Grid Galerisi */
+        .gallery-1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-1 img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-1 img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 2. Masonry Layout */
+        .gallery-2 {
+            columns: 3;
+            column-gap: 10px;
+        }
+
+        .gallery-2 img {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            break-inside: avoid;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .gallery-2 img:hover {
+            filter: brightness(1.1);
+        }
+
+        /* 3. Carousel Slider */
+        .gallery-3 {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .gallery-3 .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-3 img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .gallery-3 .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .gallery-3 .prev { left: 10px; }
+        .gallery-3 .next { right: 10px; }
+
+        /* 4. Lightbox Grid */
+        .gallery-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .gallery-4 img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-4 img:hover {
+            opacity: 0.8;
+        }
+
+        /* 5. Thumbnail + Main Image */
+        .gallery-5 {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gallery-5 .main-image {
+            flex: 2;
+        }
+
+        .gallery-5 .main-image img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .gallery-5 .thumbnails {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+
+        .gallery-5 .thumbnails img {
+            width: 100%;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-5 .thumbnails img:hover,
+        .gallery-5 .thumbnails img.active {
+            opacity: 1;
+            border: 2px solid #667eea;
+        }
+
+        /* 6. Polaroid Style */
+        .gallery-6 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .gallery-6 .polaroid {
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-6 .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .gallery-6 .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .gallery-6 .polaroid img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        /* 7. Hexagon Grid */
+        .gallery-7 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .gallery-7 .hexagon {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            position: relative;
+            margin: 15px 0;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-7 .hexagon:hover {
+            transform: scale(1.1);
+        }
+
+        .gallery-7 .hexagon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 8. Circular Gallery */
+        .gallery-8 {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .gallery-8 img {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .gallery-8 img:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        /* 9. Accordion Style */
+        .gallery-9 {
+            display: flex;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .gallery-9 .panel {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: flex 0.5s ease;
+            position: relative;
+        }
+
+        .gallery-9 .panel:hover {
+            flex: 3;
+        }
+
+        .gallery-9 .panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-9 .panel:hover::after {
+            opacity: 0;
+        }
+
+        /* 10. Card Flip Gallery */
+        .gallery-10 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-10 .flip-card {
+            width: 100%;
+            height: 80px;
+            perspective: 1000px;
+        }
+
+        .gallery-10 .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .gallery-10 .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .gallery-10 .flip-card-front,
+        .gallery-10 .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-10 .flip-card-back {
+            background: #667eea;
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .gallery-10 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 11. Mosaic Layout */
+        .gallery-11 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 40px);
+            gap: 5px;
+        }
+
+        .gallery-11 .item-1 { grid-column: 1/3; grid-row: 1/3; }
+        .gallery-11 .item-2 { grid-column: 3/5; grid-row: 1/2; }
+        .gallery-11 .item-3 { grid-column: 3/4; grid-row: 2/4; }
+        .gallery-11 .item-4 { grid-column: 4/5; grid-row: 2/4; }
+        .gallery-11 .item-5 { grid-column: 1/2; grid-row: 3/4; }
+        .gallery-11 .item-6 { grid-column: 2/3; grid-row: 3/4; }
+
+        .gallery-11 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .gallery-11 img:hover {
+            filter: sepia(50%);
+        }
+
+        /* 12. Timeline Gallery */
+        .gallery-12 {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .gallery-12::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+            transform: translateX(-50%);
+        }
+
+        .gallery-12 .timeline-item {
+            position: relative;
+            margin: 10px 0;
+            width: 45%;
+        }
+
+        .gallery-12 .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .gallery-12 .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .gallery-12 .timeline-item img {
+            width: 100%;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .gallery-12 .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .gallery-12 .timeline-item:nth-child(odd)::after {
+            right: -25px;
+        }
+
+        .gallery-12 .timeline-item:nth-child(even)::after {
+            left: -25px;
+        }
+
+        /* 13. Floating Cards */
+        .gallery-13 {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .gallery-13 .floating-card {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .gallery-13 .floating-card:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .gallery-13 .floating-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 14. Spiral Gallery */
+        .gallery-14 {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .gallery-14 img {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid #667eea;
+        }
+
+        .gallery-14 img:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+
+        /* 15. Neon Grid */
+        .gallery-15 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: #000;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .gallery-15 .neon-frame {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-15 .neon-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0080, #00ff80, #0080ff, #ff0080);
+            border-radius: 10px;
+            z-index: -1;
+            animation: neonGlow 2s linear infinite;
+        }
+
+        .gallery-15 img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            transition: filter 0.3s ease;
+        }
+
+        .gallery-15 .neon-frame:hover img {
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        @keyframes neonGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .showcase-header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-item {
+                padding: 15px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <div class="showcase-header">
+            <h1>🎨 15 Farklı Medya Galerisi Tasarımı</h1>
+            <p>Her biri farklı layout ve etkileşim stiline sahip modern galeri tasarımları</p>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- 1. Klasik Grid Galerisi -->
+            <div class="gallery-item">
+                <div class="gallery-title">1. 📱 Klasik Grid Galerisi</div>
+                <div class="gallery-1">
+                    <img src="https://picsum.photos/200/200?random=1" alt="Image 1">
+                    <img src="https://picsum.photos/200/200?random=2" alt="Image 2">
+                    <img src="https://picsum.photos/200/200?random=3" alt="Image 3">
+                    <img src="https://picsum.photos/200/200?random=4" alt="Image 4">
+                    <img src="https://picsum.photos/200/200?random=5" alt="Image 5">
+                    <img src="https://picsum.photos/200/200?random=6" alt="Image 6">
+                </div>
+            </div>
+
+            <!-- 2. Masonry Layout -->
+            <div class="gallery-item">
+                <div class="gallery-title">2. 🧱 Masonry Layout</div>
+                <div class="gallery-2">
+                    <img src="https://picsum.photos/200/150?random=7" alt="Image 7">
+                    <img src="https://picsum.photos/200/200?random=8" alt="Image 8">
+                    <img src="https://picsum.photos/200/180?random=9" alt="Image 9">
+                    <img src="https://picsum.photos/200/160?random=10" alt="Image 10">
+                    <img src="https://picsum.photos/200/190?random=11" alt="Image 11">
+                    <img src="https://picsum.photos/200/170?random=12" alt="Image 12">
+                </div>
+            </div>
+
+            <!-- 3. Carousel Slider -->
+            <div class="gallery-item">
+                <div class="gallery-title">3. 🎠 Carousel Slider</div>
+                <div class="gallery-3">
+                    <div class="slider" id="slider3">
+                        <img src="https://picsum.photos/400/150?random=13" alt="Image 13">
+                        <img src="https://picsum.photos/400/150?random=14" alt="Image 14">
+                        <img src="https://picsum.photos/400/150?random=15" alt="Image 15">
+                        <img src="https://picsum.photos/400/150?random=16" alt="Image 16">
+                    </div>
+                    <button class="nav-btn prev" onclick="slideImage('slider3', -1)">‹</button>
+                    <button class="nav-btn next" onclick="slideImage('slider3', 1)">›</button>
+                </div>
+            </div>
+
+            <!-- 4. Lightbox Grid -->
+            <div class="gallery-item">
+                <div class="gallery-title">4. 💡 Lightbox Grid</div>
+                <div class="gallery-4">
+                    <img src="https://picsum.photos/200/200?random=17" alt="Image 17" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=18" alt="Image 18" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=19" alt="Image 19" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=20" alt="Image 20" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=21" alt="Image 21" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=22" alt="Image 22" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=23" alt="Image 23" onclick="openModal(this)">
+                    <img src="https://picsum.photos/200/200?random=24" alt="Image 24" onclick="openModal(this)">
+                </div>
+            </div>
+
+            <!-- 5. Thumbnail + Main Image -->
+            <div class="gallery-item">
+                <div class="gallery-title">5. 🖼️ Ana Resim + Küçük Resimler</div>
+                <div class="gallery-5">
+                    <div class="main-image">
+                        <img id="mainImg5" src="https://picsum.photos/400/200?random=25" alt="Main Image">
+                    </div>
+                    <div class="thumbnails">
+                        <img src="https://picsum.photos/200/200?random=25" alt="Thumb 1" class="active" onclick="changeMainImage(this, 'mainImg5')">
+                        <img src="https://picsum.photos/200/200?random=26" alt="Thumb 2" onclick="changeMainImage(this, 'mainImg5')">
+                        <img src="https://picsum.photos/200/200?random=27" alt="Thumb 3" onclick="changeMainImage(this, 'mainImg5')">
+                        <img src="https://picsum.photos/200/200?random=28" alt="Thumb 4" onclick="changeMainImage(this, 'mainImg5')">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Polaroid Style -->
+            <div class="gallery-item">
+                <div class="gallery-title">6. 📸 Polaroid Stili</div>
+                <div class="gallery-6">
+                    <div class="polaroid"><img src="https://picsum.photos/200/200?random=29" alt="Polaroid 1"></div>
+                    <div class="polaroid"><img src="https://picsum.photos/200/200?random=30" alt="Polaroid 2"></div>
+                    <div class="polaroid"><img src="https://picsum.photos/200/200?random=31" alt="Polaroid 3"></div>
+                    <div class="polaroid"><img src="https://picsum.photos/200/200?random=32" alt="Polaroid 4"></div>
+                    <div class="polaroid"><img src="https://picsum.photos/200/200?random=33" alt="Polaroid 5"></div>
+                </div>
+            </div>
+
+            <!-- 7. Hexagon Grid -->
+            <div class="gallery-item">
+                <div class="gallery-title">7. ⬡ Altıgen Grid</div>
+                <div class="gallery-7">
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=34" alt="Hex 1"></div>
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=35" alt="Hex 2"></div>
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=36" alt="Hex 3"></div>
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=37" alt="Hex 4"></div>
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=38" alt="Hex 5"></div>
+                    <div class="hexagon"><img src="https://picsum.photos/200/200?random=39" alt="Hex 6"></div>
+                </div>
+            </div>
+
+            <!-- 8. Circular Gallery -->
+            <div class="gallery-item">
+                <div class="gallery-title">8. ⭕ Dairesel Galeri</div>
+                <div class="gallery-8" id="circularGallery">
+                    <!-- JavaScript ile doldurulacak -->
+                </div>
+            </div>
+
+            <!-- 9. Accordion Style -->
+            <div class="gallery-item">
+                <div class="gallery-title">9. 🪗 Akordeon Stili</div>
+                <div class="gallery-9">
+                    <div class="panel" style="background-image: url('https://picsum.photos/400/200?random=46')"></div>
+                    <div class="panel" style="background-image: url('https://picsum.photos/400/200?random=47')"></div>
+                    <div class="panel" style="background-image: url('https://picsum.photos/400/200?random=48')"></div>
+                    <div class="panel" style="background-image: url('https://picsum.photos/400/200?random=49')"></div>
+                </div>
+            </div>
+
+            <!-- 10. Card Flip Gallery -->
+            <div class="gallery-item">
+                <div class="gallery-title">10. 🔄 Kart Çevirme Galerisi</div>
+                <div class="gallery-10">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=50" alt="Flip 1"></div>
+                            <div class="flip-card-back">Resim 1</div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=51" alt="Flip 2"></div>
+                            <div class="flip-card-back">Resim 2</div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=52" alt="Flip 3"></div>
+                            <div class="flip-card-back">Resim 3</div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=53" alt="Flip 4"></div>
+                            <div class="flip-card-back">Resim 4</div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=54" alt="Flip 5"></div>
+                            <div class="flip-card-back">Resim 5</div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><img src="https://picsum.photos/200/200?random=55" alt="Flip 6"></div>
+                            <div class="flip-card-back">Resim 6</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Mosaic Layout -->
+            <div class="gallery-item">
+                <div class="gallery-title">11. 🎨 Mozaik Layout</div>
+                <div class="gallery-11">
+                    <img src="https://picsum.photos/400/300?random=56" alt="Mosaic 1" class="item-1">
+                    <img src="https://picsum.photos/200/150?random=57" alt="Mosaic 2" class="item-2">
+                    <img src="https://picsum.photos/200/200?random=58" alt="Mosaic 3" class="item-3">
+                    <img src="https://picsum.photos/200/200?random=59" alt="Mosaic 4" class="item-4">
+                    <img src="https://picsum.photos/200/150?random=60" alt="Mosaic 5" class="item-5">
+                    <img src="https://picsum.photos/200/150?random=61" alt="Mosaic 6" class="item-6">
+                </div>
+            </div>
+
+            <!-- 12. Timeline Gallery -->
+            <div class="gallery-item">
+                <div class="gallery-title">12. ⏰ Zaman Çizelgesi Galerisi</div>
+                <div class="gallery-12">
+                    <div class="timeline-item"><img src="https://picsum.photos/300/100?random=62" alt="Timeline 1"></div>
+                    <div class="timeline-item"><img src="https://picsum.photos/300/100?random=63" alt="Timeline 2"></div>
+                    <div class="timeline-item"><img src="https://picsum.photos/300/100?random=64" alt="Timeline 3"></div>
+                    <div class="timeline-item"><img src="https://picsum.photos/300/100?random=65" alt="Timeline 4"></div>
+                </div>
+            </div>
+
+            <!-- 13. Floating Cards -->
+            <div class="gallery-item">
+                <div class="gallery-title">13. 🎈 Yüzen Kartlar</div>
+                <div class="gallery-13" id="floatingGallery">
+                    <!-- JavaScript ile doldurulacak -->
+                </div>
+            </div>
+
+            <!-- 14. Spiral Gallery -->
+            <div class="gallery-item">
+                <div class="gallery-title">14. 🌀 Spiral Galeri</div>
+                <div class="gallery-14" id="spiralGallery">
+                    <!-- JavaScript ile doldurulacak -->
+                </div>
+            </div>
+
+            <!-- 15. Neon Grid -->
+            <div class="gallery-item">
+                <div class="gallery-title">15. ⚡ Neon Grid</div>
+                <div class="gallery-15">
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=72" alt="Neon 1"></div>
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=73" alt="Neon 2"></div>
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=74" alt="Neon 3"></div>
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=75" alt="Neon 4"></div>
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=76" alt="Neon 5"></div>
+                    <div class="neon-frame"><img src="https://picsum.photos/200/200?random=77" alt="Neon 6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="Modal Image">
+        </div>
+    </div>
+
+    <script>
+        // Carousel Slider
+        let currentSlide = 0;
+        function slideImage(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            const images = slider.children;
+            currentSlide += direction;
+            
+            if (currentSlide < 0) currentSlide = images.length - 1;
+            if (currentSlide >= images.length) currentSlide = 0;
+            
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Lightbox Modal
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Main Image Changer
+        function changeMainImage(thumb, mainImgId) {
+            const mainImg = document.getElementById(mainImgId);
+            const thumbnails = thumb.parentElement.children;
+            
+            // Remove active class from all thumbnails
+            Array.from(thumbnails).forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumb.classList.add('active');
+            
+            // Change main image
+            mainImg.src = thumb.src;
+        }
+
+        // Circular Gallery Setup
+        function setupCircularGallery() {
+            const gallery = document.getElementById('circularGallery');
+            const images = [40, 41, 42, 43, 44, 45];
+            const radius = 80;
+            const centerX = 100;
+            const centerY = 100;
+            
+            images.forEach((imgNum, index) => {
+                const angle = (index / images.length) * 2 * Math.PI;
+                const x = centerX + radius * Math.cos(angle) - 20;
+                const y = centerY + radius * Math.sin(angle) - 20;
+                
+                const img = document.createElement('img');
+                img.src = `https://picsum.photos/200/200?random=${imgNum}`;
+                img.style.left = x + 'px';
+                img.style.top = y + 'px';
+                img.style.animationDelay = (index * 0.5) + 's';
+                
+                gallery.appendChild(img);
+            });
+        }
+
+        // Floating Cards Setup
+        function setupFloatingCards() {
+            const gallery = document.getElementById('floatingGallery');
+            const images = [66, 67, 68, 69, 70, 71];
+            
+            images.forEach((imgNum, index) => {
+                const card = document.createElement('div');
+                card.className = 'floating-card';
+                card.style.left = Math.random() * 300 + 'px';
+                card.style.top = Math.random() * 80 + 'px';
+                card.style.animationDelay = (index * 1) + 's';
+                
+                const img = document.createElement('img');
+                img.src = `https://picsum.photos/200/200?random=${imgNum}`;
+                
+                card.appendChild(img);
+                gallery.appendChild(card);
+            });
+        }
+
+        // Spiral Gallery Setup
+        function setupSpiralGallery() {
+            const gallery = document.getElementById('spiralGallery');
+            const images = [78, 79, 80, 81, 82, 83, 84, 85];
+            const centerX = 100;
+            const centerY = 100;
+            
+            images.forEach((imgNum, index) => {
+                const angle = index * 0.8;
+                const radius = 10 + index * 8;
+                const x = centerX + radius * Math.cos(angle) - 15;
+                const y = centerY + radius * Math.sin(angle) - 15;
+                
+                const img = document.createElement('img');
+                img.src = `https://picsum.photos/200/200?random=${imgNum}`;
+                img.style.left = x + 'px';
+                img.style.top = y + 'px';
+                
+                gallery.appendChild(img);
+            });
+        }
+
+        // Initialize galleries on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupCircularGallery();
+            setupFloatingCards();
+            setupSpiralGallery();
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Auto-slide carousel
+        setInterval(() => {
+            slideImage('slider3', 1);
+        }, 3000);
+    </script>
+</body>
+</html>

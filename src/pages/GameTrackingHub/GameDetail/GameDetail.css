@@ -1,777 +1,1411 @@
-/* 🎮 GameDetail.css - Phase 3: Oyun Detay Sayfası Stilleri */
+/* 🎮 GameDetailOptimized - Optimize Edilmiş Tasarım */
+
+/* SADECE GAMEDETAIL SAYFASI İÇİN CSS RESET */
+.game-detail-page * {
+  box-sizing: border-box;
+}
+
+.game-detail-page .tracker-header {
+  margin: 0;
+  padding: 1rem 2rem;
+}
+
+/* Body ve HTML boşluklarını kaldır */
+body:has(.game-detail-page) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html:has(.game-detail-page) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 .game-detail-page {
   min-height: 100vh;
-  background: var(--gradient-background);
+  background: linear-gradient(135deg, 
+    var(--bg-gradient-1) 0%, 
+    var(--bg-gradient-2) 50%, 
+    var(--bg-gradient-3) 100%);
   color: var(--text-primary);
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Header */
-.detail-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(var(--color-white-rgb), 0.1);
-}
-
-.back-button {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  color: var(--text-primary);
-  padding: 12px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.back-button:hover {
-  background: rgba(var(--color-white-rgb), 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(var(--color-black-rgb), 0.2);
-}
-
-.detail-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  padding-top: 140px; /* Header yüksekliği için yeterli boşluk */
   margin: 0;
-  background: linear-gradient(45deg, var(--color-white), var(--color-gray-300));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  position: relative;
 }
 
-/* Ana İçerik */
-.detail-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 30px;
-}
+/* ========================================
+ * 📱 LOADING & ERROR STATES
+ * ======================================== */
 
-/* Sol Panel - Oyun Bilgileri */
-.game-info-panel {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
-}
-
-/* Kapak Görseli */
-.game-cover {
-  margin-bottom: 30px;
-}
-
-.cover-placeholder {
-  width: 100%;
-  height: 300px;
-  background: linear-gradient(135deg, rgba(var(--color-white-rgb), 0.1), rgba(var(--color-white-rgb), 0.05));
-  border: 2px dashed rgba(var(--color-white-rgb), 0.3);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: rgba(var(--color-white-rgb), 0.6);
-}
-
-/* Temel Bilgiler */
-.basic-info {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(var(--color-white-rgb), 0.1);
-}
-
-.info-item:last-child {
-  border-bottom: none;
-}
-
-.info-item .label {
-  font-weight: 600;
-  color: var(--color-gray-300);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.info-item .value {
-  font-weight: 500;
-  color: var(--color-white);
-  font-size: 16px;
-}
-
-/* Status Select */
-.status-select {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  color: var(--color-white);
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-}
-
-.status-select option {
-  background: var(--color-primary-700);
-  color: var(--color-white);
-}
-
-/* Progress Container */
-.progress-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex: 1;
-  margin-left: 20px;
-}
-
-.progress-slider {
-  flex: 1;
-  height: 6px;
-  background: rgba(var(--color-white-rgb), 0.2);
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-}
-
-.progress-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(var(--color-black-rgb), 0.3);
-}
-
-.progress-value {
-  font-weight: 600;
-  color: var(--color-white);
-  font-size: 16px;
-  min-width: 45px;
-  text-align: right;
-}
-
-/* Fraksiyonlar */
-.factions-section {
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
-}
-
-.factions-section h3 {
-  margin: 0 0 20px 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-gray-300);
-}
-
-.factions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-}
-
-.faction-card {
-  background: rgba(var(--color-white-rgb), 0.05);
-  border: 1px solid rgba(var(--color-white-rgb), 0.1);
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.faction-card:hover {
-  background: rgba(var(--color-white-rgb), 0.1);
-  transform: translateY(-2px);
-}
-
-.faction-name {
-  display: block;
-  font-weight: 600;
-  color: var(--color-white);
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.faction-progress {
-  display: block;
-  font-weight: 500;
-  color: var(--color-gray-400);
-  font-size: 12px;
-}
-
-/* Sağ Panel - Notlar */
-.notes-panel {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(var(--color-black-rgb), 0.1);
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
-}
-
-.notes-panel h3 {
-  margin: 0 0 25px 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-gray-300);
-}
-
-/* Not Ekleme */
-.add-note {
-  margin-bottom: 25px;
-}
-
-.note-input {
-  width: 100%;
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  border-radius: 12px;
-  padding: 15px;
-  color: var(--color-white);
-  font-size: 14px;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 80px;
-  margin-bottom: 15px;
-  backdrop-filter: blur(10px);
-}
-
-.note-input::placeholder {
-  color: rgba(var(--color-white-rgb), 0.6);
-}
-
-.note-input:focus {
-  outline: none;
-  border-color: rgba(var(--color-white-rgb), 0.4);
-  background: rgba(var(--color-white-rgb), 0.15);
-}
-
-.add-note-button {
-  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
-  border: none;
-  color: var(--color-white);
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.add-note-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(var(--color-primary-500-rgb), 0.4);
-}
-
-.add-note-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Notlar Listesi */
-.notes-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.no-notes {
-  text-align: center;
-  padding: 40px 20px;
-  color: rgba(var(--color-white-rgb), 0.6);
-  font-style: italic;
-}
-
-.note-item {
-  background: rgba(var(--color-white-rgb), 0.05);
-  border: 1px solid rgba(var(--color-white-rgb), 0.1);
-  border-radius: 12px;
-  padding: 15px;
-  transition: all 0.3s ease;
-}
-
-.note-item:hover {
-  background: rgba(var(--color-white-rgb), 0.1);
-}
-
-.note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.note-date {
-  font-size: 12px;
-  color: var(--color-gray-400);
-  font-weight: 500;
-}
-
-.delete-note {
-  background: none;
-  border: none;
-  color: rgba(var(--color-white-rgb), 0.6);
-  cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.delete-note:hover {
-  color: var(--color-error-500);
-  background: rgba(255, 107, 107, 0.1);
-}
-
-.note-text {
-  margin: 0;
-  color: var(--color-white);
-  font-size: 14px;
-  line-height: 1.5;
-  word-wrap: break-word;
-}
-
-/* Footer */
-.detail-footer {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
-}
-
-.phase-badge, .status-badge {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  color: var(--color-gray-300);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  backdrop-filter: blur(10px);
-}
-
-.status-badge {
-  background: linear-gradient(45deg, var(--color-primary-500), var(--color-secondary-500));
-  color: var(--color-white);
-  border-color: transparent;
-}
-
-/* Loading ve Error States */
-.loading-state, .error-state {
+.game-detail-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  text-align: center;
+  gap: 1rem;
 }
 
 .loading-spinner {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  animation: spin 2s linear infinite;
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-subtle);
+  border-top: 3px solid var(--color-primary-500);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.game-detail-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
 }
 
 .error-icon {
   font-size: 3rem;
-  margin-bottom: 20px;
+  color: var(--color-error-400);
 }
 
-.loading-state h2, .error-state h2 {
-  margin: 0 0 10px 0;
+.error-title {
   font-size: 1.5rem;
-  color: var(--color-gray-300);
-}
-
-.error-state p {
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 0;
-  color: var(--color-gray-400);
-  font-size: 16px;
 }
 
-/* 🎯 Campaign Stilleri */
-.campaigns-section {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
+.error-message {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  max-width: 500px;
+  line-height: 1.5;
 }
 
-.campaigns-header {
+.retry-button {
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.retry-button:hover {
+  background: var(--color-primary-600);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+ * 🎯 HEADER STYLES (Mevcut siteden)
+ * ======================================== */
+
+.game-detail-page .tracker-header {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 2rem;
 }
 
-.campaigns-header h3 {
+.header-left h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
   margin: 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-white);
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.add-campaign-button {
-  background: linear-gradient(45deg, var(--color-success-500), var(--color-success-600));
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+.header-left p {
+  color: var(--text-secondary);
+  margin: 0.5rem 0 0 0;
+  font-size: 1.1rem;
 }
 
-.add-campaign-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-}
-
-/* Campaign Ekleme Formu */
-.add-campaign-form {
-  background: rgba(var(--color-white-rgb), 0.05);
-  border: 1px solid rgba(var(--color-white-rgb), 0.1);
+.data-source-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.data-source-badge.local {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.data-source-badge.rawg {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-400);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
-.form-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.form-row:last-child {
-  margin-bottom: 0;
-}
-
-.campaign-input,
-.campaign-textarea,
-.campaign-select,
-.campaign-progress-input,
-.campaign-date {
-  background: rgba(var(--color-white-rgb), 0.1);
-  border: 1px solid rgba(var(--color-white-rgb), 0.2);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: var(--color-white);
-  font-size: 14px;
-  transition: all 0.3s ease;
-  flex: 1;
-}
-
-.campaign-input:focus,
-.campaign-textarea:focus,
-.campaign-select:focus,
-.campaign-progress-input:focus,
-.campaign-date:focus {
-  outline: none;
-  border-color: var(--color-success-500);
-  box-shadow: 0 0 0 2px rgba(var(--color-success-500-rgb), 0.2);
-}
-
-.campaign-input::placeholder,
-.campaign-textarea::placeholder,
-.campaign-progress-input::placeholder {
-  color: rgba(var(--color-white-rgb), 0.6);
-}
-
-.campaign-progress-input {
-  max-width: 120px;
-}
-
-.campaign-date {
-  max-width: 150px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
-}
-
-.save-campaign-button {
-  background: linear-gradient(45deg, var(--color-primary-500), var(--color-primary-600));
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
-}
-
-.save-campaign-button:hover:not(:disabled) {
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(102, 126, 234, 0.1);
 }
 
-.save-campaign-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+/* ========================================
+ * 🎮 CONTAINER & LAYOUT
+ * ======================================== */
 
-/* Campaign Listesi */
-.campaigns-list {
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem 2rem; /* Üst padding kaldırıldı */
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 2rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.no-campaigns {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(var(--color-white-rgb), 0.05);
-  border: 2px dashed rgba(var(--color-white-rgb), 0.2);
+/* ========================================
+ * 🖼️ GAME BANNER (80px uzatılmış)
+ * ======================================== */
+
+.game-banner {
+  position: relative;
+  height: 480px; /* 400px'den 480px'e çıkarıldı */
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.1) 0%, 
+    rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:0.1"/></linearGradient></defs><rect width="1200" height="600" fill="url(%23bg)"/></svg>') center/cover;
+  opacity: 0.3;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.game-poster {
+  width: 200px;
+  height: 280px;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
   border-radius: 12px;
-  color: rgba(var(--color-white-rgb), 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  flex-shrink: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.no-campaigns p {
-  margin: 0 0 5px 0;
-  font-size: 16px;
+.game-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
 }
 
-.no-campaigns small {
-  font-size: 14px;
-  color: rgba(var(--color-white-rgb), 0.5);
+.game-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Campaign Kartları */
-.campaign-card {
-  background: rgba(var(--color-white-rgb), 0.08);
-  border: 1px solid rgba(var(--color-white-rgb), 0.15);
+/* Küçük bilgiler başlık altında */
+.game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.meta-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Özet */
+.game-synopsis {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
   border-radius: 12px;
-  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 600px;
+}
+
+.game-synopsis p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Banner Butonları - Sağ Alt Köşe */
+.banner-actions {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 3;
+}
+
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.campaign-card:hover {
-  background: rgba(var(--color-white-rgb), 0.12);
+.action-btn.primary {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.action-btn.favorite {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
+
+.action-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(var(--color-black-rgb), 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.campaign-header {
+/* ========================================
+ * 📸 MEDIA SECTION
+ * ======================================== */
+
+.media-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.media-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.campaign-name {
+.media-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.media-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.media-tab {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.media-tab.active {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+.media-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.media-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.media-item {
+  aspect-ratio: 16/9;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.media-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+ * 📊 STATS GRID
+ * ======================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stat-header h3 {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--color-white);
 }
 
-.campaign-actions {
+/* Genişletilmiş Metacritic Kartı */
+.metacritic-extended {
+  grid-column: span 2;
+}
+
+.metacritic-score {
+  background: var(--color-success-500);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.reviews-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.critic-reviews h4,
+.player-reviews h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary-400);
+}
+
+.review-item {
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1rem;
 }
 
-.delete-campaign-button {
-  background: rgba(244, 67, 54, 0.2);
-  border: 1px solid rgba(244, 67, 54, 0.3);
-  color: var(--color-error-500);
-  padding: 6px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  transition: all 0.3s ease;
+.review-item:last-child {
+  border-bottom: none;
 }
 
-.delete-campaign-button:hover {
-  background: rgba(244, 67, 54, 0.3);
-  transform: scale(1.1);
+.review-source {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 80px;
 }
 
-.campaign-description {
-  margin: 0 0 15px 0;
-  color: rgba(var(--color-white-rgb), 0.8);
-  font-size: 14px;
-  line-height: 1.4;
+.review-score {
+  font-weight: 700;
+  color: var(--color-success-400);
+  min-width: 60px;
+  text-align: center;
 }
 
-.campaign-info {
-  margin-bottom: 15px;
+.review-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex: 1;
+  text-align: right;
 }
 
-.campaign-status {
+/* Diğer stat kartları */
+.time-stats,
+.player-stats,
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.time-item,
+.stat-item,
+.price-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.time-item:last-child,
+.stat-item:last-child,
+.price-item:last-child {
+  border-bottom: none;
 }
 
-.status-badge.başlanmadı {
-  background: rgba(var(--color-gray-500-rgb), 0.2);
-  color: var(--color-gray-400);
+.currency-toggle {
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.status-badge.oynuyor {
-  background: rgba(var(--color-primary-500-rgb), 0.2);
-  color: var(--color-primary-300);
+.currency-toggle:hover {
+  background: var(--color-primary-600);
 }
 
-.status-badge.tamamlandı {
-  background: rgba(var(--color-success-500-rgb), 0.2);
-  color: var(--color-success-300);
+/* ========================================
+ * 💻 SYSTEM REQUIREMENTS
+ * ======================================== */
+
+.requirements-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.status-badge.bırakıldı {
-  background: rgba(var(--color-error-500-rgb), 0.2);
-  color: var(--color-error-300);
-}
-
-.campaign-progress {
+.requirements-section h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-white);
 }
 
-.campaign-progress-bar {
-  width: 100%;
-  height: 6px;
-  background: rgba(var(--color-white-rgb), 0.1);
-  border-radius: 3px;
+.requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.req-column h3 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary-400);
+  font-size: 1.2rem;
+}
+
+.req-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.5;
+}
+
+.req-item:last-child {
+  border-bottom: none;
+}
+
+/* ========================================
+ * 🏆 AWARDS SECTION
+ * ======================================== */
+
+.awards-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.awards-section h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.award-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.award-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.award-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.award-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ========================================
+ * 🎮 RELATED GAMES
+ * ======================================== */
+
+.related-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.related-section h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.related-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.game-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.game-card .game-poster {
+  width: 60px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.game-card .game-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.game-card .game-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .game-banner {
+    height: 400px;
+  }
+  
+  .banner-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  
+  .game-poster {
+    width: 150px;
+    height: 200px;
+    font-size: 3rem;
+  }
+  
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .banner-actions {
+    position: static;
+    margin-top: 1rem;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .metacritic-extended {
+    grid-column: span 1;
+  }
+  
+  .reviews-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .requirements-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .awards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .related-games {
+    grid-template-columns: 1fr;
+  }
+  
+  .game-detail-page {
+    padding-top: 150px; /* Mobilde header için yeterli boşluk */
+  }
+  
+  .tracker-header {
+    padding: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .header-left h1 {
+    font-size: 2rem;
+  }
+  
+  .navigation-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ========================================
+ * 🎯 ACCESSIBILITY
+ * ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+  
+  * {
+    transition: none !important;
+  }
+}
+
+/* Focus indicators */
+.action-btn:focus,
+.media-tab:focus,
+.currency-toggle:focus,
+.nav-btn:focus {
+  outline: 2px solid var(--color-primary-400);
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .game-detail-page {
+    border: 1px solid var(--text-primary);
+  }
+  
+  .loading-spinner {
+    border-width: 4px;
+  }
+}
+
+/* ========================================
+ * ✨ ÇOK YAKINDA BÖLÜMÜ - ŞIK TASARIM
+ * ======================================== */
+
+.game-detail-main {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 2rem 2rem 4rem 2rem;
+}
+
+/* Çok Yakında Bölümü - Geliştirilmiş Görünürlük */
+.coming-soon-container {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.15) 0%, 
+    rgba(118, 75, 162, 0.15) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 3rem;
+  margin: 2rem 0 4rem 0;
+  min-height: 700px;
+  position: relative;
   overflow: hidden;
+}
+
+.coming-soon-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(102, 126, 234, 0.1) 0%, 
+    transparent 50%, 
+    rgba(118, 75, 162, 0.1) 100%);
+  pointer-events: none;
+}
+
+.coming-soon-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.coming-soon-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.coming-soon-icons span {
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.coming-soon-icons span:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.coming-soon-icons span:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* Başlık - Çok Daha Belirgin */
+.coming-soon-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 25%, 
+    #f093fb 50%, 
+    #f5576c 75%, 
+    #4facfe 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  letter-spacing: 2px;
+}
+
+.coming-soon-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Özellik Kartları - Hizalama Düzeltmesi */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 0;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  height: 240px;
+  display: grid;
+  grid-template-rows: 60px 40px 80px 40px;
+  grid-template-areas: 
+    "icon"
+    "title"
+    "description"
+    "status";
+  align-items: center;
+  justify-items: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(102, 126, 234, 0.1) 0%, 
+    transparent 50%, 
+    rgba(118, 75, 162, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Kart İçeriği - Grid Hizalama */
+.feature-icon {
+  grid-area: icon;
+  font-size: 2.5rem;
+  margin: 0;
+  text-align: center;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  align-self: center;
+  justify-self: center;
+}
+
+.feature-title {
+  grid-area: title;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+  align-self: center;
+  justify-self: center;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feature-description {
+  grid-area: description;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-status {
+  grid-area: status;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  align-self: center;
+  justify-self: center;
+}
+
+/* Footer - Düzeltilmiş Pozisyon */
+/* Modern Coming Soon Footer Redesign */
+.coming-soon-footer {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.15) 50%,
+    rgba(240, 147, 251, 0.15) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  margin-top: 3rem;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(102, 126, 234, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.08) 50%, 
+    transparent 70%
+  );
+  animation: footerShimmer 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes footerShimmer {
+  0%, 100% { transform: translateX(-100%) translateY(-100%); }
+  50% { transform: translateX(100%) translateY(100%); }
+}
+
+.progress-section {
+  margin-bottom: 2rem;
+}
+
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 120px;
+}
+
+.progress-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1px;
+}
+
+/* Modern Progress Bar Design */
+.progress-bar {
+  width: 100%;
+  max-width: 800px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-success-500), var(--color-success-300));
-  border-radius: 3px;
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, 
+    #667eea 0%,
+    #764ba2 20%,
+    #f093fb 40%,
+    #f5576c 60%,
+    #4facfe 80%,
+    #00f2fe 100%
+  );
+  background-size: 300% 100%;
+  border-radius: 25px;
+  width: 35%;
+  position: relative;
+  overflow: hidden;
+  animation: progressFlow 4s ease-in-out infinite;
+  box-shadow: 
+    0 0 20px rgba(102, 126, 234, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.campaign-dates {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: rgba(var(--color-white-rgb), 0.7);
+@keyframes progressFlow {
+  0%, 100% { 
+    background-position: 0% 50%;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  }
+  50% { 
+    background-position: 100% 50%;
+    box-shadow: 0 0 30px rgba(245, 87, 108, 0.8);
+  }
 }
 
-.start-date,
-.end-date {
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.5) 50%, 
+    transparent 100%);
+  animation: progressShimmer 3s infinite;
+}
+
+@keyframes progressShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 15%,
+    #f093fb 30%,
+    #f5576c 45%,
+    #4facfe 60%,
+    #00f2fe 75%,
+    #667eea 100%
+  );
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: textGradientFlow 5s ease-in-out infinite;
+  margin-top: 1rem;
+  text-align: center;
+  white-space: nowrap;
+  filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.4));
+}
+
+@keyframes textGradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.progress-text::before {
+  content: '⚡';
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  animation: float 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.progress-text::after {
+  content: '🚀';
+  position: absolute;
+  right: -2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  animation: float 2s ease-in-out infinite reverse;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.coming-soon-footer .notification-message {
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-top: 2.5rem;
 }
 
-.campaign-notes {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(var(--color-white-rgb), 0.1);
+/* Modern Notification Card Design */
+.coming-soon-container .coming-soon-footer .footer-note,
+.coming-soon-footer p.footer-note,
+p.footer-note {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.6rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg,
+    rgba(255, 193, 7, 0.2) 0%,
+    rgba(255, 152, 0, 0.2) 50%,
+    rgba(255, 87, 34, 0.2) 100%
+  ) !important;
+  border: 2px solid rgba(255, 193, 7, 0.4) !important;
+  border-radius: 14px !important;
+  padding: 0.8rem 1.5rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 
+    0 8px 32px rgba(255, 193, 7, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+  letter-spacing: 0.3px !important;
 }
 
-.campaign-notes small {
-  color: rgba(var(--color-white-rgb), 0.6);
-  font-style: italic;
+.footer-note::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  ) !important;
+  animation: notificationShimmer 3s ease-in-out infinite !important;
 }
 
-/* Responsive Design */
+@keyframes notificationShimmer {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.footer-note:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 12px 40px rgba(255, 193, 7, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 193, 7, 0.6) !important;
+}
+
+/* Bell icon animation - HTML'deki zil ikonu için */
+.footer-note {
+  animation: bellRing 2s ease-in-out infinite !important;
+}
+
+@keyframes bellRing {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-1deg); }
+  20%, 40% { transform: rotate(1deg); }
+}
+
+/* Animasyonlar */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes shimmerMove {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .game-detail-page {
-    padding: 15px;
+  .coming-soon-container {
+    padding: 2rem 1.5rem;
+    margin: 1rem 0;
   }
   
-  .detail-content {
+  .coming-soon-title {
+    font-size: 2.2rem;
+  }
+  
+  .coming-soon-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .features-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1rem;
   }
   
-  .detail-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  .feature-card {
+    height: 160px; /* Mobilde biraz daha kısa */
   }
   
-  .detail-header h1 {
-    font-size: 2rem;
-  }
-  
-  .game-info-panel, .notes-panel {
-    padding: 20px;
-  }
-  
-  .factions-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .campaigns-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .campaign-progress-input,
-  .campaign-date {
-    max-width: none;
-  }
-
-  .campaign-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .campaign-dates {
-    flex-direction: column;
-    gap: 8px;
+  .coming-soon-footer {
+    padding: 1.5rem;
   }
 }

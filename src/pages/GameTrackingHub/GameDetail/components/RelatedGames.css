@@ -1,0 +1,234 @@
+/* 🎮 RelatedGames - Wireframe'e Göre Tasarım */
+
+.related-games-section {
+  margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  padding: 2rem;
+}
+
+.related-games-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ========================================
+ * 🎮 OYUN KATEGORİLERİ
+ * ======================================== */
+
+.games-category h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ========================================
+ * 🎯 OYUN KARTLARI
+ * ======================================== */
+
+.related-game-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.related-game-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 12px 32px rgba(var(--color-black-rgb), 0.15);
+}
+
+.game-image-container {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+
+.game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.related-game-card:hover .game-image {
+  transform: scale(1.05);
+}
+
+.discount-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--color-success-500);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--color-black-rgb), 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.related-game-card:hover .game-overlay {
+  opacity: 1;
+}
+
+.view-game-btn {
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-game-btn:hover {
+  background: var(--color-primary-600);
+  transform: scale(1.05);
+}
+
+/* ========================================
+ * 📝 OYUN BİLGİLERİ
+ * ======================================== */
+
+.game-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.game-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-rating {
+  display: flex;
+  align-items: center;
+}
+
+.metacritic-score {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.metacritic-score.excellent {
+  background: var(--color-success-500);
+}
+
+.metacritic-score.good {
+  background: var(--color-warning-500);
+}
+
+.metacritic-score.mixed {
+  background: var(--color-warning-600);
+}
+
+.metacritic-score.poor {
+  background: var(--color-error-500);
+}
+
+.game-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.original-price {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+
+.discounted-price {
+  color: var(--color-success-400);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.current-price {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 1023px) {
+  .games-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .related-games-section {
+    padding: 1rem;
+    margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  }
+  
+  .related-games-container {
+    gap: 2rem;
+  }
+  
+  .games-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .game-info {
+    padding: 0.75rem;
+  }
+  
+  .game-title {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .related-game-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}

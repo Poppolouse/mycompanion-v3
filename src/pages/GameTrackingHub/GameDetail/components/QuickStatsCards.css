@@ -1,0 +1,1142 @@
+/* 📊 QuickStatsCards - Wireframe'e Göre Tasarım */
+
+.quick-stats-section {
+  margin: 0; /* GameDetail.css'de flex gap kontrolü var */
+  padding: 2rem;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ========================================
+ * 🎨 GRADIENT OVERLAY DESIGN (12 NUMARA)
+ * ======================================== */
+
+.gradient-overlay-design .gradient-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  min-height: 260px; /* 1.3x increased height */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-overlay-design .gradient-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  z-index: 1;
+}
+
+.gradient-overlay-design .gradient-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.gradient-overlay-design .gradient-card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 1.5rem;
+}
+
+.gradient-overlay-design .gradient-card-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-overlay-design .gradient-card-value {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-overlay-design .gradient-card-title {
+  font-size: 1rem;
+  opacity: 0.9;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Kart tipi özel gradient'ları */
+.gradient-overlay-design .critics-card {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.gradient-overlay-design .users-card {
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+.gradient-overlay-design .hltb-card {
+  background: linear-gradient(135deg, #45b7d1, #3498db);
+}
+
+.gradient-overlay-design .esrb-card {
+  background: linear-gradient(135deg, #96ceb4, #85c1a3);
+}
+
+/* Responsive Design for Gradient Overlay */
+@media (max-width: 1200px) {
+  .gradient-overlay-design .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gradient-overlay-design .stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .gradient-overlay-design .gradient-card {
+    min-height: 200px;
+  }
+  
+  .gradient-overlay-design .gradient-card-icon {
+    font-size: 2.5rem;
+  }
+  
+  .gradient-overlay-design .gradient-card-value {
+    font-size: 2.2rem;
+  }
+}
+
+/* Dark Theme Compatibility */
+@media (prefers-color-scheme: dark) {
+  .gradient-overlay-design .gradient-card::before {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* ========================================
+ * 📊 STAT CARD GENEL TASARIM
+ * ======================================== */
+
+.stat-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(var(--color-black-rgb), 0.15);
+  border-color: var(--color-primary-400);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-600));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* ========================================
+ * 🎨 MODERN HEADER DESIGN
+ * ======================================== */
+
+.modern-header {
+  position: relative;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+  min-height: 40px;
+}
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  gap: 1rem;
+}
+
+.header-link {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+}
+
+.header-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header-link:active {
+  transform: translateY(0);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.header-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.15rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+}
+
+.header-right {
+  flex-shrink: 0;
+}
+
+.score-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.score-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.score-suffix {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+ * 🎨 HEADER SPECIFIC GRADIENTS
+ * ======================================== */
+
+/* Metacritic Header */
+.metacritic-header .header-background {
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 50%, 
+    #f093fb 100%);
+}
+
+.metacritic-header .header-icon {
+  background: rgba(102, 126, 234, 0.3);
+}
+
+/* Completion Header */
+.completion-header .header-background {
+  background: linear-gradient(135deg, 
+    #4facfe 0%, 
+    #00f2fe 50%, 
+    #43e97b 100%);
+}
+
+.completion-header .header-icon {
+  background: rgba(79, 172, 254, 0.3);
+}
+
+/* Age Rating Header */
+.age-rating-header .header-background {
+  background: linear-gradient(135deg, 
+    #fa709a 0%, 
+    #fee140 50%, 
+    #ff9a9e 100%);
+}
+
+.age-rating-header .header-icon {
+  background: rgba(250, 112, 154, 0.3);
+}
+
+/* User Score Header */
+.user-score-header .header-background {
+  background: linear-gradient(135deg, 
+    #a8edea 0%, 
+    #fed6e3 50%, 
+    #d299c2 100%);
+}
+
+.user-score-header .header-icon {
+  background: rgba(168, 237, 234, 0.3);
+}
+
+/* ========================================
+ * 📏 DIVIDER VE TITLE
+ * ======================================== */
+
+.stat-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+  margin: 0.5rem 0;
+}
+
+.stat-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+ * 📋 STAT DETAILS
+ * ======================================== */
+
+.stat-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.user-time {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.user-time .detail-value {
+  color: var(--color-primary-400);
+  font-weight: 700;
+}
+
+/* ========================================
+ * 🔞 YAŞ SINIRI ÖZEL TASARIM
+ * ======================================== */
+
+.content-descriptor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.25rem 0;
+}
+
+.descriptor-icon {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.descriptor-text {
+  color: #e0e0e0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* ========================================
+ * ⭐ TOPLULUK PUANI ÖZEL TASARIM
+ * ======================================== */
+
+.rating-stars {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  letter-spacing: 0.1em;
+}
+
+.rating-text {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-success-400);
+  margin-bottom: 0.75rem;
+}
+
+.view-details-btn {
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  border: 1px solid rgba(var(--color-primary-500-rgb), 0.3);
+  color: var(--color-primary-400);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.view-details-btn:hover {
+  background: rgba(var(--color-primary-500-rgb), 0.2);
+  border-color: rgba(var(--color-primary-500-rgb), 0.5);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+ * 📊 PROGRESS BAR
+ * ======================================== */
+
+.progress-bar {
+  height: 4px;
+  background: rgba(var(--color-white-rgb), 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-white-rgb), 0.3), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.community-progress {
+  background: linear-gradient(90deg, var(--color-success-500), var(--color-success-400));
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ========================================
+ * 🎨 CARD ÖZEL RENKLERİ
+ * ======================================== */
+
+/* Metacritic Card - GÜÇLÜ KORUMA */
+.quick-stats-section .stats-container .stat-card.metacritic-card {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+.quick-stats-section .stats-container .stat-card.metacritic-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--score-excellent-rgb), 0.5) 25%, 
+    rgba(var(--color-primary-400-rgb), 0.5) 50%, 
+    rgba(var(--color-accent-400-rgb), 0.5) 75%, 
+    transparent 100%) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.quick-stats-section .stats-container .stat-card.metacritic-card:hover {
+  border-color: var(--score-excellent) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.metacritic-card .stat-icon {
+  background: rgba(var(--score-excellent-rgb), 0.1);
+  border-color: rgba(var(--score-excellent-rgb), 0.2);
+}
+
+/* Completion Card */
+.quick-stats-section .stats-container .stat-card.completion-card {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.25) 0%, 
+    rgba(118, 75, 162, 0.25) 50%,
+    rgba(64, 224, 208, 0.15) 100%) !important;
+  border: 1px solid rgba(102, 126, 234, 0.4) !important;
+  border-radius: 16px !important;
+  padding: 1.25rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.quick-stats-section .stats-container .stat-card.completion-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, 
+    #667eea 0%, 
+    #764ba2 50%,
+    #40e0d0 100%) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.quick-stats-section .stats-container .stat-card.completion-card:hover {
+  border-color: rgba(102, 126, 234, 0.6) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.completion-card .stat-icon {
+  background: rgba(var(--color-primary-500-rgb), 0.1);
+  border-color: rgba(var(--color-primary-500-rgb), 0.2);
+}
+
+/* Age Rating Card - GÜÇLÜ KORUMA */
+.quick-stats-section .stats-container .stat-card.age-rating-card {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+.quick-stats-section .stats-container .stat-card.age-rating-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--color-warning-500-rgb), 0.5) 25%, 
+    rgba(var(--color-primary-400-rgb), 0.5) 50%, 
+    rgba(var(--color-accent-400-rgb), 0.5) 75%, 
+    transparent 100%) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.quick-stats-section .stats-container .stat-card.age-rating-card:hover {
+  border-color: var(--color-warning-400) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.age-rating-card .stat-icon {
+  background: rgba(var(--color-warning-500-rgb), 0.1);
+  border-color: rgba(var(--color-warning-500-rgb), 0.2);
+}
+
+/* Community Card - GÜÇLÜ KORUMA */
+.quick-stats-section .stats-container .stat-card.community-card {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+.quick-stats-section .stats-container .stat-card.community-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--color-success-500-rgb), 0.5) 25%, 
+    rgba(var(--color-primary-400-rgb), 0.5) 50%, 
+    rgba(var(--color-accent-400-rgb), 0.5) 75%, 
+    transparent 100%) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.quick-stats-section .stats-container .stat-card.community-card:hover {
+  border-color: var(--color-success-400) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.community-card .stat-icon {
+  background: rgba(var(--color-success-500-rgb), 0.1);
+  border-color: rgba(var(--color-success-500-rgb), 0.2);
+}
+
+/* User Score Card - GÜÇLÜ KORUMA */
+.quick-stats-section .stats-container .stat-card.user-score-card {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+.quick-stats-section .stats-container .stat-card.user-score-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--color-success-500-rgb), 0.5) 25%, 
+    rgba(var(--color-primary-400-rgb), 0.5) 50%, 
+    rgba(var(--color-accent-400-rgb), 0.5) 75%, 
+    transparent 100%) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.quick-stats-section .stats-container .stat-card.user-score-card:hover {
+  border-color: var(--color-success-400) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.user-score-card .stat-icon {
+  background: rgba(var(--color-success-500-rgb), 0.1);
+  border-color: rgba(var(--color-success-500-rgb), 0.2);
+}
+
+.user-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-success-400);
+  line-height: 1;
+}
+
+/* ========================================
+ * 🎮 YENİ KART TASARIMLARI
+ * ======================================== */
+
+/* Loading State */
+.loading-text {
+  color: #d0d0d0;
+  font-style: italic;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Metacritic Review Preview */
+.review-preview {
+  background: rgba(var(--color-white-rgb), 0.05);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-left: 3px solid var(--score-excellent);
+}
+
+.review-text {
+  color: #ffffff;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.review-meta {
+  color: #a0a0a0;
+  font-size: 0.65rem;
+  margin-top: 0.3rem;
+}
+
+.review-source {
+  color: #b0b0b0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+}
+
+/* ========================================
+ * 🔄 REVIEW NAVIGATION
+ * ======================================== */
+
+.review-navigation {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 5;
+  min-height: 48px;
+}
+
+.nav-arrow {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 10;
+  min-width: 32px;
+  min-height: 32px;
+  flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-arrow:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-arrow svg {
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+.review-indicator {
+  display: flex !important;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  min-width: 40px;
+  justify-content: center;
+}
+
+.current-review {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.review-separator {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0.1rem;
+}
+
+.total-reviews {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* HowLongToBeat Durations - Yeni Modern Tasarım */
+.duration-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.duration-item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(var(--color-primary-500-rgb), 0.1), rgba(var(--color-primary-600-rgb), 0.05));
+  border-radius: 12px;
+  border: 1px solid rgba(var(--color-primary-400-rgb), 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.duration-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--color-primary-400), var(--color-primary-500));
+  border-radius: 0 2px 2px 0;
+}
+
+.duration-item:hover {
+  transform: translateX(4px);
+  background: linear-gradient(135deg, rgba(var(--color-primary-500-rgb), 0.15), rgba(var(--color-primary-600-rgb), 0.08));
+  border-color: rgba(var(--color-primary-400-rgb), 0.4);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-500-rgb), 0.2);
+}
+
+.duration-label {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.duration-label::before {
+  content: '⏱️';
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.duration-value {
+  font-size: 1rem;
+  color: var(--color-white);
+  font-weight: 700;
+  background: rgba(var(--color-primary-500-rgb), 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(var(--color-primary-400-rgb), 0.3);
+}
+
+.similarity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, rgba(var(--color-success-500-rgb), 0.15), rgba(var(--color-success-600-rgb), 0.1));
+  color: var(--color-success-300);
+  padding: 0.4rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(var(--color-success-400-rgb), 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(var(--color-success-500-rgb), 0.2);
+  transition: all 0.3s ease;
+}
+
+.similarity-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--color-success-500-rgb), 0.3);
+  background: linear-gradient(135deg, rgba(var(--color-success-500-rgb), 0.2), rgba(var(--color-success-600-rgb), 0.15));
+}
+
+.similarity-badge::before {
+  content: '✨';
+  font-size: 0.8rem;
+}
+
+/* Age Rating Redesign */
+.rating-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rating-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(var(--color-warning-500-rgb), 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(var(--color-warning-500-rgb), 0.2);
+}
+
+.rating-letter {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-warning-400);
+}
+
+.rating-age {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.rating-description {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.content-descriptors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.content-descriptor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.25rem 0;
+}
+
+.descriptor-icon {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.descriptor-text {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* User Score Breakdown */
+.score-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.score-item {
+  text-align: center;
+}
+
+.score-label {
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.score-value {
+  font-size: 0.9rem;
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.user-review-preview {
+  background: rgba(var(--color-white-rgb), 0.05);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-left: 3px solid var(--color-success-400);
+}
+
+.user-review-preview .review-text {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.user-review-preview .review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-rating {
+  background: rgba(var(--color-success-500-rgb), 0.1);
+  color: var(--color-success-400);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.review-author {
+  color: #d0d0d0;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Progress Bar Variants */
+.user-progress {
+  background: linear-gradient(90deg, var(--color-success-500), var(--color-success-400));
+}
+
+/* ========================================
+ * 🎯 QUICK STATS CARDS - NEW DESIGNS
+ * ======================================== */
+
+/* Base container styles */
+.quick-stats-section {
+  margin: 2rem 0;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ========================================
+ * 🎨 PLACEHOLDER STYLES FOR ALL 4 CARDS
+ * ======================================== */
+
+.critics-card-placeholder,
+.howlongtobeat-card-placeholder,
+.age-rating-card-placeholder,
+.users-card-placeholder {
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 500;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+ * 📱 RESPONSIVE DESIGN
+ * ======================================== */
+
+@media (max-width: 768px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .critics-card-placeholder,
+  .howlongtobeat-card-placeholder,
+  .age-rating-card-placeholder,
+  .users-card-placeholder {
+    padding: 30px 15px;
+    min-height: 150px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+ * 🆕 NEW CARD DESIGNS WILL BE ADDED HERE
+ * ======================================== */
+
+/* Design variations will be implemented after user selection */

@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserStats } from '../../../contexts/UserStatsContext';
+import { useGame } from '../../../contexts/GameContext';
 import ProfileDropdown from '../../../components/ProfileDropdown';
 import './Statistics.css';
 
 function Statistics() {
   const navigate = useNavigate();
-  const [games, setGames] = useState([]);
+  const { games } = useGame();
+  const { 
+    userStats, 
+    gamePlaytimes, 
+    favorites, 
+    clips, 
+    achievements,
+    formatPlaytime 
+  } = useUserStats();
   const [selectedPeriod, setSelectedPeriod] = useState('all'); // all, week, month, year
-
-  // Oyunları localStorage'dan yükle
-  useEffect(() => {
-    const savedGames = localStorage.getItem('gameTracker_games');
-    if (savedGames) {
-      try {
-        const gameList = JSON.parse(savedGames);
-        setGames(gameList);
-      } catch (err) {
-        console.error('❌ LocalStorage yükleme hatası:', err);
-      }
-    }
-  }, []);
 
   // Zaman formatla (saniye -> HH:MM:SS)
   const formatTime = (seconds) => {
@@ -53,11 +50,24 @@ function Statistics() {
         startDate = new Date(0);
     }
     
-    return games.flatMap(game => 
-      (game.sessions || [])
-        .filter(session => new Date(session.startTime) >= startDate)
-        .map(session => ({ ...session, gameTitle: game.title, gameId: game.id }))
-    );
+    // UserStats'tan session verilerini al
+    const allSessions = [];
+    Object.entries(gamePlaytimes).forEach(([gameId, gameData]) => {
+      const game = games.find(g => g.id == gameId);
+      if (game && gameData.sessions) {
+        gameData.sessions
+          .filter(session => new Date(session.startTime) >= startDate)
+          .forEach(session => {
+            allSessions.push({
+              ...session,
+              gameTitle: game.title,
+              gameId: gameId
+            });
+          });
+      }
+    });
+    
+    return allSessions;
   };
 
   // Genel istatistikler hesapla
@@ -70,15 +80,15 @@ function Statistics() {
     
     // Status istatistikleri
     const statusStats = games.reduce((acc, game) => {
-      const status = game.status || 'Not Started';
+      const status = game.status || 'Başlanmadı';
       acc[status] = (acc[status] || 0) + 1;
       return acc;
     }, {});
     
-    // Priority istatistikleri
-    const priorityStats = games.reduce((acc, game) => {
-      const priority = game.priority || 'Medium';
-      acc[priority] = (acc[priority] || 0) + 1;
+    // Platform istatistikleri
+    const platformStats = games.reduce((acc, game) => {
+      const platform = game.platform || 'Bilinmiyor';
+      acc[platform] = (acc[platform] || 0) + 1;
       return acc;
     }, {});
     
@@ -89,20 +99,28 @@ function Statistics() {
       avgSessionTime,
       totalGames: games.length,
       statusStats,
-      priorityStats
+      platformStats,
+      favoriteGames: favorites.size,
+      totalClips: clips.length,
+      totalAchievements: achievements.length
     };
   };
 
   // En çok oynanan oyunlar
   const getTopGames = (limit = 5) => {
     return games
+      .map(game => {
+        const gameStats = gamePlaytimes[game.id] || { totalMinutes: 0, sessions: [] };
+        return {
+          ...game,
+          totalPlayTime: gameStats.totalMinutes,
+          sessionCount: gameStats.sessions.length,
+          lastPlayed: gameStats.lastPlayed
+        };
+      })
       .filter(game => game.totalPlayTime > 0)
-      .sort((a, b) => (b.totalPlayTime || 0) - (a.totalPlayTime || 0))
-      .slice(0, limit)
-      .map(game => ({
-        ...game,
-        sessionCount: (game.sessions || []).length
-      }));
+      .sort((a, b) => b.totalPlayTime - a.totalPlayTime)
+      .slice(0, limit);
   };
 
   // Günlük aktivite (son 7 gün)
@@ -114,11 +132,18 @@ function Statistics() {
       const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];
       
-      const daysSessions = games.flatMap(game => 
-        (game.sessions || []).filter(session => 
-          session.date === dateStr
-        )
-      );
+      // UserStats'tan o günün session'larını al
+      const daysSessions = [];
+      Object.values(gamePlaytimes).forEach(gameData => {
+        if (gameData.sessions) {
+          gameData.sessions.forEach(session => {
+            const sessionDate = new Date(session.startTime).toISOString().split('T')[0];
+            if (sessionDate === dateStr) {
+              daysSessions.push(session);
+            }
+          });
+        }
+      });
       
       const totalTime = daysSessions.reduce((sum, session) => sum + (session.duration || 0), 0);
       
@@ -135,18 +160,34 @@ function Statistics() {
 
   // Platform istatistikleri
   const getPlatformStats = () => {
-    const platformStats = games.reduce((acc, game) => {
-      const platform = game.platform || 'Bilinmiyor';
-      if (!acc[platform]) {
-        acc[platform] = { count: 0, totalTime: 0 };
-      }
-      acc[platform].count++;
-      acc[platform].totalTime += game.totalPlayTime || 0;
-      return acc;
-    }, {});
+    const platformData = {};
     
-    return Object.entries(platformStats)
-      .map(([platform, stats]) => ({ platform, ...stats }))
+    games.forEach(game => {
+      const platform = game.platform || 'Bilinmiyor';
+      const gameStats = gamePlaytimes[game.id] || { totalMinutes: 0 };
+      
+      if (!platformData[platform]) {
+        platformData[platform] = {
+          count: 0,
+          totalTime: 0,
+          completedGames: 0
+        };
+      }
+      
+      platformData[platform].count++;
+      platformData[platform].totalTime += gameStats.totalMinutes;
+      
+      if (game.status === 'Tamamlandı') {
+        platformData[platform].completedGames++;
+      }
+    });
+    
+    return Object.entries(platformData)
+      .map(([platform, data]) => ({
+        platform,
+        ...data,
+        avgTime: data.count > 0 ? Math.round(data.totalTime / data.count) : 0
+      }))
       .sort((a, b) => b.totalTime - a.totalTime);
   };
 
@@ -227,7 +268,7 @@ function Statistics() {
               <span className="stat-label">Toplam Oyun</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{formatTime(stats.totalPlayTime)}</span>
+              <span className="stat-value">{formatPlaytime(userStats.totalPlaytime)}</span>
               <span className="stat-label">Toplam Süre</span>
             </div>
             <div className="stat-item">
@@ -235,12 +276,24 @@ function Statistics() {
               <span className="stat-label">Toplam Session</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{stats.uniqueGames}</span>
+              <span className="stat-value">{userStats.gamesPlayed}</span>
               <span className="stat-label">Oynanan Oyun</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{formatTime(stats.avgSessionTime)}</span>
+              <span className="stat-value">{formatPlaytime(stats.avgSessionTime)}</span>
               <span className="stat-label">Ortalama Session</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{favorites.length}</span>
+              <span className="stat-label">Favori Oyun</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{clips.length}</span>
+              <span className="stat-label">Toplam Klip</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{achievements.length}</span>
+              <span className="stat-label">Başarım</span>
             </div>
           </div>
         </div>
@@ -260,16 +313,16 @@ function Statistics() {
           </div>
         </div>
 
-        {/* Priority Dağılımı */}
+        {/* Platform Dağılımı */}
         <div className="stats-card">
-          <h2>⭐ Öncelik Dağılımı</h2>
-          <div className="priority-distribution">
-            {Object.entries(stats.priorityStats).map(([priority, count]) => (
-              <div key={priority} className="priority-item">
-                <span className={`priority-badge ${priority.toLowerCase()}`}>
-                  {priority}
+          <h2>🎮 Platform Dağılımı</h2>
+          <div className="platform-distribution">
+            {Object.entries(stats.platformStats).map(([platform, count]) => (
+              <div key={platform} className="platform-item">
+                <span className={`platform-badge ${platform.toLowerCase().replace(' ', '-')}`}>
+                  {platform}
                 </span>
-                <span className="priority-count">{count} oyun</span>
+                <span className="platform-count">{count} oyun</span>
               </div>
             ))}
           </div>
@@ -285,7 +338,7 @@ function Statistics() {
                 <div className="game-info">
                   <span className="game-title">{game.title}</span>
                   <span className="game-stats">
-                    ⏱️ {formatTime(game.totalPlayTime)} • 
+                    ⏱️ {formatPlaytime(game.totalPlayTime)} • 
                     📊 {game.sessionCount} session • 
                     🎯 {game.progress || 0}%
                   </span>
@@ -310,7 +363,7 @@ function Statistics() {
                     }}
                   />
                 </div>
-                <span className="day-time">{formatTime(day.totalTime)}</span>
+                <span className="day-time">{formatPlaytime(day.totalTime)}</span>
                 <span className="day-sessions">{day.sessionCount} session</span>
               </div>
             ))}
@@ -328,7 +381,7 @@ function Statistics() {
                   <span className="platform-count">{platform.count} oyun</span>
                 </div>
                 <div className="platform-time">
-                  <span className="time-value">{formatTime(platform.totalTime)}</span>
+                  <span className="time-value">{formatPlaytime(platform.totalTime)}</span>
                 </div>
               </div>
             ))}
